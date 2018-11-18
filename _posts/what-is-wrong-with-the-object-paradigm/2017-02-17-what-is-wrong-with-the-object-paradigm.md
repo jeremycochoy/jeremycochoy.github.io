@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "What is wrong with the object paradigm ?"
+author: Jérémy Cochoy
 date: 2017-02-17 +0100
 categories: think languages programming software
 ---
