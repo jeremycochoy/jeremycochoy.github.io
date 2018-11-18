@@ -5,8 +5,6 @@ date: 2017-02-17 +0100
 categories: think languages programming software
 ---
 
-# Object paradigm and categoric paradigm
-
 Disclaimer: Aside from the catchy title,
 the main point of this article is to asks questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.
