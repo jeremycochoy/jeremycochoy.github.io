@@ -8,7 +8,7 @@ alng: fr
 
 ## ICSP?
 
-ICSP (In-Circuit Serial Programming) ou encore ISP est le nom donné à l’interface de programmation des microcontroleurs pouvant être reprogrammé _in- situ_. C'est le cas des AVR de chez Atmels, dont figure la très célèbre famille des Atméga (Atmega328P pour la carte arduino uno), mais aussi les petits ATtiny, qui n'ont que peux à envier aux atméga, puisque pouvant surpasser la cadence des seconds (20Mhz pour l'attiny84 et l'attiny85).
+ICSP (In-Circuit Serial Programming) ou encore ISP est le nom donné à l’interface de programmation des microcontroleurs pouvant être reprogrammé _in situ_. C'est le cas des AVR de chez Atmels, dont figure la très célèbre famille des Atméga (Atmega328P pour la carte arduino uno), mais aussi les petits ATtiny, qui n'ont que peux à envier aux atméga, puisque pouvant surpasser la cadence des seconds (20Mhz pour l'attiny84 et l'attiny85).
 
 Si vous disposez d'une carte arduino, vous ne programmez pas votre microcontroleur grace à l'ICSP, mais via le bootloader arduino qui a chaque démarrage (appuis sur reset si vous préférez, ou mise sous tension) attend quelques instant une éventuelle communication sur les pins 0 et 1 (RX et TX) avant de finalement lancer votre programme (aussi appelé sketch). Vous l'aurez comprit, la programmation d'une arduino se fait en effectuant un reset et en transmettant les données sous la forme d'une [liaison série asynchrone][uart].
 
