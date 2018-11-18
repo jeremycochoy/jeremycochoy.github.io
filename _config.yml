@@ -39,3 +39,6 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Define the url of articles in the blog to not include dates
+permalink: /:title/
