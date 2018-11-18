@@ -1,6 +1,7 @@
 ---
 layout: post
 title: How to use boost::property_tree to load and write JSON
+description: A quick starting guide to the C++ boost library module property_tree.
 author: Jérémy Cochoy
 date: 2015-12-21 +0100
 categories: c++ boost languages programming software
