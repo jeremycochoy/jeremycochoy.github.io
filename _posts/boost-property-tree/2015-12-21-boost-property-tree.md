@@ -4,6 +4,7 @@ title: How to use boost::property_tree to load and write JSON
 author: Jérémy Cochoy
 date: 2015-12-21 +0100
 categories: c++ boost languages programming software
+lang: en
 ...
 
 **Property Tree** is a sublibrary of boost that allow you handling _tree of property_. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.
