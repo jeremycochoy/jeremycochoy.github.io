@@ -23,6 +23,8 @@ layout: default
         </h3>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}
+        {%- elsif post.description -%}
+          {{ post.description }}
         {%- endif -%}
       </li>
       {%- endfor -%}
