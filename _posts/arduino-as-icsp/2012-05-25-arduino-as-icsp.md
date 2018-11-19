@@ -1,12 +1,11 @@
 ---
 layout: post
 title: Arduino as ICSP - Programmeur pour microcontrôleurs atmel
-description: Comment transformer son arduino en un programmeur pour
-  microcontroleurs Atmel. Cela permet notament de charger le boot
-  loader arduino sur de nouveaux ATMegas.
+description: Comment transformer son arduino en un programmeur pour    microcontroleurs Atmel. Cela permet notament de charger le boot    loader arduino sur de nouveaux ATMegas.
 author: Jérémy Cochoy
 date: 2012-05-25 +0100
-alng: fr
+categories: hardware software programming
+lang: fr
 ...
 
 ## ICSP?
