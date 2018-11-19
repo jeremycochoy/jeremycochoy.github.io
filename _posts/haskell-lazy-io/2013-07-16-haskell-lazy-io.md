@@ -4,7 +4,9 @@ title: Haskell - Lazy IO
 description: On discute des entrées et sorties paresseuses en Haskell et
   des soucis qu'un comportement paresseux peut poser.
 author: Jérémy Cochoy
-date: 2013/07/16
+date: 2013-07-16 +0100
+categories: programming haskell language lazy io software script
+lang: fr
 ...
 
 Ces derniers jours, j'écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu'un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.
