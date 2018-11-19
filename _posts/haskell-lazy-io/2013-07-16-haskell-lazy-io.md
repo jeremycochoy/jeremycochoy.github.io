@@ -75,7 +75,7 @@ qui produit le même résultat que notre pli.
 
 Et là tout fonctionne bien, nos fichier d'1Go sont haché.
 
-Mais ... si vous travaillez sur beaucoup de fichiers, vous risquez d'avoir un soucis. Par exemple, si vous testez sur /usr/lib (qui dois probablement contenir beaucoup de fichiers ;) ), vous obtiendrez peut-être une jolie exception vous indiquant qu'il y a trop de filedescriptors utilisés, et que donc le fichier ne peux être ouvert.
+Mais ... si vous travaillez sur beaucoup de fichiers, vous risquez d'avoir un soucis. Par exemple, si vous testez sur `/usr/lib`, vous obtiendrez peut-être une jolie exception vous indiquant qu'il y a trop de filedescriptors utilisés, et que donc le fichier ne peux être ouvert.
 Il se trouve que les fichier ne sont pas fermé immédiatement après le hachage, et c'est un vrai problème. Problème que nous allons résoudre.
 
 La solution : withFile
@@ -115,4 +115,4 @@ Dans notre cas, il faudrait forcer la promesse faire par `fmap` a être évalué
 
 Voila, c'est tout, c'est `$!` qui fait tout le travail en demandant à hashlazy de gentiment s'évaluer.
 
-Et la, c'est le bonheur, tout refonctionne, et l'on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.
+Et la c'est le bonheur, tout refonctionne et l'on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.
