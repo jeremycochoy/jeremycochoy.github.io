@@ -424,7 +424,7 @@ just because your favorite language doesn't provide such features :)
     for C++ developer. Despite the critic made in this article, it's definitively
     a book full of good practices.
 
-[^trait]: See <http://rustbyexample.com/trait.html>
+[^trait]: See [rust traits](http://rustbyexample.com/trait.html)
 
 [^wrong]: Things aren't black and white. The object paradigm is definitively well suited
     for many tasks like modeling GUI.
