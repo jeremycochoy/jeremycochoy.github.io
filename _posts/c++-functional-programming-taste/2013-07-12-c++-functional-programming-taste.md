@@ -11,8 +11,7 @@ lang: fr
 
 Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.
 
-Alpha, Beta, ... Kappa, Lambda!
-===============================
+## Alpha, Beta, ... Kappa, Lambda!
 
 Bien que portant le même nom, les _lambda_(C++ 11 powered) sont très différentes de leur homologues fonctionnelles, les _lambda fonctions_. Une lambda en C++11, c'est plutôt une intégration au langage des foncteurs.
 
