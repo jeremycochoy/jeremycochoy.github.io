@@ -3,16 +3,16 @@ layout: page
 title: GBA Doc
 ---
 
-GameBoy Emulator Documentation
-==============================
+## GameBoy Emulator Documentation
 
-[Nintendo Gameboy CPU (LR35902) instruction set](gameboy-opcodes.html)
-----------------------------------------------
+This page contain links to documentation on Game Boy emulation.
+
+### [Nintendo Gameboy CPU (LR35902) instruction set](gameboy-opcodes.html)
 
 A table with all the opcode, flags affected, and timings.
+Rework of Imran Nazar's table.
 
-[Blargg's testrom set](http://gbdev.gg8.se/wiki/articles/Test_ROMs)
---------------------
+### [Blargg's testrom set](http://gbdev.gg8.se/wiki/articles/Test_ROMs)
 
 A set of test-roms to check the cpu instructions behavior, timing,
 acess to memory, and sound implementation.
@@ -30,14 +30,12 @@ Mirror available here:
   * [mem_timing-2.zip](data/blargg/mem_timing-2.zip)
   * [oam_bug.zip](data/blargg/oam_bug.zip)
 
-[How Do I Write an Emulator?](http://www.atarihq.com/danb/files/emu_vol1.txt)
----------------------------
+### [How Do I Write an Emulator?](http://www.atarihq.com/danb/files/emu_vol1.txt)
 
 A general introduction to writing an emulator,
 independently of the platform targeted.
 
-[Imran Nazar series](http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU)
-------------------
+### [Imran Nazar series](http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU)
 
 Imran Nazar's blog posts on writing a Game Boy emulator in javascript.
 
