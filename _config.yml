@@ -23,6 +23,14 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jeremycochoy
 github_username: jeremycochoy
 google_analytics: UA-10762787-6
+paginate: 6
+
+
+# About/contact
+author:
+  name:              Jeremy Cochoy
+  url:               https://cochoy.fr
+  email:             jeremy.cochoy@gmail.com
 
 # Build settings
 markdown: kramdown
@@ -42,4 +50,4 @@ plugins:
 #   - vendor/ruby/
 
 # Define the url of articles in the blog to not include dates
-permalink: /:title/
+permalink: :title/
