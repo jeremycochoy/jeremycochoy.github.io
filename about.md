@@ -4,9 +4,9 @@ title: About
 permalink: /about/
 ---
 
-### Jeremy Cochoy
+### Hi. I'm Jeremy.
 
-I am a PhD student at INRIA-Saclay, in France located near Paris.
-My research was on Bidimensional Persistence Modules.
-
-See my [personal website](http://zenol.fr).
+Hello, my name is *Jeremy Cochoy*.
+I was a PhD student at INRIA-Saclay, France, located near Paris.
+My [research](http://zenol.fr/reaserch/) was on Bidimensional Persistence Modules, and you can learn
+more on my [personal website](http://zenol.fr).
