@@ -16,14 +16,13 @@
 title: Tech Gate
 email: jeremy.cochoy@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Tech Gate is a blog dedicated to programming, software, hardware,
-  languages and new technology. Made by a developper for developpers.
+  Made by a developper for developpers.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jeremycochoy
 github_username: jeremycochoy
 google_analytics: UA-10762787-6
-paginate: 6
+paginate: 10
 
 
 # About/contact

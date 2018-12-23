@@ -1,6 +1,6 @@
 ---
 layout: page
-title: GBA Doc
+title: GB Doc
 ---
 
 ## GameBoy Emulator Documentation
