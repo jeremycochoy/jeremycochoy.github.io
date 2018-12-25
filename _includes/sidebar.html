@@ -10,7 +10,11 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.url }}">Posts</a>
+
+      <a class="sidebar-nav-item" href="http://cochoy.fr/hyper-flop/">
+        Hyper-Flop
+      </a>
 
       {% comment %}
         The code below dynamically generates a sidebar nav of pages with
@@ -18,22 +22,24 @@
       {% endcomment %}
 
       {% assign pages_list = site.pages | sort:"url" %}
-      {% for node in pages_list %}
+      {% for node in pages_list reversed %}
         {% if node.title != null %}
           {% if node.layout == "page" %}
             <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
           {% endif %}
         {% endif %}
       {% endfor %}
+
+      <a class="sidebar-nav-item" href="http://cochoy.fr/resume/">
+        Resume
+      </a>
     </nav>
 
-    <div></div>
-  
-    <div class="sidebar-item">
-      <p>
-        &copy; {{ site.time | date: '%Y' }}. All rights reserved.
-      </p>
+    <div class="sidebar-nav">
+      <span class="sidebar-nav-item white small">Make a donation. 😇</span>
+      <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+      <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
     </div>
-
+  
   </div>
 </div>

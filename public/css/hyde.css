@@ -55,7 +55,7 @@ html {
 
 .sidebar {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 0.5rem 1rem;
   color: rgba(255,255,255,.5);
   background-color: #202020;
 }
@@ -248,4 +248,16 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .content a,
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
+}
+
+/*** New CSS ***/
+.x-small {
+  font-size:x-small;
+}
+.small {
+  font-size:small;
+}
+
+.white {
+  color: white;
 }

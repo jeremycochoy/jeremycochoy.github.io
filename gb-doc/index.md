@@ -1,20 +1,23 @@
 ---
 layout: page
-title: GB Doc
+title: Gameboy Emulators
 ---
-
-## GameBoy Emulator Documentation
 
 This page contain links to documentation on Game Boy emulation.
 
-### [Nintendo Gameboy CPU (LR35902) instruction set](gameboy-opcodes.html)
+## RGB Rust gameboy Emulator
 
-A table with all the opcode, flags affected, and timings.
-Rework of Imran Nazar's table.
+This project is a minimalist [gameboy emulator][sgb] in [rust].
 
-### [Blargg's testrom set](http://gbdev.gg8.se/wiki/articles/Test_ROMs)
+## Nintendo Gameboy CPU (LR35902) instruction set
 
-A set of test-roms to check the cpu instructions behavior, timing,
+A [table with all the opcode][gameboy-opcodes] of the nintendo gameboy CPU.
+Also include the flags affected by each instruction, and their timings.
+It is a rework of Imran Nazar's opcode table.
+
+## Blargg's testrom set
+
+A [set of test-roms made by Blargg][blargg-roms] to check the cpu instructions behavior, timing,
 acess to memory, and sound implementation.
 
 Mirror available here:
@@ -30,12 +33,19 @@ Mirror available here:
   * [mem_timing-2.zip](data/blargg/mem_timing-2.zip)
   * [oam_bug.zip](data/blargg/oam_bug.zip)
 
-### [How Do I Write an Emulator?](http://www.atarihq.com/danb/files/emu_vol1.txt)
+## How Do I Write an Emulator?
 
-A general introduction to writing an emulator,
-independently of the platform targeted.
+[How Do I Write an Emulator?][emulator-writing] is a general introduction to developping an emulator,
+written by Daniel Boris in 1999. It is still very accurate.
+This text is independent of the platform targeted, and apply to a wide range of consoles.
 
-### [Imran Nazar series](http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU)
+## Imran Nazar series
 
-Imran Nazar's blog posts on writing a Game Boy emulator in javascript.
+Imran Nazar's blog posts on [writing a Game Boy emulator in javascript][imran-nazar].
 
+[rust]: https://en.wikipedia.org/wiki/Rust_(programming_language)
+[sgb]: https://github.com/jeremycochoy/sgb
+[gameboy-opcodes]: gameboy-opcodes.html
+[blargg-roms]: http://gbdev.gg8.se/wiki/articles/Test_ROMs
+[emulator-writing]: http://www.atarihq.com/danb/files/emu_vol1.txt
+[imran-nazar]: http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU
