@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Dr. Jérémy Cochoy</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <script>
+  // Wow you are reading the source!
+  //
+  // Since you are really into details, you should know that this resume was
+  // generated from markdown with pandoc. I wrote a blog post about it
+  // http://blog.chmd.fr/editing-a-cv-in-markdown-with-pandoc.html. Go check
+  // it out!
+  //
+  //          \
+  //           \
+  //            \\
+  //             \\
+  //              >\/7
+  //          _.-(6'  \
+  //         (=___._/` \
+  //              )  \ |
+  //             /   / |
+  //            /    > /
+  //           j    < _\
+  //       _.-' :      ``.
+  //       \ r=._\        `.
+  //      <`\\_  \         .`-.
+  //       \ r-7  `-. ._  ' .  `\
+  //        \`,      `-.`7  7)   )
+  //         \/         \|  \'  / `-._
+  //                    ||    .'
+  //                     \\  (
+  //                      >\  >
+  //                  ,.-' >.'
+  //                 <.'_.''
+  //                   <'
+  //
+  // The following snippet is meant to inject my age instead of the
+  // placeholder {{ MYAGE }}. More automation, less maintainance, yay!
+  //
+  // Use pandoc '-H <script>' to put it in the document header
+  //
+  // Cause unicorns rocks!
+  window.onload = function(){
+      // compute my age
+      var birthday = Date.parse("July 14, 1990")
+      var ageDiff = Date.now() - birthday;
+      var msPerYear = 31536000000;
+      var myAge = Math.floor(ageDiff / msPerYear);
+  
+      // Replace the placeholder
+      //
+      // Unfortunately, pandoc does not offer an easy option to put an html
+      // placeholder in the markdown source without messing too much with
+      // the other formats, so the simplest option is to operate the
+      // replacement in the whole document. For big documents, this is not
+      // recommended, but for a resume, there should not be any performance
+      // issue.
+      document.body.innerHTML = document.body.innerHTML.replace("{{ MYAGE }}", myAge);
+  }
+  </script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dr. Jérémy Cochoy</h1>
+</header>
+<hr />
+<blockquote>
+<p><strong>CTO at Symphonia</strong><br />
+<br />
+Co founder of <a href="http://symphonia.app">Symphonia</a></p>
+</blockquote>
+<hr />
+<h2 id="corporate-experience">Corporate Experience</h2>
+<dl>
+<dt>2019</dt>
+<dd><p><em>CTO at Symphonia</em></p>
+<p>R&amp;D on audio signal processing using python and pytorch. Architecture and implementation of the iOS app embeding the algorithm in swift and C. Management of a small team.</p>
+</dd>
+<dt>2018-2019</dt>
+<dd><p><em>Backend Developper at Klaxit</em></p>
+<p>I was a backend developper at the French carpooling startup Klaxit. Worked with a ruby stack, redis, sidekick, aws, postgre on features integration, bug fixes, and performance improvement.</p>
+</dd>
+<dt>2015-2018</dt>
+<dd><p><em>Doctorat et Monitorat - INRIA Saclay &amp; U-PSUD</em> (Paris, France).</p>
+<p>PhD in persistent homology with Steve Oudot. I taught at the IUT d’Orsay and University Paris Descart.</p>
+</dd>
+<dt>2013</dt>
+<dd><p><em>Internship with Frank Wagner</em> (Lyon, France).</p>
+<p>Modele theorie.</p>
+</dd>
+<dt>2012</dt>
+<dd><p><em>Internship with Frédéric Chapoton</em></p>
+<p>Knot theory.</p>
+</dd>
+<dt>2009</dt>
+<dd><p><em>In charge of the Assembly subjet at EPITECH</em></p>
+<p>I was in charge of the <em>Assembly</em> lessons for the second year students at the School EPITECH. I also took part to other subjects.</p>
+</dd>
+</dl>
+<h2 id="education">Education</h2>
+<dl>
+<dt>2018</dt>
+<dd><p><em>PhD in Computer science and Mathematics</em></p>
+<p>I worked on persisent homology.</p>
+</dd>
+<dt>2014 - 2015</dt>
+<dd><p><em>Master Introduction a la theorie des fonctions zeta et L - ENS</em> (Lyon, France).</p>
+<p>Second year of master at the Ecole Normale Superieur of Lyon.</p>
+</dd>
+<dt>2013 - 2014</dt>
+<dd><p><em>Agregation - ENS</em> (Lyon, France).</p>
+<p>Selective French competitive exam to allow teaching in high school and classes preparatoires.</p>
+</dd>
+<dt>20011 - 2012</dt>
+<dd><p><em>Licence 3 - ENS</em> (Lyon, France).</p>
+<p>Third year of Licence in mathemtics at the Ecole Normale Superieur of Lyon.</p>
+</dd>
+<dt>2009 - 2011</dt>
+<dd><p><em>Licence 1 and Licence 2 - UCBL</em> (Lyon, France).</p>
+<p>First and second year of Licence in the university of Lyon.</p>
+</dd>
+</dl>
+<h2 id="open-source-contributions">Open Source Contributions</h2>
+<dl>
+<dt>C++</dt>
+<dd>Author of <a href="https://github.com/jeremycochoy/sednl">sednl</a>, a simple event driven network library.
+</dd>
+<dt>Rust</dt>
+<dd>Author of <a href="https://github.com/jeremycochoy/sgb">SGB</a>, a simple game boy classic emulator written in rust.
+</dd>
+</dl>
+<h2 id="few-technologies-and-stacks-i-like">Few technologies and stacks I like</h2>
+<ul>
+<li>Ruby, Rails, Sinatra, Redis</li>
+<li>Vue.js, React</li>
+<li>Pytorch, Flask</li>
+<li>Swift</li>
+<li>AVR assembly</li>
+</ul>
+<h2 id="activities-and-interests">Activities and interests</h2>
+<dl>
+<dt>Hobbies</dt>
+<dd>Playing and composing music, reading.
+</dd>
+<dt>Sports</dt>
+<dd>Dance (Lindy Hop, Rock, …) and Climbing.
+</dd>
+</dl>
+<hr />
+<blockquote>
+<p>jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • {{ MYAGE }} years old<br />
+27 Rue au maire<br />
+75003 Paris<br />
+<a href="http://zenol.fr/resume/index.pdf">pdf version</a> • <a href="http://zenol.fr/resume/index.txt">txt version</a> • <a href="http://zenol.fr/resume/index.docx">doc version</a> • <a href="http://zenol.fr/resume/index.html">html version</a></p>
+</blockquote>
+</body>
+</html>
