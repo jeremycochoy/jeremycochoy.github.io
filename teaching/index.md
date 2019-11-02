@@ -45,10 +45,4 @@ Pour me contacter :
 
   >  jeremy.cochoy at gmail.com
 
-### Adresse :
-
-  >  INRIA Saclay
-  >  1 Rue Honoré d'Estienne d'Orves
-  >  91120 Palaiseau
-
 --------------------------------------------------
