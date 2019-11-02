@@ -4,9 +4,6 @@ title: Research activity
 permalink: /research/
 ---
 
-Status :
---------
-
 I did my PhD at the INRIA-Saclay, Palaiseau(France) located near Paris.
 My research focused on __Persistence Modules__.
 
