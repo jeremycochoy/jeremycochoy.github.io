@@ -78,7 +78,7 @@ html, body {
 
 #slice3 {
     background: url('images/slide3.jpg') 50% no-repeat fixed;
-    color: white;
+    /* color: white; */
 }
 
 #slice4 {
@@ -89,7 +89,7 @@ html, body {
 
 #slice5 {
     background: url('images/slide5.jpg') 50% no-repeat fixed;
-    color: white;
+    /* color: white; */
 }
 
 .slice p {
