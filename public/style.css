@@ -69,6 +69,11 @@ html, body {
     background: url('/public/images/slide1.jpg') 50% no-repeat fixed;
     color: black;
 }
+@supports (-webkit-overflow-scrolling: touch) {
+  #slice1 {
+      background: url('/public/images/slide1.jpg') 50% no-repeat;
+    }
+}
 
 #slice2 {
     background-color: white;
