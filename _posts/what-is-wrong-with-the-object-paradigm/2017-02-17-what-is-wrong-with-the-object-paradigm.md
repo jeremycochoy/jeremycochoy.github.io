@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What is wrong with the object paradigm ?"
+title: What is wrong with the object paradigm ?
 description: A reflexion on error handling and application modeling
   through various variations of data modeling. We look at old C fashion,
   object languages, and more functional approaches.

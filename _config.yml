@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Tech Gate
+title: Jeremy Cochoy
 email: jeremy.cochoy@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   By a developper, for developpers.
@@ -21,9 +21,9 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jeremycochoy
 github_username: jeremycochoy
-google_analytics: UA-10762787-6
+google_analytics: UA-10762787-1
+paginate_path: "/blog/page:num/"
 paginate: 10
-
 
 # About/contact
 author:
@@ -36,6 +36,7 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-paginate
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.

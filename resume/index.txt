@@ -1,0 +1,123 @@
+Dr. Jérémy Cochoy
+
+------------------------------------------------------------------------
+
+  CTO AT SYMPHONIA
+  Co founder of Symphonia
+
+------------------------------------------------------------------------
+
+
+Corporate Experience
+
+2019
+
+    _CTO at Symphonia_
+
+    R&D on audio signal processing using python and pytorch.
+    Architecture and implementation of the iOS app embeding the
+    algorithm in swift and C. Management of a small team.
+
+2018-2019
+
+    _Backend Developper at Klaxit_
+
+    I was a backend developper at the French carpooling startup Klaxit.
+    Worked with a ruby stack, redis, sidekick, aws, postgre on features
+    integration, bug fixes, and performance improvement.
+
+2015-2018
+
+    _Doctorat et Monitorat - INRIA Saclay & U-PSUD_ (Paris, France).
+
+    PhD in persistent homology with Steve Oudot. I taught at the IUT
+    d’Orsay and University Paris Descart.
+
+2013
+
+    _Internship with Frank Wagner_ (Lyon, France).
+
+    Modele theorie.
+
+2012
+
+    _Internship with Frédéric Chapoton_
+
+    Knot theory.
+
+2009
+
+    _In charge of the Assembly subjet at EPITECH_
+
+    I was in charge of the _Assembly_ lessons for the second year
+    students at the School EPITECH. I also took part to other subjects.
+
+
+Education
+
+2018
+
+    _PhD in Computer science and Mathematics_
+
+    I worked on persisent homology.
+
+2014 - 2015
+
+    _Master Introduction a la theorie des fonctions zeta et L - ENS_
+    (Lyon, France).
+
+    Second year of master at the Ecole Normale Superieur of Lyon.
+
+2013 - 2014
+
+    _Agregation - ENS_ (Lyon, France).
+
+    Selective French competitive exam to allow teaching in high school
+    and classes preparatoires.
+
+20011 - 2012
+
+    _Licence 3 - ENS_ (Lyon, France).
+
+    Third year of Licence in mathemtics at the Ecole Normale Superieur
+    of Lyon.
+
+2009 - 2011
+
+    _Licence 1 and Licence 2 - UCBL_ (Lyon, France).
+
+    First and second year of Licence in the university of Lyon.
+
+
+Open Source Contributions
+
+C++
+    Author of sednl, a simple event driven network library.
+
+Rust
+    Author of SGB, a simple game boy classic emulator written in rust.
+
+
+Few technologies and stacks I like
+
+-   Ruby, Rails, Sinatra, Redis
+-   Vue.js, React
+-   Pytorch, Flask
+-   Swift
+-   AVR assembly
+
+
+Activities and interests
+
+Hobbies
+    Playing and composing music, reading.
+
+Sports
+    Dance (Lindy Hop, Rock, …) and Climbing.
+
+------------------------------------------------------------------------
+
+  jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • years old
+  27 Rue au maire
+  75003 Paris
+  pdf version • txt version • doc version • html version

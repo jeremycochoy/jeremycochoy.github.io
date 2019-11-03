@@ -1,0 +1,157 @@
+@-webkit-viewport { width: device-width; }
+@-moz-viewport    { width: device-width; }
+@-ms-viewport     { width: device-width; }
+@-o-viewport      { width: device-width; }
+@viewport         { width: device-width; }
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  background-color: #f5f5f5;
+  color: #000000;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-align: center;
+}
+.footer  p
+{
+  color: #000000;
+}
+
+.footer a
+{
+  color: #ffffff;
+  background-color: #000000;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+/* Parallax Scrolling */
+html, body {
+    height: 100%;
+}
+
+.slice {
+	padding: 10% 0 15% 0;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#slice1 {
+    background: url('images/slide1.jpg') 50% no-repeat fixed;
+    color: black;
+}
+
+#slice2 {
+    background-color: white;
+    background-image:linear-gradient(lightgrey, white);
+    color: black;
+}
+
+#slice3 {
+    background: url('images/slide3.jpg') 50% no-repeat fixed;
+    /* color: white; */
+}
+
+#slice4 {
+    background-color: white;
+    background-image:linear-gradient(lightgrey, white);
+    color: black;
+}
+
+#slice5 {
+    background: url('images/slide5.jpg') 50% no-repeat fixed;
+    /* color: white; */
+}
+
+.slice p {
+    font-size: 2em;
+    font-size: 'Wellfleet';
+    text-align: center;
+}
+.slice h1 {
+    font-family: 'Times';
+    font-weight: bold;
+    font-size: 4em;
+    text-align: center;
+    padding-bottom: 0.3em;
+    font-weight: bold;
+}
+
+.slice h2 {
+    font-family: 'Oswald';
+    font-weight: normal;
+    font-size: 2.5em;
+    text-align: center;
+    padding-bottom: 1.5em;
+}
+
+/* Smaller text for phones */
+@media all and (max-width: 900px)
+{
+	.slice p {
+		font-size: 1.5em;
+	}
+}
+@media (max-width: 800px)
+{
+	.slice {
+		padding: 25% 0 15% 0;
+	}
+}
+@media (max-width: 600px)
+{
+	.slice {
+		padding: 40% 0 15% 0;
+	}
+}
+@media (max-width: 800px) and (orientation: landscape)
+{
+	.slice {
+	    padding: 3% 0 15% 0;
+	}
+}
+
+.slice a {
+    color: black;
+    background-color: white;
+}
+
+content {
+    width: 70%;
+    margin: 0 auto;
+}
+
+/* Header and Footer opacity */
+
+.navbar {
+    opacity: 0.9;
+}

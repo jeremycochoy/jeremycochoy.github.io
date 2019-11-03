@@ -1,0 +1,22 @@
+{
+  "main.css": "/hyper-flop/static/css/main.a866c680.chunk.css",
+  "main.js": "/hyper-flop/static/js/main.9f76d2cf.chunk.js",
+  "main.js.map": "/hyper-flop/static/js/main.9f76d2cf.chunk.js.map",
+  "static/css/1.6339df65.chunk.css": "/hyper-flop/static/css/1.6339df65.chunk.css",
+  "static/js/1.ac1ad9c3.chunk.js": "/hyper-flop/static/js/1.ac1ad9c3.chunk.js",
+  "static/js/1.ac1ad9c3.chunk.js.map": "/hyper-flop/static/js/1.ac1ad9c3.chunk.js.map",
+  "runtime~main.js": "/hyper-flop/static/js/runtime~main.20886701.js",
+  "runtime~main.js.map": "/hyper-flop/static/js/runtime~main.20886701.js.map",
+  "static/media/transistor.png": "/hyper-flop/static/media/transistor.698837d2.png",
+  "static/media/cpu.png": "/hyper-flop/static/media/cpu.a746621a.png",
+  "static/media/gpu.png": "/hyper-flop/static/media/gpu.70923c40.png",
+  "static/media/clock.gif": "/hyper-flop/static/media/clock.b250844f.gif",
+  "static/media/red-diode.png": "/hyper-flop/static/media/red-diode.8e565cd0.png",
+  "static/media/blue-diode.png": "/hyper-flop/static/media/blue-diode.a1158657.png",
+  "static/media/sdcard.png": "/hyper-flop/static/media/sdcard.8e89f217.png",
+  "static/css/main.a866c680.chunk.css.map": "/hyper-flop/static/css/main.a866c680.chunk.css.map",
+  "static/css/1.6339df65.chunk.css.map": "/hyper-flop/static/css/1.6339df65.chunk.css.map",
+  "index.html": "/hyper-flop/index.html",
+  "precache-manifest.beac56b088c2d45e7f539d192a8998d3.js": "/hyper-flop/precache-manifest.beac56b088c2d45e7f539d192a8998d3.js",
+  "service-worker.js": "/hyper-flop/service-worker.js"
+}

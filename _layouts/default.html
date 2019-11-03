@@ -5,15 +5,16 @@
 
   <body>
 
-    {% include sidebar.html %}
+    {% include navbar.html %}
 
-    <div class="content container">
+    <div class="container">
       {{ content }}
     </div>
 
     {% if site.google_analytics %}
     {% include google_analytics.html %}
     {% endif %}
-  
+
+    {% include footer.html %}
   </body>
 </html>
