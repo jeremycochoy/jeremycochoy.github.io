@@ -1,3 +1,10 @@
+---
+layout: null
+redirect_from:
+  - /cv/
+  - /cv_2015.pdf/
+---
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
@@ -48,7 +55,7 @@
   //                   <'
   //
   // The following snippet is meant to inject my age instead of the
-  // placeholder {{ MYAGE }}. More automation, less maintainance, yay!
+  // placeholder [[ MYAGE ]]. More automation, less maintainance, yay!
   //
   // Use pandoc '-H <script>' to put it in the document header
   //
@@ -59,7 +66,7 @@
       var ageDiff = Date.now() - birthday;
       var msPerYear = 31536000000;
       var myAge = Math.floor(ageDiff / msPerYear);
-  
+
       // Replace the placeholder
       //
       // Unfortunately, pandoc does not offer an easy option to put an html
@@ -68,7 +75,7 @@
       // replacement in the whole document. For big documents, this is not
       // recommended, but for a resume, there should not be any performance
       // issue.
-      document.body.innerHTML = document.body.innerHTML.replace("{{ MYAGE }}", myAge);
+      document.body.innerHTML = document.body.innerHTML.replace("[[ MYAGE ]]", myAge);
   }
   </script>
 </head>
@@ -161,7 +168,7 @@ Co founder of <a href="http://symphonia.app">Symphonia</a></p>
 </dl>
 <hr />
 <blockquote>
-<p>jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • {{ MYAGE }} years old<br />
+<p>jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • [[ MYAGE ]] years old<br />
 27 Rue au maire<br />
 75003 Paris<br />
 <a href="http://zenol.fr/resume/index.pdf">pdf version</a> • <a href="http://zenol.fr/resume/index.txt">txt version</a> • <a href="http://zenol.fr/resume/index.docx">doc version</a> • <a href="http://zenol.fr/resume/index.html">html version</a></p>
