@@ -47,7 +47,7 @@ Pour ma part, j'ai été obligé d'ajouter une horloge externe pour avoir une r�
 
 ### Let's GO!
 
-Votre sketch est sur votre arduino, votre circuit est opérationnel, vous avez vérifier chaque câble, chaque branchement, et relut le schéma 8 fois? Bien, alors revérifiez encore une fois[^reflet-acide-8].
+Votre sketch est sur votre arduino, votre circuit est opérationnel, vous avez vérifier chaque câble, chaque branchement, et relut le schéma 8 fois? Bien, alors revérifiez encore une fois dans le doute.
 
 Installez la suite AVRtools (WinAVR pour windows, votre gestionnaire de packets sous linux, et pour les autres, à vous de vous débrouiller :D ). Ne pas hésiter à consulter la [documentation de AVRtools][avr-tools].
 
@@ -65,8 +65,6 @@ au site de [LadyAda][avrdude].
 Sur ce, amusez vous bien :)
 
 __Nb :__ Pour calculer les fuses, j'utilise [FuseCalc][fuse-calc].
-
-[^reflet-acide-8]: Si vous ne conaissez pas la saga MP3 reflet d'acide, vous pouvez rechercher la fameuse citation "huit, ça suffit".
 
 [serial-peripherical-interface]: http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
 [uart]: http://fr.wikipedia.org/wiki/UART

@@ -40,6 +40,9 @@ GEM
       jekyll (>= 3.3, < 5.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
+    jgd (1.12)
+      jekyll (>= 1.5.1)
+      trollop (= 2.9.9)
     kramdown (1.17.0)
     liquid (4.0.3)
     listen (3.2.0)
@@ -63,6 +66,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    trollop (2.9.9)
 
 PLATFORMS
   ruby
@@ -72,6 +76,7 @@ DEPENDENCIES
   jekyll-paginate
   jekyll-postfiles
   jekyll-redirect-from
+  jgd
   minima (~> 2.0)
   tzinfo-data
 
