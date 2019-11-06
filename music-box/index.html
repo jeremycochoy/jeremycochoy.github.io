@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      Boite à musique Arduino &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">Boite à musique Arduino</h1>
+  <span class="post-date">16 Aug 2013</span>
+  <p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
+
+<p>Tout ceci est plutôt abstrait, alors regardons cela de plus près.</p>
+
+<h2 id="montage-de-test-">Montage de test :</h2>
+
+<p>Le montage de test est très similaire à celui du tutoriel tone. Seul change le port sur lequel vous devez connecter votre speacker.</p>
+
+<p><a href="data/music_box_arduino.png"><img src="data/music_box_arduino.png" alt="Montage arduino" /></a></p>
+
+<p>Donc, une résistance d’une centaine d’ohms (prenez ce que vous avez sous la main, plus la résistance sera élevée, moins le volume le sera) reliée à un speacker, ou bien à une prise JACK pour brancher vos enceintes favorites.</p>
+
+<p>Si vous souhaitez changer le port de sortie, il vous faudra toucher au code (et au code asm aussi :/) car le code utilise un mécanisme de l’ATMEGA328P qui n’est disponible que sur les ports 11, 10, 9, 6, 5 et 3 de l’arduino (ceux marqués d’une petite vague). De plus, si vous souhaitez utiliser le port 3 conjointement à ce code, vous risquez d’avoir quelques soucis. (Ces ports sont regroupés en paires, et chaque port d’une paire ne peut émettre un signal qu’à la même fréquence. Vous ne pourrez pas non plus utiliser l’interruption du timer 2, utilisé par ces deux ports. Ici, le code utilise la fréquence maximum possible, donc cela ne devrait à priori pas poser de soucis pour les utilisations les plus simples du port 3, comme contrôler l’intensité lumineuse d’une led).</p>
+
+<h2 id="fonctionnement-de-la-lib">Fonctionnement de la Lib</h2>
+
+<p>L’utilisation se fait via le header Synth_8bits.h qui définit plusieurs variables globales essentielles au fonctionnement.
+Dans un premier temps, il faut initialiser la lib en appelant <code class="highlighter-rouge">synth_setup();</code>. Par la suite, vous disposez de 4 variables de période / fréquences :</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">int</span> <span class="n">square1_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square2_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square3_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square4_period</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>En fait, c’est la période de l’onde qui est stockée, exprimée en 62500ième de seconde. Une macro, frequency_to_period(f), s’occupe de convertir une fréquence f (en Hz) en une période. Un exemple d’utilisation serait :</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="mi">440</span><span class="p">);</span> <span class="c1">//Le LA de référence est à 440Hz</span>
+</code></pre></div></div>
+
+<p>De nombreuses macros et un tableau sont là pour vous permettre de choisir une note de façon plus agréable :</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">NOTE_A4</span><span class="p">);</span> <span class="c1">//Pour encoder, directement dans votre code, une mélodie</span>
+<span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">note_table</span><span class="p">[</span><span class="n">BNOTE_A4</span><span class="p">]);</span> <span class="c1">//Pour pouvoir facilement générer des mélodies à partir d'algorithmes.</span>
+</code></pre></div></div>
+
+<p>Reste un détail important : le volume de sortie! Il se fait à l’aide des</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square1_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square2_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square3_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square4_amplitude</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Où vous pouvez choisir une amplitude sonore entre 0 (pas de son) et 255 (volume maximum). Attention ! La somme des volumes de tous les canaux doit être inférieure à 255 ! (Sinon et ben, ça sera moche et tout sauf musical ;) ).</p>
+
+<p>Vous pouvez ainsi créer vos propres instruments en superposant différentes fréquences, et en modifiant le volume des canaux au cours du temps (par exemple, si vous voulez un son qui s’atténue, décrémentez petit à petit l’amplitude jusqu’à ce qu’elle atteigne 0). Le second exemple sonore exploite cette possibilité.</p>
+
+<p>Pour les percussions, il y a le canal de bruit.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_amplitude</span><span class="p">;</span>
+</code></pre></div></div>
+<p>C’est un canal qui émet un son similaire à celui d’un vieux téléviseur sans antennes, un “Tshhhhh” très caractéristique. À nouveau, en faisant varier l’amplitude (on parle de modulation d’amplitude), vous pouvez créer le timbre de divers instruments de percussion. La fonction <code class="highlighter-rouge">play_seawave();</code> est un exemple.</p>
+
+<p>Le bruit est près calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
+
+<h1 id="code-et-exemple-de-test">Code et exemple de test</h1>
+
+<p>Voici le code directement dans ce billet, et sous la forme d’un tar un peu plus loin. Les commentaires sont plutôt explicites :</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Synth_8bits.h :</span>
+
+<span class="cp">#ifndef SYNTH_8BITS_H_
+# define SYNTH_8_BITS_H_
+</span>
+<span class="c1">//Some macros</span>
+<span class="cp">#define frequency_to_period(f) (62500 / (f))
+</span>
+<span class="cm">/*
+#ifdef __cplusplus
+extern "C" {
+#endif
+*/</span>
+
+<span class="cm">/*************************************************************************/</span>
+<span class="cm">/* Here come definitions and prototypes for the Synth_8bits library      */</span>
+<span class="cm">/* All this stuff is given, without guaranty, and under the BSD licence. */</span>
+<span class="cm">/*                                 ---                                   */</span>
+<span class="cm">/* By Jeremy Cochoy                                                      */</span>
+<span class="cm">/*************************************************************************/</span>
+
+<span class="c1">//White noise table, in progmem</span>
+<span class="k">extern</span> <span class="kt">char</span> <span class="n">white_noise</span><span class="p">[</span><span class="mi">4096</span><span class="p">];</span>
+
+<span class="c1">/////////////////////////</span>
+<span class="c1">// Settings / Controls //</span>
+<span class="c1">/////////////////////////</span>
+
+<span class="c1">//Periods, stored after applying the right calculus with frequency_to_period(int)</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square1_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square2_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square3_period</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">square4_period</span><span class="p">;</span>
+
+<span class="c1">// 0 = full speed, 255 = slowest (for a tv white noise sound</span>
+<span class="c1">// use 20, which i the default value)</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_speed</span><span class="p">;</span>
+
+<span class="c1">//Output amplitudes. Make sure that the sum of all your amplitudes of synth is &lt; than 256!</span>
+
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square1_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square2_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square3_amplitude</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square4_amplitude</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_amplitude</span><span class="p">;</span>
+
+<span class="cm">/*************************************************
+* Public Constants, from Tone Lybrary, by B Hagman
+*  see : http://code.google.com/p/arduino-tone/source/browse/trunk/Tone.h
+*************************************************/</span>
+
+<span class="cp">#define NOTE_B0  31
+#define NOTE_C1  33
+#define NOTE_CS1 35
+#define NOTE_D1  37
+#define NOTE_DS1 39
+#define NOTE_E1  41
+#define NOTE_F1  44
+#define NOTE_FS1 46
+#define NOTE_G1  49
+#define NOTE_GS1 52
+#define NOTE_A1  55
+#define NOTE_AS1 58
+#define NOTE_B1  62
+#define NOTE_C2  65
+#define NOTE_CS2 69
+#define NOTE_D2  73
+#define NOTE_DS2 78
+#define NOTE_E2  82
+#define NOTE_F2  87
+#define NOTE_FS2 93
+#define NOTE_G2  98
+#define NOTE_GS2 104
+#define NOTE_A2  110
+#define NOTE_AS2 117
+#define NOTE_B2  123
+#define NOTE_C3  131
+#define NOTE_CS3 139
+#define NOTE_D3  147
+#define NOTE_DS3 156
+#define NOTE_E3  165
+#define NOTE_F3  175
+#define NOTE_FS3 185
+#define NOTE_G3  196
+#define NOTE_GS3 208
+#define NOTE_A3  220
+#define NOTE_AS3 233
+#define NOTE_B3  247
+#define NOTE_C4  262
+#define NOTE_CS4 277
+#define NOTE_D4  294
+#define NOTE_DS4 311
+#define NOTE_E4  330
+#define NOTE_F4  349
+#define NOTE_FS4 370
+#define NOTE_G4  392
+#define NOTE_GS4 415
+#define NOTE_A4  440
+#define NOTE_AS4 466
+#define NOTE_B4  494
+#define NOTE_C5  523
+#define NOTE_CS5 554
+#define NOTE_D5  587
+#define NOTE_DS5 622
+#define NOTE_E5  659
+#define NOTE_F5  698
+#define NOTE_FS5 740
+#define NOTE_G5  784
+#define NOTE_GS5 831
+#define NOTE_A5  880
+#define NOTE_AS5 932
+#define NOTE_B5  988
+#define NOTE_C6  1047
+#define NOTE_CS6 1109
+#define NOTE_D6  1175
+#define NOTE_DS6 1245
+#define NOTE_E6  1319
+#define NOTE_F6  1397
+#define NOTE_FS6 1480
+#define NOTE_G6  1568
+#define NOTE_GS6 1661
+#define NOTE_A6  1760
+#define NOTE_AS6 1865
+#define NOTE_B6  1976
+#define NOTE_C7  2093
+#define NOTE_CS7 2217
+#define NOTE_D7  2349
+#define NOTE_DS7 2489
+#define NOTE_E7  2637
+#define NOTE_F7  2794
+#define NOTE_FS7 2960
+#define NOTE_G7  3136
+#define NOTE_GS7 3322
+#define NOTE_A7  3520
+#define NOTE_AS7 3729
+#define NOTE_B7  3951
+#define NOTE_C8  4186
+#define NOTE_CS8 4435
+#define NOTE_D8  4699
+#define NOTE_DS8 4978
+</span>
+<span class="cm">/**********
+ * A table that contain all those frequencies (89)
+ * stored in sram.
+ **********/</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">note_table</span><span class="p">[];</span>
+
+<span class="cm">/**********
+ * Give the 8bits index of the previous table, if you know the note
+ **********/</span>
+<span class="cp">#define BNOTE_B0	0
+#define BNOTE_C1	1
+#define BNOTE_CS1	2
+#define BNOTE_D1	3
+#define BNOTE_DS1	4
+#define BNOTE_E1	5
+#define BNOTE_F1	6
+#define BNOTE_FS1	7
+#define BNOTE_G1	8
+#define BNOTE_GS1	9
+#define BNOTE_A1	10
+#define BNOTE_AS1	11
+#define BNOTE_B1	12
+#define BNOTE_C2	13
+#define BNOTE_CS2	14
+#define BNOTE_D2	15
+#define BNOTE_DS2	16
+#define BNOTE_E2	17
+#define BNOTE_F2	18
+#define BNOTE_FS2	19
+#define BNOTE_G2	20
+#define BNOTE_GS2	21
+#define BNOTE_A2	22
+#define BNOTE_AS2	23
+#define BNOTE_B2	24
+#define BNOTE_C3	25
+#define BNOTE_CS3	26
+#define BNOTE_D3	27
+#define BNOTE_DS3	28
+#define BNOTE_E3	29
+#define BNOTE_F3	30
+#define BNOTE_FS3	31
+#define BNOTE_G3	32
+#define BNOTE_GS3	33
+#define BNOTE_A3	34
+#define BNOTE_AS3	35
+#define BNOTE_B3	36
+#define BNOTE_C4	37
+#define BNOTE_CS4	38
+#define BNOTE_D4	39
+#define BNOTE_DS4	40
+#define BNOTE_E4	41
+#define BNOTE_F4	42
+#define BNOTE_FS4	43
+#define BNOTE_G4	44
+#define BNOTE_GS4	45
+#define BNOTE_A4	46
+#define BNOTE_AS4	47
+#define BNOTE_B4	48
+#define BNOTE_C5	49
+#define BNOTE_CS5	50
+#define BNOTE_D5	51
+#define BNOTE_DS5	52
+#define BNOTE_E5	53
+#define BNOTE_F5	54
+#define BNOTE_FS5	55
+#define BNOTE_G5	56
+#define BNOTE_GS5	57
+#define BNOTE_A5	58
+#define BNOTE_AS5	59
+#define BNOTE_B5	60
+#define BNOTE_C6	61
+#define BNOTE_CS6	62
+#define BNOTE_D6	63
+#define BNOTE_DS6	64
+#define BNOTE_E6	65
+#define BNOTE_F6	66
+#define BNOTE_FS6	67
+#define BNOTE_G6	68
+#define BNOTE_GS6	69
+#define BNOTE_A6	70
+#define BNOTE_AS6	71
+#define BNOTE_B6	72
+#define BNOTE_C7	73
+#define BNOTE_CS7	74
+#define BNOTE_D7	75
+#define BNOTE_DS7	76
+#define BNOTE_E7	77
+#define BNOTE_F7	78
+#define BNOTE_FS7	79
+#define BNOTE_G7	80
+#define BNOTE_GS7	81
+#define BNOTE_A7	82
+#define BNOTE_AS7	83
+#define BNOTE_B7	84
+#define BNOTE_C8	85
+#define BNOTE_CS8	86
+#define BNOTE_D8	87
+#define BNOTE_DS8	88
+</span>
+<span class="c1">//////////////</span>
+<span class="c1">//Prototypes//</span>
+<span class="c1">//////////////</span>
+
+<span class="c1">//Initialisation (call it in void setup() )</span>
+<span class="kt">void</span> <span class="nf">synth_setup</span><span class="p">();</span>
+
+<span class="c1">//Play some chord 'like' an orgue</span>
+<span class="c1">// (do not forget to delay a little time after...)</span>
+<span class="kt">void</span> <span class="nf">play_org</span><span class="p">(</span><span class="kt">int</span> <span class="n">f</span><span class="p">);</span>
+
+<span class="c1">//Play waves from the sea/beach</span>
+<span class="c1">// (just call it in a while(true) )</span>
+<span class="kt">void</span> <span class="nf">play_seawave</span><span class="p">();</span>
+
+<span class="cm">/*
+#ifdef __cplusplus
+}
+#endif
+*/</span>
+
+<span class="cp">#endif </span><span class="cm">/* !SYNTH_8BITS_H_ */</span><span class="cp">
+</span><span class="o">&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+<span class="n">Synth_8bits_lib</span><span class="p">.</span><span class="n">cpp</span> <span class="o">:&lt;</span><span class="n">pre</span> <span class="n">lang</span><span class="o">=</span><span class="s">"C"</span> <span class="n">colla</span><span class="o">=</span><span class="s">"-"</span><span class="o">&gt;</span><span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">avr</span><span class="o">/</span><span class="n">io</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+<span class="cp">#include &lt;avr/interrupt.h&gt;
+</span>
+<span class="cp">#include &lt;Arduino.h&gt;
+</span>
+<span class="cp">#include "Synth_8bits.h"
+#include "white_noise.h"
+</span>
+<span class="c1">//Periods, stored after applying the right calculus with frequency_to_period(int)</span>
+<span class="kt">int</span> <span class="n">square1_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square2_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square3_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square4_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// 0 = full speed, 255 = slowest (for a tv white noise sound, use 20</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_speed</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="c1">//Output amplitudes. Make sure that the sum of all your amplitudes of synth is &lt; than 256!</span>
+
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square1_amplitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square2_amplitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square3_amplitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">square4_amplitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_amplitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">///////////////////////</span>
+<span class="c1">// PRIVATE VARIABLES //</span>
+<span class="c1">///////////////////////</span>
+<span class="c1">//Counters used to synthetise at the right frequency</span>
+
+<span class="kt">int</span> <span class="n">square1_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square2_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square3_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">square4_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">noise_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_delay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">//Note table</span>
+<span class="kt">int</span> <span class="n">note_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">31</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span>
+  <span class="mi">104</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">185</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">247</span><span class="p">,</span> <span class="mi">262</span><span class="p">,</span> <span class="mi">277</span><span class="p">,</span> <span class="mi">294</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">330</span><span class="p">,</span>
+  <span class="mi">349</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">392</span><span class="p">,</span> <span class="mi">415</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mi">466</span><span class="p">,</span> <span class="mi">494</span><span class="p">,</span> <span class="mi">523</span><span class="p">,</span> <span class="mi">554</span><span class="p">,</span> <span class="mi">587</span><span class="p">,</span> <span class="mi">622</span><span class="p">,</span> <span class="mi">659</span><span class="p">,</span> <span class="mi">698</span><span class="p">,</span> <span class="mi">740</span><span class="p">,</span> <span class="mi">784</span><span class="p">,</span> <span class="mi">831</span><span class="p">,</span> <span class="mi">880</span><span class="p">,</span> <span class="mi">932</span><span class="p">,</span> <span class="mi">988</span><span class="p">,</span> <span class="mi">1047</span><span class="p">,</span> <span class="mi">1109</span><span class="p">,</span>
+  <span class="mi">1175</span><span class="p">,</span> <span class="mi">1245</span><span class="p">,</span> <span class="mi">1319</span><span class="p">,</span> <span class="mi">1397</span><span class="p">,</span> <span class="mi">1480</span><span class="p">,</span> <span class="mi">1568</span><span class="p">,</span> <span class="mi">1661</span><span class="p">,</span> <span class="mi">1760</span><span class="p">,</span> <span class="mi">1865</span><span class="p">,</span> <span class="mi">1976</span><span class="p">,</span> <span class="mi">2093</span><span class="p">,</span> <span class="mi">2217</span><span class="p">,</span> <span class="mi">2349</span><span class="p">,</span> <span class="mi">2489</span><span class="p">,</span> <span class="mi">2637</span><span class="p">,</span> <span class="mi">2794</span><span class="p">,</span> <span class="mi">2960</span><span class="p">,</span> <span class="mi">3136</span><span class="p">,</span>
+  <span class="mi">3322</span><span class="p">,</span> <span class="mi">3520</span><span class="p">,</span> <span class="mi">3729</span><span class="p">,</span> <span class="mi">3951</span><span class="p">,</span> <span class="mi">4186</span><span class="p">,</span> <span class="mi">4435</span><span class="p">,</span> <span class="mi">4699</span><span class="p">,</span> <span class="mi">4978</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">synth_setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">//Fast PWM</span>
+  <span class="c1">//COM2A 1:0 = 2 -&gt; not inverted</span>
+  <span class="c1">//WGM0 2:1:0 = 3 -&gt; FAST PWM</span>
+  <span class="n">TCCR2A</span> <span class="o">=</span> <span class="n">_BV</span><span class="p">(</span><span class="n">COM2A1</span><span class="p">)</span> <span class="o">|</span> <span class="n">_BV</span><span class="p">(</span><span class="n">WGM01</span><span class="p">)</span> <span class="o">|</span> <span class="n">_BV</span><span class="p">(</span><span class="n">WGM00</span><span class="p">);</span>
+  
+  <span class="c1">//Timer setting</span>
+  <span class="c1">//Setup the mask</span>
+  <span class="n">TIMSK2</span> <span class="o">=</span> <span class="n">_BV</span><span class="p">(</span><span class="n">TOIE2</span><span class="p">);</span>
+  <span class="c1">//Set N=1 : no divisor</span>
+  <span class="n">TCCR2B</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&lt;&lt;</span> <span class="n">CS22</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">&lt;&lt;</span> <span class="n">CS21</span> <span class="o">|</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS20</span><span class="p">;</span>
+  
+  <span class="c1">//OC2A[The pwm pin] is pin B3(~11)</span>
+  <span class="n">DDRB</span> <span class="o">=</span> <span class="n">_BV</span><span class="p">(</span><span class="n">DDB3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+// OLD C-CODE
+// TOO SLOW TO BE USED AT THIS FREQUENCY :(
+
+void inline compute_square_wave(int &amp;out, int &amp;square_id, unsigned char &amp;square_amplitude, int &amp;square_period)
+{
+  square_id = square_id &amp; (4096 - 1);
+  if (square_id &gt; 2048)
+    out += square_amplitude;
+  //Center the square wave
+  out -= square_amplitude &gt;&gt; 1;
+  square_id += square_period;
+};
+
+//The synthetiser
+ISR(TIMER2_OVF_vect)
+{
+   int out = 128;
+
+  //Square waves
+  compute_square_wave(out, square1_id, square1_amplitude, square1_period);
+  compute_square_wave(out, square2_id, square2_amplitude, square2_period);
+  //compute_square_wave(out, square3_id, square3_amplitude, square3_period);
+  
+  OCR2A = out;
+}
+*/</span>
+
+<span class="c1">// ------------ SQUARE WAVE GENERATOR -----------------------+</span>
+<span class="cp">#define square_wave0(amplitude, period, id)                  \
+      asm volatile (                                         \
+    	"lds r24, " period "\n" </span><span class="cm">/* load period low */</span><span class="cp">        \
+	"lds r25, (" period ")+1\n" </span><span class="cm">/* load period high */</span><span class="cp">       \
+        "lds r30, " id "\n" </span><span class="cm">/* load id low */</span><span class="cp">                \
+        "lds r31, (" id ")+1\n" </span><span class="cm">/* load id high */</span><span class="cp">           \
+        "lds r28, " amplitude "\n" </span><span class="cm">/* load amplitude */</span><span class="cp">      \
+                                                             \
+        </span><span class="cm">/* square1_id &amp;= (8192-1) ; 4096-1 = 0xFFF */</span><span class="cp">        \
+        "andi r31, hi8(8191)\n"                              \
+                                                             \
+        </span><span class="cm">/* if (r &gt;= 4096) goto .Lb_&lt;something&gt; */</span><span class="cp">            \
+        "cpi r31, hi8(4096)\n"                               \
+        "brge .Lb_%=\n"                                      \
+                                                             \
+        </span><span class="cm">/* Add the amplitude */</span><span class="cp">                              \
+        "add r23, r28\n"                                     \
+                                                             \
+        ".Lb_%=:\n"                                          \
+                                                             \
+        </span><span class="cm">/* out -= square_amplitude/2 */</span><span class="cp">                      \
+        "lsr r28\n" </span><span class="cm">/* logical shift right = &gt;&gt; 1 */</span><span class="cp">         \
+        "sub r23, r28\n"                                     \
+                                                             \
+        </span><span class="cm">/* square_id += square_period */</span><span class="cp">                     \
+        "add r30,r24\n"                                      \
+        "adc r31,r25\n"                                      \
+        "sts " id ",r30\n"                                   \
+        "sts (" id ")+1,r31\n"                               \
+        ::)
+</span>
+<span class="cm">/* NEW ONE  */</span>
+<span class="c1">// ------------ SQUARE WAVE GENERATOR -----------------------+</span>
+<span class="cp">#define square_wave(amplitude, period, id)                   \
+      asm volatile (                                         \
+    	"lds r24, " period "\n" </span><span class="cm">/* load period low */</span><span class="cp">        \
+	"lds r25, (" period ")+1\n" </span><span class="cm">/* load period high */</span><span class="cp">       \
+        "lds r30, " id "\n" </span><span class="cm">/* load id low */</span><span class="cp">                \
+        "lds r31, (" id ")+1\n" </span><span class="cm">/* load id high */</span><span class="cp">           \
+        "lds r28, " amplitude "\n" </span><span class="cm">/* load amplitude */</span><span class="cp">      \
+                                                             \
+        </span><span class="cm">/* if (id &lt; period) goto .do_not_reset_&lt;something&gt; */</span><span class="cp">\
+        "cp r30, r24\n"                                      \
+        "cpc r31, r25\n"                                     \
+        "brlt .do_not_reset_%=\n"                            \
+        </span><span class="cm">/* Reset id and go to the end of the function */</span><span class="cp">     \
+        "ldi r30,0\n" </span><span class="cm">/* id = 0 */</span><span class="cp">                           \
+        "ldi r31,0\n"                                        \
+        "sts " id ",r30\n"                                   \
+        "sts (" id ")+1,r31\n"                               \
+        "rjmp .end_%=\n"                                     \
+        ".do_not_reset_%=:\n"                                \
+                                                             \
+        </span><span class="cm">/* if (id &gt;= period/2) goto .Lb_&lt;something&gt; */</span><span class="cp">       \
+        "lsr r25\n"                                          \
+        "ror r24\n"                                          \
+        "cp r30, r24\n"                                      \
+        "cpc r31, r25\n"                                     \
+        "brge .Lb_%=\n"                                      \
+                                                             \
+        </span><span class="cm">/* Add the amplitude */</span><span class="cp">                              \
+        "add r23, r28\n"                                     \
+                                                             \
+        ".Lb_%=:\n"                                          \
+                                                             \
+        </span><span class="cm">/* out -= square_amplitude/2 */</span><span class="cp">                      \
+        "lsr r28\n" </span><span class="cm">/* logical shift right = &gt;&gt; 1 */</span><span class="cp">         \
+        "sub r23, r28\n"                                     \
+                                                             \
+        </span><span class="cm">/* square_id += 1 */</span><span class="cp">                                 </span><span class="cm">/*
+        // You can also use : 
+        "ldi r24, 1\n"                                       \
+        "ldi r25, 0\n"                                       \
+        "add r30,r24\n"                                      \
+        "adc r31,r25\n"                                      \*/</span><span class="cp">\
+        "adiw r30, 1\n"                                      \
+        "sts " id ",r30\n"                                   \
+        "sts (" id ")+1,r31\n"                               \
+                                                             \
+        ".end_%=:\n"                                         \
+        ::)
+</span>
+<span class="n">ISR</span><span class="p">(</span><span class="n">TIMER2_OVF_vect</span><span class="p">,</span> <span class="n">ISR_NAKED</span><span class="p">)</span>
+<span class="p">{</span>	
+  <span class="n">asm</span> <span class="k">volatile</span> <span class="p">(</span>
+    <span class="s">"push r30</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//square_id low</span>
+    <span class="s">"push r31</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//square_id high</span>
+    <span class="s">"push r28</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//square_amplitude</span>
+    <span class="s">"push r23</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//out</span>
+    <span class="s">"push r24</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//square_period low</span>
+    <span class="s">"push r25</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//square_period high</span>
+    <span class="s">"in r23, __SREG__</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"push r23</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="s">"ldi r23, lo8(128)</span><span class="se">\n</span><span class="s">"</span> <span class="c1">//out=128</span>
+    <span class="p">);</span>
+                
+  <span class="c1">//---------------</span>
+  <span class="c1">//-  SQUARE  1  -</span>
+  <span class="c1">//---------------</span>
+  <span class="n">square_wave</span><span class="p">(</span><span class="s">"square1_amplitude"</span><span class="p">,</span> <span class="s">"square1_period"</span><span class="p">,</span> <span class="s">"square1_id"</span><span class="p">);</span>
+  <span class="c1">//---------------</span>
+  
+  <span class="c1">//---------------</span>
+  <span class="c1">//-  SQUARE  2  -</span>
+  <span class="c1">//---------------</span>
+  <span class="n">square_wave</span><span class="p">(</span><span class="s">"square2_amplitude"</span><span class="p">,</span> <span class="s">"square2_period"</span><span class="p">,</span> <span class="s">"square2_id"</span><span class="p">);</span>
+  <span class="c1">//---------------</span>
+  
+  <span class="c1">//---------------</span>
+  <span class="c1">//-  SQUARE  3  -</span>
+  <span class="c1">//---------------</span>
+  <span class="n">square_wave</span><span class="p">(</span><span class="s">"square3_amplitude"</span><span class="p">,</span> <span class="s">"square3_period"</span><span class="p">,</span> <span class="s">"square3_id"</span><span class="p">);</span>
+  <span class="c1">//---------------</span>
+  
+  <span class="c1">//---------------</span>
+  <span class="c1">//-  SQUARE  4  -</span>
+  <span class="c1">//---------------</span>
+  <span class="n">square_wave</span><span class="p">(</span><span class="s">"square4_amplitude"</span><span class="p">,</span> <span class="s">"square4_period"</span><span class="p">,</span> <span class="s">"square4_id"</span><span class="p">);</span>
+  <span class="c1">//---------------</span>
+  
+  <span class="n">asm</span> <span class="k">volatile</span> <span class="p">(</span>
+    <span class="c1">//if (noise_amplitude) : when there is no noise (in fact often ;) )</span>
+    <span class="c1">// we skip all these code an prevent a lot's of cycles.</span>
+    <span class="s">"lds r30, noise_amplitude</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"cpi r30, 0</span><span class="se">\n</span><span class="s">"</span>
+
+    <span class="s">"breq .no_noise</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//Load noise id</span>
+    <span class="s">"lds r24, noise_id</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"lds r25, (noise_id)+1</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//Load white_noise addr</span>
+    <span class="s">"ldi r30, lo8(white_noise)</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"ldi r31, hi8(white_noise)</span><span class="se">\n</span><span class="s">"</span>
+
+    <span class="c1">//Sum noise_id and white_noise</span>
+    <span class="s">"add r30, r24</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"adc r31, r25</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//Load noise value into r28</span>
+    <span class="s">"lpm r28, Z</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//We will use mult!</span>
+    <span class="s">"push r0</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"push r1</span><span class="se">\n</span><span class="s">"</span>
+
+    <span class="c1">//Load noise amplitude</span>
+    <span class="s">"lds r30, noise_amplitude</span><span class="se">\n</span><span class="s">"</span>
+     
+    <span class="c1">//r1:r0 = white_noise[noise_id] * noise_amplitude</span>
+    <span class="s">"mul r28, r30</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//Add white_noise[noise_id] to out</span>
+    <span class="c1">// (We want to divide r1:r0 by 255, but it's easyer to divide by 256, i.e.</span>
+    <span class="c1">// only take the hight part r1 of the result :)</span>
+    <span class="s">"add r23, r1</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="s">"pop r1</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r0</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//Load the delay value</span>
+    <span class="s">"lds r30, noise_delay</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"lds r31, noise_speed</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//If noise_delay &lt;= noise_speed</span>
+    <span class="s">"cp r30, r31</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"brge .inc_noise</span><span class="se">\n</span><span class="s">"</span>
+    <span class="c1">//Increment noise_delay</span>
+    <span class="s">"inc r30</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"rjmp .endif_delay_lt_speed</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//else</span>
+    <span class="s">".inc_noise:</span><span class="se">\n</span><span class="s">"</span>
+    <span class="c1">//noise_delay = 0</span>
+    <span class="s">"ldi r30, lo8(0)</span><span class="se">\n</span><span class="s">"</span>
+
+    <span class="c1">//Increment noise_id of 1</span>
+    <span class="s">"ldi r28, 1</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"add r24, r28</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"ldi r28, 0</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"adc r25, r28</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"andi r25, hi8(4095)</span><span class="se">\n</span><span class="s">"</span>
+    <span class="c1">//Store the new noise_id value</span>
+    <span class="s">"sts noise_id, r24</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"sts (noise_id)+1, r25</span><span class="se">\n</span><span class="s">"</span>
+
+    <span class="s">".endif_delay_lt_speed:</span><span class="se">\n</span><span class="s">"</span>
+    <span class="c1">//Store the new noise_delay value</span>
+    <span class="s">"sts noise_delay, r30</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//endif (noise_activated)</span>
+    <span class="s">".no_noise:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+  <span class="n">asm</span> <span class="k">volatile</span> <span class="p">(</span>
+    <span class="c1">//Update OCR2A with the out(r23) value calculated</span>
+    <span class="s">"ldi r30,lo8(179)</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"ldi r31,hi8(179)</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"st Z, r23</span><span class="se">\n</span><span class="s">"</span>
+    
+    <span class="c1">//pop saved registers</span>
+    <span class="s">"pop r23</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"out __SREG__, r23</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r25</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r24</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r23</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r28</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r31</span><span class="se">\n</span><span class="s">"</span>
+    <span class="s">"pop r30</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="n">reti</span><span class="p">();</span>
+<span class="p">}</span>
+
+
+<span class="c1">///////////////////////////////////////////////</span>
+<span class="c1">// Funny functions, used to make some noises //</span>
+<span class="c1">///////////////////////////////////////////////</span>
+
+
+<span class="kt">void</span> <span class="nf">play_org</span><span class="p">(</span><span class="kt">int</span> <span class="n">f</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">square1_amplitude</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+  
+    <span class="n">square2_amplitude</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="n">square2_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span>
+  
+    <span class="n">square3_amplitude</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+    <span class="n">square3_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>
+  
+    <span class="n">square4_amplitude</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+    <span class="n">square4_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">play_seawave</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(;</span> <span class="n">noise_amplitude</span> <span class="o">&lt;</span> <span class="mi">120</span><span class="p">;)</span>
+  <span class="p">{</span>
+   <span class="n">noise_amplitude</span><span class="o">+=</span><span class="mi">2</span><span class="p">;</span>
+   <span class="n">delay</span><span class="p">(</span><span class="mi">40</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(;</span> <span class="n">noise_amplitude</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">;)</span>
+  <span class="p">{</span>
+   <span class="n">noise_amplitude</span><span class="o">-=</span><span class="mi">4</span><span class="p">;</span>
+   <span class="n">delay</span><span class="p">(</span><span class="mi">40</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">700</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<pre><code class="language-{.c}">// white_noise.h :
+
+#ifndef WHITE_NOISE_H_
+ #define WHITE_NOISE_H_
+
+#include &lt;avr/pgmspace.h&gt;
+
+char white_noise[4096] PROGMEM = {
+70, 100, 49, 41, 100, 134, 237, 156, 215, 31, 194, 7, 37, 72, 32, 162, 
+196, 168, 90, 235, 11, 32, 65, 73, 79, 139, 241, 248, 205, 48, 241, 19, 
+148, 34, 60, 248, 168, 41, 149, 128, 73, 87, 135, 110, 159, 167, 17, 99, 
+80, 107, 78, 91, 140, 143, 164, 219, 27, 149, 211, 232, 197, 197, 251, 90, 
+231, 55, 82, 144, 96, 231, 16, 169, 62, 151, 24, 221, 62, 41, 65, 142, 
+148, 143, 233, 32, 31, 141, 251, 58, 34, 207, 34, 232, 148, 29, 66, 123, 
+84, 148, 11, 180, 124, 27, 94, 186, 178, 118, 152, 241, 159, 217, 127, 51, 
+104, 105, 84, 135, 246, 79, 193, 25, 30, 227, 1, 178, 0, 67, 46, 84, 
+215, 57, 9, 83, 85, 103, 14, 7, 221, 166, 248, 124, 127, 120, 175, 231, 
+225, 3, 111, 215, 83, 48, 240, 113, 20, 241, 36, 20, 52, 82, 105, 12, 
+139, 114, 95, 224, 217, 109, 232, 182, 19, 224, 50, 146, 88, 225, 122, 57, 
+229, 233, 17, 56, 25, 1, 169, 45, 243, 205, 66, 39, 31, 171, 51, 171, 
+29, 147, 139, 246, 0, 115, 172, 20, 84, 222, 166, 172, 191, 32, 230, 164, 
+9, 247, 220, 35, 248, 134, 80, 235, 83, 146, 19, 115, 61, 70, 30, 90, 
+217, 169, 80, 218, 29, 252, 238, 113, 218, 148, 29, 154, 181, 3, 62, 190, 
+250, 27, 225, 243, 161, 50, 222, 244, 196, 241, 103, 2, 56, 133, 92, 17, 
+47, 173, 235, 76, 169, 217, 189, 132, 110, 218, 30, 35, 222, 92, 225, 216, 
+119, 195, 203, 24, 245, 170, 13, 185, 155, 116, 187, 211, 250, 24, 229, 41, 
+197, 208, 117, 110, 170, 50, 242, 24, 12, 16, 59, 234, 109, 28, 195, 228, 
+223, 142, 253, 212, 56, 10, 142, 212, 126, 73, 167, 120, 97, 140, 161, 38, 
+93, 22, 149, 7, 72, 135, 31, 85, 152, 90, 63, 5, 118, 2, 233, 86, 
+145, 230, 42, 201, 240, 184, 157, 111, 2, 69, 231, 99, 209, 137, 138, 46, 
+159, 31, 53, 232, 166, 84, 61, 62, 174, 124, 67, 37, 127, 45, 123, 16, 
+19, 165, 217, 4, 94, 119, 115, 96, 188, 90, 195, 141, 227, 77, 188, 131, 
+108, 241, 107, 19, 70, 168, 81, 244, 36, 149, 25, 163, 194, 148, 179, 213, 
+58, 141, 217, 152, 4, 76, 248, 192, 167, 187, 77, 138, 9, 9, 13, 117, 
+251, 120, 136, 65, 32, 218, 53, 69, 111, 79, 232, 49, 227, 156, 6, 29, 
+41, 224, 181, 45, 44, 173, 237, 211, 105, 58, 94, 114, 68, 107, 231, 63, 
+228, 112, 128, 4, 74, 181, 73, 185, 4, 50, 234, 232, 206, 240, 5, 247, 
+208, 187, 36, 253, 104, 17, 208, 209, 75, 46, 67, 143, 154, 43, 206, 126, 
+155, 78, 130, 229, 4, 204, 158, 8, 254, 136, 240, 204, 120, 246, 195, 73, 
+177, 231, 70, 25, 248, 22, 235, 67, 69, 46, 211, 223, 89, 161, 93, 244, 
+240, 223, 217, 244, 171, 119, 252, 169, 255, 237, 117, 120, 227, 56, 193, 148, 
+31, 7, 173, 23, 29, 152, 91, 98, 199, 46, 65, 32, 207, 158, 21, 191, 
+126, 238, 179, 41, 102, 176, 211, 101, 157, 72, 221, 128, 129, 158, 20, 160, 
+165, 193, 184, 195, 90, 19, 37, 33, 65, 103, 65, 16, 5, 86, 208, 131, 
+69, 131, 173, 171, 51, 128, 16, 208, 200, 238, 80, 73, 140, 100, 234, 50, 
+38, 162, 245, 128, 181, 26, 161, 246, 129, 226, 6, 135, 57, 214, 10, 126, 
+90, 183, 41, 141, 55, 57, 94, 0, 39, 174, 73, 180, 19, 51, 230, 57, 
+213, 219, 185, 138, 245, 90, 128, 119, 60, 135, 254, 117, 93, 8, 243, 183, 
+192, 28, 69, 247, 86, 163, 247, 125, 81, 65, 49, 100, 116, 23, 157, 74, 
+242, 86, 212, 232, 176, 85, 95, 237, 220, 93, 98, 57, 101, 86, 241, 37, 
+114, 54, 29, 200, 217, 20, 70, 42, 85, 119, 143, 202, 143, 44, 20, 129, 
+131, 232, 105, 51, 61, 200, 32, 25, 37, 131, 83, 139, 217, 68, 176, 75, 
+122, 205, 20, 83, 226, 90, 125, 55, 209, 12, 1, 96, 57, 21, 226, 188, 
+254, 75, 239, 59, 20, 16, 85, 57, 147, 168, 196, 108, 236, 117, 183, 102, 
+66, 203, 185, 36, 37, 54, 92, 247, 67, 93, 87, 124, 115, 57, 56, 113, 
+133, 39, 172, 153, 55, 1, 210, 202, 169, 151, 54, 149, 12, 238, 251, 78, 
+185, 180, 115, 223, 235, 207, 214, 46, 44, 45, 170, 159, 103, 226, 16, 236, 
+9, 189, 133, 65, 190, 87, 11, 104, 238, 66, 253, 250, 48, 249, 73, 233, 
+173, 188, 200, 152, 139, 158, 198, 183, 204, 112, 87, 51, 82, 103, 31, 92, 
+36, 164, 157, 227, 251, 168, 75, 234, 234, 72, 228, 26, 65, 45, 4, 239, 
+233, 204, 135, 116, 107, 78, 44, 55, 190, 131, 106, 17, 234, 137, 109, 15, 
+45, 10, 242, 40, 178, 61, 18, 157, 133, 247, 183, 199, 36, 187, 182, 14, 
+136, 61, 130, 243, 139, 174, 42, 74, 49, 148, 91, 28, 29, 200, 43, 74, 
+210, 29, 114, 132, 90, 133, 33, 223, 124, 217, 166, 160, 148, 92, 174, 28, 
+154, 49, 15, 37, 223, 57, 111, 17, 205, 202, 45, 234, 146, 88, 52, 100, 
+117, 167, 233, 207, 44, 10, 174, 168, 227, 85, 72, 120, 177, 247, 148, 75, 
+40, 164, 113, 7, 221, 224, 24, 171, 171, 69, 149, 61, 157, 202, 162, 18, 
+113, 139, 225, 157, 149, 144, 69, 121, 229, 141, 241, 150, 132, 133, 226, 172, 
+41, 83, 180, 7, 51, 204, 178, 222, 18, 71, 28, 175, 17, 190, 194, 130, 
+73, 163, 31, 222, 51, 100, 87, 24, 242, 72, 175, 118, 206, 145, 35, 247, 
+228, 215, 254, 23, 163, 176, 246, 181, 248, 18, 101, 9, 208, 39, 140, 25, 
+202, 171, 247, 254, 16, 79, 22, 2, 151, 197, 120, 101, 86, 155, 93, 58, 
+114, 91, 82, 22, 12, 72, 203, 4, 90, 48, 13, 42, 87, 153, 67, 34, 
+69, 58, 32, 85, 137, 54, 87, 33, 252, 207, 134, 82, 107, 227, 141, 221, 
+63, 223, 243, 75, 39, 191, 79, 129, 239, 92, 171, 71, 246, 238, 105, 59, 
+40, 137, 144, 178, 191, 231, 211, 187, 182, 89, 14, 33, 61, 155, 255, 124, 
+122, 242, 199, 161, 177, 22, 34, 161, 114, 205, 232, 104, 187, 81, 163, 227, 
+218, 51, 149, 153, 26, 104, 85, 209, 194, 99, 242, 255, 254, 241, 123, 120, 
+228, 66, 25, 149, 88, 59, 54, 202, 8, 30, 51, 195, 111, 214, 166, 73, 
+10, 60, 227, 36, 164, 56, 245, 102, 155, 232, 101, 153, 217, 224, 17, 189, 
+34, 42, 83, 122, 101, 137, 69, 109, 168, 120, 48, 23, 78, 214, 97, 88, 
+18, 68, 125, 183, 124, 114, 29, 23, 90, 131, 176, 52, 99, 193, 241, 134, 
+235, 68, 0, 80, 206, 69, 189, 118, 189, 237, 141, 12, 195, 238, 100, 214, 
+50, 225, 141, 174, 84, 170, 197, 174, 45, 117, 226, 145, 54, 212, 23, 33, 
+24, 23, 113, 230, 93, 46, 92, 26, 27, 234, 38, 223, 216, 139, 181, 11, 
+108, 66, 185, 192, 236, 127, 111, 26, 244, 81, 171, 43, 37, 194, 76, 62, 
+217, 190, 36, 54, 236, 129, 81, 8, 107, 119, 231, 67, 2, 156, 78, 111, 
+222, 8, 47, 202, 135, 158, 228, 123, 240, 143, 166, 21, 81, 243, 83, 43, 
+177, 120, 97, 157, 249, 178, 165, 100, 42, 140, 167, 44, 40, 246, 155, 6, 
+254, 203, 209, 133, 105, 181, 0, 89, 69, 167, 111, 150, 154, 194, 193, 75, 
+58, 35, 232, 51, 213, 142, 151, 255, 26, 63, 44, 67, 53, 199, 73, 51, 
+146, 26, 184, 252, 208, 184, 85, 21, 95, 196, 171, 249, 135, 109, 68, 193, 
+144, 45, 245, 101, 187, 140, 101, 213, 203, 145, 24, 0, 88, 98, 51, 235, 
+124, 235, 231, 76, 164, 60, 97, 3, 1, 13, 253, 136, 122, 65, 73, 10, 
+110, 62, 111, 41, 203, 212, 255, 150, 101, 23, 151, 190, 121, 202, 169, 246, 
+182, 144, 66, 90, 204, 164, 93, 205, 177, 90, 85, 43, 156, 159, 53, 10, 
+221, 164, 52, 168, 121, 51, 63, 222, 74, 214, 156, 196, 160, 69, 186, 86, 
+213, 252, 176, 162, 160, 14, 111, 81, 104, 197, 124, 4, 100, 177, 15, 65, 
+86, 67, 234, 207, 118, 41, 173, 192, 255, 74, 132, 159, 143, 62, 246, 101, 
+59, 166, 7, 219, 180, 118, 45, 29, 59, 169, 33, 159, 91, 48, 225, 177, 
+115, 203, 128, 233, 244, 45, 170, 243, 119, 46, 146, 7, 109, 136, 108, 168, 
+47, 115, 131, 227, 233, 176, 0, 37, 90, 34, 196, 181, 82, 165, 102, 198, 
+112, 230, 175, 100, 19, 89, 87, 139, 136, 234, 146, 245, 114, 254, 157, 161, 
+113, 32, 133, 90, 209, 133, 127, 43, 167, 68, 224, 250, 233, 70, 192, 90, 
+44, 111, 190, 63, 201, 22, 202, 81, 0, 92, 70, 114, 90, 227, 20, 203, 
+3, 153, 38, 212, 30, 165, 255, 198, 233, 223, 192, 211, 37, 128, 45, 81, 
+239, 235, 145, 184, 1, 91, 9, 1, 184, 79, 116, 18, 50, 136, 222, 54, 
+33, 4, 10, 63, 169, 10, 5, 147, 233, 197, 102, 15, 69, 147, 96, 53, 
+126, 241, 237, 128, 77, 247, 129, 5, 70, 245, 23, 121, 125, 245, 175, 158, 
+249, 185, 222, 163, 195, 227, 54, 173, 169, 156, 188, 238, 47, 28, 35, 173, 
+14, 17, 45, 91, 8, 175, 96, 78, 164, 119, 199, 34, 109, 118, 192, 102, 
+48, 158, 9, 243, 130, 63, 160, 43, 219, 92, 25, 10, 121, 61, 184, 135, 
+78, 229, 226, 86, 148, 66, 164, 57, 185, 108, 91, 38, 226, 27, 141, 18, 
+186, 150, 6, 60, 214, 166, 103, 177, 3, 128, 188, 124, 189, 116, 3, 11, 
+89, 229, 97, 238, 39, 6, 39, 224, 114, 130, 7, 84, 157, 148, 103, 87, 
+42, 109, 147, 0, 19, 250, 178, 22, 123, 110, 146, 56, 226, 149, 68, 59, 
+122, 165, 41, 161, 171, 80, 130, 29, 210, 137, 114, 112, 29, 217, 199, 71, 
+70, 91, 72, 89, 85, 250, 112, 208, 104, 2, 9, 74, 152, 77, 133, 18, 
+242, 175, 180, 158, 255, 54, 187, 210, 191, 45, 66, 220, 6, 9, 35, 76, 
+100, 107, 166, 186, 101, 22, 138, 205, 24, 147, 23, 176, 224, 157, 195, 211, 
+76, 119, 113, 75, 173, 44, 29, 108, 90, 95, 72, 96, 105, 107, 173, 205, 
+215, 83, 135, 60, 105, 18, 10, 129, 165, 33, 50, 134, 190, 245, 89, 10, 
+108, 202, 86, 25, 246, 115, 133, 80, 211, 205, 177, 60, 56, 94, 9, 15, 
+177, 145, 76, 26, 163, 86, 155, 72, 119, 205, 206, 54, 194, 39, 64, 46, 
+241, 150, 71, 232, 10, 204, 56, 221, 153, 233, 25, 210, 71, 34, 225, 248, 
+179, 45, 18, 86, 131, 174, 159, 251, 123, 109, 49, 62, 149, 113, 108, 134, 
+8, 180, 110, 18, 128, 167, 239, 26, 144, 8, 236, 216, 42, 205, 208, 222, 
+251, 227, 52, 126, 145, 211, 121, 12, 65, 170, 74, 214, 28, 183, 92, 36, 
+107, 203, 54, 235, 114, 37, 5, 2, 45, 241, 218, 87, 191, 171, 53, 186, 
+142, 106, 56, 31, 61, 178, 43, 126, 92, 118, 84, 120, 45, 177, 156, 152, 
+124, 210, 131, 238, 247, 137, 240, 36, 122, 203, 124, 57, 118, 177, 243, 4, 
+27, 44, 35, 89, 222, 78, 215, 58, 196, 44, 179, 241, 221, 79, 137, 89, 
+34, 13, 71, 25, 150, 55, 62, 16, 2, 186, 74, 120, 107, 61, 124, 135, 
+105, 159, 224, 71, 238, 183, 130, 178, 227, 53, 164, 192, 132, 45, 25, 166, 
+58, 96, 192, 208, 152, 254, 225, 154, 184, 43, 19, 35, 104, 143, 170, 210, 
+47, 138, 25, 29, 66, 155, 207, 37, 208, 115, 230, 85, 161, 255, 251, 219, 
+96, 187, 172, 248, 185, 141, 146, 113, 184, 165, 149, 32, 53, 63, 242, 100, 
+202, 12, 129, 12, 167, 80, 49, 120, 196, 23, 205, 101, 23, 200, 64, 119, 
+132, 236, 111, 61, 121, 1, 175, 49, 167, 68, 82, 220, 131, 68, 64, 77, 
+80, 193, 89, 248, 17, 139, 112, 213, 162, 61, 58, 185, 5, 123, 48, 137, 
+103, 159, 199, 225, 161, 118, 18, 72, 186, 100, 36, 61, 169, 100, 139, 249, 
+37, 228, 241, 54, 111, 97, 12, 18, 158, 70, 203, 164, 193, 252, 45, 41, 
+155, 244, 10, 60, 106, 28, 132, 36, 129, 168, 98, 42, 12, 237, 35, 49, 
+209, 21, 104, 65, 118, 116, 83, 21, 186, 30, 185, 124, 26, 230, 165, 182, 
+219, 175, 242, 69, 203, 119, 106, 76, 31, 204, 118, 44, 185, 154, 93, 138, 
+175, 197, 203, 37, 57, 30, 58, 244, 61, 243, 112, 87, 218, 21, 13, 181, 
+196, 0, 250, 143, 119, 100, 220, 150, 48, 82, 194, 233, 236, 32, 116, 155, 
+229, 63, 193, 31, 94, 251, 19, 155, 239, 131, 242, 201, 152, 0, 126, 92, 
+0, 120, 235, 119, 221, 199, 13, 13, 26, 208, 247, 6, 240, 107, 162, 213, 
+170, 99, 244, 8, 94, 7, 163, 77, 138, 150, 22, 34, 150, 148, 126, 150, 
+13, 106, 13, 234, 49, 26, 247, 75, 234, 238, 82, 218, 89, 244, 176, 4, 
+87, 164, 12, 181, 172, 176, 3, 54, 70, 25, 89, 220, 174, 215, 114, 187, 
+65, 127, 165, 115, 153, 156, 190, 132, 139, 16, 94, 228, 4, 14, 232, 91, 
+179, 245, 17, 95, 165, 20, 149, 235, 45, 238, 199, 219, 198, 57, 150, 7, 
+184, 59, 122, 81, 216, 57, 213, 99, 73, 52, 71, 78, 66, 48, 169, 245, 
+37, 186, 84, 202, 206, 234, 181, 252, 216, 124, 215, 158, 181, 110, 166, 109, 
+169, 32, 190, 129, 89, 148, 228, 163, 200, 44, 241, 10, 92, 154, 0, 129, 
+85, 84, 75, 35, 62, 0, 31, 23, 124, 247, 181, 49, 101, 91, 158, 14, 
+124, 92, 144, 213, 240, 116, 120, 184, 160, 105, 195, 252, 4, 195, 125, 89, 
+23, 200, 124, 86, 200, 156, 109, 68, 147, 34, 117, 248, 126, 19, 6, 250, 
+112, 150, 207, 96, 11, 72, 25, 171, 177, 220, 168, 181, 159, 37, 14, 182, 
+238, 139, 12, 182, 39, 121, 251, 186, 156, 112, 178, 26, 132, 184, 20, 244, 
+79, 227, 84, 90, 43, 109, 5, 221, 73, 173, 146, 232, 211, 161, 159, 193, 
+44, 171, 119, 83, 37, 114, 13, 193, 227, 191, 219, 103, 119, 239, 91, 198, 
+210, 175, 32, 254, 29, 38, 219, 102, 211, 109, 79, 166, 14, 238, 103, 58, 
+153, 223, 141, 190, 81, 154, 127, 52, 89, 90, 155, 209, 73, 246, 151, 28, 
+166, 184, 26, 195, 222, 245, 41, 177, 98, 120, 88, 113, 102, 191, 171, 0, 
+158, 57, 190, 240, 211, 62, 36, 45, 152, 192, 254, 226, 182, 149, 254, 92, 
+77, 24, 31, 43, 13, 73, 221, 111, 193, 53, 224, 40, 244, 140, 40, 147, 
+197, 230, 131, 152, 36, 167, 197, 189, 103, 195, 159, 30, 89, 157, 122, 166, 
+181, 154, 210, 194, 227, 175, 49, 164, 228, 18, 204, 216, 158, 244, 107, 99, 
+219, 238, 251, 255, 150, 193, 188, 253, 132, 91, 27, 221, 248, 150, 132, 173, 
+48, 86, 111, 19, 5, 161, 183, 233, 179, 132, 193, 81, 120, 45, 180, 83, 
+27, 175, 83, 177, 112, 15, 175, 245, 107, 202, 210, 99, 96, 86, 17, 144, 
+172, 128, 163, 177, 33, 91, 154, 212, 223, 92, 37, 87, 137, 217, 171, 164, 
+137, 254, 86, 249, 13, 5, 238, 120, 207, 193, 220, 48, 23, 237, 192, 196, 
+109, 100, 117, 143, 191, 16, 99, 158, 108, 137, 245, 245, 98, 160, 153, 235, 
+158, 239, 229, 172, 244, 211, 36, 196, 148, 0, 244, 172, 237, 180, 112, 91, 
+24, 229, 234, 215, 245, 77, 117, 97, 214, 107, 86, 57, 11, 240, 36, 170, 
+223, 9, 86, 212, 221, 122, 152, 113, 123, 140, 29, 104, 64, 141, 195, 89, 
+115, 173, 48, 104, 251, 166, 202, 209, 17, 32, 10, 28, 16, 47, 198, 240, 
+56, 28, 196, 21, 151, 92, 135, 18, 232, 164, 122, 40, 50, 62, 129, 165, 
+235, 178, 13, 230, 88, 215, 184, 105, 248, 194, 133, 8, 241, 76, 248, 42, 
+104, 188, 63, 255, 24, 198, 17, 0, 107, 140, 41, 157, 202, 170, 66, 181, 
+92, 79, 156, 180, 39, 84, 29, 31, 22, 163, 39, 8, 239, 32, 50, 87, 
+220, 113, 87, 245, 56, 104, 245, 163, 244, 30, 64, 190, 201, 130, 116, 37, 
+209, 16, 218, 248, 100, 247, 23, 122, 154, 63, 130, 137, 95, 180, 225, 59, 
+38, 56, 48, 94, 160, 38, 1, 149, 68, 65, 83, 13, 195, 199, 51, 148, 
+215, 13, 141, 59, 4, 164, 182, 159, 227, 56, 40, 66, 237, 9, 126, 19, 
+65, 174, 113, 226, 212, 114, 119, 25, 179, 202, 38, 118, 146, 89, 10, 105, 
+102, 151, 165, 107, 60, 91, 10, 31, 147, 50, 98, 128, 60, 224, 147, 125, 
+142, 4, 95, 99, 118, 214, 124, 41, 161, 162, 159, 51, 252, 170, 156, 98, 
+65, 65, 205, 125, 156, 215, 157, 48, 10, 255, 176, 70, 223, 68, 195, 109, 
+72, 35, 208, 191, 249, 76, 232, 154, 239, 136, 205, 235, 50, 106, 77, 115, 
+171, 27, 241, 72, 242, 142, 120, 252, 141, 40, 66, 108, 108, 6, 217, 181, 
+41, 170, 116, 34, 246, 92, 189, 229, 228, 138, 208, 22, 244, 30, 138, 160, 
+57, 123, 232, 43, 9, 96, 40, 150, 136, 106, 2, 245, 112, 219, 170, 153, 
+133, 30, 188, 124, 122, 121, 97, 95, 3, 50, 117, 248, 80, 255, 152, 137, 
+122, 128, 180, 131, 224, 220, 25, 104, 71, 27, 93, 183, 247, 7, 81, 124, 
+37, 13, 248, 160, 134, 90, 255, 137, 140, 116, 129, 220, 116, 25, 101, 238, 
+153, 25, 114, 121, 246, 139, 226, 61, 167, 63, 244, 158, 71, 69, 26, 108, 
+82, 19, 12, 216, 109, 11, 98, 249, 128, 227, 213, 244, 253, 58, 226, 150, 
+83, 84, 16, 73, 224, 242, 134, 135, 49, 123, 37, 120, 192, 63, 229, 19, 
+82, 241, 235, 191, 253, 77, 184, 125, 49, 141, 113, 46, 199, 83, 196, 27, 
+168, 212, 100, 136, 198, 235, 15, 248, 102, 52, 112, 38, 115, 85, 57, 198, 
+71, 37, 133, 68, 114, 62, 193, 163, 203, 50, 209, 147, 133, 150, 174, 45, 
+106, 18, 181, 49, 253, 196, 41, 99, 248, 153, 138, 108, 239, 195, 50, 54, 
+232, 183, 122, 91, 245, 59, 254, 193, 109, 208, 84, 242, 102, 2, 32, 208, 
+20, 213, 1, 18, 154, 42, 117, 146, 196, 255, 254, 179, 195, 48, 233, 171, 
+232, 99, 6, 221, 158, 5, 158, 11, 213, 242, 253, 59, 244, 29, 11, 9, 
+243, 13, 27, 141, 55, 144, 31, 251, 144, 30, 174, 83, 78, 151, 254, 54, 
+250, 5, 20, 152, 10, 178, 163, 223, 165, 161, 26, 153, 190, 37, 162, 177, 
+50, 189, 62, 106, 78, 94, 101, 222, 124, 20, 49, 202, 171, 47, 1, 166, 
+52, 21, 62, 62, 199, 226, 29, 108, 131, 55, 6, 65, 93, 168, 243, 143, 
+102, 49, 249, 180, 143, 95, 146, 11, 115, 195, 214, 30, 242, 215, 196, 39, 
+236, 3, 101, 179, 229, 131, 32, 104, 186, 38, 169, 23, 206, 156, 167, 52, 
+206, 160, 232, 93, 255, 122, 105, 114, 61, 63, 145, 48, 22, 85, 87, 2, 
+88, 188, 181, 61, 63, 213, 165, 250, 251, 79, 17, 202, 235, 184, 254, 185, 
+89, 231, 23, 88, 97, 128, 203, 159, 191, 92, 207, 213, 177, 38, 215, 10, 
+226, 140, 71, 34, 98, 237, 28, 93, 60, 45, 39, 39, 230, 38, 225, 63, 
+13, 248, 151, 110, 120, 98, 13, 55, 190, 220, 12, 112, 2, 227, 122, 229, 
+111, 193, 7, 209, 174, 35, 47, 234, 80, 86, 18, 54, 124, 243, 117, 137, 
+235, 13, 248, 99, 111, 5, 154, 46, 226, 166, 158, 228, 137, 24, 201, 248, 
+217, 208, 202, 136, 243, 249, 114, 68, 79, 132, 122, 204, 119, 240, 85, 98, 
+253, 77, 197, 108, 83, 95, 154, 53, 5, 56, 25, 142, 80, 227, 135, 42, 
+179, 81, 178, 167, 74, 36, 235, 153, 169, 101, 101, 32, 85, 187, 131, 82, 
+8, 72, 191, 91, 168, 89, 144, 173, 146, 170, 60, 226, 141, 195, 12, 64, 
+20, 190, 231, 94, 227, 210, 247, 140, 56, 93, 172, 141, 24, 47, 224, 32, 
+120, 159, 124, 32, 248, 12, 205, 138, 182, 9, 109, 67, 204, 121, 132, 224, 
+56, 107, 62, 27, 62, 54, 167, 118, 147, 83, 3, 171, 131, 227, 203, 251, 
+130, 71, 27, 123, 84, 232, 5, 10, 242, 114, 78, 190, 236, 210, 159, 36, 
+61, 221, 63, 123, 19, 230, 241, 166, 57, 245, 81, 188, 216, 29, 183, 91, 
+100, 210, 214, 184, 187, 219, 195, 173, 78, 17, 107, 58, 227, 10, 94, 32, 
+232, 157, 156, 251, 131, 141, 162, 188, 130, 243, 121, 91, 16, 48, 182, 117, 
+3, 140, 45, 190, 103, 240, 107, 181, 1, 214, 239, 228, 225, 77, 5, 201, 
+234, 161, 196, 109, 46, 102, 42, 177, 90, 163, 12, 106, 211, 194, 223, 214, 
+78, 13, 148, 181, 253, 255, 107, 255, 214, 90, 227, 183, 168, 232, 128, 146, 
+137, 68, 0, 184, 171, 42, 105, 5, 205, 117, 111, 160, 55, 79, 119, 133, 
+92, 11, 58, 89, 11, 165, 88, 225, 0, 60, 152, 168, 36, 24, 58, 174, 
+92, 58, 102, 7, 100, 207, 12, 49, 68, 124, 210, 123, 203, 73, 0, 39, 
+84, 58, 128, 95, 224, 217, 64, 224, 21, 216, 136, 57, 240, 194, 231, 77, 
+253, 77, 84, 97, 28, 97, 147, 96, 221, 101, 219, 168, 174, 219, 207, 2, 
+22, 79, 98, 246, 40, 162, 214, 61, 123, 94, 119, 107, 32, 94, 184, 29, 
+172, 13, 127, 200, 110, 18, 41, 75, 119, 4, 243, 37, 224, 194, 39, 246, 
+17, 137, 236, 58, 44, 194, 119, 167, 32, 238, 18, 64, 77, 203, 94, 249, 
+216, 221, 193, 70, 239, 234, 145, 102, 239, 132, 139, 207, 70, 178, 197, 87, 
+60, 177, 145, 104, 115, 9, 15, 147, 247, 33, 211, 68, 236, 49, 61, 196, 
+14, 255, 10, 253, 233, 155, 99, 216, 31, 238, 167, 101, 161, 108, 189, 221, 
+29, 78, 69, 144, 87, 84, 35, 79, 117, 247, 147, 98, 40, 209, 38, 55, 
+208, 49, 52, 185, 204, 152, 146, 236, 134, 57, 81, 39, 166, 14, 4, 195, 
+93, 73, 84, 180, 157, 119, 3, 19, 110, 151, 117, 151, 104, 155, 206, 56, 
+204, 2, 241, 153, 154, 131, 133, 33, 189, 214, 72, 99, 229, 77, 38, 66, 
+150, 122, 246, 52, 242, 250, 71, 96, 145, 188, 247, 249, 87, 197, 49, 36, 
+200, 34, 189, 98, 166, 66, 131, 99, 24, 204, 198, 253, 25, 236, 63, 175, 
+103, 54, 227, 89, 48, 42, 185, 193, 230, 177, 186, 62, 118, 235, 98, 62, 
+13, 31, 161, 179, 97, 36, 22, 121, 240, 220, 119, 9, 201, 182, 185, 48, 
+236, 156, 137, 28, 199, 66, 221, 173, 243, 151, 235, 106, 130, 77, 168, 144, 
+108, 73, 67, 205, 110, 90, 71, 94, 54, 190, 104, 255, 116, 33, 47, 97, 
+189, 184, 125, 132, 251, 91, 50, 238, 242, 29, 88, 117, 107, 1, 5, 215, 
+74, 72, 165, 184, 162, 236, 23, 217, 170, 127, 216, 30, 160, 8, 127, 93, 
+192, 253, 226, 187, 88, 20, 170, 74, 49, 2, 191, 156, 3, 196, 116, 78, 
+13, 25, 6, 175, 5, 29, 136, 175, 156, 97, 205, 60, 105, 77, 154, 41, 
+74, 124, 229, 162, 144, 143, 236, 193, 145, 172, 94, 149, 112, 210, 227, 125, 
+235, 233, 45, 240, 7, 181, 159, 163, 22, 108, 224, 127, 185, 122, 169, 255};
+
+#endif /* WHITE_NOISE_H_ */
+</code></pre>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// generate_white_noise.cpp</span>
+
+<span class="cp">#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+</span>
+<span class="cp">#define SIZE 4096
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+  <span class="n">srand</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"#ifndef WHITE_NOISE_H_</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" #define WHITE_NOISE_H_</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"#include &lt;avr/pgmspace.h&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"char white_noise["</span> <span class="o">&lt;&lt;</span> <span class="n">SIZE</span> <span class="o">&lt;&lt;</span> <span class="s">"] PROGMEM = {"</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">16</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">256</span> <span class="o">&lt;&lt;</span> <span class="s">", "</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"};</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"#endif </span><span class="se">\\</span><span class="s">* WHITE_NOISE_H_ *</span><span class="se">\\\n</span><span class="s">"</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Synth_8bits.ino :
+
+#include &lt;avr/io.h&gt;
+
+#include "Synth_8bits.h"
+
+void setup()
+{
+  synth_setup();
+}
+
+int tetris_m[] = {
+  NOTE_D5, NOTE_D5,
+  NOTE_B4, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_C5, NOTE_B4,
+  
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_C5,
+  NOTE_E5, NOTE_E5,
+  NOTE_D5, NOTE_C5,
+  
+  NOTE_B4, NOTE_B4,
+  NOTE_B4, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_E5, NOTE_E5,
+  
+  NOTE_C5, NOTE_C5,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+  
+  //--
+  
+  NOTE_D5, NOTE_D5,
+  NOTE_D5, NOTE_F5,
+  NOTE_A5, NOTE_A5,
+  NOTE_G5, NOTE_F5,
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_E5, NOTE_C5,
+  NOTE_E5, NOTE_E5,
+  NOTE_D5, NOTE_C5,
+
+  NOTE_B4, NOTE_B4,
+  NOTE_B4, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_E5, NOTE_E5,
+ 
+  NOTE_C5, NOTE_C5,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+
+  //--
+  
+  NOTE_D5, NOTE_D5,
+  NOTE_D5, NOTE_F5,
+  NOTE_A5, NOTE_A5,
+  NOTE_G5, NOTE_F5,
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_E5, NOTE_C5,
+  NOTE_E5, NOTE_E5,
+  NOTE_D5, NOTE_C5,
+
+  NOTE_B4, NOTE_B4,
+  NOTE_B4, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_E5, NOTE_E5,
+ 
+  NOTE_C5, NOTE_C5,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+  NOTE_A4, NOTE_A4,
+  
+  //--
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_C5, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_B4, NOTE_B4,
+
+  NOTE_C5, NOTE_C5,
+  NOTE_A4, NOTE_A4,
+  NOTE_GS3, NOTE_GS3,
+  NOTE_B4, NOTE_B4,
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_C5, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_B4, NOTE_B4,
+
+  NOTE_C5, NOTE_E5,
+  NOTE_A5, NOTE_GS5,
+  NOTE_E5, NOTE_E5,
+  NOTE_E5, NOTE_E5,
+  
+  //-- Last one
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_C5, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_B4, NOTE_B4,
+
+  NOTE_C5, NOTE_C5,
+  NOTE_A4, NOTE_A4,
+  NOTE_GS3, NOTE_GS3,
+  NOTE_B4, NOTE_B4,
+  
+  NOTE_E5, NOTE_E5,
+  NOTE_C5, NOTE_C5,
+  NOTE_D5, NOTE_D5,
+  NOTE_B4, NOTE_B4,
+
+  NOTE_A5, NOTE_A5,
+  NOTE_A5, NOTE_A5,
+  NOTE_A5, NOTE_A5,
+  NOTE_A5, NOTE_A5,
+  0  };
+
+#define FINISH 4242
+
+int tetris_b[] = {
+  NOTE_E3, NOTE_E3,
+  NOTE_E2, NOTE_E2,
+  NOTE_E3, NOTE_E3,
+  NOTE_E2, NOTE_E2,
+
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  
+  NOTE_GS3, NOTE_GS3,
+  NOTE_GS2, NOTE_GS2,
+  NOTE_GS3, NOTE_GS3,
+  NOTE_GS2, NOTE_GS2,
+  
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_A3, NOTE_B3,
+  NOTE_C4, NOTE_D4,
+  
+  // --
+
+  NOTE_D3, NOTE_D3,
+  NOTE_D2, NOTE_D2,
+  NOTE_D3, NOTE_D3,
+  NOTE_D2, NOTE_D2,
+  
+  NOTE_C3, NOTE_C3,
+  NOTE_C2, NOTE_C2,
+  NOTE_C3, NOTE_C3,
+  NOTE_C2, NOTE_C2,
+
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_A3, NOTE_B3,
+  NOTE_C4, NOTE_D4,
+  
+  // --
+
+  NOTE_D3, NOTE_D3,
+  NOTE_D2, NOTE_D2,
+  NOTE_D3, NOTE_D3,
+  NOTE_D2, NOTE_D2,
+  
+  NOTE_C3, NOTE_C3,
+  NOTE_C2, NOTE_C2,
+  NOTE_C3, NOTE_C3,
+  NOTE_C2, NOTE_C2,
+
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  
+  //--
+  
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  NOTE_C4, NOTE_C4,
+  NOTE_C3, NOTE_C3,
+  NOTE_D4, NOTE_D4,
+  NOTE_D3, NOTE_D3,
+ 
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  NOTE_C4, NOTE_C4,
+  NOTE_C3, NOTE_C3,
+  NOTE_D4, NOTE_D4,
+  NOTE_D3, NOTE_D3,
+  
+  // -- and the last line
+  
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  NOTE_C4, NOTE_C4,
+  NOTE_C3, NOTE_C3,
+  NOTE_D4, NOTE_D4,
+  NOTE_D3, NOTE_D3,
+ 
+  NOTE_A3, NOTE_A3,
+  NOTE_A2, NOTE_A2,
+  NOTE_B3, NOTE_B3,
+  NOTE_B2, NOTE_B2,
+  
+  FINISH, FINISH,
+  FINISH, FINISH,
+  FINISH, FINISH,
+  FINISH, FINISH,
+  
+  0};
+
+void play_2_voices(int M, int B)
+{
+    square1_amplitude = 100;
+    square1_period = frequency_to_period(M);
+  
+    square2_amplitude = 120;
+    if (B != FINISH)
+    square2_period = frequency_to_period(B);
+    
+    if (B == FINISH)
+    {
+      square2_period = frequency_to_period(NOTE_A3);
+      square3_period = frequency_to_period(NOTE_A4);
+      square2_amplitude = 120;
+      square3_amplitude = 25;
+    }
+
+    square3_amplitude = 0;
+    square4_amplitude = 0;
+
+    delay(300);
+}
+
+void play_2_voices_with_effects(int M, int B)
+{
+    square1_amplitude = 90;
+    square1_period = frequency_to_period(M);
+  
+    square2_amplitude = 90;
+    if (B != FINISH)
+    square2_period = frequency_to_period(B);
+    
+    if (B == FINISH)
+    {
+      square2_period = frequency_to_period(NOTE_A3);
+      square3_period = frequency_to_period(NOTE_A4);
+      square2_amplitude = 120;
+      square3_amplitude = 25;
+    }
+
+    square3_amplitude = 0;
+    square4_amplitude = 0;
+
+  int cp1 = square1_period;
+  int cp2 = square2_period;
+  for (int i =0; i &lt; 6; i++)
+  {
+    square1_amplitude = (5 - i) * 100 / 5;
+    square1_period = cp1 / (1 + (i % 2));
+    square2_amplitude = 50 + (i) * 50 / 5;
+    square2_period = cp2 / (1 + (1 + i % 2));
+    delay(50);
+  }
+}
+
+void cutall()
+{
+  square1_amplitude = 0;
+  square2_amplitude = 0;
+  square3_amplitude = 0;
+  square4_amplitude = 0;
+}
+
+void loop()
+{
+  //TETRIS SONG!
+  for (int i = 0; tetris_m[i] != 0; i++)
+  {
+    play_2_voices(tetris_m[i], tetris_b[i]);
+  }
+  
+  //TETRIS SONG (CHIPTUNE VERSION)
+  for (int i = 0; tetris_m[i] != 0; i++)
+  {
+    play_2_voices_with_effects(tetris_m[i], tetris_b[i]);
+  }
+  
+  cutall();
+  while(true);
+    play_seawave();
+}
+</code></pre></div></div>
+
+<p>Le tar.gz : <a href="data/synth_8bits.tar.gz">synth_8bits.tar</a>.</p>
+
+<h2 id="extrait-sonore-du-code-de-démonstration">Extrait sonore du code de démonstration</h2>
+
+<p>Pour vous montrer que je ne plaisante pas quand à la polyphonie, voici deux extraits utilisant 2 canaux. (Bon, le dernier accord en utilise 3, mais on ne s’en rend pas compte.)</p>
+
+<p><a href="data/arduino_tetris.mp3">Première partie</a>
+<a href="data/arduino_tetris_effects.mp3">Seconde partie</a></p>
+
+<h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
+
+<p>N’hésitez pas à supprimer quelques canaux, comme le 4ième canal, si vous ne l’utilisez pas et trouvez que votre application est trop lente (i.e. supprimer le bloc de code suivant).</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//---------------</span>
+  <span class="c1">//-  SQUARE  4  -</span>
+  <span class="c1">//---------------</span>
+  <span class="n">square_wave</span><span class="p">(</span><span class="s">"square4_amplitude"</span><span class="p">,</span> <span class="s">"square4_period"</span><span class="p">,</span> <span class="s">"square4_id"</span><span class="p">);</span>
+  <span class="c1">//---------------</span>
+</code></pre></div></div>
+
+<p>Vous pouvez aussi supprimer le canal de bruit et le tableau white_noise.h pour gagner un peu de mémoire. Bref, faite ce que vous voulez de ce code!</p>
+
+<h3 id="quelques-références-">Quelques références :</h3>
+
+<p>Plus sur le PWM :</p>
+
+<ul>
+  <li><a href="http://arduino.cc/en/Tutorial/SecretsOfArduinoPWM">http://arduino.cc/en/Tutorial/SecretsOfArduinoPWM</a></li>
+  <li><a href="http://zenol.fr/site/2012/05/03/atmega328-arduino-uno-timercounter-pwm-a-625khz/" title="ATMega328 (Arduino uno) : Timer/Counter &amp; PWM à 62,5kHz">L’article sur le PWM :)</a></li>
+</ul>
+
+<p>Plus sur Tone :</p>
+<ul>
+  <li><a href="http://arduino.cc/en/Tutorial/Tone">http://arduino.cc/en/Tutorial/Tone</a></li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/boost-property-tree/">
+            How to use boost::property_tree to load and write JSON
+            <small>21 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>

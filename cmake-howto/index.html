@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      CMake - Mini howto &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">CMake - Mini howto</h1>
+  <span class="post-date">30 Jun 2013</span>
+  <h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
+
+<p>CMake est un utilitaire permettant de générer le “build process” d’un projet. C’est un outils du même genre que les autotools (aussi appelé pour des raisons que je tairai ‘autohell’) en</p>
+
+<ul>
+  <li>Plus simple à configurer</li>
+  <li>Plus récent (donc moins de façons de procédé obscures)</li>
+  <li>Plus performant (dans le sens où, avec cmake, compiler un projet à l’extérieur du repository est extrêmement simple et agréable!)</li>
+  <li>Vous êtes libre d’organiser vos répertoires/fichier comme vous le désirez.</li>
+</ul>
+
+<p>Il est bon aussi de savoir que CMake est capable de générer aussi bien des Makefiles que des fichiers de projet VC++ ou XCode (pas mal, hein?).</p>
+
+<p>On a aussi une jolie progression en % de la compilation (et l’on peut toujours utiliser make -j42 pour faire chauffer les cœurs).</p>
+
+<p>##Comment on s’en sert ?</p>
+
+<p>On connais tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien salle dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore du votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="highlighter-rouge">cmake .</code> puis <code class="highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="highlighter-rouge">cmake ..</code> et <code class="highlighter-rouge">make &amp;&amp; sudo make install</code>. Dite bonjour a la propreté de votre projet grâce à CMake ;)</p>
+
+<p>##Comment ça fonctionne ?</p>
+
+<p>C’est là qu’est le plus beau. Configurer CMake pour un projet, gérer les dépendances de libs, générer les libs, voir même générer les packages (que ce soit des packages archlinux, debian …). On prend très vite en main, c’est claire, et la documentation est excellente.</p>
+
+<p>Je ne vais pas détailler comment construire un fichier de config ; le <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial CMake</a> le fait déjà très bien, et l’on trouve tout ce qu’il manque dans le wiki. (Notez que dans un VRAI projet, il vous faudra un peu plus que le tutorial). Je vais aborder les idées générales et les petites astuces qui m’ont servies.</p>
+
+<p>D’abord, on place les instructions dans un fichier CMakeLists.txt a la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossier grâce à <code class="highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
+
+<p>On peut facilement demander a cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendras soin d’ajouter <code class="highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
+
+<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp a la liste des fichiers du projet). Avec <code class="highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> le liste des fichiers figure dans la variable “SOURCE_FILES”. Si il vous faut exclure certains fichiers, vous pouvez utiliser :
+<code class="highlighter-rouge">file(GLOB_RECURSE UNWANTED_FILES src/FichierAExclure.cpp SRC)
+list (REMOVE_ITEM SOURCE_FILES ${UNWANTED_FILES})</code></p>
+
+<p>Si vous êtes fan des tests unitaires, CMake propose une façon agréable de lancer des tests avec :
+<code class="highlighter-rouge">add_test (NAME NomDuTeste WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
+Ça vas de “lancer un programme et vérifier qu’il EXIT_SUCCESS” à “vérifier que la sortie du programme contient cette expression”.</p>
+
+<p>Chose utile, que ne fournissent pas les autotools, c’est une façon unifiée de gèrer le numéro de version de l’application ; Toute les variables d’un CMakeListes peuvent être utiliser pour générer des fichiers à partir de templates (souvent le nom du fichier avec le suffixe .in). En pratique, on définit VERSION_MAJOR et VERSION_MINOR, puis on génère un Version.h, un doxyfile, et on utilise les valeurs pour générer les noms des bibliothèques exportés. C’est simple, intuitif, et très bien expliqué dans le tutoriel. Faire une release se limite alors a changer le numéro de version dans un fichier, et de lancer la compilation pour obtenir les binaires et packages.</p>
+
+<p>CMake dispose aussi d’un système de macros, pour faciliter la vie des maintainers, et l’on comprend donc que de plus en plus de projets tendent à l’utiliser.</p>
+
+<p>Un fichier de configuration emacs est disponible (depuis la doc de cmake) pour ajouter un “cmake-mode”, et se charge avec, par exemple, <code class="highlighter-rouge">(load "~/.emacs.d/cmake-mode.el")</code>.</p>
+
+<p>On peux aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeListes dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de fonfiguration CMake par <code class="highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(DOXYGEN_FOUND)
+  configure_file(${DOXYGEN_TEMPLATE_FILE}
+    ${DOXYGEN_CONFIGURED_FILE}
+    @ONLY
+    )
+  add_custom_target(doc
+    ${DOXYGEN_EXECUTABLE}
+    ${DOXYGEN_CONFIGURED_FILE}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Generating API documentation with Doxygen" VERBATIM
+    )
+endif(DOXYGEN_FOUND)
+</code></pre></div></div>
+<p>où le @ONLY signifie que seul les mots entouré d’@ seront remplacé (Sinon, les ${SOMETHING} sont aussi affectés).</p>
+
+<h2 id="conclusion-">Conclusion :</h2>
+
+<p>Ce qu’il faut retenir, c’est que CMake est simple à configurer, offre de nombreuses fonctionnalités, et laisse la possibilité d’ajouter celles manquantes. Beaucoup de gens sont encore habitué au ./configure, et sont effrayé par cette nouvelle façon d’aborder ce problème. Pourtant, CMake est un réel gain de temps, et l’on voit des gros projets comme KDE changer de build system pour CMake.  On peux même l’utiliser pour de minuscule projets (compiler les .cpp d’un dossier en un exécutable, sans dépendances particulières, se fait avec un fichier de configuration de 3 lignes), et je vous encourage justement à le faire. Trois lignes pour avoir une gestion automatique des dépendances des .h, génération des makefiles, le tout multiplateforme, ce n’est pas cher payé.</p>
+
+<h3 id="resources-">Resources :</h3>
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/CMake">http://en.wikipedia.org/wiki/CMake</a></li>
+  <li><a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">http://www.cmake.org/cmake/help/cmake_tutorial.html</a></li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/boost-property-tree/">
+            How to use boost::property_tree to load and write JSON
+            <small>21 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      SedNL : Simple Event Driven Network Library &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">SedNL : Simple Event Driven Network Library</h1>
+  <span class="post-date">21 Aug 2013</span>
+  <p><a href="https://github.com/Zenol/sednl" title="SedNL repository">SedNL</a> est une bibliothèque
+réseau écrite en C++11, principalement destinée à la réalisation d’applications
+réseau dont le protocole est basé sur la notion d’évènements :
+Les clients et le serveur communiquent via des évènements,
+de la forme : <code class="highlighter-rouge">"login" { username : "raccoon", password : "leaf" }</code>.</p>
+
+<p>SedNL est sous <a href="https://github.com/Zenol/sednl/blob/master/LICENCE">licence ZLib</a>,
+ce qui autorise une utilisation commerciale / closed source, sans obligation
+de redistribution de la licence avec les binaires. Elle autorise aussi la modification
+de la bibliothèque pour l’intégrer à vos projets, sans obligation de publier vos
+modifications. Il n’y a pas non plus de comportement viral comme celui
+de la GPL : la licence est donc compatible avec la plupart
+des autres licences.</p>
+
+<p>De nombreux jeux utilisent un système d’évènements pour leur mode réseau.
+Par exemple, voici <a href="https://developer.valvesoftware.com/wiki/Networking_Events_%26_Messages">la documentation d’un SDK de Valve</a>
+qui fournit un mécanisme d’évènements.</p>
+
+<p>L’API de SedNL a été conçue pour être <strong>simple</strong>, <strong>concise</strong>, et rapide à
+apprendre (moins d’un quart d’heure pour un développeur expérimenté).
+Elle convient parfaitement tant à des projets d’envergure moyenne que des
+projets de taille plus conséquente.</p>
+
+<p>Un court exemple d’utilisation du mécanisme d’évènement coté serveur :</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="n">Connection</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">on_connect</span><span class="p">(</span><span class="n">Connection</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">on_event</span><span class="p">(</span><span class="n">Connection</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">Event</span><span class="o">&amp;</span><span class="p">);</span>
+
+<span class="n">TCPServer</span> <span class="nf">server</span><span class="p">(</span><span class="n">SocketAddress</span><span class="p">(</span><span class="mi">4242</span><span class="p">));</span>
+<span class="n">EventListener</span> <span class="nf">listener</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="n">listener</span><span class="p">.</span><span class="n">on_connect</span><span class="p">().</span><span class="n">set_function</span><span class="p">(</span><span class="n">on_connect</span><span class="p">);</span>
+
+<span class="n">EventConsumer</span> <span class="nf">consumer</span><span class="p">(</span><span class="n">listener</span><span class="p">);</span>
+<span class="n">consumer</span><span class="p">.</span><span class="n">on_disconnect</span><span class="p">().</span><span class="n">set_function</span><span class="p">(</span><span class="n">on_disconnect</span><span class="p">);</span>
+<span class="n">consumer</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="s">"login"</span><span class="p">).</span><span class="n">set_function</span><span class="p">(</span><span class="n">on_login</span><span class="p">);</span>
+
+<span class="n">listener</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<span class="n">consumer</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Déterminer la bibliothèque la plus adaptée à votre projet est
+une étape critique : un mauvais choix se répercutera plusieurs mois
+plus tard par un coût important, nécessitant souvent le
+ré-usinage(refactoring) d’une quantité importante de code, et donc
+une énorme perte de temps (sans compter que c’est l’occasion rêvée
+pour de nombreux bugs qui voudraient élire domicile dans votre code).
+C’est pourquoi la documentation vous met tout de suite en face de
+l’architecture type assumée par SedNL : Une communication via des
+évènements, procédés de manière asynchrone, avec la garantie que
+l’évènement <i>connected</i> sera le premier exécuté à la connexion
+d’un client. À partir de cet instant, aucun ordre dans l’appel de
+vos callback pour les évènements provenant d’un même utilisateur
+ne peut être supposé. En contrepartie, vous pouvez contrôler quels
+threads vous allouez à quels évènements.</p>
+
+<p>SedNL fournis aussi des outils légers pour sérialiser et envoyer
+de façon fiable les instances de vos classes.</p>
+
+<p>Philosophie particulière de cette bibliothèque : la règle est que même
+dans des conditions difficiles (plus de mémoire disponible, limite de
+connections ouvertes, exceptions levées par vos callback, dysfonctionnement
+du système dans la gestion des threads, …) la bibliothèque doit faire tout
+ce qui est possible pour conserver un comportement normal.
+Toutes les exceptions “std::bad_alloc” sont interceptées et traitées
+intelligemment afin de prévenir un malencontreux crash.
+En cas de file d’évènements pleine ou d’un manque de mémoire,
+les évènements sont temporairement ignorés.
+Cela vous permet de ne pas perdre les données de vos utilisateurs encore
+en mémoire, et de construire des applications serveur fiables à uptime élevé.
+C’est, selon moi, ce que l’on doit attendre de toute vraie bibliothèque réseau.</p>
+
+<p>Il est possible que suite à certaines contraintes techniques SedNL ne soit
+pas la bibliothèque la plus adaptée à votre projet. Une lecture rapide de
+la documentation devrait vous permettre de savoir si SedNL est adapté à
+votre projet, ou si vous devez préférer une autre bibliothèque.
+Par exemple, SedNL n’est pas du tout adapter <a href="http://en.wikipedia.org/wiki/Remote_procedure_call">à de la RCP</a>.
+Même si le mécanisme d’évènement est ce que vous recherchez,
+d’autres alternative C basé aussi sur un mécanisme d’évènement
+comme libev / libevent offrent un contrôle plus fin,
+au coût d’une API plus complexe et moins intuitive.
+Gardez aussi à l’esprit que le design encouragé par SedNL devrait
+s’adapter à de nombreuses bibliothèques fournissant un mécanisme
+d’évènement, et que la licence autorise diverses modifications
+pour des besoins spécifiques.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/boost-property-tree/">
+            How to use boost::property_tree to load and write JSON
+            <small>21 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>

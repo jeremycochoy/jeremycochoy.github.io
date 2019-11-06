@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      How to use boost::property_tree to load and write JSON &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">How to use boost::property_tree to load and write JSON</h1>
+  <span class="post-date">21 Dec 2015</span>
+  <p><strong>Property Tree</strong> is a sublibrary of boost that allow you handling <em>tree of property</em>. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.</p>
+
+<p>Our example case will be the following json file :</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"height"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">320</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"some"</span><span class="w"> </span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"complex"</span><span class="w"> </span><span class="p">:</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"path"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"animals"</span><span class="w"> </span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"rabbit"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"white"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dog"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"brown"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"grey"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"fruits"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"apple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"raspberry"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"matrix"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">]]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="reading-data">Reading data</h2>
+
+<p>Let’s have a look at how we can load those data into our c++ application.</p>
+
+<h3 id="setting-up">Setting up</h3>
+
+<p>First, we need to include the libraries and load the file.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;boost/property_tree/ptree.hpp&gt;
+#include &lt;boost/property_tree/json_parser.hpp&gt;
+</span>
+<span class="c1">// Short alias for this namespace</span>
+<span class="k">namespace</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="p">;</span>
+
+<span class="c1">// Create a root</span>
+<span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">root</span><span class="p">;</span>
+
+<span class="c1">// Load the json file in this ptree</span>
+<span class="n">pt</span><span class="o">::</span><span class="n">read_json</span><span class="p">(</span><span class="s">"filename.json"</span><span class="p">,</span> <span class="n">root</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Now, we have a populated property tree thatis waiting from us to look at him. Notice that you can also read from a stream, for example <code class="highlighter-rouge">pt::read_json(std::cin, root)</code>{.cpp} is also allowed.</p>
+
+<p>If your json file is illformed, you will be granted by a <code class="highlighter-rouge">pt::json_parser::json_parser_error</code>.</p>
+
+<h3 id="loading-some-values">Loading some values</h3>
+
+<p>We can access a value from the root by giving it’s path to the <code class="highlighter-rouge">get</code> method.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read values</span>
+<span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="c1">// You can also go through nested nodes</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>If the field your are looking to doesn’t exists, the <code class="highlighter-rouge">get()</code> method will throw a <code class="highlighter-rouge">pt::ptree_bad_path</code> exception, so that you can recorver from incomplete json files. Notice you can set a default value as second argument, or use <code class="highlighter-rouge">get_optional&lt;T&gt;()</code> wich return a <code class="highlighter-rouge">boost::optional&lt;T&gt;</code>.</p>
+
+<p>Notice the getter doesn’t care about the type of the input in the json file, but only rely on the ability to convert the string to the type you are asking.</p>
+
+<h3 id="browsing-lists">Browsing lists</h3>
+
+<p>So now, we would like to read a list of objects (in our cases, a list of animals).</p>
+
+<p>We can handle it with a simple for loop, using an iterator. In <strong>c++11</strong>, it become :</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A vector to allow storing our animals</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">animals</span><span class="p">;</span>
+
+<span class="c1">// Iterator over all animals</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">animal</span> <span class="o">:</span> <span class="n">root</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">"animals"</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="c1">// Animal is a std::pair of a string and a child</span>
+
+    <span class="c1">// Get the label of the node</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="n">animal</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+    <span class="c1">// Get the content of the node</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">color</span> <span class="o">=</span> <span class="n">animal</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">data</span><span class="p">();</span>
+    <span class="n">animals</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">color</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Since <code class="highlighter-rouge">animal.second</code> is a <code class="highlighter-rouge">ptree</code>, we can also call call <code class="highlighter-rouge">get()</code> or <code class="highlighter-rouge">get_child()</code> in the case our node wasn’t just a string.</p>
+
+<p>A bit more complexe example is given by a list of values. Each element of the list is actualy a <code class="highlighter-rouge">std::pair("", value)</code> (where value is a <code class="highlighter-rouge">ptree</code>). It doesnt means that reading it is harder.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">fruits</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">fruit</span> <span class="o">:</span> <span class="n">root</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="c1">// fruit.first contain the string ""</span>
+    <span class="n">fruits</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">fruit</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>In the case the values arent string, we can just call <code class="highlighter-rouge">fruit.second.get_value&lt;T&gt;()</code> in place of <code class="highlighter-rouge">fruit.second.data()</code>.</p>
+
+<h3 id="deeper--matrices">Deeper : matrices</h3>
+
+<p>There is nothing now to enable reading of matrices, but it’s a good way to check that you anderstood the reading of list. But enought talking, let’s have a look at the code.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">row</span> <span class="o">:</span> <span class="n">root</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">"matrix"</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">cell</span> <span class="o">:</span> <span class="n">row</span><span class="p">.</span><span class="n">second</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">matrix</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">get_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">y</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">x</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You can now read any kind of JSON tree. The next step is being able to read them.</p>
+
+<h2 id="writing-json">Writing JSON</h2>
+
+<p>Let’s say that now, we wan’t to produce this tree from our application’s data. To do that, all we have to do is build a <code class="highlighter-rouge">ptree</code> containing our data.</p>
+
+<p>We start with an empty tree :</p>
+<pre><code class="language-{.cpp}">pt::ptree root;
+
+//...
+
+// Once our ptree was constructed, we can generate JSON on standard output
+pt::write_json(std::cout, root);
+</code></pre>
+
+<h3 id="add-values">Add values</h3>
+
+<p>Puting values in a tree can be acomplished with the <code class="highlighter-rouge">put()</code> method.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+<span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">,</span> <span class="s">"bonjour"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>As you can see, very boring.</p>
+
+<h3 id="add-a-list-of-objects">Add a list of objects</h3>
+
+<p>No big deel here, although we now use <code class="highlighter-rouge">add_child()</code> to put our <code class="highlighter-rouge">animal</code> node at the root.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a node</span>
+<span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">animals_node</span><span class="p">;</span>
+<span class="c1">// Add animals as childs</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">animal</span> <span class="o">:</span> <span class="n">animals</span><span class="p">)</span>
+    <span class="n">animals_node</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">animal</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">animal</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+<span class="c1">// Add the new node to the root</span>
+<span class="n">root</span><span class="p">.</span><span class="n">add_child</span><span class="p">(</span><span class="s">"animals"</span><span class="p">,</span> <span class="n">animals_node</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="add-many-nodes-with-the-same-name">Add many nodes with the same name</h3>
+
+<p>Now start the tricky tricks. If you want to add more than one time a node
+named <code class="highlighter-rouge">fish</code>, you can’t call the <code class="highlighter-rouge">put()</code> method. The call <code class="highlighter-rouge">node.put("name", value)</code> will
+replace the existing node named <code class="highlighter-rouge">name</code>. But you can do it by manually pushing your nodes,
+as demonstrated bellow.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// Add two objects with the same name</span>
+ <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fish1</span><span class="p">;</span>
+ <span class="n">fish1</span><span class="p">.</span><span class="n">put_value</span><span class="p">(</span><span class="s">"blue"</span><span class="p">);</span>
+ <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fish2</span><span class="p">;</span>
+ <span class="n">fish2</span><span class="p">.</span><span class="n">put_value</span><span class="p">(</span><span class="s">"yellow"</span><span class="p">);</span>
+ <span class="n">oroot</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">"fish"</span><span class="p">,</span> <span class="n">fish1</span><span class="p">));</span>
+ <span class="n">oroot</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">"fish"</span><span class="p">,</span> <span class="n">fish2</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h3 id="add-a-list-of-values">Add a list of values</h3>
+
+<p>If you remember, list are mades of nodes with empty name. Se we have to build node with empty names, and then use the <code class="highlighter-rouge">push_back()</code> once again to add all those unnamed childs.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a list</span>
+<span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fruits_node</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">fruit</span> <span class="o">:</span> <span class="n">fruits</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Create an unnamed node containing the value</span>
+    <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fruit_node</span><span class="p">;</span>
+    <span class="n">fruit_node</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">fruit</span><span class="p">);</span>
+
+    <span class="c1">// Add this node to the list.</span>
+    <span class="n">fruits_node</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">fruit_node</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">root</span><span class="p">.</span><span class="n">add_child</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="n">fruits_node</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="add-a-matrix">Add a matrix</h3>
+
+<p>We already have all the tools needed to export our matrix. But let’s demonstrate how to do it.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a matrix</span>
+<span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">matrix_node</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">row</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Create an unnamed value</span>
+        <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">cell</span><span class="p">;</span>
+        <span class="n">cell</span><span class="p">.</span><span class="n">put_value</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+        <span class="c1">// Add the value to our row</span>
+        <span class="n">row</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">cell</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// Add the row to our matrix</span>
+    <span class="n">matrix_node</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">row</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="c1">// Add the node to the root</span>
+<span class="n">root</span><span class="p">.</span><span class="n">add_child</span><span class="p">(</span><span class="s">"matrix"</span><span class="p">,</span> <span class="n">matrix_node</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<p>You can download a <a href="./data/example.cpp">C++ example</a> and the <a href="./data/example.json">input JSON file</a> for experimenting. Compile it with <code class="highlighter-rouge">clang++ -std=c++11 example.cpp -o example</code>.</p>
+
+<p>Some links related :</p>
+
+<ul>
+  <li><a href="http://www.boost.org/doc/libs/1_60_0/doc/html/property_tree/tutorial.html">The official documentation</a></li>
+  <li><a href="http://stackoverflow.com/questions/2114466/creating-json-arrays-in-boost-using-property-trees">A post on stack overflow</a></li>
+</ul>
+
+<p><strong>Rem</strong> : At the time of writing, the boost::property_tree library doesn’t output typed value. But we can expect that it will be corrected soon.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/tutorial-sednl/">
+            Tutoriel d'initiation à SEDNL
+            <small>25 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>

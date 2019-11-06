@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      Le Haskell, un langage au label pure. Première partie. &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">Le Haskell, un langage au label pure. Première partie.</h1>
+  <span class="post-date">07 Apr 2013</span>
+  <p>Mauvais jeux de mots mit à part, ce très court et succin billet (vous me voyez venir) va traiter du haskell. Haskell, de monsieur Haskell Brook Curry, un monsieur très épicé, est un langage fonctionnel. Comme beaucoup de langages fonctionnel, cela représente un choque culturel que de les appréhender. Mais le haskell semble avoir un petit quelque chose que n’ont pas les autres langages fonctionnels. À travers les trois prochains billets, j’espère vous convaincre que, si un jour, dans votre vie, vous avez l’occasion de creuser un language fonctionnel, alors vous devriez creuser le haskell.</p>
+
+<p>La <a href="http://zenol.fr/site/blog/posts/haskell-pure-2/fr.htm" title="Le Haskell, un langage au label pure. Seconde partie.">seconde partie est disponible ici</a>.</p>
+
+<p>On y vas tout en douceur. Curryfication et typage, pour ceux qui n’ont pas déjà découvert les joies (les dolipranes?) qu’apportent ces derniers. Si vous avez déjà eu à toucher à des langages fonctionnels, vous souhaiterez sûrement passer directement à la seconde partie où j’aborderais les diverses fonctionnalités original du haskell, comme les fameuses liste infinies dont tout le monde parle, mais dont trop peu se doutent de l’utilité. On parleras de data driven programming, de fonctions sans effets de bord et de parallélisation des calculs en haskell (avec un VRAI exemple!). Enfin, apogée, moment de transe et de plaisir inégale, on abordera la huitième merveille du monde : les monades.</p>
+
+<h2 id="ce-que-tout-le-monde-sais-déjà-ou-pas">Ce que tout le monde sais déjà… ou pas.</h2>
+
+<p>Faisons un petit retour sur ce que l’on retrouve dans tous les langages fonctionnels, et ce qui les rend si différents.</p>
+
+<p>Histoire de fixer la syntaxe, une fonction qui prend deux nombres et retourne leur produit s’écrit :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span>
+<span class="n">mult</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</code></pre></div></div>
+<p>Une fonction qui ajoute 42 à un entier :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">addOne</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span>
+<span class="n">addOne</span> <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">42</span>
+</code></pre></div></div>
+
+<p>La première ligne est le typage de la fonction (souvent facultatif), et la seconde est le corps de la fonction. En C++, ça donnerais :</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="nf">mult</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">T</span> <span class="nf">addOne</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>En fait, le <code class="highlighter-rouge">n</code> qui apparaît dans le type peut être remplacé par n’importe quel lettre/mot qui vous plaît. Cela signifie un type quelconque, qui respecte la contrainte “<em>peut être multiplié</em>” décrite par <code class="highlighter-rouge">(Num n) =&gt;</code>.</p>
+
+<p>La présence de <code class="highlighter-rouge">Num</code> correspond à la nécessiter d’avoir, dans le code c++, une surcharge de l’opérateur *. Remarquez qu’une fonction en haskell correspond naturellement a une fonction template, à moins de forcer les types à être moins “puissant”, comme par exemple :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">mult</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p>Qui ne sais plus que multiplier des entiers.</p>
+
+<h3 id="curryfication">Curryfication</h3>
+
+<p>La curryfication est essentiellement un changement de point de vue. On peux considérer une fonctions prenant deux nombres, et retournant une valeur. Mais on peut aussi changer de point de vue et considérer une fonction prenant un nombre, et renvoyant une nouvelle fonction, prenant un nombre, et retournant une valeur.</p>
+
+<p>Cela explique l’étrange notation pour le type de la fonction mult. En fait, l’opérateur “-&gt;” est associatif à droite, c’est à dire qu’il fallait lire :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Où <code class="highlighter-rouge">X -&gt; Y</code> indique que la fonction prend du type X et retourne du type Y. Ainsi, <code class="highlighter-rouge">n -&gt; n</code> signifie prend un type n quelconque et renvoi quelque chose du même type. C’est le type d’une fonction. Si l’on veux un exemple plus concret, <code class="highlighter-rouge">Int-&gt; (Float-&gt;Double)</code> signifie une fonction qui prend un entier, puis renvoi une nouvelle fonction. Cette dernière prend un float et le transforme en un double.</p>
+
+<p>Partant de ce point de vue, il est très simple de fixer les premiers arguments d’une fonction curryfiée. L’application d’un élément à un autre étant associatif à gauche, il suffit de l’appeler avec une partie de ses arguments. (Et oui, puisque écrire <code class="highlighter-rouge">mult a b</code> signifie alors <code class="highlighter-rouge">((mult a) b)</code>. C’est à dire appliquer <code class="highlighter-rouge">mult</code> à <code class="highlighter-rouge">a</code> pour obtenir une fonction qui “<em>prend un entier et le multiplie par a</em>”, puis évaluer cette fonction sur l’entier b.)</p>
+
+<p>Par exemple, <code class="highlighter-rouge">nouvelle_fonction = mult 42</code> correspond à fixer la première valeur de la fonction <code class="highlighter-rouge">mul</code> à <code class="highlighter-rouge">42</code>.</p>
+
+<p>En C++, il faudrais écrire</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="nf">nouvelle_fonction</span><span class="p">(</span><span class="n">T</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">mult</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pour finir, puisque l’on est en plein dans la manipulation de fonctions, on peut écrire une fonction comme une valeur, et la stocker dans une “variable”.</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Pour écrire une fonction "anonyme", qui prend trois arguments et renvoi 42, on peut écrire</span>
+<span class="c1">-- (\x y z -&gt; 42)</span>
+<span class="c1">-- Où x y z seront les trois arguments, et ce qui suit -&gt; est la "valeur de retour".</span>
+<span class="c1">-- On aurais donc pu écrire la fonction mult de la façon suivante :</span>
+<span class="n">mult</span> <span class="o">=</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span>
+
+<span class="c1">--On peut aussi écrire \a -&gt; \b -&gt; à la place de \a b, grâce à la curryfication.</span>
+</code></pre></div></div>
+<p>Le typage est bien sur facultatif.</p>
+
+<p>On a alors deux petites fonctions bien pratique pour manipuler des fonctions ; l’identité et la composition :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">id</span> <span class="o">=</span> <span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<span class="n">a</span> <span class="o">.</span> <span class="n">b</span> <span class="o">=</span> <span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="p">(</span><span class="n">b</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>On peut alors composer la multiplication par 2 et l’addition à 3 :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">add</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">superFct</span> <span class="o">=</span> <span class="n">mult</span> <span class="mi">2</span> <span class="o">.</span> <span class="n">add</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>Enfin, on aurais pu écrire :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="n">add</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span>
+<span class="n">superFct</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">)</span> <span class="o">.</span> <span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="typage">Typage</h3>
+
+<p>Les types, en langage fonctionnel, disent beaucoup de choses, et sont lourd de sens.
+En haskell, une liste d’entiers se note <code class="highlighter-rouge">[Int]</code>. Si <code class="highlighter-rouge">a</code> est un type, alors une liste de <code class="highlighter-rouge">a</code> est de type <code class="highlighter-rouge">[a]</code>. Les chaînes de caractères sont par exemple des <code class="highlighter-rouge">[Char]</code>.</p>
+
+<p>Alors, que devrait faire une fonction de type <code class="highlighter-rouge">(a -&gt; b) -&gt; [a] -&gt; [b]</code>? Et bien, elle prend une fonction <em>transformant du a en b</em> que l’on appellera f, une <em>liste de a</em>, et produit une <em>liste de b</em>. Le bon sens veux que cette fonction applique f à chaque élément de la <em>liste de a</em>, pour produire une <em>liste de b</em>.</p>
+
+<p>Encore un, pour la route. Que dire du type <code class="highlighter-rouge">[[a]] -&gt; [a]</code>? On prend une <em>liste de liste</em>, et on produit <em>une liste</em>. La première chose qui nous vient à l’esprit est de concaténer toute ces listes les unes à la suite des autres pour n’en produire plus qu’une.</p>
+
+<p>Voyez tout ce qu’on peut deviner sur le comportement d’une fonction grâce aux types.</p>
+
+<p>Pour éviter les noms à rallonge, on peu aussi construire des alias de type. Plutôt que décrire <code class="highlighter-rouge">[Char]</code>, on peut écrire <code class="highlighter-rouge">String</code>, définit par :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">type</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>C’est très utile pour annoter une fonction. Par exemple, on peut imaginer le scénario suivant :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">type</span> <span class="kt">Nom</span> <span class="o">=</span> <span class="kt">String</span>
+<span class="kr">type</span> <span class="kt">Prenom</span> <span class="o">=</span> <span class="kt">String</span>
+<span class="kr">type</span> <span class="kt">Identifiant</span> <span class="o">=</span> <span class="kt">Int</span>
+
+<span class="n">getSomeone</span> <span class="o">::</span> <span class="kt">Nom</span> <span class="o">-&gt;</span> <span class="kt">Prenom</span> <span class="o">-&gt;</span> <span class="kt">Identifiant</span>
+</code></pre></div></div>
+
+<p>Grâce à ces alias, vous avez une idée claire du comportement de la fonction getSomeone simplement en lisant son type.</p>
+
+<p>Mais le meilleur est à venir : les constructeurs de type.
+Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se rapprocherais plutôt de la structure, et encore…</p>
+
+<p>Pou faire bref, les constructeur permettent de fabriquer des instances d’un type. Considérons quelques types :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Personne</span> <span class="o">=</span> <span class="kt">ConstructeurDePersonne</span> <span class="kt">Nom</span> <span class="kt">Prenom</span> <span class="kt">Identifiant</span>
+<span class="kr">data</span> <span class="kt">Reponse</span> <span class="o">=</span> <span class="kt">Oui</span> <span class="o">|</span> <span class="kt">Non</span>
+<span class="kr">data</span> <span class="kt">LaValeur</span> <span class="o">=</span> <span class="kt">Entier</span> <span class="kt">Int</span> <span class="o">|</span> <span class="kt">Flotant</span> <span class="kt">Float</span>
+<span class="kr">data</span> <span class="kt">ListeEntier</span> <span class="o">=</span> <span class="kt">Element</span> <span class="kt">Int</span> <span class="kt">Liste</span> <span class="o">|</span> <span class="kt">Vide</span>
+<span class="kr">data</span> <span class="kt">ArbreEntier</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="kt">Int</span> <span class="kt">Arbre</span> <span class="kt">Arbre</span> <span class="o">|</span> <span class="kt">Vide</span>
+</code></pre></div></div>
+
+<p>Le premier type, <code class="highlighter-rouge">Personne</code>, est une structure à trois champs. Le second, est un type booléen, qui peut soit être construit par le constructeur <em>Oui</em>, soit par le constructeur <em>Non</em>. Le troisième est une union pouvant contenir un <code class="highlighter-rouge">Int</code> ou un <code class="highlighter-rouge">Float</code>, et les derniers sont respectivement un type liste d’entier et arbre binaire d’entier. Le système de types permet de considérer des objets plus proche des données représentée, et de s’abstraire de l’implémentation.</p>
+
+<p>Donnons une correspondance C++ des deux derniers exemples dans leur version “polymorphique”, où Liste et Arbre deviennent des constructeurs de type, et prennent donc en paramètre le type qu’ils doivent contenir.</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Liste</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Element</span> <span class="n">a</span> <span class="kt">Liste</span> <span class="o">|</span> <span class="kt">Vide</span>
+<span class="kr">data</span> <span class="kt">Arbre</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="n">a</span> <span class="kt">Arbre</span> <span class="kt">Arbre</span> <span class="o">|</span> <span class="kt">Vide</span>
+
+<span class="kr">type</span> <span class="kt">ListeEntier</span> <span class="o">=</span> <span class="kt">Liste</span> <span class="kt">Int</span>
+<span class="kr">type</span> <span class="kt">ArbreEntier</span> <span class="o">=</span> <span class="kt">Arbre</span> <span class="kt">Int</span>
+</code></pre></div></div>
+
+<p>L’équivalent C++ :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">template</span> <span class="o">&lt;</span><span class="kr">class</span> <span class="kt">T</span><span class="o">&gt;</span>
+<span class="n">struct</span> <span class="kt">Liste</span> <span class="p">{</span>
+  <span class="n">union</span> <span class="p">{</span>
+    <span class="n">struct</span> <span class="kt">Element</span> <span class="p">{</span>
+      <span class="kt">T</span> <span class="n">value</span><span class="p">;</span>
+      <span class="n">struct</span> <span class="kt">List</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">firstConstructor</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="kt">Vide</span> <span class="p">{</span>
+    <span class="p">}</span> <span class="n">secondConstructor</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+ 
+<span class="n">template</span> <span class="o">&lt;</span><span class="kr">class</span> <span class="kt">T</span><span class="o">&gt;</span>
+<span class="n">struct</span> <span class="kt">Arbre</span> <span class="p">{</span>
+  <span class="n">union</span> <span class="p">{</span>
+    <span class="n">struct</span> <span class="kt">Noeud</span> <span class="p">{</span>
+      <span class="kt">T</span> <span class="n">value</span><span class="p">;</span>
+      <span class="n">struct</span> <span class="kt">Arbre</span> <span class="o">*</span><span class="n">left</span><span class="p">;</span>
+      <span class="n">struct</span> <span class="kt">Arbre</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">firstConstructor</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="kt">Vide</span> <span class="p">{</span>
+    <span class="p">}</span> <span class="n">secondConstructor</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Un petit exemple d’utilisation :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">personnage</span> <span class="o">=</span> <span class="kt">ConstructeurDePersonne</span> <span class="s">"Dent"</span> <span class="s">"Arthur"</span> <span class="mi">42</span>
+<span class="n">estCeVrai</span> <span class="o">=</span> <span class="kt">Oui</span>
+<span class="n">valeur</span> <span class="o">=</span> <span class="kt">Entier</span> <span class="mi">42</span>
+<span class="n">uneListe</span> <span class="o">=</span> <span class="kt">Element</span> <span class="mi">1</span> <span class="p">(</span> <span class="kt">Element</span> <span class="mi">2</span> <span class="p">(</span> <span class="kt">Element</span> <span class="mi">3</span> <span class="p">(</span> <span class="kt">Element</span> <span class="mi">4</span> <span class="kt">Vide</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">racine</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="mi">4</span> <span class="p">(</span><span class="kt">Noeud</span> <span class="mi">2</span> <span class="kt">Vide</span> <span class="kt">Vide</span><span class="p">)</span> <span class="p">(</span><span class="kt">Noeud</span> <span class="mi">6</span> <span class="kt">Vide</span> <span class="kt">Vide</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="patern-matching">Patern matching</h3>
+
+<p>Si l’on peut construire des types, on peut aussi les détruire, où plus précisément, les dès-construire. Partant d’un objet de type liste, on peut vouloir récupérer le première élément, si la liste n’est pas vide. Cela se fait en faisant matcher un pattern sur l’instance d’un type :</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">obtenirNom</span> <span class="p">(</span><span class="kt">ConstructeurDePersonne</span> <span class="n">nom</span> <span class="kr">_</span> <span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">nom</span>
+
+<span class="n">obtenirPrenom</span> <span class="p">(</span><span class="kt">ConstructeurDePersonne</span> <span class="kr">_</span> <span class="n">prenom</span> <span class="kr">_</span><span class="p">)</span> <span class="o">=</span>  <span class="n">prenom</span>
+
+<span class="n">obtenirID</span> <span class="p">(</span><span class="kt">ConstructeurDePersonne</span> <span class="kr">_</span> <span class="kr">_</span> <span class="n">id</span><span class="p">)</span> <span class="o">=</span> <span class="n">id</span>
+
+<span class="n">recupererValeur</span> <span class="p">(</span><span class="kt">Entier</span> <span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+
+<span class="n">premierElement</span> <span class="p">(</span><span class="kt">Element</span> <span class="n">v</span> <span class="n">sousListe</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+<span class="n">premierElement</span> <span class="kt">Empty</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Il est aussi possible de déconstruire un objet au milieu d’une fonction, sous réserve d’être certain que l’objet respecte le pattern spécifié :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recupererValeur'</span> <span class="n">truc</span> <span class="o">=</span> <span class="kr">let</span> <span class="p">(</span><span class="kt">Entier</span> <span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">truc</span> <span class="kr">in</span> <span class="n">v</span>
+</code></pre></div></div>
+
+<p><strong>Nb :</strong> Le caractère ‘ est un caractère valide comme un autre pour un nom de fonction ou de variable (bien qu’en fait, en haskell, il n’existe pas de variable au sens usuel).</p>
+
+<p>Voilà, ce seras tout pour aujourd’hui :)</p>
+
+<h2 id="références-">Références :</h2>
+
+<ul>
+  <li>Quelques détails sur les constructeurs : <a href="http://www.haskell.org/haskellwiki/Constructor">http://www.haskell.org/haskellwiki/Constructor</a></li>
+</ul>
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/boost-property-tree/">
+            How to use boost::property_tree to load and write JSON
+            <small>21 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>

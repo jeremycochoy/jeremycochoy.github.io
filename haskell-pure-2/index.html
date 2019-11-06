@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="description" content="Jeremy Cochoy's personal website.">
+  <meta name="author" content="Jeremy Cochoy">
+
+  <title>
+    
+      Le Haskell, un langage au label pure. Seconde partie. &middot; Jeremy Cochoy
+    
+  </title>
+
+  <!-- CSS -->
+  <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/style.css" rel="stylesheet">
+
+  <!-- Maths equations -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container">
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="/">Jeremy Cochoy</a>
+   </div>
+   <div id="navbar" class="collapse navbar-collapse">
+     <ul class="nav navbar-nav">
+ <li><a href="/blog/">Blog</a></li>
+ <li><a href="/resume/">Resume</a></li>
+ <li role="separator" class="divider"></li>
+ <li><a href="/research/">Research</a></li>
+ <li><a href="/talks/">Talks</a></li>
+ <li><a href="/teaching/">Teaching</a></li>
+ <li><a href="/music/">Music</a></li>
+ <li class="dropdown">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+   <ul class="dropdown-menu">
+     <li><a href="/hyper-flop/">Hyper-Flop</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="/pdfs/">PDFs & Talks</a></li>
+     <li><a href="/agreg-dev/">Agregation de mathématique</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a href="https://github.com/jeremycochoy/sednl" alt="SEDNL Github">SEDNL (Github)</a></li>
+     <li><a href="http://sednl.zenol.fr" alt="Simple Event Driven Network Library">SEDNL</a></li>
+           <li role="separator" class="divider"></li>
+           <li><a href="/gb-doc">GameBoy Emulator Documentation</a></li>
+   </ul>
+ </li>
+     </ul>
+   </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+    <div class="container">
+      <div class="post">
+  <h1 class="post-title">Le Haskell, un langage au label pure. Seconde partie.</h1>
+  <span class="post-date">22 Apr 2013</span>
+  <p>Nous continuons de découvrir des paysages fonctionnels à travers le Haskell. Cette fois, nous nous éloignons des généralités et rentrons dans le vif du sujet en nous intéressant à des aspects plus propre au haskell (bien que d’autres langages fonctionnels implémentent des fonctionnalités similaires).</p>
+
+<p>La <a href="/haskell-pure-1/" title="Le Haskell, un langage au label pure. Première partie.">première partie est disponible ici</a>. La <a href="/haskell-pure-3/" title="Le Haskell, un langage au label pure. Troisième partie.">troisième là</a>.</p>
+
+<h2 id="la-force-de-haskell">La force de haskell</h2>
+
+<h3 id="les-listes-infinies-et-listes-en-compréhension">Les listes infinies (et listes en compréhension)</h3>
+
+<p>Les listes infinies sont une des nombreuses possibilités offertes par un langage paresseux. C’est souvent d’elles dont on entend le plus parler pour présenter le haskell, alors qu’il ne s’agit pourtant que d’une fonctionnalité original parmi tant d’autres. Cela est sûrement du au fait que la notion d’infinie éveille la curiosité des développeurs habitué à un monde impératif où les tableaux, les listes, et toute structure mémoire est finie.</p>
+
+<p>Le principe est relativement simple : vous définissez une liste, que ce soit de façon récursive ou simplement par compréhension (on vas voir ce que cela signifie dans quelques lignes), puis seulement les éléments de la liste dont le programme auras besoin seront évalué. Les autres ne seront jamais calculés.</p>
+
+<p>Comment faire de telles listes? La façon la plus simple est la définition de liste par compréhension, c’est à dire une définition de la forme “L’ensemble des f(trucs) pour les quels P(truc) est vraie”. Où f est une formule sur “trucs” et où P est une proposition, disons une fonction qui renvoie True ou False.</p>
+
+<p>Par exemple :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- "x &lt;- l" signifit "pour x se baladant dans la liste l"</span>
+<span class="c1">-- l1 = [1, 2, 3, 4, 5]</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="c1">-- L'opérateur c/c++ != s'écrit /= </span>
+<span class="c1">-- l2 = [1, 2, 4, 5]</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">x</span> <span class="o">/=</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1">-- l3 = [2, 4, 8, 16, 32]</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">^</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+
+<span class="c1">-- l4 = [2, 4, 16, 32]</span>
+<span class="n">l4</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">^</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">x</span> <span class="o">/=</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>En fait, c’est une sorte de sucre syntaxique. Le soucis, c’est que ce que cache les listes en compréhension ne seras aborder que dans la troisième partie. On se contenteras donc de la signification et de la façon dont on l’utilise.</p>
+
+<p>Pour en revenir a nos listes en compréhension infinie, on peut penser à “L’ensemble des entiers qui sont paire” par exemple. Voici quelques listes infinies :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--La liste de tous les entiers à partir de 42 peut s'écrire [42..]</span>
+<span class="n">liste_infinie_des_entiers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]</span>
+
+<span class="c1">--Pour calculer x % 2 (c/c++), on écrit "x `mod` 2", ou encore "mod x 2".</span>
+
+<span class="n">liste_des_entiers_paires</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]]</span>
+<span class="c1">-- On peut rajouter des conditions séparé par des virgules</span>
+<span class="n">liste_des_entiers_paires'</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">],</span> <span class="n">x</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1">-- On peut utiliser plusieurs variables se baladant dans différentes listes :</span>
+<span class="n">liste_de_produit</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">],</span> <span class="n">y</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<p>Une autre façon de définir une liste est d’utiliser la récusivité. Voici quelques exemples.</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--"map f l" applique la fonction f sur chaque élément de la liste l</span>
+<span class="c1">-- [a, b] est du sucre syntaxique pour a : b : [].</span>
+<span class="n">entiers</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">:</span> <span class="p">(</span><span class="n">map</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">)</span> <span class="n">entiers</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Regardons se qui se passe si l’on demande les trois premiers éléments de la liste, ce qui se fait avec <code class="highlighter-rouge">take 3 l</code>. D’abord, il lit <code class="highlighter-rouge">1 :</code> et connais donc le premier élément. Pour avoir le second, il lit <code class="highlighter-rouge">(map (1+) entiers)</code>. Il applique donc map sur la liste, mais de façon paresseuse, c’est a dire qu’en ne calculant que l’application sur le premier terme. Il obtient donc <code class="highlighter-rouge">(1+)(1) = 2</code>. puis, pour avoir le troisième élément, il doit appliquer <code class="highlighter-rouge">(1+)</code> au deuxième élément de la liste entier. Ça tombe bien, on vient de le calculer, c’est <code class="highlighter-rouge">2</code>. On a donc pour troisième élément <code class="highlighter-rouge">(1+)(2) = 3</code>.</p>
+
+<p>De cette façon, on aurais aussi pu définir la liste des entiers pairs, la liste des nombres de fibonacci (même si on ne voit pas bien l’intérêt dans un programme), ou la liste des nombres premiers (plus difficile).</p>
+
+<p>Bon, c’est très beau tout ça, mais est-ce que ça sert vraiment (parce que, faire des listes infinies pour faire des listes infinies…)? Oui, ça sert, et voici un exemple simple et concret. Disons que vous participez au Google Code Jam. Vous devez fournir des réponse en respectant un certain format. Plus précisément, on vous donne une entrée de n éléments à traiter, par exemple n lignes contenant chacune un nombre, et vous devez fournir le résultat de votre traitement sous la forme _Case #i: <vos données="">\n_. En C++, on aurais itéré sur la liste de résultat (ou directement l'entrée) et provoqué l'écriture de "Case #i" sur la sortie standard juste avant celle de vos données. En haskell, on peut (doit?) faire ça différemment (J'ai honteusement pompé ce que propose un développeur sur [youtube](http://www.youtube.com/watch?v=_tgv3HVgOMc)) :</vos></p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">boilerPlate</span> <span class="o">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+<span class="n">boilerPlate</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Case #"</span> <span class="o">++</span> <span class="n">show</span> <span class="n">n</span> <span class="o">++</span> <span class="s">": "</span> <span class="o">|</span> <span class="n">n</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]]</span>
+
+<span class="n">standardOutput</span> <span class="o">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+<span class="c1">-- zipWith f l1 l2 recole les deux listes l1 et l2 en utilisant la fonction f sur les éléments de chacune des deux listes.</span>
+<span class="c1">-- La liste produite par zipWith fait la longueur de la plus courte.</span>
+<span class="c1">-- Par exemple, zipWith (+) [1, 2, 3] [1, 1, 1, 1, 1] = [1+1, 2+1, 3+1]</span>
+<span class="n">standardOutput</span> <span class="o">=</span> <span class="n">zipWith</span> <span class="p">(</span><span class="o">++</span><span class="p">)</span> <span class="n">boilerPlate</span>
+
+<span class="c1">-- Une fois votre sortie sous la forme d'une liste de String, il vous suffit de la donner à standardOutput pour obtenir le formatage attendu</span>
+</code></pre></div></div>
+
+<p>On voit ici que la liste infinie boilerPlate contient tous les formatages possibles. Bien entendu, à chaque exécution, il n’y auras qu’un nombre finie d’entrées et de sorties, donc une partie finie de la liste qui seras utilisé.</p>
+
+<h3 id="data-driven-programming">Data-driven programming</h3>
+
+<p>En haskell, manipuler des listes ou des structures similaires est chose courante, et il y a un bon nombre de fonction dédiés. Par exemple <code class="highlighter-rouge">map f l</code> qui permet d’appliquer <code class="highlighter-rouge">f</code> sur les éléments de <code class="highlighter-rouge">l</code>, <code class="highlighter-rouge">zip</code> et <code class="highlighter-rouge">zipWith</code> qui permettent de souder deux liste en une unique (soit sous forme de liste de couple, soit en utilisant la fonction que vous fournissez). Mais ce n’est pas tout. Nous ne parlerons par exemple pas de <code class="highlighter-rouge">foldr</code> et <code class="highlighter-rouge">foldl</code> qui permettent a partir d’une liste d’éléments de l’écraser en un nouvel élément grâce à une fonction que vous fournissez (leurs usages est multiple. On peut implémenter facilement la somme/produit des éléments d’une liste, la conversion d’une liste de mot en une seul chaine de caractère, la transformation d’une liste en un arbre binaire de recherche, etc).</p>
+
+<p>Vous devriez avoir remarquer qu’en haskell, on aime bien concevoir de petites fonctions travaillant sur un élément de type a, et produisant un élément de type b, puis appliquer ces petites fonctions sur les éléments de structures de donnés plus ou moins complexe. Cela a de nombreux avantages :
+-Il est plus simple de concevoir une fonction de type Int-&gt;String qu’une fonction de type <code class="highlighter-rouge">[Int] -&gt; [(String, Int)]</code>, par exemple.
+-On est plus générique ; Si l’on sais transformer du a en b, alors on sais transformer du <code class="highlighter-rouge">[a]</code> en <code class="highlighter-rouge">[b]</code> et du <code class="highlighter-rouge">Tree a</code> en <code class="highlighter-rouge">Tree b</code> (où <code class="highlighter-rouge">Tree a</code> est un arbre binaire où chaque noeud contient un élément de type a).
+-En cas de changement de structure mémoire, par exemple pour des raisons de performances, on minimise l’impacte sur le code à modifier. Si l’on souhaite passer de liste à des arbres, seul le traitement effectué sur les listes devras être ré-écrit pour les arbres, mais rien d’autre.</p>
+
+<p>On se retrouve donc à se concentrer plus sur les types qu’on manipule que la façon dont on les manipule. C’est à dire que l’on dispose d’un nombre important de façon simple de transformer certaines données en d’autres, et les points cruciaux sont alors de:
+-Bien choisir la façon dont seront représentés les données traitées
+-Trouver les structures de données intermédiaires au cours du déroulement d’un algorithme.</p>
+
+<p>Si l’on sais exactement de quels donnés l’on part, et quels donnés on droit produire, il ne reste alors plus qu’à décrire les transformations nécessaire pour passer de l’une à l’autre. Par exemple, faire un programme de reconnaissance de caractère, c’est simplement transformer une image en une chaîne de caractère. Pour peut que l’on parvienne à réduire l’écart entre les structures de donnés considérés (par exemple une image, puis une liste de rectangles de pixels représentant des lignes, puis une liste de liste de rectangles de pixels représentant des mots) il devient très simple de décrire la transformation (on a réussi a réduire le problème a savoir découper les lignes, découper les mots, découper les lettres puis reconnaître une lettre).</p>
+
+<p>Si ce type de raisonnement peut conduire à du code catastrophique dans un langage objet, en haskell c’est très certainement l’une des routes les plus sur. Tout, dans le langage, s’adapte parfaitement à cette conduite, et particulièrement le système de types et de classes.</p>
+
+<p>En C++ un type représente un ensemble de fonctionnalités. En haskell un type n’est rien d’autre qu’un ensemble possible de valeur. On peut tout de fois préciser qu’un type peut être manipulé d’une certaine façon (ordonné, comparé, affiché…). On pourrait dire que deux éléments d’un type que l’on a construit peuvent être affiché, ou encore comparé, en le faisant instance d’une classe. Cela correspond a la surcharge de fonctions/opérateurs du C++ ; après avoir déclarer une structure <code class="highlighter-rouge">struct St;</code>, on peut surcharger l’opérateur de comparaison pour ce nouveau type par <code class="highlighter-rouge">bool operator &lt; (St &amp;a, St &amp;b);</code>. Vient alors l’idée de ce que doit être quelque chose “d’affichable” ou de “comparable”. C’est un type pour le quel on doit avoir certaines fonctions de définies. En java, il y à la notion d’interface, où l’on veut imposer l’existence de certaines méthodes. Malheureusement, on ne peut le faire que lors de la déclaration d’un type, et l’implémentation de cette interface est faite “à l’intérieur” du type. En haskell, pas de fonctions membres, mais des fonctions tout cours. Ce qui fait que n’importe quel type pourra devenir instance de n’importe quel classe (terme haskell désignant un jeu de fonctions) et à l’instant où vous le désirerais. Le sens d’une classe en haskell est donc plus proche de celle de la théorie des ensembles (une collection d’objets [ici de types] qui respectent certaines conditions [ici, pouvoir être comparé, affiché…]) ou si vous voulait vraiment une analogie en langage impératif, des interfaces du java. Ce n’est certainement pas celui des classes C++.</p>
+
+<p>Quand on prétend qu’un type est instance d’une classe, on doit fournir l’implémentation des fonctions de la classe, mais pas nécessairement toutes. Les classes fournissent souvent une implémentation des fonctions, souvent en terme récursif. Par exemple on pourrais définir a /= b à partir de == et a == b à partir de /=. De cette façon, il suffit de définir l’une des deux fonctions pour pouvoir immédiatement utiliser les deux opérateurs. (Le compilateur s’assurant que cela n’engendre pas de sur-coût en terme de performances).</p>
+
+<p>Voici par exemple la classe Eq, décrivant deux objets pouvant être comparé :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">class</span>  <span class="kt">Eq</span> <span class="n">a</span>  <span class="kr">where</span>
+<span class="kr">class</span> <span class="kt">Eq</span> <span class="n">a</span> <span class="kr">where</span>
+    <span class="p">(</span><span class="o">==</span><span class="p">)</span> <span class="o">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+    <span class="p">(</span><span class="o">/=</span><span class="p">)</span> <span class="o">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+    <span class="n">x</span> <span class="o">==</span> <span class="n">y</span> <span class="o">=</span> <span class="n">not</span> <span class="p">(</span><span class="n">x</span> <span class="o">/=</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">/=</span> <span class="n">y</span> <span class="o">=</span> <span class="n">not</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>On rend un type instance d’une classe de la façon suivante (exemple honteusement tirer de <em>Learn you haskell for a great good</em> :</p>
+<pre><code class="language-haskel">data TrafficLight = Red | Yellow | Green
+
+instance Eq TrafficLight where
+    Red == Red = True
+    Green == Green = True
+    Yellow == Yellow = True
+    _ == _ = False
+</code></pre>
+<p>On définit l’égalité grâce au filtrage par motif, en définissant seulement l’opérateur ==.</p>
+
+<p>Bon, à vrais dire, pour les classes comme Eq (comparable) et Show (affichable), on peut laisser haskell s’en charger comme un grand :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">TrafficLight</span> <span class="o">=</span> <span class="kt">Red</span> <span class="o">|</span> <span class="kt">Yellow</span> <span class="o">|</span> <span class="kt">Green</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">,</span> <span class="kt">Eq</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>En fait, quand on parleras de foncteurs, foncteurs applicatifs ou monades, on parleras de type qui sont instance respectivement de Functor (Prelude.Functor), de Applicative (Control.Applicative) et de Monad (Control.Monad).</p>
+
+<h3 id="les-foncteurs">Les foncteurs</h3>
+
+<p>Les foncteurs (à nouveau, le terme est à prendre au sens e la théorie des catégories) constituent le point de départ vers les monades. Faisons un petit détour par les maths et définissons ce qu’est un foncteur (il n’est pas nécessaire de comprendre ce paragraphe pour la suite, c’est pour la culture).</p>
+
+<p><strong>La catégorie des types :</strong>_ Une catégorie $\mathcal{C}$ est une collection d’ensembles. Ici, on regarderas la collection de tous les types hasell possible. Un ensemble seras donc un type. Ses éléments seront les valeurs qui sont de ce type. Par exemple Int seras un semble et 1, 4, 6 sont des éléments de cette ensemble. Il n’y a que deux éléments dans l’ensemble Bool, et une infinité d’éléments pour Integer. Pour que ce soit une catégorie, il faut qu’étant donné deux ensembles de notre collection $A$ et $B$, il existes une ensemble d’applications de $A \to B$. Dans notre cas ce seras toute les <em>fonctions</em> de type <i> A -&gt; B </i>. On parle des “flèches de A vers B”. Pour la culture, on note l’ensemble de ces applications $Hom_{\mathcal{C}}(A, B)$.</p>
+
+<p>Attention, pour que ce soit vraiment une catégorie, il faut quelques conditions sur ces flèches :</p>
+
+<p>1) Si $A$ est un élément de $\mathcal{C}$, alors il faut que l’identité soit une flèche. Dans notre cas, on veut que la fonction <code class="highlighter-rouge">id x = x</code> de type <code class="highlighter-rouge">A -&gt; A</code> soit bien une fonction haskell. Ce qui est le cas, puisque je viens de vous donner le code haskell qui permet de la définir :)</p>
+
+<p>2) Si $f: A \to B$ et $g : B \to C$ sont deux flèches (respectivement de $A$ dans $B$ et de $B$ dans $C$), alors la composé $g \circ f$ est une flèche de $A$ dans $C$. Dans le cas qui nous intéresse, cette règle est bien respectée car si <code class="highlighter-rouge">f</code> et <code class="highlighter-rouge">g</code> sont deux fonctions haskell, alors la composé est la fonction <code class="highlighter-rouge">\x -&gt; g (f x)</code>, que l’on peut aussi écrire <code class="highlighter-rouge">f . g</code>.</p>
+
+<p>Donc, pour résumer : La collection de tous les types haskell est une catégorie. Si <code class="highlighter-rouge">a</code> et <code class="highlighter-rouge">b</code> sont deux types haskell, l’ensemble de toute les fonctions de <code class="highlighter-rouge">a -&gt; b</code> sont appelés les flèches entre <code class="highlighter-rouge">a</code> et <code class="highlighter-rouge">b</code>.</p>
+
+<p><strong>Les foncteurs (covariants) :</strong> Un foncteur $F$ d’une catégorie $\mathcal{C}$ vers une catégorie $\mathcal{D}$ est :</p>
+
+<p>1) Pour chaque semble $A$ de $\mathcal{C}$, un ensemble de $\mathcal{D}$ qu’on noteras $F(A)$.</p>
+
+<p>2) Pour chaque flèche $f : A \to B$ entre des ensembles de $\mathcal{C}$, une flèche $F(A) \to F(B)$ qu’on noteras $F(f)$.</p>
+
+<p>3) Il faut que $F(g \circ f) = F (g) \circ F(f)$ et que $F(id) = id$. C’est à dire que composer des flèches avant transformation est la même chose que les composer après, et l’identité $id: A \to A$ (flèche qui ne fait rien) est bien envoyer sur l’identité $id: F(A) -&gt; F(A)$.</p>
+
+<p>Un foncteur est donc une façon de transformer une catégorie $\mathcal{C}$ en une partie (sous-catégorie) de $\mathcal{D}$.</p>
+
+<p><strong>Point culture (pour les curieux) :</strong> Les foncteurs contravariants sont simplement des foncteurs qui “renversent” les flèches, c’est à dire en transforment A -&gt; B en F(A) &lt;- F(B).&lt;/i&gt;</p>
+
+<p>Ici, ce qui nous intéresse sont les foncteurs de $\mathcal{C}$ dans $\mathcal{C}$ (on dit des endofoncteurs). À partir de maintenant, on ne considère plus que la catégorie $\mathcal{T}$ des types haskell. Un foncteur <code class="highlighter-rouge">Fonc</code>, en haskell, est un foncteur de $\mathcal{T}$ dans $\mathcal{T}$. C’est à dire :</p>
+
+<p>1) Une façon à tout type <code class="highlighter-rouge">a</code> d’associer un type <code class="highlighter-rouge">Fonc a</code>. Ainsi <code class="highlighter-rouge">Fonc</code> est un constructeur de type, par exemple <code class="highlighter-rouge">Liste</code> ou <code class="highlighter-rouge">Arbre</code> des exemples précédents. C’est peut-être le bon moment d’aller feuilleter quelques lien sur les constructeurs de type et leur “kind”. Disons simplement qu’un type comme int ou bool est de kind <code class="highlighter-rouge">*</code> mais que Liste et Arbre sont de kind <code class="highlighter-rouge">* -&gt; *</code>. Cela signifit que ces deux dernier mangent un type <code class="highlighter-rouge">T</code> et fabrique des nouveaux types <code class="highlighter-rouge">Liste T</code> et <code class="highlighter-rouge">Arbre T</code>. Liste n’est donc pas un type, mais un constructeur de type.</p>
+
+<p>2) Une façon à toute fonction <code class="highlighter-rouge">f :: a -&gt; b</code> d’associer une fonction <code class="highlighter-rouge">f' :: Fonc a -&gt; Fonc b</code></p>
+
+<p>3) Cette façon de faire doit transformer l’identité <code class="highlighter-rouge">(\x -&gt; x) :: a -&gt; a</code> en l’identité <code class="highlighter-rouge">(\x -&gt; x) :: Fonc a -&gt; Fonc a</code></p>
+
+<p>4) Cette façon de faire doit passer à la composition, c’est à dire que si l’on transforme <code class="highlighter-rouge">f :: a -&gt; b</code> en <code class="highlighter-rouge">f' :: Fonc a -&gt; Fonc b</code> et <code class="highlighter-rouge">g :: b -&gt; c</code> en <code class="highlighter-rouge">g' :: Fonc b -&gt; Fonc c</code>, alors ` g . f ` seras transformé en <code class="highlighter-rouge">g' . f'</code>.</p>
+
+<p>Pour qu’un constructeur de type <code class="highlighter-rouge">Fonc</code> soit un foncteur, on le fait instance de la classe Functor définie comme suit :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">class</span>  <span class="kt">Functor</span> <span class="n">f</span>  <span class="kr">where</span>
+    <span class="n">fmap</span>        <span class="o">::</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p>Remarquez que l’on peut lire <code class="highlighter-rouge">fmap :: (a -&gt; b) -&gt; (f a -&gt; f b)</code> ce qui signifie : fmap(fonctorial mapping) prend une fonction de type <code class="highlighter-rouge">a -&gt; b</code> et la transforme en une fonction de type <code class="highlighter-rouge">f a -&gt; f b</code>. On a donc bien une transformation d’une flèche de a vers b en une flèche de $f a$ vers $f b$. Si l’on a donc un constructeur de type qui est instance de <code class="highlighter-rouge">Functor</code>, on a bien un endofoncteur de la catégorie des types. Maintenant que nous avons le sentiment que toutes nos considérations théoriques nous ont apporté une compréhension profonde du sujet, nous allons pouvoir les oublier et passer à la pratique.</p>
+
+<p>A quoi sert un foncteur : Un constructeur de type fonctoriel, c’est un constructeur de type où l’on sauras maper des fonctions. Si notre type Liste devient instance de <code class="highlighter-rouge">Functor</code>, et que l’on a un <code class="highlighter-rouge">Liste Int</code>, on peut construire rapidement une liste de tous ces nombres représenté par des chaines de caractères. Il suffit de disposer d’une fonction <code class="highlighter-rouge">Int -&gt; String</code>. Haskell nous en fournis une, c’est <code class="highlighter-rouge">show</code>. Alors, on n’a plus qu’a appliquer cette fonction sur chacun des éléments de la liste par <code class="highlighter-rouge">map show liste</code>.</p>
+
+<p>Regardons comment rendre Liste instance de Functor :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">instance</span>  <span class="kt">Functor</span> <span class="kt">Liste</span>  <span class="kr">where</span>
+    <span class="n">fmap</span> <span class="n">f</span> <span class="kt">Vide</span> <span class="o">=</span> <span class="kt">Vide</span>
+    <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Element</span> <span class="n">h</span> <span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="kt">Element</span> <span class="p">(</span><span class="n">f</span> <span class="n">h</span><span class="p">)</span> <span class="p">(</span><span class="n">fmap</span> <span class="n">f</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1">-- Maintenant, on peut mapper des fonctions sur des listes</span>
+<span class="n">estPositif</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">listeEntiers</span> <span class="o">=</span> <span class="kt">Cons</span> <span class="mi">1</span> <span class="p">(</span><span class="kt">Cons</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="p">(</span><span class="kt">Cons</span> <span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">)</span> <span class="p">(</span><span class="kt">Cons</span> <span class="mi">4</span> <span class="kt">Vide</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">listeEstPositif</span> <span class="o">=</span> <span class="n">fmap</span> <span class="n">estPositif</span> <span class="n">listeEntiers</span>
+<span class="c1">-- listeEstPositif = Cons True (Cons False (Cons False (Cons True Vide)))</span>
+</code></pre></div></div>
+
+<p>Si vous réfléchissez bien, ça ressemble beaucoup à ce que vous faites à chaque fois que vous appliquez un traitement aux éléments d’un container ; vous parcourez une liste, et vous appliquez votre procédure à chaque élément. L’avantage d’avoir une unique fonction fmap implémenté pour chaque type, c’est que si vous décidez de modifier votre container, vous n’aurez que très peut de changement à faire. Il suffiras de rendre le nouveau container instance de Functor, alors qu’en C++, si vous utilisiez auparavant des containers de la STL, il vous faudra vous assurer que votre nouvelle structure fournie elle aussi des littérateurs, ce qui peut être assez lourd à fournir, voir impossible si vous n’êtes pas auteur de la classe.</p>
+
+<p>Parmi les instances de Functor il y a donc les listes (les vrais listes []), mais aussi Maybe. On peut donc utiliser Maybe pour utiliser des valeurs dans un contexte. Par exemple :</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">divideBy</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Maybe</span> <span class="kt">Int</span>
+<span class="n">divideBy</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kt">Nothing</span> <span class="kr">else</span> <span class="p">(</span><span class="n">n</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="n">m</span><span class="p">)</span>
+
+
+<span class="n">doSomething</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">doSomething</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span>
+
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">fmap</span> <span class="n">doSomething</span> <span class="p">(</span><span class="n">divideBy</span> <span class="mi">3</span> <span class="mi">7</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Il est très important de bien saisir l’intérêt des foncteurs (qui n’est pas cantonné aux langages fonctionnels), et leur fonctionnement pour la suite. La dernière partie ne traiteras que de leurs spécialisations : les foncteurs applicatifs et les monades.</p>
+
+<p><strong><em>Point culture :</em></strong> Et si l’on veux un foncteur contravariant en haskell? On peut prendre par exemple le constructeur de type <code class="highlighter-rouge">type Func a = a -&gt; Int</code> et la fonction <code class="highlighter-rouge">map :: (a -&gt; b) -&gt; (b -&gt; Int) -&gt; (a -&gt; Int) ; map f fa = fb . f</code>. On construit bien une fonction de type <code class="highlighter-rouge">a -&gt; Int</code> à partir d’une fonction de type <code class="highlighter-rouge">b -&gt; Int</code>. On a donc “inversé les flèches”, puisque l’on part de “a -&gt; b” pour obtenir du “Func b -&gt; Func a”.&lt;/i&gt;</p>
+
+<h3 id="références-">Références :</h3>
+
+<ul>
+  <li>Catégories : <a href="http://fr.wikipedia.org/wiki/Th%C3%A9orie_des_cat%C3%A9gories">http://fr.wikipedia.org/wiki/Th%C3%A9orie_des_cat%C3%A9gories</a></li>
+  <li>Foncteurs : <a href="http://fr.wikipedia.org/wiki/Foncteur">http://fr.wikipedia.org/wiki/Foncteur</a></li>
+  <li>Apprendre Haskell vous fera le plus grand bien : <a href="http://lyah.haskell.fr/&lt;">http://lyah.haskell.fr/&lt;</a> ou <a href="http://learnyouahaskell.com">http://learnyouahaskell.com</a></li>
+  <li>Real World Haskell : <a href="http://book.realworldhaskell.org/read/">http://book.realworldhaskell.org/read/</a></li>
+  <li>Haskell “kind” : <a href="http://www.haskell.org/haskellwiki/Kind">http://www.haskell.org/haskellwiki/Kind</a> (type <code class="highlighter-rouge">:k Maybe</code> and <code class="highlighter-rouge">:k Bool</code> on GHCI)</li>
+  <li>La classe functor : <a href="http://en.wikibooks.org/wiki/Haskell/The_Functor_class">http://en.wikibooks.org/wiki/Haskell/The_Functor_class</a></li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/what-is-wrong-with-the-object-paradigm/">
+            What is wrong with the object paradigm ?
+            <small>17 Feb 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/boost-property-tree/">
+            How to use boost::property_tree to load and write JSON
+            <small>21 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/an-alternative-error-handling-strategy-cpp/">
+            An alternative error handling strategy for C++
+            <small>27 Aug 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10762787-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    
+
+    <footer class="footer">
+  <hr/>
+  <div class="container">
+    <div class="row">
+      <p class="text-muted col-sm-10 text-center">
+            <span class="sidebar-nav-item small">Make a donation. 😇</span>
+            <span class="sidebar-nav-item x-small">BTC: <a href="bitcoin:1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ">1JcME7DSCw8b83nEGFKUYTKE4LM8aX4dhJ</a></span>
+            <span class="sidebar-nav-item x-small">ETH: <a href="ethereum:eA22ADf19f20D618D8EF66E4704C540A10708F1F">eA22ADf19f20D618D8EF66E4704C540A10708F1F</a></span>
+      </p>
+      <p class="col-sm-2">
+        <a class="twitter-share-button col-sm"
+           href="https://twitter.com/share"
+           data-via="Zenol42">
+          Tweet
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Twitter sharing button loader -->
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+
+  </body>
+</html>
