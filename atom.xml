@@ -4,7 +4,7 @@
  <title>Jeremy Cochoy</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2019-11-06T17:02:56+02:00</updated>
+ <updated>2019-11-06T17:20:07+02:00</updated>
  <id></id>
  <author>
    <name>Jeremy Cochoy</name>
@@ -4387,7 +4387,7 @@ a planté – ce qui arrive plus souvent qu’on le souhaiterais.&lt;/li&gt;
 
 &lt;h3 id=&quot;lets-go&quot;&gt;Let’s GO!&lt;/h3&gt;
 
-&lt;p&gt;Votre sketch est sur votre arduino, votre circuit est opérationnel, vous avez vérifier chaque câble, chaque branchement, et relut le schéma 8 fois? Bien, alors revérifiez encore une fois&lt;sup id=&quot;fnref:reflet-acide-8&quot;&gt;&lt;a href=&quot;#fn:reflet-acide-8&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Votre sketch est sur votre arduino, votre circuit est opérationnel, vous avez vérifier chaque câble, chaque branchement, et relut le schéma 8 fois? Bien, alors revérifiez encore une fois dans le doute.&lt;/p&gt;
 
 &lt;p&gt;Installez la suite AVRtools (WinAVR pour windows, votre gestionnaire de packets sous linux, et pour les autres, à vous de vous débrouiller :D ). Ne pas hésiter à consulter la &lt;a href=&quot;http://www.nongnu.org/avr-libc/user-manual/using_tools.html&quot;&gt;documentation de AVRtools&lt;/a&gt;.&lt;/p&gt;
 
@@ -4404,13 +4404,6 @@ au site de &lt;a href=&quot;http://www.ladyada.net/learn/avr/avrdude.html&quot;&
 
 &lt;p&gt;&lt;strong&gt;Nb :&lt;/strong&gt; Pour calculer les fuses, j’utilise &lt;a href=&quot;http://www.engbedded.com/fusecalc&quot;&gt;FuseCalc&lt;/a&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:reflet-acide-8&quot;&gt;
-      &lt;p&gt;Si vous ne conaissez pas la saga MP3 reflet d’acide, vous pouvez rechercher la fameuse citation “huit, ça suffit”. &lt;a href=&quot;#fnref:reflet-acide-8&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
 </content>
  </entry>
  
