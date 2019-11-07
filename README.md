@@ -9,4 +9,4 @@ Deployment process
 ------------------
 
 Compile and deploy to master the development branch:
-`jgd -r development -b master`
+`bundle exec jgd -r development -b master`
