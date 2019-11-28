@@ -2,6 +2,9 @@
 layout: page
 title: Teaching
 permalink: /teaching/
+redirect_from:
+  - /teaching/cours_android/cours2.pdf
+  - /teaching/cours_android/cours1.pdf
 ---
 
 Enseignements :

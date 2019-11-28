@@ -7,6 +7,8 @@ author: Jérémy Cochoy
 date: 2013-03-31 + 0100
 categories: arduino software arclinux linux
 lang: fr
+redirect_from:
+  - /blog/arduino-archlinux/fr.html
 ...
 
 Voilà que je ressort mon arduino de mes cartons, motivé à dépoussiérer le code de ma 'boite musicale'. Et quel ne fut pas ma surprise quand le package rxtx refusa de s'installer suite a des erreurs de compilation.

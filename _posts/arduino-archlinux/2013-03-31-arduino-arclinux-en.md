@@ -7,6 +7,8 @@ author: Jérémy Cochoy
 date: 2013-03-31 + 0100
 categories: arduino software arclinux linux
 lang: en
+redirect_from:
+  - /blog/arduino-archlinux/en.html
 ...
 
 I quickly explain how to make your arduino card works with your ArchLinux distrib by patching and installing the last version of rxtx.

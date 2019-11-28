@@ -8,6 +8,8 @@ date: 2011-02-25 +0100
 categories: maths c programming software
 lang: fr
 math: true
+redirect_from:
+  - /blog/fast-exponentiation/fr.html
 ...
 
 ## La recherche de racine pour des polynômes du 3ème degré

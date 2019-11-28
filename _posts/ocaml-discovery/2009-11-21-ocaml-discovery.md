@@ -21,7 +21,7 @@ Il y a deux type de propositions :
  *  Les définitions : De la forme $$q := \sqrt{2}$$ qui déclare q comme un alias de $$\sqrt{2}$$
 
 En ocaml, la syntaxe est la suivante :
- *  Pour un expression : 
+ *  Pour un expression :
     ``` ocaml
     3 * 7;;
     ```
@@ -91,9 +91,9 @@ On pourras aussi utiliser l'instruction match {variable} with {filtre}.
 
 ## La récursivité terminal
 
-Maintenant, considérons les itérations. Nous allons utiliser la récursivités terminal(tail-rec pour les intimes) affin de construire une boucle. La récursivitée terminal est une forme de récursivité ou l'unique action qui succède à l'appelle a la fonction récursive est un retour de valeur.
+Maintenant, considérons les itérations. Nous allons utiliser la récursivités terminal(tail-rec pour les intimes) afin de construire une boucle. La récursivité terminale est une forme de récursivité ou l'unique action qui succède à l'appelle a la fonction récursive est un retour de valeur.
 
-C'est plutôt élémentaire : 
+C'est plutôt élémentaire :
 ``` ocaml
 let rec aff_n = function
   | n when n < 1 -> ();

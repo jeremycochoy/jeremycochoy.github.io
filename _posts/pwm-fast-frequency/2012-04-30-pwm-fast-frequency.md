@@ -8,6 +8,11 @@ author: Jérémy Cochoy
 date: 2012-04-30 +0100
 categories: arduino embeded asm pwm timer hardware atmega
 lang: fr
+redirect_from:
+  - /site/blog/posts/termcap-library/fr.html
+  - /blog/pwm
+  - /blog/pwm/
+  - /blog/windows-keyboard-mapping/fr.html
 ...
 
 ## Timer/Counter et PWM pour des fréquences élevés.
