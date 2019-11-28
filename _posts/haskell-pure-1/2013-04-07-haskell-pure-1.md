@@ -6,6 +6,9 @@ author: Jérémy Cochoy
 date: 2013-04-07 +0100
 categories: programming haskell language software
 lang: fr
+redirect_from:
+  - /haskell-pure-1/fr.htm
+  - /haskell-pure-1/
 ...
 
 Mauvais jeux de mots mit à part, ce très court et succin billet (vous me voyez venir) va traiter du haskell. Haskell, de monsieur Haskell Brook Curry, un monsieur très épicé, est un langage fonctionnel. Comme beaucoup de langages fonctionnel, cela représente un choque culturel que de les appréhender. Mais le haskell semble avoir un petit quelque chose que n'ont pas les autres langages fonctionnels. À travers les trois prochains billets, j'espère vous convaincre que, si un jour, dans votre vie, vous avez l'occasion de creuser un language fonctionnel, alors vous devriez creuser le haskell.
@@ -171,7 +174,7 @@ struct Liste {
     } secondConstructor;
   };
 };
- 
+
 template <class T>
 struct Arbre {
   union {
@@ -225,4 +228,3 @@ Références :
 ------------
 
   * Quelques détails sur les constructeurs : <http://www.haskell.org/haskellwiki/Constructor>
-
