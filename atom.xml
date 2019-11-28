@@ -4,7 +4,7 @@
  <title>Jeremy Cochoy</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2019-11-08T10:14:12+02:00</updated>
+ <updated>2019-11-28T18:47:54+02:00</updated>
  <id></id>
  <author>
    <name>Jeremy Cochoy</name>
@@ -4035,7 +4035,7 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondConstructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
- 
+
 &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Arbre&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;union&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -4087,7 +4087,6 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
 &lt;ul&gt;
   &lt;li&gt;Quelques détails sur les constructeurs : &lt;a href=&quot;http://www.haskell.org/haskellwiki/Constructor&quot;&gt;http://www.haskell.org/haskellwiki/Constructor&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 </content>
  </entry>
  
