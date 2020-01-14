@@ -69,7 +69,7 @@ and the remaining part of the list.
 ```swift
   init(from list: [T] = []) {
     cursor = list.first
-    rightList = list
+    rightList = list.reversed()
   }
 
   /// Convert to a swift array
