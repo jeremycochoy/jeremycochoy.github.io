@@ -61,7 +61,7 @@ the index set is $\mathbb{R}^2$.
 --------------------------------------------------
 
 ## Talk:
-* [Persistent Algebras](pre-algebra) during the [JGA 2017](https://jga2017.sciencesconf.org/)
+* [Persistent Algebras][pre-algebra] during the [JGA 2017](https://jga2017.sciencesconf.org/)
 
 
 ## Papers:
