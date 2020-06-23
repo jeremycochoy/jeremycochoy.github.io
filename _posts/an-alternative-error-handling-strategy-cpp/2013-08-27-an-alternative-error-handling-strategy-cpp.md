@@ -10,6 +10,7 @@ categories: programming C++ monads language software script
 lang: en
 redirect_from:
   - /site/2013/08/27/an-alternative-error-handling-strategy-for-cpp
+  - /site/2013/08/27/an-alternative-error-handling-strategy-for-cpp/index.html
 ...
 
 ## Error handling
