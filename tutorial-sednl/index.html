@@ -142,14 +142,14 @@ Microsoft. La procédure pour utiliser MinGW est légèrement plus compliquée.<
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cmake <span class="nt">-G</span> <span class="s2">"MinGW Makefiles"</span> ..
 </code></pre></div></div>
 
-<p>Vous pouvez éventuellement personnaliser le build en exécutant <code class="highlighter-rouge">cmake-gui</code> sous
-linux ou <code class="highlighter-rouge">cmake-gui.exe</code> sous Windows.</p>
+<p>Vous pouvez éventuellement personnaliser le build en exécutant <code class="language-plaintext highlighter-rouge">cmake-gui</code> sous
+linux ou <code class="language-plaintext highlighter-rouge">cmake-gui.exe</code> sous Windows.</p>
 
-<p>Vous pouvez maintenant lancer la compilation avec <code class="highlighter-rouge">make</code> sous linux,
-et <code class="highlighter-rouge">mingw32-make</code> sous Windows avec mingw.</p>
+<p>Vous pouvez maintenant lancer la compilation avec <code class="language-plaintext highlighter-rouge">make</code> sous linux,
+et <code class="language-plaintext highlighter-rouge">mingw32-make</code> sous Windows avec mingw.</p>
 
 <p>Une fois la compilation terminé, vous obtenez une bibliothèque statique
-<code class="highlighter-rouge">sednl-1.0.a</code> et une dynamique <code class="highlighter-rouge">sednl-1.0.so</code>. (.lib et .dll sous windows).</p>
+<code class="language-plaintext highlighter-rouge">sednl-1.0.a</code> et une dynamique <code class="language-plaintext highlighter-rouge">sednl-1.0.so</code>. (.lib et .dll sous windows).</p>
 
 <p>C’est terminé, nous allons pouvoir compiler notre premier programme.</p>
 
@@ -214,15 +214,15 @@ standard, puis l’envoyer au serveur.</p>
 </code></pre></div></div>
 
 <p>Si le fichier se nome « client.cpp », vous pouvez le compiler avec la ligne
-<code class="highlighter-rouge">clang++ -std=c++11 -I/usr/local/include/sednl-1.0/ -lsednl-1.0 -lpthread client.cpp</code>.</p>
+<code class="language-plaintext highlighter-rouge">clang++ -std=c++11 -I/usr/local/include/sednl-1.0/ -lsednl-1.0 -lpthread client.cpp</code>.</p>
 
-<p>La première fonction <code class="highlighter-rouge">get_input</code> lit l’entrée standard et stocke tout l’extrait de code dans une chaîne qu’elle renvoie.</p>
+<p>La première fonction <code class="language-plaintext highlighter-rouge">get_input</code> lit l’entrée standard et stocke tout l’extrait de code dans une chaîne qu’elle renvoie.</p>
 
 <p>Par la suite, on demande à ce que le premier argument du programme soit le nom
-de l’extrait de code (<code class="highlighter-rouge">argv[0]</code>).</p>
+de l’extrait de code (<code class="language-plaintext highlighter-rouge">argv[0]</code>).</p>
 
 <p>Enfin, c’est à la ligne 26 que commence vraiment notre programme.
-On commence par ouvrir une connexion vers <code class="highlighter-rouge">localhost</code>. C’est l’ordinateur
+On commence par ouvrir une connexion vers <code class="language-plaintext highlighter-rouge">localhost</code>. C’est l’ordinateur
 qui exécute ce programme. On peux aussi indiquer « 127.0.0.1 ».
 Le port sur le quel on cherche à atteindre le serveur est le port « 4280 ».
 Un port n’a pas de réalitée matériel, c’est juste une façon de distinguer
@@ -232,14 +232,14 @@ Le choix du numéro de port est arbitraire, même si l’on cherchera à
 20 et 21 pour ftp, etc.) ainsi que les valeurs inférieurs à 1024, car
 certains système requière des privilèges administrateur pour les utiliser.</p>
 
-<p>La ligne 35 fait deux choses. D’abord, <code class="highlighter-rouge">make_event</code> fabriquer un objet
-de type <code class="highlighter-rouge">Event</code> qui contient :</p>
+<p>La ligne 35 fait deux choses. D’abord, <code class="language-plaintext highlighter-rouge">make_event</code> fabriquer un objet
+de type <code class="language-plaintext highlighter-rouge">Event</code> qui contient :</p>
 
-<p>1)  Le nom de l’évènement envoyé au serveur. Ici, <code class="highlighter-rouge">"log_that"</code>.
-2)  Le nom sous le quel l’extrait de code sera enregistré. Ici, <code class="highlighter-rouge">argv[1]</code>.
-3)  L’extrait de code à logger. Ici, <code class="highlighter-rouge">input</code>.</p>
+<p>1)  Le nom de l’évènement envoyé au serveur. Ici, <code class="language-plaintext highlighter-rouge">"log_that"</code>.
+2)  Le nom sous le quel l’extrait de code sera enregistré. Ici, <code class="language-plaintext highlighter-rouge">argv[1]</code>.
+3)  L’extrait de code à logger. Ici, <code class="language-plaintext highlighter-rouge">input</code>.</p>
 
-<p>Une fois l’évènement crée, il est envoyé avec par la fonction membre <code class="highlighter-rouge">send</code>.</p>
+<p>Une fois l’évènement crée, il est envoyé avec par la fonction membre <code class="language-plaintext highlighter-rouge">send</code>.</p>
 
 <p>Enfin, la connexion est fermée à la ligne 37.</p>
 

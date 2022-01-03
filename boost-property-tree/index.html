@@ -146,13 +146,13 @@
 <span class="n">pt</span><span class="o">::</span><span class="n">read_json</span><span class="p">(</span><span class="s">"filename.json"</span><span class="p">,</span> <span class="n">root</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Now, we have a populated property tree thatis waiting from us to look at him. Notice that you can also read from a stream, for example <code class="highlighter-rouge">pt::read_json(std::cin, root)</code>{.cpp} is also allowed.</p>
+<p>Now, we have a populated property tree thatis waiting from us to look at him. Notice that you can also read from a stream, for example <code class="language-plaintext highlighter-rouge">pt::read_json(std::cin, root)</code>{.cpp} is also allowed.</p>
 
-<p>If your json file is illformed, you will be granted by a <code class="highlighter-rouge">pt::json_parser::json_parser_error</code>.</p>
+<p>If your json file is illformed, you will be granted by a <code class="language-plaintext highlighter-rouge">pt::json_parser::json_parser_error</code>.</p>
 
 <h3 id="loading-some-values">Loading some values</h3>
 
-<p>We can access a value from the root by giving it’s path to the <code class="highlighter-rouge">get</code> method.</p>
+<p>We can access a value from the root by giving it’s path to the <code class="language-plaintext highlighter-rouge">get</code> method.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read values</span>
 <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
@@ -160,7 +160,7 @@
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>If the field your are looking to doesn’t exists, the <code class="highlighter-rouge">get()</code> method will throw a <code class="highlighter-rouge">pt::ptree_bad_path</code> exception, so that you can recorver from incomplete json files. Notice you can set a default value as second argument, or use <code class="highlighter-rouge">get_optional&lt;T&gt;()</code> wich return a <code class="highlighter-rouge">boost::optional&lt;T&gt;</code>.</p>
+<p>If the field your are looking to doesn’t exists, the <code class="language-plaintext highlighter-rouge">get()</code> method will throw a <code class="language-plaintext highlighter-rouge">pt::ptree_bad_path</code> exception, so that you can recorver from incomplete json files. Notice you can set a default value as second argument, or use <code class="language-plaintext highlighter-rouge">get_optional&lt;T&gt;()</code> wich return a <code class="language-plaintext highlighter-rouge">boost::optional&lt;T&gt;</code>.</p>
 
 <p>Notice the getter doesn’t care about the type of the input in the json file, but only rely on the ability to convert the string to the type you are asking.</p>
 
@@ -186,9 +186,9 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Since <code class="highlighter-rouge">animal.second</code> is a <code class="highlighter-rouge">ptree</code>, we can also call call <code class="highlighter-rouge">get()</code> or <code class="highlighter-rouge">get_child()</code> in the case our node wasn’t just a string.</p>
+<p>Since <code class="language-plaintext highlighter-rouge">animal.second</code> is a <code class="language-plaintext highlighter-rouge">ptree</code>, we can also call call <code class="language-plaintext highlighter-rouge">get()</code> or <code class="language-plaintext highlighter-rouge">get_child()</code> in the case our node wasn’t just a string.</p>
 
-<p>A bit more complexe example is given by a list of values. Each element of the list is actualy a <code class="highlighter-rouge">std::pair("", value)</code> (where value is a <code class="highlighter-rouge">ptree</code>). It doesnt means that reading it is harder.</p>
+<p>A bit more complexe example is given by a list of values. Each element of the list is actualy a <code class="language-plaintext highlighter-rouge">std::pair("", value)</code> (where value is a <code class="language-plaintext highlighter-rouge">ptree</code>). It doesnt means that reading it is harder.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">fruits</span><span class="p">;</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">fruit</span> <span class="o">:</span> <span class="n">root</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">))</span>
@@ -199,7 +199,7 @@
 
 </code></pre></div></div>
 
-<p>In the case the values arent string, we can just call <code class="highlighter-rouge">fruit.second.get_value&lt;T&gt;()</code> in place of <code class="highlighter-rouge">fruit.second.data()</code>.</p>
+<p>In the case the values arent string, we can just call <code class="language-plaintext highlighter-rouge">fruit.second.get_value&lt;T&gt;()</code> in place of <code class="language-plaintext highlighter-rouge">fruit.second.data()</code>.</p>
 
 <h3 id="deeper--matrices">Deeper : matrices</h3>
 
@@ -223,7 +223,7 @@
 
 <h2 id="writing-json">Writing JSON</h2>
 
-<p>Let’s say that now, we wan’t to produce this tree from our application’s data. To do that, all we have to do is build a <code class="highlighter-rouge">ptree</code> containing our data.</p>
+<p>Let’s say that now, we wan’t to produce this tree from our application’s data. To do that, all we have to do is build a <code class="language-plaintext highlighter-rouge">ptree</code> containing our data.</p>
 
 <p>We start with an empty tree :</p>
 <pre><code class="language-{.cpp}">pt::ptree root;
@@ -236,7 +236,7 @@ pt::write_json(std::cout, root);
 
 <h3 id="add-values">Add values</h3>
 
-<p>Puting values in a tree can be acomplished with the <code class="highlighter-rouge">put()</code> method.</p>
+<p>Puting values in a tree can be acomplished with the <code class="language-plaintext highlighter-rouge">put()</code> method.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
 <span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">,</span> <span class="s">"bonjour"</span><span class="p">);</span>
@@ -246,7 +246,7 @@ pt::write_json(std::cout, root);
 
 <h3 id="add-a-list-of-objects">Add a list of objects</h3>
 
-<p>No big deel here, although we now use <code class="highlighter-rouge">add_child()</code> to put our <code class="highlighter-rouge">animal</code> node at the root.</p>
+<p>No big deel here, although we now use <code class="language-plaintext highlighter-rouge">add_child()</code> to put our <code class="language-plaintext highlighter-rouge">animal</code> node at the root.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a node</span>
 <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">animals_node</span><span class="p">;</span>
@@ -260,8 +260,8 @@ pt::write_json(std::cout, root);
 <h3 id="add-many-nodes-with-the-same-name">Add many nodes with the same name</h3>
 
 <p>Now start the tricky tricks. If you want to add more than one time a node
-named <code class="highlighter-rouge">fish</code>, you can’t call the <code class="highlighter-rouge">put()</code> method. The call <code class="highlighter-rouge">node.put("name", value)</code> will
-replace the existing node named <code class="highlighter-rouge">name</code>. But you can do it by manually pushing your nodes,
+named <code class="language-plaintext highlighter-rouge">fish</code>, you can’t call the <code class="language-plaintext highlighter-rouge">put()</code> method. The call <code class="language-plaintext highlighter-rouge">node.put("name", value)</code> will
+replace the existing node named <code class="language-plaintext highlighter-rouge">name</code>. But you can do it by manually pushing your nodes,
 as demonstrated bellow.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// Add two objects with the same name</span>
@@ -275,7 +275,7 @@ as demonstrated bellow.</p>
 
 <h3 id="add-a-list-of-values">Add a list of values</h3>
 
-<p>If you remember, list are mades of nodes with empty name. Se we have to build node with empty names, and then use the <code class="highlighter-rouge">push_back()</code> once again to add all those unnamed childs.</p>
+<p>If you remember, list are mades of nodes with empty name. Se we have to build node with empty names, and then use the <code class="language-plaintext highlighter-rouge">push_back()</code> once again to add all those unnamed childs.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a list</span>
 <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fruits_node</span><span class="p">;</span>
@@ -317,7 +317,7 @@ as demonstrated bellow.</p>
 
 <h2 id="references">References</h2>
 
-<p>You can download a <a href="./data/example.cpp">C++ example</a> and the <a href="./data/example.json">input JSON file</a> for experimenting. Compile it with <code class="highlighter-rouge">clang++ -std=c++11 example.cpp -o example</code>.</p>
+<p>You can download a <a href="./data/example.cpp">C++ example</a> and the <a href="./data/example.json">input JSON file</a> for experimenting. Compile it with <code class="language-plaintext highlighter-rouge">clang++ -std=c++11 example.cpp -o example</code>.</p>
 
 <p>Some links related :</p>
 

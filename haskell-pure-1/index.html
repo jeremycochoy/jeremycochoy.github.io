@@ -121,7 +121,7 @@
 </code></pre></div></div>
 
 <p>La première ligne est le typage de la fonction (souvent facultatif), et la seconde est le corps de la fonction. En C++, ça donnerais :</p>
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="n">T</span> <span class="nf">mult</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
@@ -133,9 +133,9 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>En fait, le <code class="highlighter-rouge">n</code> qui apparaît dans le type peut être remplacé par n’importe quel lettre/mot qui vous plaît. Cela signifie un type quelconque, qui respecte la contrainte “<em>peut être multiplié</em>” décrite par <code class="highlighter-rouge">(Num n) =&gt;</code>.</p>
+<p>En fait, le <code class="language-plaintext highlighter-rouge">n</code> qui apparaît dans le type peut être remplacé par n’importe quel lettre/mot qui vous plaît. Cela signifie un type quelconque, qui respecte la contrainte “<em>peut être multiplié</em>” décrite par <code class="language-plaintext highlighter-rouge">(Num n) =&gt;</code>.</p>
 
-<p>La présence de <code class="highlighter-rouge">Num</code> correspond à la nécessiter d’avoir, dans le code c++, une surcharge de l’opérateur *. Remarquez qu’une fonction en haskell correspond naturellement a une fonction template, à moins de forcer les types à être moins “puissant”, comme par exemple :</p>
+<p>La présence de <code class="language-plaintext highlighter-rouge">Num</code> correspond à la nécessiter d’avoir, dans le code c++, une surcharge de l’opérateur *. Remarquez qu’une fonction en haskell correspond naturellement a une fonction template, à moins de forcer les types à être moins “puissant”, comme par exemple :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
 <span class="n">mult</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
 </code></pre></div></div>
@@ -150,14 +150,14 @@
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Où <code class="highlighter-rouge">X -&gt; Y</code> indique que la fonction prend du type X et retourne du type Y. Ainsi, <code class="highlighter-rouge">n -&gt; n</code> signifie prend un type n quelconque et renvoi quelque chose du même type. C’est le type d’une fonction. Si l’on veux un exemple plus concret, <code class="highlighter-rouge">Int-&gt; (Float-&gt;Double)</code> signifie une fonction qui prend un entier, puis renvoi une nouvelle fonction. Cette dernière prend un float et le transforme en un double.</p>
+<p>Où <code class="language-plaintext highlighter-rouge">X -&gt; Y</code> indique que la fonction prend du type X et retourne du type Y. Ainsi, <code class="language-plaintext highlighter-rouge">n -&gt; n</code> signifie prend un type n quelconque et renvoi quelque chose du même type. C’est le type d’une fonction. Si l’on veux un exemple plus concret, <code class="language-plaintext highlighter-rouge">Int-&gt; (Float-&gt;Double)</code> signifie une fonction qui prend un entier, puis renvoi une nouvelle fonction. Cette dernière prend un float et le transforme en un double.</p>
 
-<p>Partant de ce point de vue, il est très simple de fixer les premiers arguments d’une fonction curryfiée. L’application d’un élément à un autre étant associatif à gauche, il suffit de l’appeler avec une partie de ses arguments. (Et oui, puisque écrire <code class="highlighter-rouge">mult a b</code> signifie alors <code class="highlighter-rouge">((mult a) b)</code>. C’est à dire appliquer <code class="highlighter-rouge">mult</code> à <code class="highlighter-rouge">a</code> pour obtenir une fonction qui “<em>prend un entier et le multiplie par a</em>”, puis évaluer cette fonction sur l’entier b.)</p>
+<p>Partant de ce point de vue, il est très simple de fixer les premiers arguments d’une fonction curryfiée. L’application d’un élément à un autre étant associatif à gauche, il suffit de l’appeler avec une partie de ses arguments. (Et oui, puisque écrire <code class="language-plaintext highlighter-rouge">mult a b</code> signifie alors <code class="language-plaintext highlighter-rouge">((mult a) b)</code>. C’est à dire appliquer <code class="language-plaintext highlighter-rouge">mult</code> à <code class="language-plaintext highlighter-rouge">a</code> pour obtenir une fonction qui “<em>prend un entier et le multiplie par a</em>”, puis évaluer cette fonction sur l’entier b.)</p>
 
-<p>Par exemple, <code class="highlighter-rouge">nouvelle_fonction = mult 42</code> correspond à fixer la première valeur de la fonction <code class="highlighter-rouge">mul</code> à <code class="highlighter-rouge">42</code>.</p>
+<p>Par exemple, <code class="language-plaintext highlighter-rouge">nouvelle_fonction = mult 42</code> correspond à fixer la première valeur de la fonction <code class="language-plaintext highlighter-rouge">mul</code> à <code class="language-plaintext highlighter-rouge">42</code>.</p>
 
 <p>En C++, il faudrais écrire</p>
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="n">T</span> <span class="nf">nouvelle_fonction</span><span class="p">(</span><span class="n">T</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">return</span> <span class="n">mult</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
@@ -194,15 +194,15 @@
 <h3 id="typage">Typage</h3>
 
 <p>Les types, en langage fonctionnel, disent beaucoup de choses, et sont lourd de sens.
-En haskell, une liste d’entiers se note <code class="highlighter-rouge">[Int]</code>. Si <code class="highlighter-rouge">a</code> est un type, alors une liste de <code class="highlighter-rouge">a</code> est de type <code class="highlighter-rouge">[a]</code>. Les chaînes de caractères sont par exemple des <code class="highlighter-rouge">[Char]</code>.</p>
+En haskell, une liste d’entiers se note <code class="language-plaintext highlighter-rouge">[Int]</code>. Si <code class="language-plaintext highlighter-rouge">a</code> est un type, alors une liste de <code class="language-plaintext highlighter-rouge">a</code> est de type <code class="language-plaintext highlighter-rouge">[a]</code>. Les chaînes de caractères sont par exemple des <code class="language-plaintext highlighter-rouge">[Char]</code>.</p>
 
-<p>Alors, que devrait faire une fonction de type <code class="highlighter-rouge">(a -&gt; b) -&gt; [a] -&gt; [b]</code>? Et bien, elle prend une fonction <em>transformant du a en b</em> que l’on appellera f, une <em>liste de a</em>, et produit une <em>liste de b</em>. Le bon sens veux que cette fonction applique f à chaque élément de la <em>liste de a</em>, pour produire une <em>liste de b</em>.</p>
+<p>Alors, que devrait faire une fonction de type <code class="language-plaintext highlighter-rouge">(a -&gt; b) -&gt; [a] -&gt; [b]</code>? Et bien, elle prend une fonction <em>transformant du a en b</em> que l’on appellera f, une <em>liste de a</em>, et produit une <em>liste de b</em>. Le bon sens veux que cette fonction applique f à chaque élément de la <em>liste de a</em>, pour produire une <em>liste de b</em>.</p>
 
-<p>Encore un, pour la route. Que dire du type <code class="highlighter-rouge">[[a]] -&gt; [a]</code>? On prend une <em>liste de liste</em>, et on produit <em>une liste</em>. La première chose qui nous vient à l’esprit est de concaténer toute ces listes les unes à la suite des autres pour n’en produire plus qu’une.</p>
+<p>Encore un, pour la route. Que dire du type <code class="language-plaintext highlighter-rouge">[[a]] -&gt; [a]</code>? On prend une <em>liste de liste</em>, et on produit <em>une liste</em>. La première chose qui nous vient à l’esprit est de concaténer toute ces listes les unes à la suite des autres pour n’en produire plus qu’une.</p>
 
 <p>Voyez tout ce qu’on peut deviner sur le comportement d’une fonction grâce aux types.</p>
 
-<p>Pour éviter les noms à rallonge, on peu aussi construire des alias de type. Plutôt que décrire <code class="highlighter-rouge">[Char]</code>, on peut écrire <code class="highlighter-rouge">String</code>, définit par :</p>
+<p>Pour éviter les noms à rallonge, on peu aussi construire des alias de type. Plutôt que décrire <code class="language-plaintext highlighter-rouge">[Char]</code>, on peut écrire <code class="language-plaintext highlighter-rouge">String</code>, définit par :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">type</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
 </code></pre></div></div>
 
@@ -227,7 +227,7 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
 <span class="kr">data</span> <span class="kt">ArbreEntier</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="kt">Int</span> <span class="kt">Arbre</span> <span class="kt">Arbre</span> <span class="o">|</span> <span class="kt">Vide</span>
 </code></pre></div></div>
 
-<p>Le premier type, <code class="highlighter-rouge">Personne</code>, est une structure à trois champs. Le second, est un type booléen, qui peut soit être construit par le constructeur <em>Oui</em>, soit par le constructeur <em>Non</em>. Le troisième est une union pouvant contenir un <code class="highlighter-rouge">Int</code> ou un <code class="highlighter-rouge">Float</code>, et les derniers sont respectivement un type liste d’entier et arbre binaire d’entier. Le système de types permet de considérer des objets plus proche des données représentée, et de s’abstraire de l’implémentation.</p>
+<p>Le premier type, <code class="language-plaintext highlighter-rouge">Personne</code>, est une structure à trois champs. Le second, est un type booléen, qui peut soit être construit par le constructeur <em>Oui</em>, soit par le constructeur <em>Non</em>. Le troisième est une union pouvant contenir un <code class="language-plaintext highlighter-rouge">Int</code> ou un <code class="language-plaintext highlighter-rouge">Float</code>, et les derniers sont respectivement un type liste d’entier et arbre binaire d’entier. Le système de types permet de considérer des objets plus proche des données représentée, et de s’abstraire de l’implémentation.</p>
 
 <p>Donnons une correspondance C++ des deux derniers exemples dans leur version “polymorphique”, où Liste et Arbre deviennent des constructeurs de type, et prennent donc en paramètre le type qu’ils doivent contenir.</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Liste</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Element</span> <span class="n">a</span> <span class="kt">Liste</span> <span class="o">|</span> <span class="kt">Vide</span>

@@ -118,7 +118,7 @@
 
 <p>##Comment on s’en sert ?</p>
 
-<p>On connais tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien salle dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore du votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="highlighter-rouge">cmake .</code> puis <code class="highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="highlighter-rouge">cmake ..</code> et <code class="highlighter-rouge">make &amp;&amp; sudo make install</code>. Dite bonjour a la propreté de votre projet grâce à CMake ;)</p>
+<p>On connais tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien salle dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore du votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="language-plaintext highlighter-rouge">cmake .</code> puis <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="language-plaintext highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="language-plaintext highlighter-rouge">cmake ..</code> et <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Dite bonjour a la propreté de votre projet grâce à CMake ;)</p>
 
 <p>##Comment ça fonctionne ?</p>
 
@@ -126,26 +126,26 @@
 
 <p>Je ne vais pas détailler comment construire un fichier de config ; le <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial CMake</a> le fait déjà très bien, et l’on trouve tout ce qu’il manque dans le wiki. (Notez que dans un VRAI projet, il vous faudra un peu plus que le tutorial). Je vais aborder les idées générales et les petites astuces qui m’ont servies.</p>
 
-<p>D’abord, on place les instructions dans un fichier CMakeLists.txt a la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossier grâce à <code class="highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
+<p>D’abord, on place les instructions dans un fichier CMakeLists.txt a la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossier grâce à <code class="language-plaintext highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="language-plaintext highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
 
-<p>On peut facilement demander a cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendras soin d’ajouter <code class="highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
+<p>On peut facilement demander a cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendras soin d’ajouter <code class="language-plaintext highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
 
-<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp a la liste des fichiers du projet). Avec <code class="highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> le liste des fichiers figure dans la variable “SOURCE_FILES”. Si il vous faut exclure certains fichiers, vous pouvez utiliser :
-<code class="highlighter-rouge">file(GLOB_RECURSE UNWANTED_FILES src/FichierAExclure.cpp SRC)
+<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp a la liste des fichiers du projet). Avec <code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> le liste des fichiers figure dans la variable “SOURCE_FILES”. Si il vous faut exclure certains fichiers, vous pouvez utiliser :
+<code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE UNWANTED_FILES src/FichierAExclure.cpp SRC)
 list (REMOVE_ITEM SOURCE_FILES ${UNWANTED_FILES})</code></p>
 
 <p>Si vous êtes fan des tests unitaires, CMake propose une façon agréable de lancer des tests avec :
-<code class="highlighter-rouge">add_test (NAME NomDuTeste WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
+<code class="language-plaintext highlighter-rouge">add_test (NAME NomDuTeste WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
 Ça vas de “lancer un programme et vérifier qu’il EXIT_SUCCESS” à “vérifier que la sortie du programme contient cette expression”.</p>
 
 <p>Chose utile, que ne fournissent pas les autotools, c’est une façon unifiée de gèrer le numéro de version de l’application ; Toute les variables d’un CMakeListes peuvent être utiliser pour générer des fichiers à partir de templates (souvent le nom du fichier avec le suffixe .in). En pratique, on définit VERSION_MAJOR et VERSION_MINOR, puis on génère un Version.h, un doxyfile, et on utilise les valeurs pour générer les noms des bibliothèques exportés. C’est simple, intuitif, et très bien expliqué dans le tutoriel. Faire une release se limite alors a changer le numéro de version dans un fichier, et de lancer la compilation pour obtenir les binaires et packages.</p>
 
 <p>CMake dispose aussi d’un système de macros, pour faciliter la vie des maintainers, et l’on comprend donc que de plus en plus de projets tendent à l’utiliser.</p>
 
-<p>Un fichier de configuration emacs est disponible (depuis la doc de cmake) pour ajouter un “cmake-mode”, et se charge avec, par exemple, <code class="highlighter-rouge">(load "~/.emacs.d/cmake-mode.el")</code>.</p>
+<p>Un fichier de configuration emacs est disponible (depuis la doc de cmake) pour ajouter un “cmake-mode”, et se charge avec, par exemple, <code class="language-plaintext highlighter-rouge">(load "~/.emacs.d/cmake-mode.el")</code>.</p>
 
-<p>On peux aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeListes dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de fonfiguration CMake par <code class="highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(DOXYGEN_FOUND)
+<p>On peux aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeListes dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="language-plaintext highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de fonfiguration CMake par <code class="language-plaintext highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(DOXYGEN_FOUND)
   configure_file(${DOXYGEN_TEMPLATE_FILE}
     ${DOXYGEN_CONFIGURED_FILE}
     @ONLY

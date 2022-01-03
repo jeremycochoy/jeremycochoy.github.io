@@ -285,8 +285,8 @@ returns an error box (the compiler won’t let you give a function that doesn’
 an error box).</p>
 
 <p>So, we chained the call to find_slash, do_some_arithmetic, format and display. None
-of them can take an error box, but thanks to bind, we “transformed” the functions <code class="highlighter-rouge">E&lt;something_out&gt; f(something_in)</code> to
-functions of type <code class="highlighter-rouge">E&lt;something_out&gt; f(E&lt;something_in&gt;)</code>.</p>
+of them can take an error box, but thanks to bind, we “transformed” the functions <code class="language-plaintext highlighter-rouge">E&lt;something_out&gt; f(something_in)</code> to
+functions of type <code class="language-plaintext highlighter-rouge">E&lt;something_out&gt; f(E&lt;something_in&gt;)</code>.</p>
 
 <h3 id="whats-good-here-2">What’s good here?</h3>
 
@@ -323,13 +323,13 @@ Big projects are more “linear” and easy to read.</p>
 stl you’ll still have to use exceptions.</p>
 
 <p>It’s still a bit too much verbose for my taste. The need to write explicitely the type in
-<code class="highlighter-rouge">fail&lt;int&gt;("...")</code> is bad. If you had a polymorphic error type, then it’s worst because
-you’ll have to write <code class="highlighter-rouge">fail&lt;return_type, error_type&gt;("...")</code>.</p>
+<code class="language-plaintext highlighter-rouge">fail&lt;int&gt;("...")</code> is bad. If you had a polymorphic error type, then it’s worst because
+you’ll have to write <code class="language-plaintext highlighter-rouge">fail&lt;return_type, error_type&gt;("...")</code>.</p>
 
 <p>It do not provide an easy way to call a function that need more than one argument.
 In some other languages, you have “applicative” types and currification that solve it
 nicely, but that’s far from what you may expect from c++. I’m more likely to think that
-a <code class="highlighter-rouge">bind2(E&lt;a&gt;, E&lt;b&gt;, f)</code> and <code class="highlighter-rouge">bind3(E&lt;a&gt;, E&lt;b&gt;, E&lt;c&gt;, f)</code> function could be used.
+a <code class="language-plaintext highlighter-rouge">bind2(E&lt;a&gt;, E&lt;b&gt;, f)</code> and <code class="language-plaintext highlighter-rouge">bind3(E&lt;a&gt;, E&lt;b&gt;, E&lt;c&gt;, f)</code> function could be used.
 Variadic templates may help.</p>
 
 <p>To get the value “out of the box”, we have to check if the box is really a value,
@@ -352,8 +352,8 @@ so if you are curious you can have a look at my <a href="/haskell-pure-1/">frenc
 <p>A bit stranger, lists are monad. They are “a value” in a context, from a certain
 point of view.</p>
 
-<p>Let’s start by implementing the E class you saw above. I’m relying on C++11 <code class="highlighter-rouge">decltype</code>
-and <code class="highlighter-rouge">auto -&gt; decltype</code> wich allow figuring out the type of things from expressions. It’s
+<p>Let’s start by implementing the E class you saw above. I’m relying on C++11 <code class="language-plaintext highlighter-rouge">decltype</code>
+and <code class="language-plaintext highlighter-rouge">auto -&gt; decltype</code> wich allow figuring out the type of things from expressions. It’s
 really useful.</p>
 
 <p>The bind function is a bit strange, but it does what I stated previously.</p>
@@ -364,7 +364,7 @@ This is the "Either String" monad, as a way to handle errors.
 */</span>
 
 <span class="k">template</span>
-<span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="k">class</span> <span class="nc">E</span>
 <span class="p">{</span>
 <span class="nl">private:</span>
@@ -435,7 +435,7 @@ This is the "Either String" monad, as a way to handle errors.
         <span class="k">return</span> <span class="n">oss</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">F</span><span class="p">&gt;</span>
     <span class="kr">inline</span>
     <span class="k">auto</span> <span class="n">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">m_value</span><span class="p">))</span>
     <span class="p">{</span>
@@ -449,7 +449,7 @@ This is the "Either String" monad, as a way to handle errors.
 
 </code></pre></div></div>
 
-<p>I also overloaded the <code class="highlighter-rouge">&lt;&lt;</code> operator, so that it’s easier to see what the box contains.
+<p>I also overloaded the <code class="language-plaintext highlighter-rouge">&lt;&lt;</code> operator, so that it’s easier to see what the box contains.
 We don’t really need it, and it may be a good idea to remove it for a “true” usage.</p>
 
 <p>If you look at this, and the example, we need a “E<void>" type, but it won't work as if.
@@ -460,7 +460,7 @@ value is now an "empty box".</void></p>
     Special instance for void
 */</span>
 
-<span class="k">template</span><span class="o">&lt;&gt;</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
 <span class="k">class</span> <span class="nc">E</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="nl">private:</span>
@@ -526,7 +526,7 @@ value is now an "empty box".</void></p>
         <span class="k">return</span> <span class="n">oss</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">F</span><span class="p">&gt;</span>
     <span class="kr">inline</span>
     <span class="k">auto</span> <span class="n">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
     <span class="p">{</span>
@@ -539,21 +539,21 @@ value is now an "empty box".</void></p>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Oh, we don’t spoke about <code class="highlighter-rouge">ret</code> and <code class="highlighter-rouge">fail</code>. Actually, they are just wraper around
-the <code class="highlighter-rouge">xxx::fail</code> and <code class="highlighter-rouge">xxx::ret</code> functions.</p>
+<p>Oh, we don’t spoke about <code class="language-plaintext highlighter-rouge">ret</code> and <code class="language-plaintext highlighter-rouge">fail</code>. Actually, they are just wraper around
+the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <code class="language-plaintext highlighter-rouge">xxx::ret</code> functions.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
    Then, I introduced those simple functions, to reduce the
    call to something readable/writable
  */</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="kr">inline</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ret</span><span class="p">(</span><span class="n">T</span> <span class="n">v</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">E</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">ret</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="kr">inline</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">err</span><span class="p">)</span>
 <span class="p">{</span>
@@ -572,10 +572,10 @@ the <code class="highlighter-rouge">xxx::fail</code> and <code class="highlighte
 <span class="c1">// What a user would see:</span>
 
 <span class="c1">//Return a value in an error context</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kr">inline</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="kr">inline</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ret</span><span class="p">(</span><span class="n">T</span> <span class="n">v</span><span class="p">);</span>
 <span class="c1">//Fail in an error context of type T</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kr">inline</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="kr">inline</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">err</span><span class="p">);</span>
 
 <span class="c1">// What a user would write:</span>

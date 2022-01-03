@@ -118,7 +118,7 @@
 <h2 id="fonctionnement-de-la-lib">Fonctionnement de la Lib</h2>
 
 <p>L’utilisation se fait via le header Synth_8bits.h qui définit plusieurs variables globales essentielles au fonctionnement.
-Dans un premier temps, il faut initialiser la lib en appelant <code class="highlighter-rouge">synth_setup();</code>. Par la suite, vous disposez de 4 variables de période / fréquences :</p>
+Dans un premier temps, il faut initialiser la lib en appelant <code class="language-plaintext highlighter-rouge">synth_setup();</code>. Par la suite, vous disposez de 4 variables de période / fréquences :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">int</span> <span class="n">square1_period</span><span class="p">;</span>
 <span class="k">extern</span> <span class="kt">int</span> <span class="n">square2_period</span><span class="p">;</span>
 <span class="k">extern</span> <span class="kt">int</span> <span class="n">square3_period</span><span class="p">;</span>
@@ -148,7 +148,7 @@ Dans un premier temps, il faut initialiser la lib en appelant <code class="highl
 <p>Pour les percussions, il y a le canal de bruit.</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">noise_amplitude</span><span class="p">;</span>
 </code></pre></div></div>
-<p>C’est un canal qui émet un son similaire à celui d’un vieux téléviseur sans antennes, un “Tshhhhh” très caractéristique. À nouveau, en faisant varier l’amplitude (on parle de modulation d’amplitude), vous pouvez créer le timbre de divers instruments de percussion. La fonction <code class="highlighter-rouge">play_seawave();</code> est un exemple.</p>
+<p>C’est un canal qui émet un son similaire à celui d’un vieux téléviseur sans antennes, un “Tshhhhh” très caractéristique. À nouveau, en faisant varier l’amplitude (on parle de modulation d’amplitude), vous pouvez créer le timbre de divers instruments de percussion. La fonction <code class="language-plaintext highlighter-rouge">play_seawave();</code> est un exemple.</p>
 
 <p>Le bruit est près calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
 
@@ -1064,7 +1064,7 @@ char white_noise[4096] PROGMEM = {
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Synth_8bits.ino :
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Synth_8bits.ino :
 
 #include &lt;avr/io.h&gt;
 

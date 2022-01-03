@@ -120,11 +120,11 @@ une fois en mémoire, est diviser en plusieurs segments :</p>
 <p>Pour accéder a ces différents segment, on dispose des Sélecteurs de Segment.
 Ce sont des registre qui indiquent à quel adresse mémoire situent les donnes.</p>
 
-<p>Ainsi, pour accéder a l’ octet numéro <code class="highlighter-rouge">0x03</code> du segment de code,
-on peut écrire <code class="highlighter-rouge">cs::0x03</code>.
+<p>Ainsi, pour accéder a l’ octet numéro <code class="language-plaintext highlighter-rouge">0x03</code> du segment de code,
+on peut écrire <code class="language-plaintext highlighter-rouge">cs::0x03</code>.
 Quand l’ordinateur démarre, le processeur est en mode réelle.
 C’ est a dire que les sélecteurs de segment représentent une adresse physique.
-(<code class="highlighter-rouge">0x73</code> représente l’ adresse mémoire <code class="highlighter-rouge">0x730</code>)</p>
+(<code class="language-plaintext highlighter-rouge">0x73</code> représente l’ adresse mémoire <code class="language-plaintext highlighter-rouge">0x730</code>)</p>
 
 <p>Ce n’est pas vraiment super, tout les programmes ont accès à toute la mémoire,
 et de plus les registres sont limiter a 16bits… impossible

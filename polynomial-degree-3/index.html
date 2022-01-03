@@ -103,7 +103,7 @@
   <span class="post-date">25 Feb 2011</span>
   <h2 id="la-recherche-de-racine-pour-des-polynômes-du-3ème-degré">La recherche de racine pour des polynômes du 3ème degré</h2>
 
-<p><script type="math/tex">\Delta = b^2 - 4ac</script>, voici une formule que la plupart d’entre vous on appris très jeunes
+<p>\(\Delta = b^2 - 4ac\), voici une formule que la plupart d’entre vous on appris très jeunes
 et dont la simple lecture évoque immédiatement la résolution de polynômes du second degré.</p>
 
 <p>Mais vous êtes vous déjà pausé la question de la résolution d’équations mettant en jeu des polynômes du troisième degré, ou pire, d’un degré encore plus élevé?</p>
@@ -118,9 +118,9 @@ et dont la simple lecture évoque immédiatement la résolution de polynômes du
 
 <h2 id="étape-1--changement-de-variable">Étape 1 ) Changement de variable</h2>
 
-<p>La méthode de cardan ne s’applique qu’à des polynômes de la forme <script type="math/tex">Z^3 + pZ + q = 0</script> et nous cherchons une solution pour tout polynôme de la forme <script type="math/tex">aX^3 + bX^2 + cX + d = 0</script></p>
+<p>La méthode de cardan ne s’applique qu’à des polynômes de la forme \(Z^3 + pZ + q = 0\) et nous cherchons une solution pour tout polynôme de la forme \(aX^3 + bX^2 + cX + d = 0\)</p>
 
-<p>On considéreras donc deux cas : Notre polynôme a son coefficient du second degré nulle, et dans ce cas on n’effectue pas de changement de variable, on le rend juste unitaire(diviser par a). Dans le cas contraire, on pauseras <script type="math/tex">X = Z - \frac{b}{3a}</script>, ce qui nous amène a calculer à calculer <script type="math/tex">p = - \frac{b^2}{3a^2} + \frac{c}{a}</script> et <script type="math/tex">q = \frac{b}{27a}\left(\frac{2b^2}{a^2}-\frac{9c}{a}\right)+\frac{d}{a}</script> (en développant le polynôme <script type="math/tex">a(Z - \frac{b}{3a})^3 + b(Z - \frac{b}{3a})^2 + c(Z - \frac{b}{3a}) + d = 0</script>) , et par la suite ajouter <script type="math/tex">\frac{b}{3a}</script> a nos solutions.</p>
+<p>On considéreras donc deux cas : Notre polynôme a son coefficient du second degré nulle, et dans ce cas on n’effectue pas de changement de variable, on le rend juste unitaire(diviser par a). Dans le cas contraire, on pauseras \(X = Z - \frac{b}{3a}\), ce qui nous amène a calculer à calculer \(p = - \frac{b^2}{3a^2} + \frac{c}{a}\) et \(q = \frac{b}{27a}\left(\frac{2b^2}{a^2}-\frac{9c}{a}\right)+\frac{d}{a}\) (en développant le polynôme \(a(Z - \frac{b}{3a})^3 + b(Z - \frac{b}{3a})^2 + c(Z - \frac{b}{3a}) + d = 0\)) , et par la suite ajouter \(\frac{b}{3a}\) a nos solutions.</p>
 
 <p>Voici le code c correspondant :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">cardan</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">,</span> <span class="kt">float</span> <span class="n">c</span><span class="p">,</span> <span class="kt">float</span> <span class="n">d</span><span class="p">,</span> <span class="kt">float</span> <span class="n">resultat</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
@@ -153,17 +153,16 @@ et dont la simple lecture évoque immédiatement la résolution de polynômes du
 
 <p>Nous entrons enfin dans le vif du sujet. Comment allons nous maintenant trouver les racines de notre polynôme? Pour commencer, nous savons qu’il existe au moins une racine réel (Un polynôme de degré impaire admet toujours au moins une racine réel) que l’on peut écrire sous la forme v + u, v et u deux réels. (Car, évidemment, rien ne nous empêche d’écrire 3 comme 2+1, ou 3+0!)</p>
 
-<p>A ce stade, si nous développons notre polynôme avec u+v, nous obtenons <script type="math/tex">v^3+u^3+(3uv+p)(u+v)+q=0</script> (modulo une factorisation par (u+v) ).
-Puisque nous pouvons “répartir” notre solution “un peut dans u, le reste dans v” comme nous le souhaitons, rien ne nous empêche de fixer <script type="math/tex">3uv+p = 0</script> (ou encore <script type="math/tex">uv = \frac{-p}{3u}</script></p>
+<p>A ce stade, si nous développons notre polynôme avec u+v, nous obtenons \(v^3+u^3+(3uv+p)(u+v)+q=0\) (modulo une factorisation par (u+v) ).
+Puisque nous pouvons “répartir” notre solution “un peut dans u, le reste dans v” comme nous le souhaitons, rien ne nous empêche de fixer \(3uv+p = 0\) (ou encore \(uv = \frac{-p}{3u}\)</p>
 
-<p>On remarque alors que notre polynôme se simplifie, laissant apparaître <script type="math/tex">u^3 + v^3= -q</script></p>
+<p>On remarque alors que notre polynôme se simplifie, laissant apparaître \(u^3 + v^3= -q\)</p>
 
-<p>En d’autre termes, notre solution est donc solution du système <script type="math/tex">% <![CDATA[
-\begin{cases}u^3+v^3&=-q\\ u^3v^3&=-\frac{p^3}{27}\end{cases} %]]></script> (et doivent respecter en plus la condition <script type="math/tex">3uv+p = 0</script>).</p>
+<p>En d’autre termes, notre solution est donc solution du système \(\begin{cases}u^3+v^3&amp;=-q\\ u^3v^3&amp;=-\frac{p^3}{27}\end{cases}\) (et doivent respecter en plus la condition \(3uv+p = 0\)).</p>
 
-<p>Vous remarquerez alors que connaissant le produit et la somme de deux nombres a et b, nous pouvons nous servir du polynôme du second dégrée <script type="math/tex">x^2 -(a + b)X + ab = 0</script> qui a pour racines a et b. Appliquons ceci à <script type="math/tex">u^3</script> et <script type="math/tex">v^3</script></p>
+<p>Vous remarquerez alors que connaissant le produit et la somme de deux nombres a et b, nous pouvons nous servir du polynôme du second dégrée \(x^2 -(a + b)X + ab = 0\) qui a pour racines a et b. Appliquons ceci à \(u^3\) et \(v^3\)</p>
 
-<p>On résout donc <script type="math/tex">X^2+qX-\frac{p^3}{27}=0</script>. Attention, les solutions sont soit complexe, soit réels, soit réels double (u = v). Dans le cas de solutions pour u et v réels, leur racine cubique est un réel unique et nous aurons donc l’unique racine du polynôme. Dans le cas de solutions complexe(non nulle) pour u et v, nous aurons alors 3 racines cubiques pour u et 3 pour v. Nous verrons dans le paragraphe suivant comment calculer ces racines et trouver les bonnes combinaisons.</p>
+<p>On résout donc \(X^2+qX-\frac{p^3}{27}=0\). Attention, les solutions sont soit complexe, soit réels, soit réels double (u = v). Dans le cas de solutions pour u et v réels, leur racine cubique est un réel unique et nous aurons donc l’unique racine du polynôme. Dans le cas de solutions complexe(non nulle) pour u et v, nous aurons alors 3 racines cubiques pour u et 3 pour v. Nous verrons dans le paragraphe suivant comment calculer ces racines et trouver les bonnes combinaisons.</p>
 
 <p>Voici l’implémentation pour les racines réels :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ... next block :</span>
@@ -204,27 +203,27 @@ Puisque nous pouvons “répartir” notre solution “un peut dans u, le reste 
 
 <h2 id="étape-3--racines-complexe--un-peu-de-géométrie">Étape 3 ) Racines complexe : un peu de géométrie</h2>
 
-<p>Multiplier un complexe <script type="math/tex">a</script> par un complexe <script type="math/tex">b</script>, c’est obtenir
-un complexe <script type="math/tex">c</script> dont la norme est le produit <script type="math/tex">|a| |b|</script>,
-et l’argument la somme <script type="math/tex">arg(a) + arg(b)</script>. D’un point de vue géométrique,
-le produit <script type="math/tex">a b</script> est une rotation de <script type="math/tex">a</script> d’angle <script type="math/tex">arg(b)</script> dans le sens trigonométrique,
-et une homothétie par le scalaire <script type="math/tex">|b|</script>.
+<p>Multiplier un complexe \(a\) par un complexe \(b\), c’est obtenir
+un complexe \(c\) dont la norme est le produit \(|a| |b|\),
+et l’argument la somme \(arg(a) + arg(b)\). D’un point de vue géométrique,
+le produit \(a b\) est une rotation de \(a\) d’angle \(arg(b)\) dans le sens trigonométrique,
+et une homothétie par le scalaire \(|b|\).
 Où cela nous conduit-il? A la définition d’une racine cubique d’un complexe.
-Soit <script type="math/tex">a = |a|e^{arg(a)}</script> le complexe d’argument <script type="math/tex">arg(a)</script> et de norme <script type="math/tex">|a|</script>,
-on a pour racine cubique : <script type="math/tex">z_1 = \sqrt[3]{|a|}e^{arg(a)}</script>, <script type="math/tex">z_2 = \sqrt[3]{|a|}e^{arg(a)/3 + 2\pi/3}</script>
-<script type="math/tex">z_3 = \sqrt[3]{|a|}e^{arg(a)/3 + 4\pi/3}</script></p>
+Soit \(a = |a|e^{arg(a)}\) le complexe d’argument \(arg(a)\) et de norme \(|a|\),
+on a pour racine cubique : \(z_1 = \sqrt[3]{|a|}e^{arg(a)}\), \(z_2 = \sqrt[3]{|a|}e^{arg(a)/3 + 2\pi/3}\)
+\(z_3 = \sqrt[3]{|a|}e^{arg(a)/3 + 4\pi/3}\)</p>
 
-<p>De façon générale, les racines nièmes d’un complexe d’argument <script type="math/tex">arg(a)</script> et de norme <script type="math/tex">|a|</script> est
-la rotation de <script type="math/tex">\frac{arg(a)}{n}</script> et homothétie de scalaire <script type="math/tex">\sqrt[3]{|a|}</script> des racines
+<p>De façon générale, les racines nièmes d’un complexe d’argument \(arg(a)\) et de norme \(|a|\) est
+la rotation de \(\frac{arg(a)}{n}\) et homothétie de scalaire \(\sqrt[3]{|a|}\) des racines
 nième complexe de 1 (pouvant elles même être considéré comme un polygone…)</p>
 
 <p>Bref, de belles façons d’interpréter les choses, mais en quoi cela nous aide-il?</p>
 
 <p>Et bien, si nous pouvions connaître l’argument d’un complexe et son module, nous pourrions calculer numériquement l’argument et le module de ses racines, et ainsi trouver les valeurs possible pour u et v. Considérons donc nos solutions complexe comme les points d’un plan. Le module et l’argument forment alors leur coordonnées polaire.
-Nous avons le système suivant qui lit les coordonnées cartésiennes d’un point à ses coordonnées polaire : [\begin{cases}x&amp;=r cos(\alpha)\ y&amp;=r sin(\alpha)\end{cases}] De plus, nous pouvons calculer <script type="math/tex">r</script>, en appliquant le théorème de Pythagore.
-Si l’on fait alors le quotient de x par y, on obtient <script type="math/tex">tan(\alpha)</script>. En fait, en étudiant le signe de x et de y, on peut connaitre le signe de alpha et donc utiliser la fonction arc tangente (<code class="highlighter-rouge">atan</code> en C). C’est  la réciproque de tangente,
+Nous avons le système suivant qui lit les coordonnées cartésiennes d’un point à ses coordonnées polaire : [\begin{cases}x&amp;=r cos(\alpha)\ y&amp;=r sin(\alpha)\end{cases}] De plus, nous pouvons calculer \(r\), en appliquant le théorème de Pythagore.
+Si l’on fait alors le quotient de x par y, on obtient \(tan(\alpha)\). En fait, en étudiant le signe de x et de y, on peut connaitre le signe de alpha et donc utiliser la fonction arc tangente (<code class="language-plaintext highlighter-rouge">atan</code> en C). C’est  la réciproque de tangente,
 modulo le bonne ensemble de définition.
-Pour se simplifier la tache dans l’implémentation C du calcul de l’arc tangente, on peut utiliser la fonction <code class="highlighter-rouge">atan2(x, y)</code> qui effectue le quotient et tien compte des signes.</p>
+Pour se simplifier la tache dans l’implémentation C du calcul de l’arc tangente, on peut utiliser la fonction <code class="language-plaintext highlighter-rouge">atan2(x, y)</code> qui effectue le quotient et tien compte des signes.</p>
 
 <p>Encore un dernier détaille, et nous avons terminé. Les solutions que nous trouverons pour u et v peuvent se classer par paire de conjugué (les racines de u et v correspondant a la même racine cubique de 1). On remarque alors que les solutions seront toute bien réel. (La partie imaginaire de chacun des conjugué s’annulant.) Bien, passons à l’implémentation :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ... last block :</span>
@@ -265,8 +264,7 @@ Pour se simplifier la tache dans l’implémentation C du calcul de l’arc tang
 
 <p>Sachez que la méthode papier consiste à effectuer le même raisonnement que nous avons
 mené jusqu’au calcule du discriminant du polynôme qui nous permet de trouver a et b.
-Dans le cas <script type="math/tex">% <![CDATA[
-\Delta <= 0 %]]></script>, on calculeras la racine cubique et on factoriseras le polynôme
+Dans le cas \(\Delta &lt;= 0\), on calculeras la racine cubique et on factoriseras le polynôme
 pour faire apparaître les racines.
 Dans le cas de complexes, on pourras être amener a chercher les racines d’un nouveau
 polynôme du 3ème degré pour simplifier l’expression des racines.

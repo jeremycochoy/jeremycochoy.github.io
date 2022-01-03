@@ -230,11 +230,11 @@ I automatically look to the left.</p>
 </code></pre></div></div>
 
 <p>Notice that in the case you removed the guard in the left/right functions,
-you can also simplify remove by only poping the value from <code class="highlighter-rouge">leftList</code>.</p>
+you can also simplify remove by only poping the value from <code class="language-plaintext highlighter-rouge">leftList</code>.</p>
 
 <p>Now you have a simple but powerful zipper in your hands.
 For more fanciness, one could also enjoy the natural functoriality of the list
-zipper to add the <code class="highlighter-rouge">map</code> function and allow us to map functions inside it :)</p>
+zipper to add the <code class="language-plaintext highlighter-rouge">map</code> function and allow us to map functions inside it :)</p>
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// Map a function to the tracks</span>
 <span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">R</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">f</span><span class="p">:</span> <span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">R</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ListZipper</span><span class="o">&lt;</span><span class="kt">R</span><span class="o">&gt;</span> <span class="p">{</span>

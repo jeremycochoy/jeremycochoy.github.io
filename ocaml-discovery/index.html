@@ -111,8 +111,8 @@
 
 <p>Il y a deux type de propositions :</p>
 <ul>
-  <li>Les expressions : De la forme <script type="math/tex">3*7</script> ou encore <script type="math/tex">\sqrt[7]{\frac{2^9}{3^{43}}}</script></li>
-  <li>Les définitions : De la forme <script type="math/tex">q := \sqrt{2}</script> qui déclare q comme un alias de <script type="math/tex">\sqrt{2}</script></li>
+  <li>Les expressions : De la forme \(3*7\) ou encore \(\sqrt[7]{\frac{2^9}{3^{43}}}\)</li>
+  <li>Les définitions : De la forme \(q := \sqrt{2}\) qui déclare q comme un alias de \(\sqrt{2}\)</li>
 </ul>
 
 <p>En ocaml, la syntaxe est la suivante :</p>
@@ -120,7 +120,7 @@
   <li>Pour un expression :
     <div class="language-ocaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span> <span class="o">*</span> <span class="mi">7</span><span class="p">;;</span>
 </code></pre></div>    </div>
-    <p>ou encore (pour <script type="math/tex">e^{log(\frac{exp(log(2) * 9)}{exp (log(3) * 43)}) / 7}</script>)</p>
+    <p>ou encore (pour \(e^{log(\frac{exp(log(2) * 9)}{exp (log(3) * 43)}) / 7}\))</p>
     <div class="language-ocaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">exp</span> <span class="p">(</span><span class="n">log</span> <span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">log</span> <span class="mi">2</span><span class="o">.</span> <span class="o">*.</span> <span class="mi">9</span><span class="o">.</span><span class="p">)</span> <span class="o">/.</span> <span class="n">exp</span><span class="p">(</span><span class="n">log</span> <span class="mi">3</span><span class="o">.</span> <span class="o">*.</span> <span class="mi">43</span><span class="o">.</span><span class="p">)</span> <span class="p">)</span> <span class="o">/.</span> <span class="mi">7</span><span class="o">.</span><span class="p">);;</span>
 </code></pre></div>    </div>
   </li>
@@ -136,18 +136,16 @@
 
 <p>Tout d’abord, définissons ce qu’est un langage fonctionnel. Par analogie à un langage objet où les éléments sont des objets(Dans certains cas, TOUS les éléments), dans un langage fonctionnel, les éléments sont des fonctions, au sens mathématique du terme.</p>
 
-<p>Si l’on considère la fonction suivante : <script type="math/tex">% <![CDATA[
-\begin{array}{ccccc} f & : & \mathbb{Z} & \to & \mathbb{Z}^2 \\ & & x & \mapsto & (x, x) \end{array} %]]></script></p>
+<p>Si l’on considère la fonction suivante : \(\begin{array}{ccccc} f &amp; : &amp; \mathbb{Z} &amp; \to &amp; \mathbb{Z}^2 \\ &amp; &amp; x &amp; \mapsto &amp; (x, x) \end{array}\)</p>
 
-<p>C’est la fonction qui associe à un entier <script type="math/tex">x</script> son couple situer sur sa diagonal(injection diagonal) <script type="math/tex">(x,x) \in \Delta\mathbb{Z} \subset \mathbb{Z}^2</script></p>
+<p>C’est la fonction qui associe à un entier \(x\) son couple situer sur sa diagonal(injection diagonal) \((x,x) \in \Delta\mathbb{Z} \subset \mathbb{Z}^2\)</p>
 
 <p>Il est alors très aisé de définir f en ocaml :</p>
 <pre><code class="language-{.ocaml}">let f x = (x, x);
 </code></pre>
-<p>Cette fonction est de type <code class="highlighter-rouge">int -&gt; int * int</code>, c’est a dire qu’elle prend un entier <script type="math/tex">int \approx \mathbb{Z}</script> et retourne un couple <script type="math/tex">(x, y) \in \mathbb{Z} \times \mathbb{Z}</script>.</p>
+<p>Cette fonction est de type <code class="language-plaintext highlighter-rouge">int -&gt; int * int</code>, c’est a dire qu’elle prend un entier \(int \approx \mathbb{Z}\) et retourne un couple \((x, y) \in \mathbb{Z} \times \mathbb{Z}\).</p>
 
-<p>On peut bien-sur définir des fonctions de fonction. Observons la fonction “composition”(rond) : <script type="math/tex">% <![CDATA[
-\begin{array}{ccccc} o & : & (\mathbb{B} \Rightarrow \mathbb{C} ) \times (\mathbb{A} \Rightarrow \mathbb{B} ) & \longrightarrow & (\mathbb{A} \to \mathbb{C} ) \\ & & (f, g) & \longmapsto & (x \mapsto f(g(x)) \end{array} %]]></script>.</p>
+<p>On peut bien-sur définir des fonctions de fonction. Observons la fonction “composition”(rond) : \(\begin{array}{ccccc} o &amp; : &amp; (\mathbb{B} \Rightarrow \mathbb{C} ) \times (\mathbb{A} \Rightarrow \mathbb{B} ) &amp; \longrightarrow &amp; (\mathbb{A} \to \mathbb{C} ) \\ &amp; &amp; (f, g) &amp; \longmapsto &amp; (x \mapsto f(g(x)) \end{array}\).</p>
 
 <p>En OCAML, on aurais :</p>
 <div class="language-ocaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">o</span> <span class="n">f</span> <span class="n">g</span> <span class="o">=</span> <span class="n">f</span> <span class="n">g</span><span class="p">;;</span>
@@ -159,14 +157,13 @@
 <p>Je vous ai parler un peut plus tôt de l’absence de structures conditionnel et itératif, je vais ici vous exposer les solutions a votre disposition.</p>
 
 <p>Commençons avec les blocs conditionnel. En OCAML, nous disposons d’une fonction-alitée très intéressante : les filtres.
-Si l’on considère la fonction continue suivante : <script type="math/tex">% <![CDATA[
-\begin{array}{ccccc} f & : & \mathbb{Z} & \to & \mathbb{Z} \\ & & x & \mapsto &
+Si l’on considère la fonction continue suivante : \(\begin{array}{ccccc} f &amp; : &amp; \mathbb{Z} &amp; \to &amp; \mathbb{Z} \\ &amp; &amp; x &amp; \mapsto &amp;
 \left\{
 \begin{array}{ccc}
-x < 0 & \Rightarrow & -2x \\ x \ge 0 &  \Rightarrow & x^2
+x &lt; 0 &amp; \Rightarrow &amp; -2x \\ x \ge 0 &amp;  \Rightarrow &amp; x^2
 \end{array}
 \right.
-\end{array} %]]></script></p>
+\end{array}\)</p>
 
 <p>On constate que l’on a bien deux condition, une première qui regroupe les cas des x négatif, et une deuxième qui s’intéresse aux x restant. En OCAML, on défini de la même façon :</p>
 <div class="language-ocaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="k">function</span>
@@ -181,7 +178,7 @@ x < 0 & \Rightarrow & -2x \\ x \ge 0 &  \Rightarrow & x^2
   <span class="p">;;</span>
 </code></pre></div></div>
 
-<p>Dans le cas où l’on a pas besoin de nommer x, on peut utiliser _. Ainsi, un dernier cas <code class="highlighter-rouge">_ -&gt; smtg</code> correspondrais un peut à ‘default’ d’un switch.
+<p>Dans le cas où l’on a pas besoin de nommer x, on peut utiliser _. Ainsi, un dernier cas <code class="language-plaintext highlighter-rouge">_ -&gt; smtg</code> correspondrais un peut à ‘default’ d’un switch.
 On pourras aussi utiliser l’instruction match {variable} with {filtre}.</p>
 
 <h2 id="la-récursivité-terminal">La récursivité terminal</h2>
