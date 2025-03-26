@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Ethereum Price Spiral (With EMA20 and Legend)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
+    <style>
+        .year-line { stroke: #ccc; stroke-width: 0.5; }
+        .support-circle { fill: none; stroke: #0000ff; stroke-width: 1; stroke-dasharray: 5,5; }
+        .year-label { font-size: 10px; }
+        .price-label { font-size: 12px; fill: #0000ff; font-weight: bold; }
+        .axis-line { stroke: #000; stroke-width: 1; }
+        .halving-dot { fill: green; }
+        .halving-line { stroke: green; stroke-width: 0.5; }
+        .halving-label { font-size: 12px; fill: green; font-weight: bold; }
+        .ath-dot { fill: red; }
+        .ath-line { stroke: red; stroke-width: 0.5; }
+        .ath-label { font-size: 12px; fill: red; font-weight: bold; }
+        .ethereum-line { stroke: black; stroke-width: 1.5; fill: none; }
+        .ema20-line { stroke: orange; stroke-width: 1; fill: none; }
+        .legend { font-size: 12px; }
+        #error-message { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="chart"></div>
+    <div id="error-message"></div>
+
+    <script>
+        const width = 800;
+        const height = 800;
+        const margin = {top: 40, right: 40, bottom: 60, left: 40};
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const g = svg.append("g")
+            .attr("transform", `translate(${width/2},${height/2})`);
+
+        const startDate = new Date(2009, 0, 1);  // January 1, 2009 (Keep same as original)
+        const fourYears = 4 * 365.25 * 24 * 60 * 60 * 1000;  // 4 years in milliseconds
+
+        const halvingDates = [
+            new Date("2012-11-28"),
+            new Date("2016-07-09"),
+            new Date("2020-05-11"),
+            new Date("2024-04-20")  // Estimated date
+        ];
+
+        const athDates = [
+            { date: new Date("2013-11-30"), price: 1242 },
+            { date: new Date("2017-12-17"), price: 20089 },
+            { date: new Date("2021-11-10"), price: 69000 }
+        ];
+
+        function angleFromDate(date) {
+            return ((date - startDate) % fourYears) / fourYears * 2 * Math.PI;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+        }
+
+        function calculateEMA(data, period) {
+            const k = 2 / (period + 1);
+            let ema = data[0].price;
+            return data.map((d, i) => {
+                if (i === 0) return { date: d.date, ema: d.price };
+                ema = d.price * k + ema * (1 - k);
+                return { date: d.date, ema: ema };
+            });
+        }
+
+        async function fetchHistoricalData() {
+            const baseUrl = 'https://min-api.cryptocompare.com/data/v2/histoday';
+            const limit = 2000;
+            const symbol = 'ETH';  // Changed from BTC to ETH
+            const currency = 'USD';
+
+            let allData = [];
+            let toTs = Math.floor(Date.now() / 1000);
+            const startDate = new Date(2015, 6, 30);  // July 30, 2015 (Ethereum launch)
+            const startTs = Math.floor(startDate.getTime() / 1000);
+
+            while (toTs > startTs && allData.length < 5000) {
+                const url = `${baseUrl}?fsym=${symbol}&tsym=${currency}&limit=${limit}&toTs=${toTs}`;
+                try {
+                    const response = await fetch(url);
+                    const json = await response.json();
+                    const newData = json.Data.Data;
+                    allData = [...allData, ...newData];
+                    toTs = newData[0].time - 86400;
+                } catch (error) {
+                    console.error('Error fetching historical data:', error);
+                    break;
+                }
+            }
+
+            return allData
+                .filter(dataPoint => dataPoint.time >= startTs && dataPoint.close >= 0.1)
+                .sort((a, b) => a.time - b.time)
+                .map(dataPoint => ({
+                    date: new Date(dataPoint.time * 1000),
+                    price: dataPoint.close
+                }));
+        }
+
+        function drawSpiral(data) {
+            if (!data || data.length === 0) {
+                throw new Error("No data available to draw the spiral.");
+            }
+
+            const maxLogPrice = Math.log(Math.max(10000, ...data.map(d => d.price)));
+
+            const radiusScale = d3.scaleLinear()
+                .domain([0, maxLogPrice])
+                .range([0, Math.min(width, height) / 2 - margin.top]);
+
+            // Calculate EMA20
+            const ema20Data = calculateEMA(data, 20);
+
+            // Draw EMA20 line
+            const ema20Line = d3.lineRadial()
+                .angle(d => angleFromDate(d.date))
+                .radius(d => radiusScale(Math.log(d.ema)))
+                .curve(d3.curveLinear);
+
+            g.append("path")
+                .datum(ema20Data)
+                .attr("class", "ema20-line")
+                .attr("d", ema20Line);
+
+            // Draw Ethereum price line
+            const line = d3.lineRadial()
+                .angle(d => angleFromDate(d.date))
+                .radius(d => radiusScale(Math.log(d.price)))
+                .curve(d3.curveLinear);
+
+            g.append("path")
+                .datum(data)
+                .attr("class", "ethereum-line")
+                .attr("d", line);
+
+            // Draw halving date dots and lines first
+            halvingDates.forEach(halvingDate => {
+                // Find the closest ETH price data point to the BTC halving date
+                // This ensures we have a valid data point even for dates before ETH existed
+                let closestDataPoint = null;
+                let minDateDiff = Infinity;
+                
+                data.forEach(d => {
+                    const dateDiff = Math.abs(d.date - halvingDate);
+                    if (dateDiff < minDateDiff) {
+                        minDateDiff = dateDiff;
+                        closestDataPoint = d;
+                    }
+                });
+                
+                if (closestDataPoint) {
+                    // Use the angle from the BTC halving date directly, not from the ETH data point
+                    const angle = angleFromDate(halvingDate);
+                    const radius = radiusScale(Math.log(closestDataPoint.price));
+                    
+                    // Draw line from center to halving dot
+                    g.append("line")
+                        .attr("class", "halving-line")
+                        .attr("x1", 0)
+                        .attr("y1", 0)
+                        .attr("x2", radius * Math.cos(angle - Math.PI/2))
+                        .attr("y2", radius * Math.sin(angle - Math.PI/2));
+                    
+                    // Draw halving dot
+                    g.append("circle")
+                        .attr("class", "halving-dot")
+                        .attr("cx", radius * Math.cos(angle - Math.PI/2))
+                        .attr("cy", radius * Math.sin(angle - Math.PI/2))
+                        .attr("r", 4);
+
+                    // Add halving date label
+                    const labelRadius = radius - 20;  // More to the left
+                    g.append("text")
+                        .attr("class", "halving-label")
+                        .attr("x", labelRadius * Math.cos(angle - Math.PI/2))
+                        .attr("y", labelRadius * Math.sin(angle - Math.PI/2))
+                        .attr("dy", "0.35em")
+                        .attr("text-anchor", "end")  // Always end-aligned (to the left of the dot)
+                        .text(formatDate(halvingDate));
+                }
+            });
+
+            // Draw 4 main axes
+            const axisAngles = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
+            axisAngles.forEach(angle => {
+                const radius = Math.min(width, height) / 2 - margin.top;
+                g.append("line")
+                    .attr("class", "axis-line")
+                    .attr("x1", 0)
+                    .attr("y1", 0)
+                    .attr("x2", radius * Math.cos(angle - Math.PI/2))
+                    .attr("y2", radius * Math.sin(angle - Math.PI/2));
+            });
+
+            // Draw year lines and labels (every 2 years to reduce clutter)
+            const years = d3.range(2016, new Date().getFullYear() + 1, 2);
+            years.forEach(year => {
+                const angle = angleFromDate(new Date(year, 0, 1));
+                const radius = Math.min(width, height) / 2 - margin.top;
+                
+                // Vertical line
+                g.append("line")
+                    .attr("class", "year-line")
+                    .attr("x1", 0)
+                    .attr("y1", 0)
+                    .attr("x2", radius * Math.cos(angle - Math.PI/2))
+                    .attr("y2", radius * Math.sin(angle - Math.PI/2));
+
+                // Year label (exclude labels near horizontal axis)
+                const labelX = (radius + 10) * Math.cos(angle - Math.PI/2);
+                const labelY = (radius + 10) * Math.sin(angle - Math.PI/2);
+                if (Math.abs(labelY) > 20) {
+                    g.append("text")
+                        .attr("class", "year-label")
+                        .attr("x", labelX)
+                        .attr("y", labelY)
+                        .attr("dy", "0.35em")
+                        .attr("text-anchor", "middle")
+                        .text(year);
+                }
+            });
+
+            // Draw support price circles
+            const supportPrices = [0.1, 1, 10, 100, 1000, 10000];
+            supportPrices.forEach((price, index) => {
+                const radius = radiusScale(Math.log(price));
+                g.append("circle")
+                    .attr("class", "support-circle")
+                    .attr("r", radius);
+                
+                g.append("text")
+                    .attr("class", "price-label")
+                    .attr("x", 0)
+                    .attr("y", -radius - 5)
+                    .attr("dy", "0.35em")
+                    .attr("text-anchor", "middle")
+                    .text(`$${price.toLocaleString()}`);
+            });
+
+            // Add intersecting year labels (every other year)
+            data.forEach((d, i) => {
+                if (i > 0 && d.date.getFullYear() !== data[i-1].date.getFullYear() && d.date.getFullYear() % 2 === 0) {
+                    const angle = angleFromDate(d.date);
+                    const radius = radiusScale(Math.log(d.price));
+                    const labelX = (radius + 5) * Math.cos(angle - Math.PI/2);
+                    const labelY = (radius + 5) * Math.sin(angle - Math.PI/2);
+                    if (Math.abs(labelX) < width/2 - 30) {
+                        g.append("text")
+                            .attr("class", "year-label")
+                            .attr("x", labelX)
+                            .attr("y", labelY)
+                            .attr("dy", "0.35em")
+                            .attr("text-anchor", angle > Math.PI ? "end" : "start")
+                            .text(d.date.getFullYear());
+                    }
+                }
+            });
+
+            // Add ATH dots and lines from center
+            athDates.forEach(ath => {
+                // Find the closest ETH price data point to the BTC ATH date
+                // This ensures we have a valid data point even for dates before ETH existed
+                let closestDataPoint = null;
+                let minDateDiff = Infinity;
+                
+                data.forEach(d => {
+                    const dateDiff = Math.abs(d.date - ath.date);
+                    if (dateDiff < minDateDiff) {
+                        minDateDiff = dateDiff;
+                        closestDataPoint = d;
+                    }
+                });
+                
+                if (closestDataPoint) {
+                    // Use the angle from the BTC ATH date but the radius from the ETH price at that time
+                    const angle = angleFromDate(ath.date);
+                    const radius = radiusScale(Math.log(closestDataPoint.price));
+                    
+                    // Draw line from center to ATH dot
+                    g.append("line")
+                        .attr("class", "ath-line")
+                        .attr("x1", 0)
+                        .attr("y1", 0)
+                        .attr("x2", radius * Math.cos(angle - Math.PI/2))
+                        .attr("y2", radius * Math.sin(angle - Math.PI/2));
+                    
+                    // Draw ATH dot
+                    g.append("circle")
+                        .attr("class", "ath-dot")
+                        .attr("cx", radius * Math.cos(angle - Math.PI/2))
+                        .attr("cy", radius * Math.sin(angle - Math.PI/2))
+                        .attr("r", 4);
+                    
+                    // Add ATH date label
+                    const labelRadius = radius + 15;  // Slightly further outside the dot
+                    g.append("text")
+                        .attr("class", "ath-label")
+                        .attr("x", labelRadius * Math.cos(angle - Math.PI/2))
+                        .attr("y", labelRadius * Math.sin(angle - Math.PI/2))
+                        .attr("dy", "0.35em")
+                        .attr("text-anchor", angle > Math.PI ? "end" : "start")
+                        .text(formatDate(ath.date));
+                }
+            });
+
+            // Add legend
+            const legend = svg.append("g")
+                .attr("class", "legend")
+                .attr("transform", `translate(${width/2},${height - margin.bottom + 20})`);
+
+            const legendItems = [
+                { color: "green", text: "BTC Halving" },
+                { color: "red", text: "BTC ATH" },
+                { color: "orange", text: "ETH EMA20" }
+            ];
+
+            legendItems.forEach((item, i) => {
+                const g = legend.append("g")
+                    .attr("transform", `translate(${i * 120 - 150}, 0)`);
+
+                g.append("circle")
+                    .attr("cx", 0)
+                    .attr("cy", -5)
+                    .attr("r", 5)
+                    .attr("fill", item.color);
+
+                g.append("text")
+                    .attr("x", 10)
+                    .attr("y", 0)
+                    .text(item.text);
+            });
+        }
+
+        async function updateChart() {
+            try {
+                const data = await fetchHistoricalData();
+                if (data && data.length > 0) {
+                    drawSpiral(data);
+                } else {
+                    throw new Error("No data received from the API.");
+                }
+            } catch (error) {
+                console.error('Error updating chart:', error);
+                d3.select("#error-message").text(`Error: ${error.message}`);
+            }
+        }
+
+        updateChart();
+    </script>
+</body>
+</html>
