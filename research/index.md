@@ -6,11 +6,9 @@ permalink: /research/
 
 ---
 
-## Current research interests
-  * Neural networks (CNN, RNN, GAN, VAE, etc..)
-  * Signal processing
-  * Genetic algorithm
-  * Probabilistic programming
+## Current Research
+  * Meteo Back Casting
+  * Contrastive Forecasting
 
 ---
 
