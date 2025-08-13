@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-03T18:41:12+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+03:00</published><updated>2019-05-24T00:00:00+03:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2025-08-13T23:08:55+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+02:00</published><updated>2019-05-24T00:00:00+02:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
 edit a collection of tracks, while editing only one track at a time.
 After a little thought, the best representation of this “focus” in the data
 model was obviously a zipper.
@@ -143,12 +143,12 @@ zipper to add the <code class="language-plaintext highlighter-rouge">map</code> 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>I hope you liked this little taste of functional programming. 😉</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="swift" /><category term="ios" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[A simple and elegant implementation of the list zipper data structure.]]></summary></entry><entry xml:lang="en"><title type="html">What is wrong with the object paradigm ?</title><link href="/what-is-wrong-with-the-object-paradigm/" rel="alternate" type="text/html" title="What is wrong with the object paradigm ?" /><published>2017-02-17T00:00:00+02:00</published><updated>2017-02-17T00:00:00+02:00</updated><id>/what-is-wrong-with-the-object-paradigm</id><content type="html" xml:base="/what-is-wrong-with-the-object-paradigm/"><![CDATA[<p>Disclaimer: Aside from the catchy title,
+<p>I hope you liked this little taste of functional programming. 😉</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="swift" /><category term="ios" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[A simple and elegant implementation of the list zipper data structure.]]></summary></entry><entry xml:lang="en"><title type="html">What is wrong with the object paradigm ?</title><link href="/what-is-wrong-with-the-object-paradigm/" rel="alternate" type="text/html" title="What is wrong with the object paradigm ?" /><published>2017-02-17T00:00:00+01:00</published><updated>2017-02-17T00:00:00+01:00</updated><id>/what-is-wrong-with-the-object-paradigm</id><content type="html" xml:base="/what-is-wrong-with-the-object-paradigm/"><![CDATA[<p>Disclaimer: Aside from the catchy title,
 the main point of this article is to asks questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.</p>
 
 <blockquote>
-  <p>The object paradigm is fundamentally wrong<sup id="fnref:wrong" role="doc-noteref"><a href="#fn:wrong" class="footnote" rel="footnote">1</a></sup></p>
+  <p>The object paradigm is fundamentally wrong<sup id="fnref:wrong"><a href="#fn:wrong" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 </blockquote>
 
 <p>If you are curious about programming languages and diverse paradigms,
@@ -167,7 +167,7 @@ We are in the late 70s.
 The C language is now famous as it completely changed the way to write code
 compared to assembly, is human readable and have a monstrous expressivity
 in only few language words and
-the procedural paradigm<sup id="fnref:procedural-paradigm" role="doc-noteref"><a href="#fn:procedural-paradigm" class="footnote" rel="footnote">2</a></sup> (the one you use while writing C)
+the procedural paradigm<sup id="fnref:procedural-paradigm"><a href="#fn:procedural-paradigm" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> (the one you use while writing C)
 is well understood.
 But, as applications grow and get an increasing size,
 developers are facing an increasingly common problem:
@@ -406,7 +406,7 @@ is implemented <strong>and</strong> conceived in developer’s mind.</p>
 
 <p>The second big issue, related to the way OOP is done today,
 is the huge verbosity and boilerplate code introduced by encapsulation.
-Good books like ‘effective C++’<sup id="fnref:effective-cpp" role="doc-noteref"><a href="#fn:effective-cpp" class="footnote" rel="footnote">3</a></sup> even recommend doing so.
+Good books like ‘effective C++’<sup id="fnref:effective-cpp"><a href="#fn:effective-cpp" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> even recommend doing so.
 You see it everyday, from getters and setters mostly doing one-line affectation
 (many ide have tools for automating this code generation) to constructor
 only forwarding argument to member variables.
@@ -449,7 +449,7 @@ Types are types (as they are in C) and the link between them, the instanciation 
 the trait of a type can be done independently of the definition of the trait and of
 the definition of the type.</p>
 
-<p>Here is bellow a short example from rust’s documentation<sup id="fnref:trait" role="doc-noteref"><a href="#fn:trait" class="footnote" rel="footnote">4</a></sup>:</p>
+<p>Here is bellow a short example from rust’s documentation<sup id="fnref:trait"><a href="#fn:trait" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// # A Sheep object:</span>
 
@@ -548,25 +548,25 @@ just because your favorite language doesn’t provide such features :)</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:wrong" role="doc-endnote">
+    <li id="fn:wrong">
       <p>Things aren’t black and white. The object paradigm is definitively well suited
 for many tasks like modeling GUI. <a href="#fnref:wrong" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:procedural-paradigm" role="doc-endnote">
+    <li id="fn:procedural-paradigm">
       <p>Procedural paradigm means essentially
 that the language provide functions with side effects, and code is written linearly.
 You can see it like an enhencement of languages that only provide goto and jumps. <a href="#fnref:procedural-paradigm" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:effective-cpp" role="doc-endnote">
+    <li id="fn:effective-cpp">
       <p>This is a really good book on good programming advices
 for C++ developer. Despite the critic made in this article, it’s definitively
 a book full of good practices. <a href="#fnref:effective-cpp" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:trait" role="doc-endnote">
+    <li id="fn:trait">
       <p>See <a href="http://rustbyexample.com/trait.html">rust traits</a> <a href="#fnref:trait" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name>Jérémy Cochoy</name></author><category term="think" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A reflexion on error handling and application modeling through various variations of data modeling. We look at old C fashion, object languages, and more functional approaches.]]></summary></entry><entry xml:lang="en"><title type="html">How to use boost::property_tree to load and write JSON</title><link href="/boost-property-tree/" rel="alternate" type="text/html" title="How to use boost::property_tree to load and write JSON" /><published>2015-12-21T00:00:00+02:00</published><updated>2015-12-21T00:00:00+02:00</updated><id>/boost-property-tree</id><content type="html" xml:base="/boost-property-tree/"><![CDATA[<p><strong>Property Tree</strong> is a sublibrary of boost that allow you handling <em>tree of property</em>. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.</p>
+</div>]]></content><author><name>Jérémy Cochoy</name></author><category term="think" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A reflexion on error handling and application modeling through various variations of data modeling. We look at old C fashion, object languages, and more functional approaches.]]></summary></entry><entry xml:lang="en"><title type="html">How to use boost::property_tree to load and write JSON</title><link href="/boost-property-tree/" rel="alternate" type="text/html" title="How to use boost::property_tree to load and write JSON" /><published>2015-12-21T00:00:00+01:00</published><updated>2015-12-21T00:00:00+01:00</updated><id>/boost-property-tree</id><content type="html" xml:base="/boost-property-tree/"><![CDATA[<p><strong>Property Tree</strong> is a sublibrary of boost that allow you handling <em>tree of property</em>. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.</p>
 
 <p>Our example case will be the following json file :</p>
 
@@ -598,8 +598,8 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 
 <p>First, we need to include the libraries and load the file.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;boost/property_tree/ptree.hpp&gt;
-#include &lt;boost/property_tree/json_parser.hpp&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;boost/property_tree/ptree.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;boost/property_tree/json_parser.hpp&gt;</span><span class="cp">
 </span>
 <span class="c1">// Short alias for this namespace</span>
 <span class="k">namespace</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="p">;</span>
@@ -791,7 +791,7 @@ as demonstrated bellow.</p>
   <li><a href="http://stackoverflow.com/questions/2114466/creating-json-arrays-in-boost-using-property-trees">A post on stack overflow</a></li>
 </ul>
 
-<p><strong>Rem</strong> : At the time of writing, the boost::property_tree library doesn’t output typed value. But we can expect that it will be corrected soon.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="boost" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A quick starting guide to the C++ boost library module property_tree.]]></summary></entry><entry xml:lang="en"><title type="html">An alternative error handling strategy for C++</title><link href="/an-alternative-error-handling-strategy-cpp/" rel="alternate" type="text/html" title="An alternative error handling strategy for C++" /><published>2013-08-27T00:00:00+03:00</published><updated>2013-08-27T00:00:00+03:00</updated><id>/an-alternative-error-handling-strategy-cpp</id><content type="html" xml:base="/an-alternative-error-handling-strategy-cpp/"><![CDATA[<h2 id="error-handling">Error handling</h2>
+<p><strong>Rem</strong> : At the time of writing, the boost::property_tree library doesn’t output typed value. But we can expect that it will be corrected soon.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="boost" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A quick starting guide to the C++ boost library module property_tree.]]></summary></entry><entry xml:lang="en"><title type="html">An alternative error handling strategy for C++</title><link href="/an-alternative-error-handling-strategy-cpp/" rel="alternate" type="text/html" title="An alternative error handling strategy for C++" /><published>2013-08-27T00:00:00+02:00</published><updated>2013-08-27T00:00:00+02:00</updated><id>/an-alternative-error-handling-strategy-cpp</id><content type="html" xml:base="/an-alternative-error-handling-strategy-cpp/"><![CDATA[<h2 id="error-handling">Error handling</h2>
 
 <p>This not so short post is dedicated to a subject that may interest many
 programers: error handling.</p>
@@ -1068,9 +1068,9 @@ This is the "Either String" monad, as a way to handle errors.
     <span class="n">E</span><span class="p">()</span>
     <span class="p">{}</span>
 
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="c1">//Encapsulate the value</span>
-    <span class="k">static</span> <span class="n">E</span> <span class="n">ret</span><span class="p">(</span><span class="n">T</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">static</span> <span class="n">E</span> <span class="nf">ret</span><span class="p">(</span><span class="n">T</span> <span class="n">v</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">E</span> <span class="n">box</span><span class="p">;</span>
         <span class="n">box</span><span class="p">.</span><span class="n">m_value</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
@@ -1079,7 +1079,7 @@ This is the "Either String" monad, as a way to handle errors.
     <span class="p">}</span>
 
     <span class="c1">//Encapsulate an error</span>
-    <span class="k">static</span> <span class="n">E</span> <span class="n">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
+    <span class="k">static</span> <span class="n">E</span> <span class="nf">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">E</span> <span class="n">box</span><span class="p">;</span>
         <span class="n">box</span><span class="p">.</span><span class="n">m_error</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
@@ -1094,7 +1094,7 @@ This is the "Either String" monad, as a way to handle errors.
     <span class="p">}</span>
 
     <span class="c1">//Deconstruct an E to a value</span>
-    <span class="n">T</span> <span class="n">to_value</span><span class="p">()</span> <span class="k">const</span>
+    <span class="n">T</span> <span class="nf">to_value</span><span class="p">()</span> <span class="k">const</span>
     <span class="p">{</span>
         <span class="c1">//It's a programmer error, it shouldn't happen.</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="k">this</span><span class="p">)</span>
@@ -1127,7 +1127,7 @@ This is the "Either String" monad, as a way to handle errors.
 
     <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">F</span><span class="p">&gt;</span>
     <span class="kr">inline</span>
-    <span class="k">auto</span> <span class="n">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">m_value</span><span class="p">))</span>
+    <span class="k">auto</span> <span class="nf">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">m_value</span><span class="p">))</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">type</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">m_value</span><span class="p">));</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span>
@@ -1160,9 +1160,9 @@ value is now an "empty box".</void></p>
     <span class="n">E</span><span class="p">()</span>
     <span class="p">{}</span>
 
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="c1">//Encapsulate the value</span>
-    <span class="k">static</span> <span class="n">E</span> <span class="n">ret</span><span class="p">()</span>
+    <span class="k">static</span> <span class="n">E</span> <span class="nf">ret</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">E</span> <span class="n">box</span><span class="p">;</span>
         <span class="n">box</span><span class="p">.</span><span class="n">m_valid</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
@@ -1170,7 +1170,7 @@ value is now an "empty box".</void></p>
     <span class="p">}</span>
 
     <span class="c1">//Encapsulate an error</span>
-    <span class="k">static</span> <span class="n">E</span> <span class="n">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
+    <span class="k">static</span> <span class="n">E</span> <span class="nf">fail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">E</span> <span class="n">box</span><span class="p">;</span>
         <span class="n">box</span><span class="p">.</span><span class="n">m_error</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
@@ -1185,7 +1185,7 @@ value is now an "empty box".</void></p>
     <span class="p">}</span>
 
     <span class="c1">//Déconstruct an E to a value</span>
-    <span class="kt">void</span> <span class="n">to_value</span><span class="p">()</span> <span class="k">const</span>
+    <span class="kt">void</span> <span class="nf">to_value</span><span class="p">()</span> <span class="k">const</span>
     <span class="p">{</span>
         <span class="c1">//It's a programmer error, it shouldn't happen.</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="k">this</span><span class="p">)</span>
@@ -1196,7 +1196,7 @@ value is now an "empty box".</void></p>
     <span class="p">}</span>
 
     <span class="c1">//Deconstruct an E to an error</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">to_error</span><span class="p">()</span> <span class="k">const</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">to_error</span><span class="p">()</span> <span class="k">const</span>
     <span class="p">{</span>
         <span class="c1">//It's a programmer error, it shouldn't happen.</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span>
@@ -1218,7 +1218,7 @@ value is now an "empty box".</void></p>
 
     <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">F</span><span class="p">&gt;</span>
     <span class="kr">inline</span>
-    <span class="k">auto</span> <span class="n">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
+    <span class="k">auto</span> <span class="nf">bind</span><span class="p">(</span><span class="n">F</span> <span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">type</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">());</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)</span>
@@ -1305,7 +1305,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
             <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="nl">default:</span>
+        <span class="k">default</span><span class="o">:</span>
         <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isalpha</span><span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
                 <span class="k">return</span> <span class="n">fail</span><span class="o">&lt;</span><span class="n">vs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Only alpha characters are allowed"</span><span class="p">);</span>
@@ -1323,7 +1323,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
         <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">stack</span><span class="p">);</span>
 
-    <span class="k">return</span> <span class="n">ret</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">ret</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">//Take the first word and append it to the begining of all other words.</span>
@@ -1343,7 +1343,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
         <span class="n">out</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="s">"^"</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">ret</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">ret</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">//Concatenate all strings as a big string. Vec should contain data.</span>
@@ -1379,7 +1379,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="C++" /><category term="monads" /><category term="language" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[We treat three historical ways to handle errors, and consider a functional approach using monades to handle error in C++. We provide a C++ implementation unsing templates and discuss the pros and cons.]]></summary></entry><entry xml:lang="fr"><title type="html">Tutoriel d’initiation à SEDNL</title><link href="/tutorial-sednl/" rel="alternate" type="text/html" title="Tutoriel d’initiation à SEDNL" /><published>2013-08-25T00:00:00+03:00</published><updated>2013-08-25T00:00:00+03:00</updated><id>/tutorial-sednl</id><content type="html" xml:base="/tutorial-sednl/"><![CDATA[<p>Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
+</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="C++" /><category term="monads" /><category term="language" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[We treat three historical ways to handle errors, and consider a functional approach using monades to handle error in C++. We provide a C++ implementation unsing templates and discuss the pros and cons.]]></summary></entry><entry xml:lang="fr"><title type="html">Tutoriel d’initiation à SEDNL</title><link href="/tutorial-sednl/" rel="alternate" type="text/html" title="Tutoriel d’initiation à SEDNL" /><published>2013-08-25T00:00:00+02:00</published><updated>2013-08-25T00:00:00+02:00</updated><id>/tutorial-sednl</id><content type="html" xml:base="/tutorial-sednl/"><![CDATA[<p>Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
 Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliseront
 un client et serveur de chat, ainsi qu’une application de dessin collaborative.</p>
 
@@ -1443,8 +1443,8 @@ standard.</p>
 <p>Commençons par le client. Il doit recevoir un extrait de code sur son entrée
 standard, puis l’envoyer au serveur.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
-#include &lt;iostream&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
 
@@ -1531,9 +1531,9 @@ connections, et écrire sur la sortie standard le texte reçu. Attention,
 il faudra bien penser à gérer le cas où deux clients envoie un message
 au même moment. Pour ça, on utilisera une mutex.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
-#include &lt;iostream&gt;
-#include &lt;mutex&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
 
@@ -1583,7 +1583,7 @@ au même moment. Pour ça, on utilisera une mutex.</p>
 
     <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Initiation à la bibliothèque réseau SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">SedNL : Simple Event Driven Network Library</title><link href="/sednl-simple-event-driven-network-library/" rel="alternate" type="text/html" title="SedNL : Simple Event Driven Network Library" /><published>2013-08-21T00:00:00+03:00</published><updated>2013-08-21T00:00:00+03:00</updated><id>/sednl-simple-event-driven-network-library</id><content type="html" xml:base="/sednl-simple-event-driven-network-library/"><![CDATA[<p><a href="https://github.com/Zenol/sednl" title="SedNL repository">SedNL</a> est une bibliothèque
+</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Initiation à la bibliothèque réseau SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">SedNL : Simple Event Driven Network Library</title><link href="/sednl-simple-event-driven-network-library/" rel="alternate" type="text/html" title="SedNL : Simple Event Driven Network Library" /><published>2013-08-21T00:00:00+02:00</published><updated>2013-08-21T00:00:00+02:00</updated><id>/sednl-simple-event-driven-network-library</id><content type="html" xml:base="/sednl-simple-event-driven-network-library/"><![CDATA[<p><a href="https://github.com/Zenol/sednl" title="SedNL repository">SedNL</a> est une bibliothèque
 réseau écrite en C++11, principalement destinée à la réalisation d’applications
 réseau dont le protocole est basé sur la notion d’évènements :
 Les clients et le serveur communiquent via des évènements,
@@ -1607,7 +1607,7 @@ Elle convient parfaitement tant à des projets d’envergure moyenne que des
 projets de taille plus conséquente.</p>
 
 <p>Un court exemple d’utilisation du mécanisme d’évènement coté serveur :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
 
@@ -1670,7 +1670,7 @@ au coût d’une API plus complexe et moins intuitive.
 Gardez aussi à l’esprit que le design encouragé par SedNL devrait
 s’adapter à de nombreuses bibliothèques fournissant un mécanisme
 d’évènement, et que la licence autorise diverses modifications
-pour des besoins spécifiques.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Présentation de la bibliothèque C++ SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">Boite à musique Arduino</title><link href="/music-box/" rel="alternate" type="text/html" title="Boite à musique Arduino" /><published>2013-08-16T00:00:00+03:00</published><updated>2013-08-16T00:00:00+03:00</updated><id>/music-box</id><content type="html" xml:base="/music-box/"><![CDATA[<p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
+pour des besoins spécifiques.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Présentation de la bibliothèque C++ SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">Boite à musique Arduino</title><link href="/music-box/" rel="alternate" type="text/html" title="Boite à musique Arduino" /><published>2013-08-16T00:00:00+02:00</published><updated>2013-08-16T00:00:00+02:00</updated><id>/music-box</id><content type="html" xml:base="/music-box/"><![CDATA[<p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
 
 <p>Tout ceci est plutôt abstrait, alors regardons cela de plus près.</p>
 
@@ -1992,12 +1992,12 @@ extern "C" {
 
 <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
 <span class="n">Synth_8bits_lib</span><span class="p">.</span><span class="n">cpp</span> <span class="o">:&lt;</span><span class="n">pre</span> <span class="n">lang</span><span class="o">=</span><span class="s">"C"</span> <span class="n">colla</span><span class="o">=</span><span class="s">"-"</span><span class="o">&gt;</span><span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">avr</span><span class="o">/</span><span class="n">io</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-<span class="cp">#include &lt;avr/interrupt.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include &lt;Arduino.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include "Synth_8bits.h"
-#include "white_noise.h"
+<span class="cp">#include</span> <span class="cpf">"Synth_8bits.h"</span><span class="cp">
+#include</span> <span class="cpf">"white_noise.h"</span><span class="cp">
 </span>
 <span class="c1">//Periods, stored after applying the right calculus with frequency_to_period(int)</span>
 <span class="kt">int</span> <span class="n">square1_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -2604,8 +2604,8 @@ char white_noise[4096] PROGMEM = {
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// generate_white_noise.cpp</span>
 
-<span class="cp">#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
 </span>
 <span class="cp">#define SIZE 4096
 </span>
@@ -2983,7 +2983,7 @@ void loop()
 <p>Plus sur Tone :</p>
 <ul>
   <li><a href="http://arduino.cc/en/Tutorial/Tone">http://arduino.cc/en/Tutorial/Tone</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="arduino" /><category term="software" /><category term="music" /><category term="asm" /><category term="c" /><category term="embeded" /><summary type="html"><![CDATA[Une micro-bibliothèque pour jouer une mélodie polyphonique sur arduino en C. Contient le code, la documentation, et la melodie de tétris comme exemple.]]></summary></entry><entry xml:lang="fr"><title type="html">Haskell - Lazy IO</title><link href="/haskell-lazy-io/" rel="alternate" type="text/html" title="Haskell - Lazy IO" /><published>2013-07-16T00:00:00+03:00</published><updated>2013-07-16T00:00:00+03:00</updated><id>/haskell-lazy-io</id><content type="html" xml:base="/haskell-lazy-io/"><![CDATA[<p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
+</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="arduino" /><category term="software" /><category term="music" /><category term="asm" /><category term="c" /><category term="embeded" /><summary type="html"><![CDATA[Une micro-bibliothèque pour jouer une mélodie polyphonique sur arduino en C. Contient le code, la documentation, et la melodie de tétris comme exemple.]]></summary></entry><entry xml:lang="fr"><title type="html">Haskell - Lazy IO</title><link href="/haskell-lazy-io/" rel="alternate" type="text/html" title="Haskell - Lazy IO" /><published>2013-07-16T00:00:00+02:00</published><updated>2013-07-16T00:00:00+02:00</updated><id>/haskell-lazy-io</id><content type="html" xml:base="/haskell-lazy-io/"><![CDATA[<p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
 
 <p>Je vais ici vous parler de la phase de hachage des fichiers pour les trier et déterminer les doublons. Et oui, on ne vas pas comparer le contenu de tous les fichiers entre eux, ça serait en n^2 par rapport au nombre de fichiers. On ne veux pas non plus attendre une journée.</p>
 
@@ -3078,7 +3078,7 @@ return (filename, hashed)
 
 <p>Voila, c’est tout, c’est <code class="language-plaintext highlighter-rouge">$!</code> qui fait tout le travail en demandant à hashlazy de gentiment s’évaluer.</p>
 
-<p>Et la c’est le bonheur, tout refonctionne et l’on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry><entry xml:lang="fr"><title type="html">C++ - Un gout de programmation fonctionelle</title><link href="/c++-functional-programming-taste/" rel="alternate" type="text/html" title="C++ - Un gout de programmation fonctionelle" /><published>2013-07-12T00:00:00+03:00</published><updated>2013-07-12T00:00:00+03:00</updated><id>/c++-functional-programming-taste</id><content type="html" xml:base="/c++-functional-programming-taste/"><![CDATA[<p>Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.</p>
+<p>Et la c’est le bonheur, tout refonctionne et l’on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry><entry xml:lang="fr"><title type="html">C++ - Un gout de programmation fonctionelle</title><link href="/c++-functional-programming-taste/" rel="alternate" type="text/html" title="C++ - Un gout de programmation fonctionelle" /><published>2013-07-12T00:00:00+02:00</published><updated>2013-07-12T00:00:00+02:00</updated><id>/c++-functional-programming-taste</id><content type="html" xml:base="/c++-functional-programming-taste/"><![CDATA[<p>Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.</p>
 
 <h2 id="alpha-beta--kappa-lambda">Alpha, Beta, … Kappa, Lambda!</h2>
 
@@ -3234,7 +3234,7 @@ return (filename, hashed)
 <ul>
   <li><a href="http://en.cppreference.com/w/cpp/language/lambda">http://en.cppreference.com/w/cpp/language/lambda</a></li>
   <li><a href="http://en.cppreference.com/w/cpp/utility/functional/function">http://en.cppreference.com/w/cpp/utility/functional/function</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveux aspect fonctionnel du C++ 11. Il y est question de lambdas, et les applications partielles.]]></summary></entry><entry xml:lang="fr"><title type="html">CMake - Mini howto</title><link href="/cmake-howto/" rel="alternate" type="text/html" title="CMake - Mini howto" /><published>2013-06-30T00:00:00+03:00</published><updated>2013-06-30T00:00:00+03:00</updated><id>/cmake-howto</id><content type="html" xml:base="/cmake-howto/"><![CDATA[<h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
+</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveux aspect fonctionnel du C++ 11. Il y est question de lambdas, et les applications partielles.]]></summary></entry><entry xml:lang="fr"><title type="html">CMake - Mini howto</title><link href="/cmake-howto/" rel="alternate" type="text/html" title="CMake - Mini howto" /><published>2013-06-30T00:00:00+02:00</published><updated>2013-06-30T00:00:00+02:00</updated><id>/cmake-howto</id><content type="html" xml:base="/cmake-howto/"><![CDATA[<h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
 
 <p>CMake est un utilitaire permettant de générer le “build process” d’un projet. C’est un outils du même genre que les autotools (aussi appelé pour des raisons que je tairai ‘autohell’) en</p>
 

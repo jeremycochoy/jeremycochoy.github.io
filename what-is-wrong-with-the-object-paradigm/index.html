@@ -106,7 +106,7 @@ the main point of this article is to asks questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.</p>
 
 <blockquote>
-  <p>The object paradigm is fundamentally wrong<sup id="fnref:wrong" role="doc-noteref"><a href="#fn:wrong" class="footnote" rel="footnote">1</a></sup></p>
+  <p>The object paradigm is fundamentally wrong<sup id="fnref:wrong"><a href="#fn:wrong" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 </blockquote>
 
 <p>If you are curious about programming languages and diverse paradigms,
@@ -125,7 +125,7 @@ We are in the late 70s.
 The C language is now famous as it completely changed the way to write code
 compared to assembly, is human readable and have a monstrous expressivity
 in only few language words and
-the procedural paradigm<sup id="fnref:procedural-paradigm" role="doc-noteref"><a href="#fn:procedural-paradigm" class="footnote" rel="footnote">2</a></sup> (the one you use while writing C)
+the procedural paradigm<sup id="fnref:procedural-paradigm"><a href="#fn:procedural-paradigm" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> (the one you use while writing C)
 is well understood.
 But, as applications grow and get an increasing size,
 developers are facing an increasingly common problem:
@@ -364,7 +364,7 @@ is implemented <strong>and</strong> conceived in developer’s mind.</p>
 
 <p>The second big issue, related to the way OOP is done today,
 is the huge verbosity and boilerplate code introduced by encapsulation.
-Good books like ‘effective C++’<sup id="fnref:effective-cpp" role="doc-noteref"><a href="#fn:effective-cpp" class="footnote" rel="footnote">3</a></sup> even recommend doing so.
+Good books like ‘effective C++’<sup id="fnref:effective-cpp"><a href="#fn:effective-cpp" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> even recommend doing so.
 You see it everyday, from getters and setters mostly doing one-line affectation
 (many ide have tools for automating this code generation) to constructor
 only forwarding argument to member variables.
@@ -407,7 +407,7 @@ Types are types (as they are in C) and the link between them, the instanciation 
 the trait of a type can be done independently of the definition of the trait and of
 the definition of the type.</p>
 
-<p>Here is bellow a short example from rust’s documentation<sup id="fnref:trait" role="doc-noteref"><a href="#fn:trait" class="footnote" rel="footnote">4</a></sup>:</p>
+<p>Here is bellow a short example from rust’s documentation<sup id="fnref:trait"><a href="#fn:trait" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// # A Sheep object:</span>
 
@@ -506,21 +506,21 @@ just because your favorite language doesn’t provide such features :)</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:wrong" role="doc-endnote">
+    <li id="fn:wrong">
       <p>Things aren’t black and white. The object paradigm is definitively well suited
 for many tasks like modeling GUI. <a href="#fnref:wrong" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:procedural-paradigm" role="doc-endnote">
+    <li id="fn:procedural-paradigm">
       <p>Procedural paradigm means essentially
 that the language provide functions with side effects, and code is written linearly.
 You can see it like an enhencement of languages that only provide goto and jumps. <a href="#fnref:procedural-paradigm" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:effective-cpp" role="doc-endnote">
+    <li id="fn:effective-cpp">
       <p>This is a really good book on good programming advices
 for C++ developer. Despite the critic made in this article, it’s definitively
 a book full of good practices. <a href="#fnref:effective-cpp" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:trait" role="doc-endnote">
+    <li id="fn:trait">
       <p>See <a href="http://rustbyexample.com/trait.html">rust traits</a> <a href="#fnref:trait" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

@@ -1,0 +1,222 @@
+% Copyright 2013 Christophe-Marie Duquesne <chmd@chmd.fr>
+% Copyright 2014 Mark Szepieniec <http://github.com/mszep>
+% 
+% ConText style for making a resume with pandoc. Inspired by moderncv.
+% 
+% This CSS document is delivered to you under the CC BY-SA 3.0 License.
+% https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+
+\startmode[*mkii]
+  \enableregime[utf-8]  
+  \setupcolors[state=start]
+\stopmode
+
+\setupcolor[hex]
+\definecolor[titlegrey][h=757575]
+\definecolor[sectioncolor][h=397249]
+\definecolor[rulecolor][h=9cb770]
+
+% Enable hyperlinks
+\setupinteraction[state=start, color=sectioncolor]
+
+\setuppapersize [A4][A4]
+\setuplayout    [width=middle, height=middle,
+                 backspace=20mm, cutspace=0mm,
+                 topspace=10mm, bottomspace=20mm,
+                 header=0mm, footer=0mm]
+
+%\setuppagenumbering[location={footer,center}]
+
+\setupbodyfont[11pt, helvetica]
+
+\setupwhitespace[medium]
+
+\setupblackrules[width=31mm, color=rulecolor]
+
+\setuphead[chapter]      [style=\tfd]
+\setuphead[section]      [style=\tfd\bf, color=titlegrey, align=middle]
+\setuphead[subsection]   [style=\tfb\bf, color=sectioncolor, align=right,
+                          before={\leavevmode\blackrule\hspace}]
+\setuphead[subsubsection][style=\bf]
+
+\setuphead[chapter, section, subsection, subsubsection][number=no]
+
+%\setupdescriptions[width=10mm]
+
+\definedescription
+  [description]
+  [headstyle=bold, style=normal,
+   location=hanging, width=18mm, distance=14mm, margin=0cm]
+
+\setupitemize[autointro, packed]    % prevent orphan list intro
+\setupitemize[indentnext=no]
+
+\setupfloat[figure][default={here,nonumber}]
+\setupfloat[table][default={here,nonumber}]
+
+\setuptables[textwidth=max, HL=none]
+
+\setupthinrules[width=15em] % width of horizontal rules
+
+\setupdelimitedtext
+  [blockquote]
+  [before={\setupalign[middle]},
+   indentnext=no,
+  ]
+
+
+\starttext
+\startalignment[center]
+  \blank[2*big]
+  {\tfd Dr.~Jérémy Cochoy}
+  \blank[3*medium]
+\stopalignment
+
+\thinrule
+
+\startblockquote
+{\bf CEO - Redstone Solutions}
+\stopblockquote
+
+\thinrule
+
+\subsection[title={Corporate
+Experience},reference={corporate-experience}]
+
+\startdescription{2019-2020}
+  {\em CTO at Symphonia}
+
+  R&D on audio signal processing using python and pytorch. Architecture
+  and implementation of the iOS app embeding the algorithm in swift and
+  C. Management of a small team.
+\stopdescription
+
+\startdescription{2018-2019}
+  {\em Backend Developper at Klaxit}
+
+  I was a backend developper at the French carpooling startup Klaxit.
+  Worked with a ruby stack, redis, sidekick, aws, postgre on features
+  integration, bug fixes, and performance improvement.
+\stopdescription
+
+\startdescription{2015-2018}
+  {\em Doctorat et Monitorat - INRIA Saclay & U-PSUD} (Paris, France).
+
+  PhD in persistent homology with Steve Oudot. I taught at the IUT
+  d'Orsay and University Paris Descart.
+\stopdescription
+
+\startdescription{2013}
+  {\em Internship with Frank Wagner} (Lyon, France).
+
+  Modele theorie.
+\stopdescription
+
+\startdescription{2012}
+  {\em Internship with Frédéric Chapoton}
+
+  Knot theory.
+\stopdescription
+
+\startdescription{2009}
+  {\em In charge of the Assembly subjet at EPITECH}
+
+  I was in charge of the {\em Assembly} lessons for the second year
+  students at the School EPITECH. I also took part to other subjects.
+\stopdescription
+
+\subsection[title={Education},reference={education}]
+
+\startdescription{2018}
+  {\em PhD in Computer science and Mathematics}
+
+  I worked on persisent homology.
+\stopdescription
+
+\startdescription{2014 - 2015}
+  {\em Master Introduction a la theorie des fonctions zeta et L - ENS}
+  (Lyon, France).
+
+  Second year of master at the Ecole Normale Superieur of Lyon.
+\stopdescription
+
+\startdescription{2013 - 2014}
+  {\em Agregation - ENS} (Lyon, France).
+
+  Selective French competitive exam to allow teaching in high school and
+  classes preparatoires.
+\stopdescription
+
+\startdescription{20011 - 2012}
+  {\em Licence 3 - ENS} (Lyon, France).
+
+  Third year of Licence in mathemtics at the Ecole Normale Superieur of
+  Lyon.
+\stopdescription
+
+\startdescription{2009 - 2011}
+  {\em Licence 1 and Licence 2 - UCBL} (Lyon, France).
+
+  First and second year of Licence in the university of Lyon.
+\stopdescription
+
+\subsection[title={Open Source
+Contributions},reference={open-source-contributions}]
+
+\startdescription{C++}
+  Author of
+  \useURL[url1][https://github.com/jeremycochoy/sednl][][sednl]\from[url1],
+  a simple event driven network library.
+\stopdescription
+
+\startdescription{Rust}
+  Author of
+  \useURL[url2][https://github.com/jeremycochoy/sgb][][SGB]\from[url2],
+  a simple game boy classic emulator written in rust.
+\stopdescription
+
+\subsection[title={Techs and Stacks},reference={techs-and-stacks}]
+
+\startitemize[packed]
+\item
+  Pytorch, Flask, Pandas
+\item
+  C++, Rust
+\item
+  Swift
+\item
+  Ruby, Rails, Sinatra, Redis
+\item
+  Vue.js, React
+\item
+  AVR assembly
+\stopitemize
+
+\subsection[title={Activities and
+interests},reference={activities-and-interests}]
+
+\startdescription{Hobbies}
+  Playing and composing music, reading.
+\stopdescription
+
+\startdescription{Sports}
+  Dance (Lindy Hop, Rock, \ldots{}) and Climbing.
+\stopdescription
+
+\thinrule
+
+\startblockquote
+jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • years old\crlf
+43-300 Bielsko-Biala\crlf
+Poland\crlf
+\useURL[url3][http://zenol.fr/resume/index.pdf][][pdf
+version]\from[url3] •
+\useURL[url4][http://zenol.fr/resume/index.txt][][txt
+version]\from[url4] •
+\useURL[url5][http://zenol.fr/resume/index.docx][][doc
+version]\from[url5] •
+\useURL[url6][http://zenol.fr/resume/index.html][][html
+version]\from[url6]
+\stopblockquote
+
+\stoptext

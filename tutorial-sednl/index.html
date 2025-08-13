@@ -165,8 +165,8 @@ standard.</p>
 <p>Commençons par le client. Il doit recevoir un extrait de code sur son entrée
 standard, puis l’envoyer au serveur.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
-#include &lt;iostream&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
 
@@ -253,9 +253,9 @@ connections, et écrire sur la sortie standard le texte reçu. Attention,
 il faudra bien penser à gérer le cas où deux clients envoie un message
 au même moment. Pour ça, on utilisera une mutex.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SEDNL/sednl.hpp&gt;
-#include &lt;iostream&gt;
-#include &lt;mutex&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
 

@@ -59,47 +59,6 @@ html, body {
     height: 100%;
 }
 
-.slice {
-	padding: 10% 0 15% 0;
-	height: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
-#slice1 {
-    background: url('/public/images/slide1.jpg') 50% no-repeat fixed;
-    color: black;
-}
-@supports (-webkit-overflow-scrolling: touch) {
-  #slice1 {
-      background: url('/public/images/slide1.jpg') 50% no-repeat;
-    }
-}
-
-#slice2 {
-    background-color: white;
-    background-image:linear-gradient(lightgrey, white);
-    color: black;
-}
-
-#slice3 {
-    background-color: white;
-    background-image:linear-gradient(lightgrey, white);
-    /* background: url('/public/images/slide3.jpg') 50% no-repeat fixed; */
-    /* color: white; */
-}
-
-#slice4 {
-    background-color: white;
-    background-image:linear-gradient(lightgrey, white);
-    color: black;
-}
-
-#slice5 {
-    background-color: white;
-    background-image:linear-gradient(lightgrey, white);
-    /* background: url('/public/images/slide5.jpg') 50% no-repeat fixed; */
-    /* color: white; */
-}
 
 .slice p {
     font-size: 2em;

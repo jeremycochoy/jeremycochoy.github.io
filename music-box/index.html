@@ -423,12 +423,12 @@ extern "C" {
 
 <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
 <span class="n">Synth_8bits_lib</span><span class="p">.</span><span class="n">cpp</span> <span class="o">:&lt;</span><span class="n">pre</span> <span class="n">lang</span><span class="o">=</span><span class="s">"C"</span> <span class="n">colla</span><span class="o">=</span><span class="s">"-"</span><span class="o">&gt;</span><span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">avr</span><span class="o">/</span><span class="n">io</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-<span class="cp">#include &lt;avr/interrupt.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include &lt;Arduino.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include "Synth_8bits.h"
-#include "white_noise.h"
+<span class="cp">#include</span> <span class="cpf">"Synth_8bits.h"</span><span class="cp">
+#include</span> <span class="cpf">"white_noise.h"</span><span class="cp">
 </span>
 <span class="c1">//Periods, stored after applying the right calculus with frequency_to_period(int)</span>
 <span class="kt">int</span> <span class="n">square1_period</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1035,8 +1035,8 @@ char white_noise[4096] PROGMEM = {
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// generate_white_noise.cpp</span>
 
-<span class="cp">#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
 </span>
 <span class="cp">#define SIZE 4096
 </span>

@@ -4,7 +4,7 @@
  <title>Jeremy Cochoy</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2022-01-03T18:41:12+02:00</updated>
+ <updated>2025-08-13T23:08:55+02:00</updated>
  <id></id>
  <author>
    <name>Jeremy Cochoy</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>List Zipper applied to iOS swift</title>
    <link href="/list-zipper-swift/"/>
-   <updated>2019-05-24T00:00:00+03:00</updated>
+   <updated>2019-05-24T00:00:00+02:00</updated>
    <id>/list-zipper-swift</id>
    <content type="html">&lt;p&gt;Recently, I was implementing a model for a music application where the user
 edit a collection of tracks, while editing only one track at a time.
@@ -169,14 +169,14 @@ zipper to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot
  <entry>
    <title>What is wrong with the object paradigm ?</title>
    <link href="/what-is-wrong-with-the-object-paradigm/"/>
-   <updated>2017-02-17T00:00:00+02:00</updated>
+   <updated>2017-02-17T00:00:00+01:00</updated>
    <id>/what-is-wrong-with-the-object-paradigm</id>
    <content type="html">&lt;p&gt;Disclaimer: Aside from the catchy title,
 the main point of this article is to asks questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;The object paradigm is fundamentally wrong&lt;sup id=&quot;fnref:wrong&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:wrong&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+  &lt;p&gt;The object paradigm is fundamentally wrong&lt;sup id=&quot;fnref:wrong&quot;&gt;&lt;a href=&quot;#fn:wrong&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot; role=&quot;doc-noteref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;If you are curious about programming languages and diverse paradigms,
@@ -195,7 +195,7 @@ We are in the late 70s.
 The C language is now famous as it completely changed the way to write code
 compared to assembly, is human readable and have a monstrous expressivity
 in only few language words and
-the procedural paradigm&lt;sup id=&quot;fnref:procedural-paradigm&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:procedural-paradigm&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; (the one you use while writing C)
+the procedural paradigm&lt;sup id=&quot;fnref:procedural-paradigm&quot;&gt;&lt;a href=&quot;#fn:procedural-paradigm&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot; role=&quot;doc-noteref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; (the one you use while writing C)
 is well understood.
 But, as applications grow and get an increasing size,
 developers are facing an increasingly common problem:
@@ -434,7 +434,7 @@ is implemented &lt;strong&gt;and&lt;/strong&gt; conceived in developer’s mind.
 
 &lt;p&gt;The second big issue, related to the way OOP is done today,
 is the huge verbosity and boilerplate code introduced by encapsulation.
-Good books like ‘effective C++’&lt;sup id=&quot;fnref:effective-cpp&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:effective-cpp&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; even recommend doing so.
+Good books like ‘effective C++’&lt;sup id=&quot;fnref:effective-cpp&quot;&gt;&lt;a href=&quot;#fn:effective-cpp&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot; role=&quot;doc-noteref&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; even recommend doing so.
 You see it everyday, from getters and setters mostly doing one-line affectation
 (many ide have tools for automating this code generation) to constructor
 only forwarding argument to member variables.
@@ -477,7 +477,7 @@ Types are types (as they are in C) and the link between them, the instanciation 
 the trait of a type can be done independently of the definition of the trait and of
 the definition of the type.&lt;/p&gt;
 
-&lt;p&gt;Here is bellow a short example from rust’s documentation&lt;sup id=&quot;fnref:trait&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:trait&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;p&gt;Here is bellow a short example from rust’s documentation&lt;sup id=&quot;fnref:trait&quot;&gt;&lt;a href=&quot;#fn:trait&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot; role=&quot;doc-noteref&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// # A Sheep object:&lt;/span&gt;
 
@@ -576,21 +576,21 @@ just because your favorite language doesn’t provide such features :)&lt;/p&gt;
 
 &lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:wrong&quot; role=&quot;doc-endnote&quot;&gt;
+    &lt;li id=&quot;fn:wrong&quot;&gt;
       &lt;p&gt;Things aren’t black and white. The object paradigm is definitively well suited
 for many tasks like modeling GUI. &lt;a href=&quot;#fnref:wrong&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:procedural-paradigm&quot; role=&quot;doc-endnote&quot;&gt;
+    &lt;li id=&quot;fn:procedural-paradigm&quot;&gt;
       &lt;p&gt;Procedural paradigm means essentially
 that the language provide functions with side effects, and code is written linearly.
 You can see it like an enhencement of languages that only provide goto and jumps. &lt;a href=&quot;#fnref:procedural-paradigm&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:effective-cpp&quot; role=&quot;doc-endnote&quot;&gt;
+    &lt;li id=&quot;fn:effective-cpp&quot;&gt;
       &lt;p&gt;This is a really good book on good programming advices
 for C++ developer. Despite the critic made in this article, it’s definitively
 a book full of good practices. &lt;a href=&quot;#fnref:effective-cpp&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:trait&quot; role=&quot;doc-endnote&quot;&gt;
+    &lt;li id=&quot;fn:trait&quot;&gt;
       &lt;p&gt;See &lt;a href=&quot;http://rustbyexample.com/trait.html&quot;&gt;rust traits&lt;/a&gt; &lt;a href=&quot;#fnref:trait&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
@@ -601,7 +601,7 @@ a book full of good practices. &lt;a href=&quot;#fnref:effective-cpp&quot; clas
  <entry>
    <title>How to use boost::property_tree to load and write JSON</title>
    <link href="/boost-property-tree/"/>
-   <updated>2015-12-21T00:00:00+02:00</updated>
+   <updated>2015-12-21T00:00:00+01:00</updated>
    <id>/boost-property-tree</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;Property Tree&lt;/strong&gt; is a sublibrary of boost that allow you handling &lt;em&gt;tree of property&lt;/em&gt;. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.&lt;/p&gt;
 
@@ -635,8 +635,8 @@ a book full of good practices. &lt;a href=&quot;#fnref:effective-cpp&quot; clas
 
 &lt;p&gt;First, we need to include the libraries and load the file.&lt;/p&gt;
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;boost/property_tree/ptree.hpp&amp;gt;
-#include &amp;lt;boost/property_tree/json_parser.hpp&amp;gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;boost/property_tree/ptree.hpp&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;boost/property_tree/json_parser.hpp&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;// Short alias for this namespace&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;property_tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -835,7 +835,7 @@ as demonstrated bellow.&lt;/p&gt;
  <entry>
    <title>An alternative error handling strategy for C++</title>
    <link href="/an-alternative-error-handling-strategy-cpp/"/>
-   <updated>2013-08-27T00:00:00+03:00</updated>
+   <updated>2013-08-27T00:00:00+02:00</updated>
    <id>/an-alternative-error-handling-strategy-cpp</id>
    <content type="html">&lt;h2 id=&quot;error-handling&quot;&gt;Error handling&lt;/h2&gt;
 
@@ -1114,9 +1114,9 @@ This is the &quot;Either String&quot; monad, as a way to handle errors.
     &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
 
-&lt;span class=&quot;nl&quot;&gt;public:&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//Encapsulate the value&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1125,7 +1125,7 @@ This is the &quot;Either String&quot; monad, as a way to handle errors.
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;c1&quot;&gt;//Encapsulate an error&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1140,7 +1140,7 @@ This is the &quot;Either String&quot; monad, as a way to handle errors.
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;c1&quot;&gt;//Deconstruct an E to a value&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;//It&apos;s a programmer error, it shouldn&apos;t happen.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1173,7 +1173,7 @@ This is the &quot;Either String&quot; monad, as a way to handle errors.
 
     &lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1206,9 +1206,9 @@ value is now an &quot;empty box&quot;.&lt;/void&gt;&lt;/p&gt;
     &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
 
-&lt;span class=&quot;nl&quot;&gt;public:&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//Encapsulate the value&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_valid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1216,7 +1216,7 @@ value is now an &quot;empty box&quot;.&lt;/void&gt;&lt;/p&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;c1&quot;&gt;//Encapsulate an error&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1231,7 +1231,7 @@ value is now an &quot;empty box&quot;.&lt;/void&gt;&lt;/p&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;c1&quot;&gt;//Déconstruct an E to a value&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;//It&apos;s a programmer error, it shouldn&apos;t happen.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1242,7 +1242,7 @@ value is now an &quot;empty box&quot;.&lt;/void&gt;&lt;/p&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;c1&quot;&gt;//Deconstruct an E to an error&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to_error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;//It&apos;s a programmer error, it shouldn&apos;t happen.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1264,7 +1264,7 @@ value is now an &quot;empty box&quot;.&lt;/void&gt;&lt;/p&gt;
 
     &lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;decltype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1351,7 +1351,7 @@ the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx::fail
             &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;default:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isalpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Only alpha characters are allowed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -1369,7 +1369,7 @@ the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx::fail
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;//Take the first word and append it to the begining of all other words.&lt;/span&gt;
@@ -1389,7 +1389,7 @@ the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx::fail
         &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;^&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;//Concatenate all strings as a big string. Vec should contain data.&lt;/span&gt;
@@ -1433,7 +1433,7 @@ the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx::fail
  <entry>
    <title>Tutoriel d'initiation à SEDNL</title>
    <link href="/tutorial-sednl/"/>
-   <updated>2013-08-25T00:00:00+03:00</updated>
+   <updated>2013-08-25T00:00:00+02:00</updated>
    <id>/tutorial-sednl</id>
    <content type="html">&lt;p&gt;Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
 Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliseront
@@ -1499,8 +1499,8 @@ standard.&lt;/p&gt;
 &lt;p&gt;Commençons par le client. Il doit recevoir un extrait de code sur son entrée
 standard, puis l’envoyer au serveur.&lt;/p&gt;
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;SEDNL/sednl.hpp&amp;gt;
-#include &amp;lt;iostream&amp;gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;SEDNL/sednl.hpp&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SedNL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -1587,9 +1587,9 @@ connections, et écrire sur la sortie standard le texte reçu. Attention,
 il faudra bien penser à gérer le cas où deux clients envoie un message
 au même moment. Pour ça, on utilisera une mutex.&lt;/p&gt;
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;SEDNL/sednl.hpp&amp;gt;
-#include &amp;lt;iostream&amp;gt;
-#include &amp;lt;mutex&amp;gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;SEDNL/sednl.hpp&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;mutex&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SedNL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -1646,7 +1646,7 @@ au même moment. Pour ça, on utilisera une mutex.&lt;/p&gt;
  <entry>
    <title>SedNL : Simple Event Driven Network Library</title>
    <link href="/sednl-simple-event-driven-network-library/"/>
-   <updated>2013-08-21T00:00:00+03:00</updated>
+   <updated>2013-08-21T00:00:00+02:00</updated>
    <id>/sednl-simple-event-driven-network-library</id>
    <content type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/Zenol/sednl&quot; title=&quot;SedNL repository&quot;&gt;SedNL&lt;/a&gt; est une bibliothèque
 réseau écrite en C++11, principalement destinée à la réalisation d’applications
@@ -1672,7 +1672,7 @@ Elle convient parfaitement tant à des projets d’envergure moyenne que des
 projets de taille plus conséquente.&lt;/p&gt;
 
 &lt;p&gt;Un court exemple d’utilisation du mécanisme d’évènement coté serveur :&lt;/p&gt;
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;SEDNL/sednl.hpp&amp;gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;SEDNL/sednl.hpp&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SedNL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -1742,7 +1742,7 @@ pour des besoins spécifiques.&lt;/p&gt;
  <entry>
    <title>Boite à musique Arduino</title>
    <link href="/music-box/"/>
-   <updated>2013-08-16T00:00:00+03:00</updated>
+   <updated>2013-08-16T00:00:00+02:00</updated>
    <id>/music-box</id>
    <content type="html">&lt;p&gt;Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.&lt;/p&gt;
 
@@ -2066,12 +2066,12 @@ extern &quot;C&quot; {
 
 &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;br&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Synth_8bits_lib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cpp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pre&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lang&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;C&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colla&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;avr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;avr/interrupt.h&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;avr/interrupt.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;Arduino.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &quot;Synth_8bits.h&quot;
-#include &quot;white_noise.h&quot;
+&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&quot;Synth_8bits.h&quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&quot;white_noise.h&quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;//Periods, stored after applying the right calculus with frequency_to_period(int)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;square1_period&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -2678,8 +2678,8 @@ char white_noise[4096] PROGMEM = {
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// generate_white_noise.cpp&lt;/span&gt;
 
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
-#include &amp;lt;cstdlib&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;cstdlib&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
 &lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;#define SIZE 4096
 &lt;/span&gt;
@@ -3064,7 +3064,7 @@ void loop()
  <entry>
    <title>Haskell - Lazy IO</title>
    <link href="/haskell-lazy-io/"/>
-   <updated>2013-07-16T00:00:00+03:00</updated>
+   <updated>2013-07-16T00:00:00+02:00</updated>
    <id>/haskell-lazy-io</id>
    <content type="html">&lt;p&gt;Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.&lt;/p&gt;
 
@@ -3168,7 +3168,7 @@ return (filename, hashed)
  <entry>
    <title>C++ - Un gout de programmation fonctionelle</title>
    <link href="/c++-functional-programming-taste/"/>
-   <updated>2013-07-12T00:00:00+03:00</updated>
+   <updated>2013-07-12T00:00:00+02:00</updated>
    <id>/c++-functional-programming-taste</id>
    <content type="html">&lt;p&gt;Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.&lt;/p&gt;
 
@@ -3333,7 +3333,7 @@ return (filename, hashed)
  <entry>
    <title>CMake - Mini howto</title>
    <link href="/cmake-howto/"/>
-   <updated>2013-06-30T00:00:00+03:00</updated>
+   <updated>2013-06-30T00:00:00+02:00</updated>
    <id>/cmake-howto</id>
    <content type="html">&lt;h2 id=&quot;quest-ce-que-cmake-&quot;&gt;Qu’est-ce que CMake ?&lt;/h2&gt;
 
@@ -3409,7 +3409,7 @@ endif(DOXYGEN_FOUND)
  <entry>
    <title>Le Haskell, un langage au label pure. Troisième partie.</title>
    <link href="/haskell-pure-3/"/>
-   <updated>2013-05-01T00:00:00+03:00</updated>
+   <updated>2013-05-01T00:00:00+02:00</updated>
    <id>/haskell-pure-3</id>
    <content type="html">&lt;p&gt;Et voici la troisième et dernière partie de notre découverte de ce joli langage. Au programme : des super foncteurs. D’abord des foncteurs applicatifs, puis des monades! Si vous rêviez de savoir pourquoi tant de gens s’enflamment devant ce langage, il est peut-être venue l’heure de la révélation.&lt;/p&gt;
 
@@ -3828,7 +3828,7 @@ La notation do permet décrire facilement le chaînage d’actions, et le fait d
  <entry>
    <title>Le Haskell, un langage au label pure. Seconde partie.</title>
    <link href="/haskell-pure-2/"/>
-   <updated>2013-04-22T00:00:00+03:00</updated>
+   <updated>2013-04-22T00:00:00+02:00</updated>
    <id>/haskell-pure-2</id>
    <content type="html">&lt;p&gt;Nous continuons de découvrir des paysages fonctionnels à travers le Haskell. Cette fois, nous nous éloignons des généralités et rentrons dans le vif du sujet en nous intéressant à des aspects plus propre au haskell (bien que d’autres langages fonctionnels implémentent des fonctionnalités similaires).&lt;/p&gt;
 
@@ -4039,7 +4039,7 @@ instance Eq TrafficLight where
  <entry>
    <title>Le Haskell, un langage au label pure. Première partie.</title>
    <link href="/haskell-pure-1/"/>
-   <updated>2013-04-07T00:00:00+03:00</updated>
+   <updated>2013-04-07T00:00:00+02:00</updated>
    <id>/haskell-pure-1</id>
    <content type="html">&lt;p&gt;Mauvais jeux de mots mit à part, ce très court et succin billet (vous me voyez venir) va traiter du haskell. Haskell, de monsieur Haskell Brook Curry, un monsieur très épicé, est un langage fonctionnel. Comme beaucoup de langages fonctionnel, cela représente un choque culturel que de les appréhender. Mais le haskell semble avoir un petit quelque chose que n’ont pas les autres langages fonctionnels. À travers les trois prochains billets, j’espère vous convaincre que, si un jour, dans votre vie, vous avez l’occasion de creuser un language fonctionnel, alors vous devriez creuser le haskell.&lt;/p&gt;
 
@@ -4247,7 +4247,7 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
  <entry>
    <title>Arduino Uno sous ArchLinux (3.8.4-1-ARCH)</title>
    <link href="/arduino-arclinux-fr/"/>
-   <updated>2013-03-31T00:00:00+02:00</updated>
+   <updated>2013-03-31T00:00:00+01:00</updated>
    <id>/arduino-arclinux-fr</id>
    <content type="html">&lt;p&gt;Voilà que je ressort mon arduino de mes cartons, motivé à dépoussiérer le code de ma ‘boite musicale’. Et quel ne fut pas ma surprise quand le package rxtx refusa de s’installer suite a des erreurs de compilation.&lt;/p&gt;
 
@@ -4321,7 +4321,7 @@ unzip rxtx-2.2pre2.xip
  <entry>
    <title>Arduino Uno with ArchLinux (3.8.4-1-ARCH)</title>
    <link href="/arduino-arclinux-en/"/>
-   <updated>2013-03-31T00:00:00+02:00</updated>
+   <updated>2013-03-31T00:00:00+01:00</updated>
    <id>/arduino-arclinux-en</id>
    <content type="html">&lt;p&gt;I quickly explain how to make your arduino card works with your ArchLinux distrib by patching and installing the last version of rxtx.&lt;/p&gt;
 
@@ -4393,7 +4393,7 @@ unzip rxtx-2.2pre2.xip
  <entry>
    <title>Raspbery PI with HDMI</title>
    <link href="/raspbery-pi-hdmi/"/>
-   <updated>2012-08-12T00:00:00+03:00</updated>
+   <updated>2012-08-12T00:00:00+02:00</updated>
    <id>/raspbery-pi-hdmi</id>
    <content type="html">&lt;p&gt;Today, I was testing my &lt;a href=&quot;https://en.wikipedia.org/wiki/Raspberry_Pi&quot;&gt;RPi&lt;/a&gt;, just to check that “&lt;em&gt;everything is alright&lt;/em&gt;”. I bought a cheap 1A/5V micro usb power supply from china (from a well known auction website) and writed the official raspbian image. I plugged my new VGA/HDMI flat screen, and booted the RPi. Then…. nothing.&lt;/p&gt;
 
@@ -4418,7 +4418,7 @@ disable_overscan=0
  <entry>
    <title>Construire sa matrice de led 10x10 pour l'utiliser avec une carte Arduino.</title>
    <link href="/led-matrix-10x10/"/>
-   <updated>2012-06-06T00:00:00+03:00</updated>
+   <updated>2012-06-06T00:00:00+02:00</updated>
    <id>/led-matrix-10x10</id>
    <content type="html">&lt;h2 id=&quot;matrice-de-led-10x10-pour-une-alimentation-5v&quot;&gt;Matrice de LED 10x10 pour une alimentation 5V&lt;/h2&gt;
 
@@ -4499,7 +4499,7 @@ curieux de savoir ce que ça donne.&lt;/p&gt;
  <entry>
    <title>Arduino as ICSP - Programmeur pour microcontrôleurs atmel</title>
    <link href="/arduino-as-icsp/"/>
-   <updated>2012-05-25T00:00:00+03:00</updated>
+   <updated>2012-05-25T00:00:00+02:00</updated>
    <id>/arduino-as-icsp</id>
    <content type="html">&lt;h2 id=&quot;icsp&quot;&gt;ICSP?&lt;/h2&gt;
 
@@ -4563,7 +4563,7 @@ au site de &lt;a href=&quot;http://www.ladyada.net/learn/avr/avrdude.html&quot;&
  <entry>
    <title>ATMega328 (Arduino uno) TimerCounter et PWM à 62,5kHz</title>
    <link href="/pwm-fast-frequency/"/>
-   <updated>2012-04-30T00:00:00+03:00</updated>
+   <updated>2012-04-30T00:00:00+02:00</updated>
    <id>/pwm-fast-frequency</id>
    <content type="html">&lt;h2 id=&quot;timercounter-et-pwm-pour-des-fréquences-élevés&quot;&gt;Timer/Counter et PWM pour des fréquences élevés.&lt;/h2&gt;
 
@@ -4664,7 +4664,7 @@ d’après le tableau suivant (p164 de la documentation) :&lt;/p&gt;
  <entry>
    <title>De la résolution d'équations polynomial de degré 3</title>
    <link href="/polynomial-degree-3/"/>
-   <updated>2011-02-25T00:00:00+02:00</updated>
+   <updated>2011-02-25T00:00:00+01:00</updated>
    <id>/polynomial-degree-3</id>
    <content type="html">&lt;h2 id=&quot;la-recherche-de-racine-pour-des-polynômes-du-3ème-degré&quot;&gt;La recherche de racine pour des polynômes du 3ème degré&lt;/h2&gt;
 
@@ -4841,7 +4841,7 @@ il n’est pas toujours facile de calculer les racines d’un polynôme de degr�
  <entry>
    <title>Découverte d'OCAML</title>
    <link href="/ocaml-discovery/"/>
-   <updated>2009-11-21T00:00:00+02:00</updated>
+   <updated>2009-11-21T00:00:00+01:00</updated>
    <id>/ocaml-discovery</id>
    <content type="html">&lt;h2 id=&quot;découverte-docaml&quot;&gt;Découverte d’OCAML&lt;/h2&gt;
 
@@ -4956,7 +4956,7 @@ Vous vous demandez alors, pourquoi de la tail rec et non une simple récursivit�
  <entry>
    <title>GDT et IDT</title>
    <link href="/gdt-and-idt/"/>
-   <updated>2009-04-20T00:00:00+03:00</updated>
+   <updated>2009-04-20T00:00:00+02:00</updated>
    <id>/gdt-and-idt</id>
    <content type="html">&lt;p&gt;Depuis peu, le noyeau que je développe dispose enfin d’une gestion précaire des interruptions.
 Dans cette article je vais donc vous parler… interruptions!
