@@ -53,7 +53,7 @@ Talk on *Persistent Algebras* during the [JGA 2017](https://jga2017.sciencesconf
 
 You can [download the slides][pre-algebra].
 
-2017.
+December 2017.
 
 -----
 
