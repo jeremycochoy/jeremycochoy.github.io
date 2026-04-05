@@ -1,53 +1,89 @@
-Jeremy Cochoy
-=============
+# cochoy.fr
 
-Personal website. Contains blog posts, music, articles and resources
-related to math and computer science and teaching.
+Personal website of Jeremy Cochoy — portfolio, blog, research, teaching materials, and music.
+Built with Jekyll and hosted on GitHub Pages at [www.cochoy.fr](https://www.cochoy.fr/).
 
+## Tech stack
 
-Deployment process
-------------------
+- **Static site generator:** Jekyll 4.4
+- **Theme:** Custom layouts based on Hyde/Poole, with minima as the base gem theme
+- **CSS frameworks:** Bootstrap 3 (bundled in `public/bootstrap/`), Hyde, Poole
+- **Markdown engine:** Kramdown
+- **Math rendering:** MathJax (loaded from CDN)
+- **Syntax highlighting:** Rouge (with `public/css/syntax.css`)
+- **Deployment tool:** `jgd` (Jekyll GitHub Deploy)
 
-**Quick deployment:**
-Compile and deploy to master the development branch:
-`bundle exec jgd -r development -b master`
+## Repository structure
 
-### Website Deployment
+```
+_config.yml          # Jekyll configuration
+_includes/           # Reusable HTML partials (head, navbar, footer, etc.)
+_layouts/            # Page templates (default, home, page, post)
+_posts/              # Blog posts, organized in subdirectories with data/ assets
+assets/              # Minima theme assets (SVG icons)
+blog/                # Blog index page
+public/              # Static assets served as-is
+  bootstrap/         #   Bootstrap 3 CSS, JS, fonts (Glyphicons)
+  css/               #   Hyde, Poole, syntax highlight stylesheets
+  favicon.ico        #   Favicon
+  style.css          #   Custom site-wide styles
+research/            # Research page and publications
+resume/              # CV in HTML, PDF, TeX, DOCX formats
+teaching/            # Teaching materials (Android lessons as git submodule)
+talks/               # Conference talks
+music/               # Music section
+pdfs/                # Hosted PDF documents (Perlin noise, periodic functions)
+gb-doc/              # Game Boy documentation
+hyper-flop/          # Hyper-flop web app
+agreg-dev/           # Agreg development notes
+CNAME                # Custom domain: www.cochoy.fr
+Gemfile              # Ruby dependencies
+Gemfile.lock         # Locked dependency versions
+```
 
-**Repository Structure:**
-- **Development branch**: `development` - where active development happens
-- **Master branch**: `master` - contains compiled/built website files 
-- **GitHub Pages branch**: `gh-pages` - older deployment branch (last updated Nov 2019)
+## Blog posts
 
-**Technology Stack:**
-- Jekyll static site generator with Ruby
-- Uses the `jgd` gem for GitHub deployment
-- Domain: `www.cochoy.fr` (configured in CNAME file)
-- Remote repository: `git@github.com:jeremycochoy/techgate.git`
+Posts live in `_posts/<slug>/` subdirectories. Each can contain a `data/` folder with
+images, audio, archives, etc. that are referenced with relative paths (e.g. `data/image.png`).
+The `jekyll-postfiles` plugin copies these assets to the built output.
 
-**Deployment Flow:**
-1. Content is developed in `development` branch with source files (.md, _posts/, _layouts/, etc.)
-2. Jekyll builds the static site into the `_site/` directory 
-3. The built site is committed to the `master` branch using: `bundle exec jgd -r development -b master`
-4. GitHub Pages serves the site from the `master` branch at www.cochoy.fr
+## Branch workflow
 
-The `master` branch contains only the compiled HTML/CSS files, while `development` contains the Jekyll source files.
+| Branch | Purpose |
+|---|---|
+| `development` | Active development — source Markdown, layouts, config |
+| `master` | Built static HTML — served by GitHub Pages |
 
-### CV Deployment Process
+**Never edit `master` directly.** It is overwritten by the deploy tool.
 
-**CV Generation Pipeline:**
-The CV exists in multiple formats generated from a single source:
+## Local development
 
-- **Source**: `resume/index.md` (Markdown format)
-- **Generated formats**:
-  - `index.html` - HTML version for web display
-  - `index.pdf` - PDF version
-  - `index.docx` - Word document format
-  - `index.txt` - Plain text version
-  - `index.tex` - LaTeX source (uses ConTeXt for PDF generation)
+```bash
+# Install dependencies
+bundle install
 
-**Build Process:**
-The CV uses ConTeXt (TeX-based) styling for professional formatting. The `.tex` file contains the styling definitions, and the build process converts the Markdown source through LaTeX to generate the final PDF and other formats.
+# Serve locally with live reload
+bundle exec jekyll serve
+# Site available at http://127.0.0.1:4000/
 
-**Web Integration:**
-The CV is accessible at `/resume/` and `/cv/` paths on the main website, with the HTML version integrated into the Jekyll site structure.
+# Build without serving
+bundle exec jekyll build
+# Output goes to _site/
+```
+
+## Deployment
+
+Deploy the `development` branch to `master` (GitHub Pages):
+
+```bash
+bundle exec jgd -r development -b master
+```
+
+This builds the site from `development` and force-pushes the result to `master`.
+
+## Plugins
+
+- **jekyll-feed** — Generates Atom feed at `/feed.xml`
+- **jekyll-paginate** — Blog pagination (10 posts per page)
+- **jekyll-redirect-from** — URL redirects via front matter
+- **jekyll-postfiles** — Copies non-Markdown files from post directories to output
