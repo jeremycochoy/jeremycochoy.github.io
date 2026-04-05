@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EU Electricity Prices 2025–2026 — Household vs Business</title>
+<meta name="description" content="Interactive map comparing household and business electricity prices across all 27 EU member states. Data from Eurostat H1 2025 and HEPI March 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --bg-card: #ffffff;
+    --text: #1a1a18;
+    --text-muted: #6b6b66;
+    --text-faint: #9e9e98;
+    --border: #e2e0d8;
+    --accent: #2c5f2d;
+    --accent-light: #e8f0e8;
+    --toggle-active: #1a1a18;
+    --toggle-inactive: transparent;
+    --toggle-text-active: #ffffff;
+    --toggle-text-inactive: #6b6b66;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'DM Mono', 'SF Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413;
+      --bg-card: #1e1e1c;
+      --text: #e8e8e4;
+      --text-muted: #9e9e98;
+      --text-faint: #6b6b66;
+      --border: #333330;
+      --accent: #6fbf73;
+      --accent-light: #1e2e1e;
+      --toggle-active: #e8e8e4;
+      --toggle-inactive: transparent;
+      --toggle-text-active: #1a1a18;
+      --toggle-text-inactive: #9e9e98;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; }
+
+  .page-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+  }
+  @media (max-width: 600px) { .page-wrapper { padding: 1.5rem 1rem 2rem; } }
+
+  header { margin-bottom: 2rem; }
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 560px;
+  }
+
+  .toggle-bar {
+    display: inline-flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3px;
+    margin: 1.5rem 0 1rem;
+    gap: 2px;
+  }
+  .toggle-btn {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: var(--toggle-inactive);
+    color: var(--toggle-text-inactive);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .toggle-btn.active {
+    background: var(--toggle-active);
+    color: var(--toggle-text-active);
+  }
+  .toggle-btn:hover:not(.active) { background: var(--accent-light); color: var(--text); }
+
+  .map-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .map-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .map-avg {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+  .map-desc {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  .legend-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+  .legend-bar { border-radius: 7px; }
+
+  #map-svg svg { width: 100%; height: auto; display: block; }
+  svg path { stroke: var(--bg-card); stroke-width: 0.5px; }
+  svg path.eu-country { cursor: pointer; transition: opacity 0.15s, stroke-width 0.15s; }
+  svg path.eu-country:hover { opacity: 0.82; stroke-width: 1.5px; stroke: var(--text); }
+  svg path.non-eu { fill: var(--border); opacity: 0.35; }
+  svg text.plabel { font-family: 'DM Mono', monospace; pointer-events: none; fill: var(--text); }
+
+  .tooltip-box {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    z-index: 20;
+    transition: opacity 0.12s;
+    min-width: 180px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .tt-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+  .tt-price { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 500; }
+  .tt-label { font-size: 0.72rem; color: var(--text-faint); }
+  .tt-diff { font-size: 0.75rem; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--border); color: var(--text-muted); }
+  .tt-diff .cheaper { color: #2c5f2d; }
+  .tt-diff .pricier { color: #a33; }
+
+  .data-table-wrapper { margin-top: 1.5rem; }
+  .data-table-toggle {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed var(--text-faint);
+  }
+  .data-table-toggle:hover { color: var(--text); }
+  .data-table-container { display: none; margin-top: 1rem; }
+  .data-table-container.open { display: block; }
+
+  table.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  table.price-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  table.price-table td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  table.price-table td:nth-child(2),
+  table.price-table td:nth-child(3) { font-family: var(--font-mono); font-size: 0.8rem; }
+  table.price-table tr:hover td { background: var(--accent-light); }
+  .bar-cell { position: relative; }
+  .bar-fill {
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    height: 6px;
+    border-radius: 3px;
+    opacity: 0.5;
+  }
+
+  footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    line-height: 1.7;
+  }
+  footer a { color: var(--text-muted); }
+  footer strong { color: var(--text-muted); font-weight: 600; }
+  .source-block { margin-bottom: 0.75rem; }
+  .methodology { margin-top: 0.75rem; padding: 0.75rem; background: var(--accent-light); border-radius: 8px; font-size: 0.72rem; }
+  .updated { margin-top: 0.75rem; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+  <header>
+    <h1>EU electricity prices by country</h1>
+    <p class="subtitle">Comparing what households and businesses actually pay per kWh across all 27 EU member states — including taxes, levies, and government price caps.</p>
+  </header>
+
+  <div class="toggle-bar">
+    <button class="toggle-btn active" id="btn-household" onclick="switchView('household')">Household</button>
+    <button class="toggle-btn" id="btn-business" onclick="switchView('business')">Business</button>
+  </div>
+
+  <div class="map-card">
+    <div class="map-header">
+      <span class="map-title" id="map-title">Household electricity prices</span>
+      <span class="map-avg" id="map-avg">EU avg: €0.287/kWh</span>
+    </div>
+    <p class="map-desc" id="map-desc">
+      Price per kWh for medium-consumption households (2,500–5,000 kWh/year), including all taxes, levies and VAT.
+    </p>
+    <div class="legend-row">
+      <span class="legend-label" id="legend-min">€0.10</span>
+      <canvas id="legend-bar" class="legend-bar" width="240" height="12"></canvas>
+      <span class="legend-label" id="legend-max">€0.38</span>
+    </div>
+    <div id="map-svg"></div>
+    <div class="tooltip-box" id="tooltip"></div>
+  </div>
+
+  <div class="data-table-wrapper">
+    <button class="data-table-toggle" id="table-toggle" onclick="toggleTable()">Show full data table ▾</button>
+    <div class="data-table-container" id="table-container">
+      <table class="price-table" id="price-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Household</th>
+            <th>Business</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <div class="source-block">
+      <strong>Sources — Household prices</strong><br>
+      Eurostat, <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">Electricity prices for household consumers (nrg_pc_204)</a>, first half 2025, published October 2025. Band DC: 2,500–5,000 kWh annual consumption. Prices include all taxes, levies and VAT.<br>
+      HEPI — Household Energy Price Index by Energie-Control Austria, MEKH and VaasaETT, <a href="https://www.energypriceindex.com/price-data" target="_blank" rel="noopener">March 2026 release</a>. Capital-city level data used for cross-reference.
+    </div>
+    <div class="source-block">
+      <strong>Sources — Business prices</strong><br>
+      Eurostat, <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_205/default/table?lang=en" target="_blank" rel="noopener">Electricity prices for non-household consumers (nrg_pc_205)</a>, first half 2025, published October 2025. Band ID: 500–2,000 MWh annual consumption. Prices include all non-recoverable taxes and levies, but exclude VAT.<br>
+      Confirmed exact values for Ireland (€0.2726), Italy (€0.2336), Finland (€0.0804), Sweden (€0.0964). Other country values estimated from Eurostat Figure 6 bar chart, <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Electricity_price_statistics" target="_blank" rel="noopener">Electricity price statistics — Statistics Explained</a>.
+    </div>
+    <div class="methodology">
+      <strong>Methodology note</strong> — Household and business prices are not directly comparable. Household prices include VAT (ranging from 5% in Malta to 25% in several countries) and all levies. Business prices exclude recoverable VAT but include non-recoverable taxes. In countries like Hungary, Malta and Bulgaria, household prices are heavily regulated or capped by government, making them artificially low compared to market rates that businesses pay. Conversely, in Germany and Denmark, heavy energy taxes and renewable levies inflate household bills by 40–50%, while businesses are partially exempt.
+    </div>
+    <p class="updated">Map projection: Mercator via D3.js. Geometry: Natural Earth / world-atlas. Last updated: April 2026.</p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+var DATA = {
+  "040": { name: "Austria",     hh: 0.2905, biz: 0.188 },
+  "056": { name: "Belgium",     hh: 0.3571, biz: 0.205 },
+  "100": { name: "Bulgaria",    hh: 0.1300, biz: 0.098 },
+  "191": { name: "Croatia",     hh: 0.1499, biz: 0.115 },
+  "196": { name: "Cyprus",      hh: 0.2932, biz: 0.225 },
+  "203": { name: "Czechia",     hh: 0.3179, biz: 0.205 },
+  "208": { name: "Denmark",     hh: 0.3485, biz: 0.185 },
+  "233": { name: "Estonia",     hh: 0.2298, biz: 0.148 },
+  "246": { name: "Finland",     hh: 0.2276, biz: 0.0804 },
+  "250": { name: "France",      hh: 0.2664, biz: 0.155 },
+  "276": { name: "Germany",     hh: 0.3835, biz: 0.215 },
+  "300": { name: "Greece",      hh: 0.2263, biz: 0.200 },
+  "348": { name: "Hungary",     hh: 0.1040, biz: 0.195 },
+  "372": { name: "Ireland",     hh: 0.3260, biz: 0.2726 },
+  "380": { name: "Italy",       hh: 0.3291, biz: 0.2336 },
+  "428": { name: "Latvia",      hh: 0.2440, biz: 0.175 },
+  "440": { name: "Lithuania",   hh: 0.2109, biz: 0.155 },
+  "442": { name: "Luxembourg",  hh: 0.2665, biz: 0.145 },
+  "470": { name: "Malta",       hh: 0.1244, biz: 0.160 },
+  "528": { name: "Netherlands", hh: 0.2342, biz: 0.170 },
+  "616": { name: "Poland",      hh: 0.2559, biz: 0.185 },
+  "620": { name: "Portugal",    hh: 0.2390, biz: 0.175 },
+  "642": { name: "Romania",     hh: 0.1918, biz: 0.160 },
+  "703": { name: "Slovakia",    hh: 0.1887, biz: 0.155 },
+  "705": { name: "Slovenia",    hh: 0.1810, biz: 0.125 },
+  "724": { name: "Spain",       hh: 0.2608, biz: 0.165 },
+  "752": { name: "Sweden",      hh: 0.2654, biz: 0.0964 }
+};
+
+var VIEWS = {
+  household: {
+    title: "Household electricity prices",
+    avg: "EU avg: €0.287/kWh",
+    desc: "Price per kWh for medium-consumption households (2,500–5,000 kWh/year), including all taxes, levies and VAT. Source: Eurostat H1 2025.",
+    key: "hh",
+    min: 0.10, max: 0.39,
+    labelMin: "€0.10", labelMax: "€0.39",
+    tooltipLabel: "household, incl. all taxes"
+  },
+  business: {
+    title: "Business electricity prices",
+    avg: "EU avg: €0.190/kWh",
+    desc: "Price per kWh for medium non-household consumers (500–2,000 MWh/year), including non-recoverable taxes, excluding VAT. Source: Eurostat H1 2025.",
+    key: "biz",
+    min: 0.07, max: 0.28,
+    labelMin: "€0.07", labelMax: "€0.28",
+    tooltipLabel: "business, excl. VAT"
+  }
+};
+
+var currentView = "household";
+var euIds = new Set(Object.keys(DATA));
+var countriesGeo = null;
+
+function priceColor(p, min, max) {
+  var t = Math.max(0, Math.min(1, (p - min) / (max - min)));
+  var r, g, b;
+  if (t < 0.25) {
+    var s = t / 0.25;
+    r = Math.round(34 + s * 60); g = Math.round(120 + s * 60); b = Math.round(70 - s * 10);
+  } else if (t < 0.5) {
+    var s = (t - 0.25) / 0.25;
+    r = Math.round(94 + s * 106); g = Math.round(180 + s * 20); b = Math.round(60 - s * 20);
+  } else if (t < 0.75) {
+    var s = (t - 0.5) / 0.25;
+    r = Math.round(200 + s * 30); g = Math.round(200 - s * 80); b = Math.round(40 - s * 10);
+  } else {
+    var s = (t - 0.75) / 0.25;
+    r = Math.round(230 + s * 15); g = Math.round(120 - s * 75); b = Math.round(30 - s * 5);
+  }
+  return "rgb(" + r + "," + g + "," + b + ")";
+}
+
+function drawLegend(min, max) {
+  var canvas = document.getElementById("legend-bar");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 240, 12);
+  for (var x = 0; x < 240; x++) {
+    var p = min + (x / 239) * (max - min);
+    ctx.fillStyle = priceColor(p, min, max);
+    ctx.fillRect(x, 0, 1, 12);
+  }
+}
+
+function renderMap() {
+  var v = VIEWS[currentView];
+  document.getElementById("map-title").textContent = v.title;
+  document.getElementById("map-avg").textContent = v.avg;
+  document.getElementById("map-desc").textContent = v.desc;
+  document.getElementById("legend-min").textContent = v.labelMin;
+  document.getElementById("legend-max").textContent = v.labelMax;
+  drawLegend(v.min, v.max);
+
+  if (!countriesGeo) return;
+
+  var svg = d3.select("#map-svg svg");
+  svg.selectAll("path.eu-country")
+    .transition().duration(400)
+    .attr("fill", function(d) {
+      var id = String(d.id).padStart(3, "0");
+      if (DATA[id]) return priceColor(DATA[id][v.key], v.min, v.max);
+      return "transparent";
+    });
+
+  svg.selectAll("text.plabel")
+    .text(function(d) { return (d[v.key] * 100).toFixed(1); });
+}
+
+function switchView(view) {
+  currentView = view;
+  document.getElementById("btn-household").classList.toggle("active", view === "household");
+  document.getElementById("btn-business").classList.toggle("active", view === "business");
+  renderMap();
+}
+
+function toggleTable() {
+  var container = document.getElementById("table-container");
+  var btn = document.getElementById("table-toggle");
+  if (container.classList.contains("open")) {
+    container.classList.remove("open");
+    btn.textContent = "Show full data table ▾";
+  } else {
+    container.classList.add("open");
+    btn.textContent = "Hide data table ▴";
+    buildTable();
+  }
+}
+
+function buildTable() {
+  var tbody = document.getElementById("table-body");
+  var rows = Object.entries(DATA).map(function(e) { return e[1]; });
+  rows.sort(function(a, b) { return b.hh - a.hh; });
+  tbody.innerHTML = rows.map(function(d) {
+    return "<tr><td>" + d.name + "</td><td>€" + d.hh.toFixed(4) + "</td><td>€" + d.biz.toFixed(4) + "</td></tr>";
+  }).join("");
+}
+
+var width = 720, height = 520;
+var svg = d3.select("#map-svg").append("svg")
+  .attr("viewBox", "0 0 " + width + " " + height)
+  .attr("width", "100%")
+  .attr("preserveAspectRatio", "xMidYMid meet");
+
+var tooltip = document.getElementById("tooltip");
+var projection = d3.geoMercator().center([15, 52]).scale(650).translate([width / 2, height / 2]);
+var pathGen = d3.geoPath().projection(projection);
+
+var offsets = {
+  "442": [10,-12], "470": [15,10], "196": [10,5], "056": [0,-3],
+  "528": [10,-8], "208": [5,8], "233": [5,0], "428": [5,0],
+  "440": [5,5], "705": [-5,8], "372": [-20,0], "620": [-15,5],
+  "040": [0,3], "203": [0,-2], "703": [10,5], "348": [0,3],
+  "300": [0,5], "100": [0,0], "642": [0,0], "191": [-5,3]
+};
+var skipLabels = ["470","196","442","705"];
+
+d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(function(world) {
+  countriesGeo = topojson.feature(world, world.objects.countries).features;
+  var v = VIEWS[currentView];
+  drawLegend(v.min, v.max);
+
+  svg.selectAll("path")
+    .data(countriesGeo).enter().append("path")
+    .attr("d", pathGen)
+    .attr("class", function(d) { return euIds.has(String(d.id).padStart(3,"0")) ? "eu-country" : "non-eu"; })
+    .attr("fill", function(d) {
+      var id = String(d.id).padStart(3,"0");
+      if (DATA[id]) return priceColor(DATA[id][v.key], v.min, v.max);
+      return "transparent";
+    })
+    .on("mouseenter", function(event, d) {
+      var id = String(d.id).padStart(3,"0");
+      if (!DATA[id]) return;
+      var info = DATA[id];
+      var vw = VIEWS[currentView];
+      var price = info[vw.key];
+      var otherKey = currentView === "household" ? "biz" : "hh";
+      var otherPrice = info[otherKey];
+      var otherLabel = currentView === "household" ? "Business" : "Household";
+      var diff = ((price - otherPrice) / otherPrice * 100);
+      var diffSign = diff > 0 ? "+" : "";
+      var diffClass = diff > 0 ? "pricier" : "cheaper";
+      tooltip.innerHTML =
+        '<div class="tt-name">' + info.name + '</div>' +
+        '<div class="tt-price">€' + price.toFixed(4) + '/kWh</div>' +
+        '<div class="tt-label">' + vw.tooltipLabel + '</div>' +
+        '<div class="tt-diff">' + otherLabel + ': €' + otherPrice.toFixed(4) +
+        ' (<span class="' + diffClass + '">' + diffSign + Math.round(diff) + '%</span>)</div>';
+      tooltip.style.opacity = 1;
+    })
+    .on("mousemove", function(event) {
+      var rect = document.querySelector(".map-card").getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      var flipX = x > rect.width - 200;
+      tooltip.style.left = flipX ? (x - 200) + "px" : (x + 14) + "px";
+      tooltip.style.top = (y - 10) + "px";
+    })
+    .on("mouseleave", function() { tooltip.style.opacity = 0; });
+
+  var labelData = Object.entries(DATA).map(function(e) {
+    var id = e[0], d = e[1];
+    var feature = countriesGeo.find(function(c) { return String(c.id).padStart(3,"0") === id; });
+    if (!feature) return null;
+    var centroid = pathGen.centroid(feature);
+    if (isNaN(centroid[0])) return null;
+    return { name: d.name, hh: d.hh, biz: d.biz, centroid: centroid, id: id };
+  }).filter(Boolean).filter(function(d) { return skipLabels.indexOf(d.id) === -1; });
+
+  svg.selectAll("text.plabel")
+    .data(labelData).enter().append("text")
+    .attr("class", "plabel")
+    .attr("x", function(d) { return d.centroid[0] + (offsets[d.id] ? offsets[d.id][0] : 0); })
+    .attr("y", function(d) { return d.centroid[1] + (offsets[d.id] ? offsets[d.id][1] : 0); })
+    .attr("text-anchor", "middle")
+    .attr("font-size", "8.5px")
+    .attr("font-weight", "500")
+    .text(function(d) { return (d[v.key] * 100).toFixed(1); });
+});
+</script>
+</body>
+</html>

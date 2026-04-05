@@ -15,7 +15,7 @@
 
   <title>
     
-      GDT et IDT &middot; Jeremy Cochoy
+      Insights &middot; Jeremy Cochoy
     
   </title>
 
@@ -102,124 +102,16 @@
 
 
     <div class="container">
-      <div class="post">
-  <h1 class="post-title">GDT et IDT</h1>
-  <span class="post-date">20 Apr 2009</span>
-  <p>Depuis peu, le noyeau que je développe dispose enfin d’une gestion précaire des interruptions.
-Dans cette article je vais donc vous parler… interruptions!
-Et histoire de ne perdre personne, on commencera par décrire le fonctionnement de la
-GDT.</p>
-
-<h2 id="1--physique-ou-virtuelle">1 : Physique ou Virtuelle</h2>
-
-<p>Si vous avez déjà fait un peu d’assembleur, vous savez peut-être qu’un programme,
-une fois en mémoire, est diviser en plusieurs segments :</p>
+      <div class="page margin-top">
+  <h1 class="page-title">Insights</h1>
+  <h2 id="data-visualizations">Data Visualizations</h2>
 
 <ul>
-  <li>Segment de code</li>
-  <li>Segment de donne</li>
-  <li>Stack</li>
+  <li><a href="/public/eu-electricity-prices.html">EU Electricity Prices 2024 Chart</a></li>
+  <li><a href="/public/btc-polar.html">Polar Asset Prices: BTC</a></li>
+  <li><a href="/public/eth-polar.html">Polar Asset Prices: ETH</a></li>
 </ul>
 
-<p>Pour accéder a ces différents segment, on dispose des Sélecteurs de Segment.
-Ce sont des registre qui indiquent à quel adresse mémoire situent les donnes.</p>
-
-<p>Ainsi, pour accéder a l’ octet numéro <code class="language-plaintext highlighter-rouge">0x03</code> du segment de code,
-on peut écrire <code class="language-plaintext highlighter-rouge">cs::0x03</code>.
-Quand l’ordinateur démarre, le processeur est en mode réelle.
-C’ est a dire que les sélecteurs de segment représentent une adresse physique.
-(<code class="language-plaintext highlighter-rouge">0x73</code> représente l’ adresse mémoire <code class="language-plaintext highlighter-rouge">0x730</code>)</p>
-
-<p>Ce n’est pas vraiment super, tout les programmes ont accès à toute la mémoire,
-et de plus les registres sont limiter a 16bits… impossible
-d’accèder à toute la mémoire des ordinateurs actuel.</p>
-
-<p>Pour régler ce problème, il existe le mode protégé,
-où le processeur est en 32Bits et ou les sélecteurs correspondent a un maillon
-de la GDT (on en reparlera dans quelques lignes).</p>
-
-<p>Dans le mode protéger, la valeur des sélecteurs correspond à
-l’offset (décalage par rapport a l’origine) de l’ élément dans
-la GDT (Global Descriptor Table).
-Pour accéder au premier sélecteur de la GDT, on place donc 0x0 dans
-un sélecteur de segment.
-Pour le second, 0x8 (chaque maillon est sur 64bits), et ainsi de suite.</p>
-
-<h2 id="2-les-interruptions">2: Les interruptions</h2>
-
-<p>Une interruption, c’est (dixit wikipedia) “un arrêt temporaire de
-l’exécution normale d’un
-<a href="http://fr.wikipedia.org/wiki/Programme_informatique">programme informatique</a>
-par le <a href="http://fr.wikipedia.org/wiki/Microprocesseur">microprocesseur</a>.</p>
-
-<p>Les interruptions sont de deux type : matériel ou logiciel.</p>
-
-<p>Une interruption matériel est typiquement l’ appuis sur une touche du clavier.
-Une interruption logiciel peut être l’ appelle à
-un syscall (un appel à write sous unix)</p>
-
-<p>Pour associer une fonction(le sens informatique du terme) à chaque
-interruption, il existe l’ IDT(Interrupt Descriptor Table).</p>
-
-<p>Chaque élément de l’ IDT contient :</p>
-
-<ul>
-  <li>Un sélecteur, qui correspond aux éléments de la GDT</li>
-  <li>Un offset (pointeur sur fonction)</li>
-  <li>Des bits qui spécifie le TYPE du maillon</li>
-</ul>
-
-<h2 id="3--irqs">3 : IRQs</h2>
-
-<p>Et non, ce n’est pas terminer. C’est bien beau de configurer la GDT et l’ IDT,
-mais encore faut-il configurer le chipset qui s’occupe de prévenir le processeur
-quand une interruption matériel a lieu.
-Pour résumer, ce composent envoi une requête (IRQ=Interuption ReQuest)
-au processeur quand un évènement a lieu.
-En plus, il n’ est pas un, mais ils sont deux, en cascade (Un esclave et un maître).</p>
-
-<p>Une fois le tout configurer, on réactive les interruption et…
-On cherche pourquoi ça n’ a pas fonctionner :)</p>
-
-<h3 id="4--références">4 : Références</h3>
-
-<p>Pour lire un peu de code, vous pouvez jeter un oeil au dépôt
- git <a href="https://github.com/jeremycochoy/kos/">https://github.com/jeremycochoy/kos/</a>.</p>
-
-</div>
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/list-zipper-swift/">
-            List Zipper applied to iOS swift
-            <small>24 May 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/what-is-wrong-with-the-object-paradigm/">
-            What is wrong with the object paradigm ?
-            <small>17 Feb 2017</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/boost-property-tree/">
-            How to use boost::property_tree to load and write JSON
-            <small>21 Dec 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-  </ul>
 </div>
 
     </div>
