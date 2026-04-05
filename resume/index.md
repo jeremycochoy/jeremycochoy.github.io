@@ -10,7 +10,12 @@
 Corporate Experience
 --------------------
 
-2020-Today
+2021-Today
+:   *CEO at Redstone Solutions OÜ*
+
+    Real-time and high-availability solutions. Building advanced generative modeling and simulation technologies.
+
+2020-2021
 :   *ML Consulting*
 
     Providing machine learning consulting services with a focus on time series forecasting.
