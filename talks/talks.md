@@ -6,15 +6,39 @@ permalink: /talks/
 
 -----
 
+Contrastive Forecasting at ML Prague 2026
+------------------------------------------
+Talk on *Contrastive Forecasting: Latent-Space Prediction for Time Series via Joint Embedding* at [ML Prague 2026](https://www.mlprague.com/).
+
+June 3, 2026.
+
+-----
+
+Introduction to Algorithmic Trading at ML Prague 2025
+------------------------------------------------------
+Workshop on *Introduction to Algorithmic Trading: Hands-On Strategy Implementation with Real-World Data* at [ML Prague 2025](https://www.mlprague.com/prague2025/), co-led with Szymon Bubak.
+
+April 28, 2025.
+
+-----
+
+Unlocking the Secrets of Singing at Warsaw IT Days 2024
+---------------------------------------------------------
+Talk on *Unlocking the Secrets of Singing: A Neural Network for Transcribing Human Sung Voice* at [Warsaw IT Days 2024](https://crossweb.pl/en/events/warszawskie-dni-informatyki-2024-warsaw-it-days-2024/).
+
+April 5-6, 2024.
+
+-----
+
 Art through gradient descent at DataNative Paris
-------------------------------------------------
+-------------------------------------------------
 
 The video is available [on facebook][fb-data-native-video].
 
 -----
 
 Monads in ruby at Paris.RB
---------------------------
+---------------------------
 For the last talk on [using monads in ruby][raw-monade-ruby-talk] at [Paris.RB][paris-rb] you can find the [code used in the talk here][code-monade-ruby-talk].
 
 Video may be available soon.
@@ -22,7 +46,7 @@ Video may be available soon.
 -----
 
 Monades and Automations at ENS Lyon
------------------------
+-------------------------------------
 My previous talk on [monades and automatons][raw-monade-automation-talk] was in Lyon in October 2015.
 You can [download the pdf][raw-monade-automation-talk] directly from github or use the embeded view below if supported by your device.
 
