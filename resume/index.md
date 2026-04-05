@@ -20,7 +20,7 @@ Corporate Experience
 
     Providing machine learning consulting services with a focus on time series forecasting.
     Expertise includes designing and implementing predictive models using PyTorch, transformers,
-    and recurrent neural network architectures. Assisting clients in leveraging AI for data-driven decision-making.
+    and recurrent neural network architectures.
 
 2019-2020
 :   *CTO at Symphonia*
