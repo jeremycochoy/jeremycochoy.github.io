@@ -10,7 +10,7 @@ Contrastive Forecasting at ML Prague 2026
 ------------------------------------------
 Talk on *Contrastive Forecasting: Latent-Space Prediction for Time Series via Joint Embedding* at [ML Prague 2026](https://www.mlprague.com/).
 
-June 3, 2026.
+May 2026.
 
 -----
 
