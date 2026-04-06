@@ -8,8 +8,8 @@ categories: sednl network programming c++ software
 lang: fr
 ...
 
-Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
-Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliseront
+Ce court tutoriel va vous apprendre à utiliser la bibliothèque réseau SedNL.
+Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliserons
 un client et serveur de chat, ainsi qu'une application de dessin collaborative.
 
 ## Installation de SedNL
@@ -59,7 +59,7 @@ linux ou `cmake-gui.exe` sous Windows.
 Vous pouvez maintenant lancer la compilation avec `make` sous linux,
 et `mingw32-make` sous Windows avec mingw.
 
-Une fois la compilation terminé, vous obtenez une bibliothèque statique
+Une fois la compilation terminée, vous obtenez une bibliothèque statique
 `sednl-1.0.a` et une dynamique `sednl-1.0.so`. (.lib et .dll sous windows).
 
 C'est terminé, nous allons pouvoir compiler notre premier programme.
@@ -67,8 +67,8 @@ C'est terminé, nous allons pouvoir compiler notre premier programme.
 ## Service de log d'extraits de code
 
 Pour nos premiers pas avec cette bibliothèque, nous allons réaliser une
-application cliente capable d'envoyer un extrait de code lue depuis l'entrée
-standard vers un serveur qui loggera tout les extraits reçus, sur sa sortie
+application cliente capable d'envoyer un extrait de code lu depuis l'entrée
+standard vers un serveur qui loggera tous les extraits reçus, sur sa sortie
 standard.
 
 ### Le client
@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-Si le fichier se nome « client.cpp », vous pouvez le compiler avec la ligne
+Si le fichier se nomme « client.cpp », vous pouvez le compiler avec la ligne
 `clang++ -std=c++11 -I/usr/local/include/sednl-1.0/ -lsednl-1.0 -lpthread client.cpp`.
 
 La première fonction `get_input` lit l'entrée standard et stocke tout l'extrait de code dans une chaîne qu'elle renvoie.
@@ -135,23 +135,23 @@ de l'extrait de code (`argv[0]`).
 
 Enfin, c'est à la ligne 26 que commence vraiment notre programme.
 On commence par ouvrir une connexion vers `localhost`. C'est l'ordinateur
-qui exécute ce programme. On peux aussi indiquer « 127.0.0.1 ».
-Le port sur le quel on cherche à atteindre le serveur est le port « 4280 ».
-Un port n'a pas de réalitée matériel, c'est juste une façon de distinguer
-les différentes connexions ouverte vers un ordinateur.
+qui exécute ce programme. On peut aussi indiquer « 127.0.0.1 ».
+Le port sur lequel on cherche à atteindre le serveur est le port « 4280 ».
+Un port n'a pas de réalité matérielle, c'est juste une façon de distinguer
+les différentes connexions ouvertes vers un ordinateur.
 Le choix du numéro de port est arbitraire, même si l'on cherchera à
 éviter d'utiliser les plus communs (comme 80 pour http,
-20 et 21 pour ftp, etc.) ainsi que les valeurs inférieurs à 1024, car
-certains système requière des privilèges administrateur pour les utiliser.
+20 et 21 pour ftp, etc.) ainsi que les valeurs inférieures à 1024, car
+certains systèmes requièrent des privilèges administrateur pour les utiliser.
 
-La ligne 35 fait deux choses. D'abord, `make_event` fabriquer un objet
+La ligne 35 fait deux choses. D'abord, `make_event` fabrique un objet
 de type `Event` qui contient :
 
 1)  Le nom de l'évènement envoyé au serveur. Ici, `"log_that"`.
-2)  Le nom sous le quel l'extrait de code sera enregistré. Ici, `argv[1]`.
+2)  Le nom sous lequel l'extrait de code sera enregistré. Ici, `argv[1]`.
 3)  L'extrait de code à logger. Ici, `input`.
 
-Une fois l'évènement crée, il est envoyé avec par la fonction membre `send`.
+Une fois l'évènement créé, il est envoyé par la fonction membre `send`.
 
 Enfin, la connexion est fermée à la ligne 37.
 
@@ -160,9 +160,9 @@ levée. Elle est alors attrapée à la ligne 39.
 
 ### Le serveur
 
-Le serveur n'est pas beaucoup plus compliqué. Il doit attendre de nouvelle
-connections, et écrire sur la sortie standard le texte reçu. Attention,
-il faudra bien penser à gérer le cas où deux clients envoie un message
+Le serveur n'est pas beaucoup plus compliqué. Il doit attendre de nouvelles
+connexions, et écrire sur la sortie standard le texte reçu. Attention,
+il faudra bien penser à gérer le cas où deux clients envoient un message
 au même moment. Pour ça, on utilisera une mutex.
 
 

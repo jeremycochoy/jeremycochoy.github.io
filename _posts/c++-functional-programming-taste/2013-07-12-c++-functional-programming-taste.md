@@ -1,15 +1,15 @@
 ---
 layout: post
-title: C++ - Un gout de programmation fonctionelle
-description: Une introduction aux nouveux aspect fonctionnel du C++ 11.
-  Il y est question de lambdas, et les applications partielles.
+title: C++ - Un goût de programmation fonctionnelle
+description: Une introduction aux nouveaux aspects fonctionnels du C++ 11.
+  Il y est question de lambdas et d'applications partielles.
 author: Jérémy Cochoy
 date: 2013-07-12 +0100
 categories: c++ programming functional language
 lang: fr
 ...
 
-Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.
+Dans ce billet, nous allons aborder quelques-unes des nouvelles fonctionnalités offertes par le C++11. Elles sont clairement inspirées de la vie dans le monde fonctionnel.
 
 ## Alpha, Beta, ... Kappa, Lambda!
 
@@ -35,14 +35,14 @@ int b = 42;
 auto f = [&b](int a){return a * b};
 ```
 
-Les lambda permette de faire la même chose de façon plus légère, et ajoute la sémantique de fonction (i.e. on ne peux pas confondre une lambda et un objet en lisant du code, alors qu'on '''pourrait''' avec un foncteur et un objet). Les lambda sont aussi plus proche de d'une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclaré dans l'exemple ci dessus (on peux faire f = g avec f et g deux AFunctor) n'existent pas (sont explicitement supprimé) pour les lambda.
+Les lambda permettent de faire la même chose de façon plus légère, et ajoutent la sémantique de fonction (i.e. on ne peut pas confondre une lambda et un objet en lisant du code, alors qu'on '''pourrait''' avec un foncteur et un objet). Les lambda sont aussi plus proches d'une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclarées dans l'exemple ci-dessus (on peut faire f = g avec f et g deux AFunctor) n'existent pas (sont explicitement supprimées) pour les lambda.
 
 
-Par exemple, le constructeur du type d'une lambda (on rappelle qu'en c++11, on peux obtenir le type de `f` avec `decltype(f)`. Par exemple `decltype(3.5f)` ou `std::vector v; decltype(v)`) n'existe pas.
+Par exemple, le constructeur du type d'une lambda (on rappelle qu'en c++11, on peut obtenir le type de `f` avec `decltype(f)`. Par exemple `decltype(3.5f)` ou `std::vector v; decltype(v)`) n'existe pas.
 
 Si f est une lambda, le code `decltype(f) g;` ne compilera pas. Pourtant, si `f` est un `AFunctor`, le code `decltype(f) g;` compilera et correspond à `AFunctor g;`.
 
-Bon, qu'on se rassure, on peux quand même faire une copie d'une lambda :
+Bon, qu'on se rassure, on peut quand même faire une copie d'une lambda :
 ``` cpp
 auto f = [](){return 42};
 
@@ -57,13 +57,13 @@ decltype(f) g4(f);
 
 ## Comment fonctionne une lambda?
 
-En fait, c'est très simple, est tout est décrit sur la page "Lambda" du site "CPPReference".
+En fait, c'est très simple, et tout est décrit sur la page "Lambda" du site "CPPReference".
 
 ``` cpp
 [ capture ] ( params ) mutable exception attribute -> ret { body }
 ```
 
-Dans capture on trouve la façon dont les variables extérieurs à la lambda sont capturé. Il y a deux mode de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veux dire "tout est récupérer par valeur", et le comportement est identique à une copie des variable(pour les objets comme `std::string`, c'est plutôt un `const std::string&` que vous recevez). On peux aussi spécifier [&] et toute les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peux expliciter le comportement pour chacune des variables, par exemple :
+Dans capture on trouve la façon dont les variables extérieures à la lambda sont capturées. Il y a deux modes de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veut dire "tout est récupéré par valeur", et le comportement est identique à une copie des variables (pour les objets comme `std::string`, c'est plutôt un `const std::string&` que vous recevez). On peut aussi spécifier [&] et toutes les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peut expliciter le comportement pour chacune des variables, par exemple :
 ``` cpp
 int a = 42;
 std::vector<int> v;
@@ -84,17 +84,17 @@ auto f5 [&]() {v.push_back(a); a++; msg.push_back('!'); std::cout << msg << std:
 
 La partie "exception" correspond aux spécifications du genre `throw (std::bad_alloc, MyExceptionType)` ou encore `noexcept` (no throw exception safety).
 
-Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter "mutable". Cela peux être très utile, si vous voulez appeler des méthodes non const sur une copie d'un objet dans le scope.
+Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter "mutable". Cela peut être très utile, si vous voulez appeler des méthodes non const sur une copie d'un objet dans le scope.
 ``` cpp
 std::vector<int> v;
 auto f = [v]() mutable {v.push_back(42); std::cout << v[0] << std::endl;}
 ```
 
-Petite astuce parfois utile : Si une lambda ne capture aucune variable, alors elle peux être convertie en pointeur de fonction.
+Petite astuce parfois utile : si une lambda ne capture aucune variable, alors elle peut être convertie en pointeur de fonction.
 
 ## std::function :
 
-Les std::function représente des fonctions. Ils sont basé sur les templates variadique (l'un des ajout les plus puissant au langage), que l'on peux espérer disponible sous VisualStudio d'ici 2039 (si l'équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n'importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, ...).
+Les std::function représentent des fonctions. Ils sont basés sur les templates variadiques (l'un des ajouts les plus puissants au langage), que l'on peut espérer disponibles sous VisualStudio d'ici 2039 (si l'équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n'importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, ...).
 
 En code :
 ``` cpp
@@ -131,7 +131,7 @@ std::function<void(const St&, int)> f = &St::sum;
 
 ## Application partielle.
 
-Tout ça, pour en venir à vous parler de ```std::bind```. Quand on travail avec des langages fonctionnels, on peux appeler une fonction avec seulement une partie de ses arguments. On parle d'_application partielle_. `std::bind` permet de reproduire ce comportement. Prenons une innocente fonction :
+Tout ça, pour en venir à vous parler de ```std::bind```. Quand on travaille avec des langages fonctionnels, on peut appeler une fonction avec seulement une partie de ses arguments. On parle d'_application partielle_. `std::bind` permet de reproduire ce comportement. Prenons une innocente fonction :
 ``` cpp
 void display(int a, int b, int c)
 {
@@ -139,7 +139,7 @@ void display(int a, int b, int c)
 }
 ```
 
-On peux alors construire, grâce à std::bind, différentes spécialisation de cette fonction :
+On peut alors construire, grâce à std::bind, différentes spécialisations de cette fonction :
 ``` cpp
 //On fixe les trois arguments
 std::function<void()> f = std::bind(display, 5, 6, 7);
@@ -148,7 +148,7 @@ f(); // Affiche a : 5 - b : 6 - c : 7
 std::function<void(int)> f = std::bind(display, 5, 6, 7);
 f(42); // Affiche a : 5 - b : 6 - c : 7
 
-//Placeholders::_i désigne le i-ième argument lors de l’appelle de f
+//Placeholders::_i désigne le i-ième argument lors de l’appel de f
 std::function<void(int)> f = std::bind(display, 5, 6, std::placeholders::_1);
 f(42); //  Affiche a : 5 - b : 6 - c : 42
 
@@ -156,17 +156,17 @@ f(42); //  Affiche a : 5 - b : 6 - c : 42
 std::function<void(int, int)> f = std::bind(display, 5, std::placeholders::_1, std::placeholders::_2);
 f(10, 20); //  Affiche a : 5 - b : 10 - c : 20
 
-//On peux changer l'ordre :
+//On peut changer l'ordre :
 std::function<void(int, int)> f = std::bind(display, 5, std::placeholders::_2, std::placeholders::_1);
 f(10, 20); //  Affiche a : 5 - b : 20 - c : 10
 
 ```
 
-Bien entendu, on peux aussi faire des choses plus complexe (passage des arguments par référence avec `std::ref` et `std::cref` dans les arguments de bind, pointeurs de fonction membre, pointeur vers membres, etc.).
+Bien entendu, on peut aussi faire des choses plus complexes (passage des arguments par référence avec `std::ref` et `std::cref` dans les arguments de bind, pointeurs de fonction membre, pointeurs vers membres, etc.).
 
-Si vous vous demandez à quoi ça peux bien servir, et bien dite vous que là où on attend une callback avec une certaine signature (c'est le cas avec beaucoup d'outil de `<algorithm>`) vous avez maintenant la possibilité de spécialiser vos fonctions.
+Si vous vous demandez à quoi ça peut bien servir, eh bien dites-vous que là où on attend une callback avec une certaine signature (c'est le cas avec beaucoup d'outils de `<algorithm>`) vous avez maintenant la possibilité de spécialiser vos fonctions.
 
-Pour ce qui est du coût, il est faible (celons les cas beaucoup de choses peuvent être optimisé lors de la compilation), et n'est un argument recevable que dans certains cas particulier. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critique, vous pouvez vous lâcher.
+Pour ce qui est du coût, il est faible (selon les cas beaucoup de choses peuvent être optimisées lors de la compilation), et n'est un argument recevable que dans certains cas particuliers. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critiques, vous pouvez vous lâcher.
 
 Voilà, j'espère vous avoir donné un petit aperçu de l'apport du c++11 en matière de manipulation des fonctions.
 

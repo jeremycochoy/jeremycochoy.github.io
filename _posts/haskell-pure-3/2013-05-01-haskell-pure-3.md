@@ -1,15 +1,15 @@
 ---
 layout: post
 title: Le Haskell, un langage au label pure. Troisième partie.
-description: Inroduction à haskell (partie 2). On discute
-  foncteurs aplicatifs, et monades.
+description: Introduction à haskell (partie 3). On discute
+  foncteurs applicatifs, et monades.
 author: Jérémy Cochoy
 date: 2013-05-01 + 0100
 categories: programming haskell language software
 lang: fr
 ...
 
-Et voici la troisième et dernière partie de notre découverte de ce joli langage. Au programme : des super foncteurs. D'abord des foncteurs applicatifs, puis des monades! Si vous rêviez de savoir pourquoi tant de gens s’enflamment devant ce langage, il est peut-être venue l'heure de la révélation.
+Et voici la troisième et dernière partie de notre découverte de ce joli langage. Au programme : des super foncteurs. D'abord des foncteurs applicatifs, puis des monades! Si vous rêviez de savoir pourquoi tant de gens s’enflamment devant ce langage, il est peut-être venu l'heure de la révélation.
 
 La [première partie est ici](http://zenol.fr/site/blog/posts/haskell-pure-1/fr.htm "Le Haskell, un langage au label pure. Première partie."), [la seconde là](http://zenol.fr/site/blog/posts/haskell-pure-2/fr.htm "Le Haskell, un langage au label pure. Seconde partie.").
 
@@ -22,11 +22,11 @@ class (Functor f) => Applicative f where
    (<*>) :: f (a -> b) -> f a -> f b
 ```
 
-Avec un type fonctoriel Fonc, on pouvais :
+Avec un type fonctoriel Fonc, on pouvait :
   * Prendre un élément de type `c` et le transformer en `Fonc c`, c'est à dire le "placer dans un contexte minimal".
   * Prendre une fonction de type `a->b` et la transformer en une fonction de type `Fonc a -> Fonc b` grâce à `fmap`.
 
-Grace à un foncteur applicatif, on peut :
+Grâce à un foncteur applicatif, on peut :
   * Prendre un élément de type <i>c</i> et le transformer en type `Fonc c`, cela se fait grâce à la fonction `pure :: (Applicative f) => c -> f c`.
   * Prendre une fonction dans un foncteur (ie un élément de type `Fonc (a->b)`) et l'appliquer à un élément de type `Fonc a` pour produire un `Fonc b`. L'opérateur permettant une telle chose est noté `<*> :: (Applicative f) => f (a -> b) -> f a -> f b`.
 
@@ -38,7 +38,7 @@ instance Functor Fonc where
 
 C'est à dire : Prenez f une fonction de type `a -> b`, alors vous savez comment l'appliquer sur un `Fonc a`. Il suffit de la "placer" elle aussi dans un foncteur, pour se retrouver avec une "fonction dans un contexte" de type `Fonc (a->b)` à appliquer sur un "élément dans un contexte" de type `F a`.
 
-C'est donc pour cela que l'on impose à tout foncteur applicatif d'être d'abord une instance de `Functor`, et que vous avez la contraire `"Functor f"` dans la définition de la classe `Applicative`.
+C'est donc pour cela que l'on impose à tout foncteur applicatif d'être d'abord une instance de `Functor`, et que vous avez la contrainte `"Functor f"` dans la définition de la classe `Applicative`.
 
 ### On se prépare au grand saut avec `Maybe`
 
@@ -52,7 +52,7 @@ instance Applicative Maybe where
 
 La méthode `pure` prend un `truc :: a` et le place dans un `Maybe a` par `Just truc`. C'est la façon la plus intuitive de placer notre `truc` dans un `Maybe`, sans perdre d'information. L'opérateur `<*>` se contente lui de récupérer la fonction à sa gauche, la valeur à sa droite, d'effectuer le calcul (l'application de f à x) puis de placer le résultat dans un contexte minimal en utilisant le constructeur `Just`. La dernière ligne s’occupe des cas où il manque la fonction, l'argument, ou bien les deux. Dans ces trois cas, on ne peut effectuer le calcul, et l'on ne peut donc pas produire de résultat.
 
-Comme dit plus haut, si l'on vais une fonction qui prend la racine carré (`sqrt :: Int`) d'un entier, et "peut-être un nombre" (un `v :: Maybe Int`), on pouvais mapper notre fonction avec la ligne `fmap sqrt v`. Avec un foncteur applicatif, on peut aussi écrire :
+Comme dit plus haut, si l'on a une fonction qui prend la racine carrée (`sqrt :: Int`) d'un entier, et "peut-être un nombre" (un `v :: Maybe Int`), on pouvait mapper notre fonction avec la ligne `fmap sqrt v`. Avec un foncteur applicatif, on peut aussi écrire :
 ``` haskell
 resultat  = (pure sqrt) <*> v
 ```
@@ -62,7 +62,7 @@ Mais alors, quel est l’intérêt des foncteurs applicatifs? Un premier exemple
 --Ici, v1, v2 et v3 sont de type Maybe Int.
 --Si vous voulez savoir d'où il viennent, disons que ce sont le résultat
 --de la lecture d'une chaine de caractère et de tentative de conversion de
---la chaine en nombres. Si c'était possible, alors on a des valeurs. Sinon, on auras "Nothing".
+--la chaine en nombres. Si c'était possible, alors on a des valeurs. Sinon, on aura "Nothing".
 
 --On a une superbe fonction :
 deepThought :: Int -> Int -> Int -> Answer
@@ -72,7 +72,7 @@ deepThought :: Int -> Int -> Int -> Answer
 premiereApplication :: Maybe (Int->Int->Answer)
 premiereApplication = fmap deepThought v1
 
---Maintenant, on est bloquer, on ne sais pas appliquer
+--Maintenant, on est bloqué, on ne sait pas appliquer
 -- une fonction qui se trouve dans un maybe...
 --... à moins d'utiliser <*> :)
 secondeApplication :: Maybe (Int -> Answer)
@@ -104,7 +104,7 @@ instance Applicative [] where
     fs <*> xs = [f x | f <- fs, x <- xs]
 ```
 
-Cela donne une façon très facile d'effectuer de nombreux calculs simultanément ; vous disposez d'un ensemble de valeurs, et d'un ensemble de fonctions. Vous voulez connaître TOUS les résultats possible. Il suffit alors d'appliquer la liste des fonctions sur la liste des valeurs avec l'opérateur `<*>`. Un exemple, en partie tiré de_Learn You Haskell for Great Good_ est le problème du parcoure d'un cavalier. Un cavalier est situé sur une case d'un échiquier infini, et vous voulez connaître toute les positions où il peut se trouver après 5 coups. Il suffit décrire une fonction par déplacement possible, puis de construire une liste de ces fonctions,  disons `[u1, u2, l1, l2, r1, r2, d1, d2]`. On applique cette liste à la position d'origine placée dans un contexte : `[(x, y)]` (ou encore `pure (x, y)`). La solution est donné par l'application répété de notre liste de fonction, comme le montre le code suivant.
+Cela donne une façon très facile d'effectuer de nombreux calculs simultanément ; vous disposez d'un ensemble de valeurs, et d'un ensemble de fonctions. Vous voulez connaître TOUS les résultats possible. Il suffit alors d'appliquer la liste des fonctions sur la liste des valeurs avec l'opérateur `<*>`. Un exemple, en partie tiré de _Learn You Haskell for Great Good_ est le problème du parcours d'un cavalier. Un cavalier est situé sur une case d'un échiquier infini, et vous voulez connaître toutes les positions où il peut se trouver après 5 coups. Il suffit d'écrire une fonction par déplacement possible, puis de construire une liste de ces fonctions,  disons `[u1, u2, l1, l2, r1, r2, d1, d2]`. On applique cette liste à la position d'origine placée dans un contexte : `[(x, y)]` (ou encore `pure (x, y)`). La solution est donnée par l'application répétée de notre liste de fonction, comme le montre le code suivant.
 
 ``` haskell
 u1 (l, c) = (l+2,c+1)
@@ -126,9 +126,9 @@ solution (l, c) = etapeSuivante . etapeSuivante . etapeSuivante . etapeSuivante 
 
 ### En apnée : le foncteur `(->) r` !
 
-On les avais cacher lors de la discussion des foncteurs, car ils sont difficile à cerné. Leur intérêt n'est pas évident au premier abord et leur construction est quelque peu... surprenante. Mais puisqu'ils sont utile comme foncteur applicatif, parlons en! Si la partie la plus abstraite vous échappe, aucune raison de vous inquiéter, l'idée est de survoler les notions pour avoir un aperçu, éveiller la curiosité et inciter à lire des livres/articles qui expliquent en détaille ce qui n'est ici que mentionner. Si tout cela vous intéresse, sautez à la section "Foncteurs applicatifs" de Learn You Haskell for Great Good!
+On les avait cachés lors de la discussion des foncteurs, car ils sont difficiles à cerner. Leur intérêt n'est pas évident au premier abord et leur construction est quelque peu... surprenante. Mais puisqu'ils sont utiles comme foncteur applicatif, parlons-en! Si la partie la plus abstraite vous échappe, aucune raison de vous inquiéter, l'idée est de survoler les notions pour avoir un aperçu, éveiller la curiosité et inciter à lire des livres/articles qui expliquent en détail ce qui n'est ici que mentionné. Si tout cela vous intéresse, sautez à la section "Foncteurs applicatifs" de Learn You Haskell for Great Good!
 
-L'opérateur `->` est un constructeur de type, à deux arguments. Vous lui donnez deux types, `a` et `b`, et il vous construiras le type "prend du a et retourne du b". On peut donc écrire `f :: a -> b` ou encore ` f :: (->) a b`. Que signifie alors `(->) r` ? On parle d'un constructeur de type à un argument qui, si vous lui donnez un type `a`, désigneras alors les fonctions de type `a -> r`. Si `r` désigne un type, on peut alors faire de `(->) r` une instance de `Functor` où mapper une fonction `f` de type `a->b` sur une fonction `g` de type `a -> r` signifie appliquer `f` au résultat de l'évaluation de la fonction `g`. Plus précisément :
+L'opérateur `->` est un constructeur de type, à deux arguments. Vous lui donnez deux types, `a` et `b`, et il vous construiras le type "prend du a et retourne du b". On peut donc écrire `f :: a -> b` ou encore ` f :: (->) a b`. Que signifie alors `(->) r` ? On parle d'un constructeur de type à un argument qui, si vous lui donnez un type `a`, désignera alors les fonctions de type `a -> r`. Si `r` désigne un type, on peut alors faire de `(->) r` une instance de `Functor` où mapper une fonction `f` de type `a->b` sur une fonction `g` de type `a -> r` signifie appliquer `f` au résultat de l'évaluation de la fonction `g`. Plus précisément :
 ``` haskell
 instance Functor ((->) r) where
     fmap f g = (\x -> f (g x))
@@ -138,9 +138,9 @@ On peut se demander l’intérêt, puisque `(fmap f g) 42` se simplifie en `f . 
 
 Un exemple commenté :
 ``` haskell
---Notre type "paramètre". On aurais pu construire une sorte de grosse structure
+--Notre type "paramètre". On aurait pu construire une sorte de grosse structure
 -- avec diverses informations.
---Dans cette exemple, on se contenteras d'un nombre.
+--Dans cet exemple, on se contentera d'un nombre.
 type Param = Int
 
 unEntier :: Param -> Int
@@ -156,12 +156,12 @@ somme = pure (+) <$> unEntier <*> unAutreEntier
 affichage = uneFonction <*> somme
 
 --Vaut 94 :
-evaluationDansUnCOntexte = affichage 42
+evaluationDansUnContexte = affichage 42
 ```
 
 ### Quelques règles que nul ne doit ignorer
 
-Comme on dit, `dura lex, sed lex`. Les foncteurs devaient respecter certaines règles, et il en est de même des foncteurs applicatifs. Une fois habitué aux foncteurs applicatifs, ces règles semblent découler du bon sens. Ce sont des invariants que DOIVENT respecter vos instances d'`Applicative`. Si vous ne les respectez pas, c'est que ce que vous voulez faire n'est pas un foncteur applicatif, et n'a donc aucune raison d’être instance d'`Applicative`.
+Comme on dit, `dura lex, sed lex`. Les foncteurs devaient respecter certaines règles, et il en est de même des foncteurs applicatifs. Une fois habitués aux foncteurs applicatifs, ces règles semblent découler du bon sens. Ce sont des invariants que DOIVENT respecter vos instances d'`Applicative`. Si vous ne les respectez pas, c'est que ce que vous voulez faire n'est pas un foncteur applicatif, et n'a donc aucune raison d’être instance d'`Applicative`.
 
 Sans trop rentrer dans les détails, les voici, brièvement commentés :
 ``` haskell
@@ -192,7 +192,7 @@ u <*> pure y = pure ($ y) <*> u
 
 ## Monades
 
-Les monades, c'est le cran au dessus. On ne veut plus seulement mapper des fonctions `f: a -> b` à l'intérieur d'un `Fonc a`, ni seulement évaluer des fonctions `Fonc (a -> b)` dans un contexte `F a`. Maintenant, on dispose de fonctions qui travaillent sur une valeur, et produisent un résultat dans un contexte. Des fonctions de type `f :: a -> Fonc b`. Si l'on essayais de les mapper comme des foncteurs sur un `Fonc a`, on se retrouverais avec du `Fonc (Fonc b)`, ce qui n'est pas du tout ce que l'on veut. Il nous faut donc une fonction capable de recoller ces "Fonc Fonc" en "Fonc". C'est ce que fournisse les monades.
+Les monades, c'est le cran au dessus. On ne veut plus seulement mapper des fonctions `f: a -> b` à l'intérieur d'un `Fonc a`, ni seulement évaluer des fonctions `Fonc (a -> b)` dans un contexte `F a`. Maintenant, on dispose de fonctions qui travaillent sur une valeur, et produisent un résultat dans un contexte. Des fonctions de type `f :: a -> Fonc b`. Si l'on essayait de les mapper comme des foncteurs sur un `Fonc a`, on se retrouverait avec du `Fonc (Fonc b)`, ce qui n'est pas du tout ce que l'on veut. Il nous faut donc une fonction capable de recoller ces "Fonc Fonc" en "Fonc". C'est ce que fournissent les monades.
 
 Tout de suite, la classe monade :
 ``` haskell
@@ -200,10 +200,10 @@ class Monad m where
   (>>=) :: m a -> (a -> m b) -> m b -- On l’appelle aussi "bind"
   (>>) :: m a -> m b -> m b -- C'est une sorte d'opérateur de concaténation.
 -- >> Ignore le premier argument et renvoi la valeur du second.
--- On vera plus tard qu'en fait, c'est extrêmement utile, avec la monade IO.
+-- On verra plus tard qu'en fait, c'est extrêmement utile, avec la monade IO.
   return :: a -> m a -- C'est notre bon vieux pure, sous un autre nom.
-  fail :: String -> m a -- On ne l'utiliseras pas, et on en parleras pas.
--- Sachez toute fois que ca renvoi moralement un "contexte sans information".
+  fail :: String -> m a -- On ne l'utilisera pas, et on n'en parlera pas.
+-- Sachez toutefois que ça renvoie moralement un "contexte sans information".
 -- Par exemple une liste vide, un Nothing, etc.
 ```
 
@@ -218,11 +218,11 @@ instance Monade Fonc where
 -- On donne mf à manger a la grosse fonction de droite. La grosse fonction de droite récupère la fonction f, la transforme en une f' par return.f. On donne donc la valeur v contenue dans mv à manger a la fonction f' grâce à >>=.
 ```
 
-Bon, si vous avez suivi jusque là, soit vous connaissez déjà le haskell, soit vous êtes des sur-hommes (ou des matheux, auquel cas je ne peux plus rien pour vous). Voyons en pratique ce qu'apportent les monades, et pourquoi est-ce que bien utilisé, elles offres une nouvelle façon de résoudre certains problèmes bien connu du monde impératif.
+Bon, si vous avez suivi jusque là, soit vous connaissez déjà le haskell, soit vous êtes des sur-hommes (ou des matheux, auquel cas je ne peux plus rien pour vous). Voyons en pratique ce qu'apportent les monades, et pourquoi est-ce que bien utilisées, elles offrent une nouvelle façon de résoudre certains problèmes bien connus du monde impératif.
 
 ### Être ou ne pas être?
 
-Dans un "vrai" programme, on n'a pas toujours une valeur a retourner pour une fonction. Que faire si l'on demande le premier élément d'une liste vide? Et si jamais on veut convertir une chaine en un nombre, qui par malheur contient le prénom de votre animal de compagnie? En bref, comment gérer une erreur correspondant à l’absence d'un résultat?
+Dans un "vrai" programme, on n'a pas toujours une valeur à retourner pour une fonction. Que faire si l'on demande le premier élément d'une liste vide? Et si jamais on veut convertir une chaine en un nombre, qui par malheur contient le prénom de votre animal de compagnie? En bref, comment gérer une erreur correspondant à l’absence d'un résultat?
 
 La réponse est la monade maybe. Commençons par des fonctions qui renvoient peut-être une valeur :
 ``` haskell
@@ -238,25 +238,25 @@ maybeRange False = Nothing
 maybeRange True = (23, 42)
 ```
 
-On voudrais maintenant récupérer le premier élément de la liste pour les valeur donné par maybeRange, si la liste existe, bien sure. C'est la que les monades interviennent! Grâce au monades, on peut composer les deux fonctions, bien qu'un `Maybe [Int]` ne soit pas un `[Int]`.
+On voudrais maintenant récupérer le premier élément de la liste pour les valeurs données par maybeRange, si la liste existe, bien sûr. C'est là que les monades interviennent! Grâce aux monades, on peut composer les deux fonctions, bien qu'un `Maybe [Int]` ne soit pas un `[Int]`.
 ``` haskell
 resultat :: Maybe Int
 resultat choice = maybeRange choice >>= maybeList >>= maybeHead
 ```
 
-Si l'une des étapes ne produit pas de résultat (un `Nothing`), alors l’absence de résultat seras propagé et on obtiendras un `Nothing`.
+Si l'une des étapes ne produit pas de résultat (un `Nothing`), alors l’absence de résultat sera propagée et on obtiendra un `Nothing`.
 
-Cette méthode a de nombreux avantages par rapport aux deux vielles solutions bien connues :
+Cette méthode a de nombreux avantages par rapport aux deux vieilles solutions bien connues :
 1) Le "code d'erreur", c'est à dire placer nullptr quand on pointeur n'existe pas, ou encore "-1" ou 0 pour signaler une erreur. L'inconvénient de cette méthode est d'obliger le développeur à vérifier chacune des valeurs de retour avec un if, généralement pour sortir de la fonction, souvent en retournant un nouveau code d’erreur pour signaler que le résultat produit n'est pas "vraiment" un résultat, mais une absence de résultat.
 
-L'utilisation de la monade Maybe permet d'éviter ces testes répété. Si une seul des fonctions ne peut pas fournir de résultat, alors les applications suivantes seront toute ignoré et, bien entendu, ces fonctions ne seront pas évaluées, donc pas de coût en temps de calcul.
+L'utilisation de la monade Maybe permet d'éviter ces tests répétés. Si une seule des fonctions ne peut pas fournir de résultat, alors les applications suivantes seront toutes ignorées et, bien entendu, ces fonctions ne seront pas évaluées, donc pas de coût en temps de calcul.
 
-2) Les exceptions. Cela consiste à interrompre l'exécution normale du programme pour remonter a travers toute la pile d'appels, en espérant que quelqu'un seras assez gentil pour s'occuper de cette erreur. Cela a un coût en terme de performances, et doit être réserver pour les évènements exceptionnels. L'impossibilité de produire un résultat est rarement exceptionnel, c'est plutôt chose commune.
+2) Les exceptions. Cela consiste à interrompre l'exécution normale du programme pour remonter à travers toute la pile d'appels, en espérant que quelqu'un sera assez gentil pour s'occuper de cette erreur. Cela a un coût en terme de performances, et doit être réservé pour les évènements exceptionnels. L'impossibilité de produire un résultat est rarement exceptionnel, c'est plutôt chose commune.
 
-Le chaînage de monade Maybe a l'avantage de ne pas déclencher un erreurs qui pourrait se perdre et aller jusqu'à interrompre le programme. Que les valeurs soient présente ou non, le comportement est toujours "simple" à prédire. Et plus un code est simple, moins il y a de risque qu'une erreurs s'introduisse à l'insu du développeur.
+Le chaînage de monade Maybe a l'avantage de ne pas déclencher une erreur qui pourrait se perdre et aller jusqu'à interrompre le programme. Que les valeurs soient présentes ou non, le comportement est toujours "simple" à prédire. Et plus un code est simple, moins il y a de risque qu'une erreur s'introduise à l'insu du développeur.
 
 
-En règle générale, dès que le résultat peut ne pas être fournit, vous devriez utiliser la monade Maybe. Si parfois une certaine fonction f que vous voulez chaîner produit toujours un résultat, alors vous pouvez la placer au milieu d'une chaine de `>>=` en écrivant `return.f`. Vous pouvez aussi une bonne vielle `fmap`, car toute les monades sont des foncteurs applicatifs, donc des foncteurs.
+En règle générale, dès que le résultat peut ne pas être fourni, vous devriez utiliser la monade Maybe. Si parfois une certaine fonction f que vous voulez chaîner produit toujours un résultat, alors vous pouvez la placer au milieu d'une chaine de `>>=` en écrivant `return.f`. Vous pouvez aussi une bonne vieille `fmap`, car toutes les monades sont des foncteurs applicatifs, donc des foncteurs.
 
 Nb : Peut-être avez vous besoin de conserver une information sur l'origine de l'erreur. Ceci est possible grâce à la monade `Either a` (souvent on utilise `Either String` pour stocker un message).
 
@@ -271,9 +271,9 @@ instance Monad Maybe where
 
 ### Un calcul pas très déterministe
 
-Nous avions vu comment les listes comme foncteurs applicatifs permettent de résoudre élégamment la question du déplacement d'un cavalier. Mais dans un échiquier fini, on ne savais pas trop comment gérer les bords.
+Nous avions vu comment les listes comme foncteurs applicatifs permettent de résoudre élégamment la question du déplacement d'un cavalier. Mais dans un échiquier fini, on ne savait pas trop comment gérer les bords.
 
-Les listes, vu comme monade, nous permettent de combiner des fonctions de type `a -> [b]`. L'idée est que vous disposez de diverse fonctions qui prennent une valeur, et produise divers résultats possible. Vous voulez alors appliquer des fonctions sur chacun de ces résultats. On peut donc parler de calcul non-déterministe : une valeur donne plusieurs résultats possible.
+Les listes, vu comme monade, nous permettent de combiner des fonctions de type `a -> [b]`. L'idée est que vous disposez de diverses fonctions qui prennent une valeur, et produisent divers résultats possibles. Vous voulez alors appliquer des fonctions sur chacun de ces résultats. On peut donc parler de calcul non-déterministe : une valeur donne plusieurs résultats possible.
 
 On peut donc réaliser un remake du cavalier, en se servant de ce calcul non déterministe, puisqu'à partir d'une position, on a diverses positions possibles
 ``` haskell
@@ -281,10 +281,10 @@ On peut donc réaliser un remake du cavalier, en se servant de ce calcul non dé
 -- histoire de rappeler que les types sont
 -- aussi là pour fournir des informations sémantiques.
 type Ligne = Int
-type Collone = Int
-type Position = (Ligne, Collone)
+type Colonne = Int
+type Position = (Ligne, Colonne)
 
---Fonction utilisé pour ne garder que les positions dans l'échiquier
+--Fonction utilisée pour ne garder que les positions dans l'échiquier
 dansLechiquier :: Position -> Bool
 dansLechiquier (l, c) = l `elem` [1..8] && c `elem` [1..8]
 
@@ -299,10 +299,10 @@ resultat = return (4, 5) >>= deplacerCavalier >>= deplacerCavalier >>= deplacerC
 ```
 
 
-En fait, une autre façon de faire serai de mapper la fonction `deplacerCavalier` dans la liste de positions, produisant un `[[Position]]`, puis d'appeler `concat` sur cette liste, la recollant en une `[Position]`. C'est d'ailleurs de cette façon qu'est implémenté l'opérateur `>>=` !
+En fait, une autre façon de faire serait de mapper la fonction `deplacerCavalier` dans la liste de positions, produisant un `[[Position]]`, puis d'appeler `concat` sur cette liste, la recollant en une `[Position]`. C'est d'ailleurs de cette façon qu'est implémenté l'opérateur `>>=` !
 
-L'utilisation des listes sous leur forme de monade n'est pas limité à cette exemple. Je peux mentionner un second cas qui vous paraîtras peut-être plus concret. Disons que vous voulez enregistrer une image, et que vous disposez d'une fonction qui vous donne les couleurs r, g, b, a sous la forme d'une liste de nombres, c'est à dire `getPixel (x, y) :: [Word8]` (Word8 est un nombre codé sur 8 bits). Sachant que pour enregistrer l'image, vous devez fournir un tableau, qui peut être très facilement construit à partir de la liste des valeurs qu'il vas contenir. (Le compilateur est très malins, et le programme compilé ne s’amusera pas à produire une liste, la construire en mémoire, puis la placer dans le tableau. Pas d'inquiétude, le compilateur est très douer à ce niveau.)
-La monade `[]` permet d'écrire en une ligne, de façon très élégante, la création d'un tableau où les valeurs sont bien la succession des valeurs de `getPixel` calculé à chaque coordonné. Bien sur, on aurais pu utiliser `concat` et `map`, mais c'est justement ce que fait l'opérateur `>>=`. Tout ça pour dire que les listes vue comme monade ne sont pas un gadget, mais bien un outil utile à l'implémentation d'applications de la "vie de tout les jouers".
+L'utilisation des listes sous leur forme de monade n'est pas limitée à cet exemple. Je peux mentionner un second cas qui vous paraîtra peut-être plus concret. Disons que vous voulez enregistrer une image, et que vous disposez d'une fonction qui vous donne les couleurs r, g, b, a sous la forme d'une liste de nombres, c'est à dire `getPixel (x, y) :: [Word8]` (Word8 est un nombre codé sur 8 bits). Sachant que pour enregistrer l'image, vous devez fournir un tableau, qui peut être très facilement construit à partir de la liste des valeurs qu'il vas contenir. (Le compilateur est très malins, et le programme compilé ne s’amusera pas à produire une liste, la construire en mémoire, puis la placer dans le tableau. Pas d’inquiétude, le compilateur est très doué à ce niveau.)
+La monade `[]` permet d'écrire en une ligne, de façon très élégante, la création d'un tableau où les valeurs sont bien la succession des valeurs de `getPixel` calculées à chaque coordonnée. Bien sûr, on aurait pu utiliser `concat` et `map`, mais c'est justement ce que fait l'opérateur `>>=`. Tout ça pour dire que les listes vues comme monade ne sont pas un gadget, mais bien un outil utile à l'implémentation d'applications de la "vie de tous les jours".
 
 Voici la définition de l'instance pour les curieux :
 ``` haskell
@@ -315,7 +315,7 @@ instance Monad [] where
 ### Dou? Doo? Do, c'est le goût!
 
 La notation do est une sorte de super sucre syntaxique. Seulement, les monades sont tellement amère que vous aurez vraiment besoin de ce sucre, je vous l'assure.
-La notation do permet décrire facilement le chaînage d'actions, et le fait de récupérer des valeurs dans un contexte.
+La notation do permet d'écrire facilement le chaînage d'actions, et le fait de récupérer des valeurs dans un contexte.
 
 Considérons l'exemple suivant tiré de Learn You Haskell for Great Good (Non, je ne suis pas encore sponsorisé par eux.) :
 ``` haskell
@@ -324,7 +324,7 @@ foo = Just 3   >>= (\x ->
       Just "!" >>= (\y -> 
       Just (show x ++ y)))
 ```
-On récupère deux valeurs de monades à travers x et y, puis l'on place le résultat de show x ++ y dans un contexte. C'est lourd a écrire, demande l'imbrication de fonctions... Avec la notation do, cela évident :
+On récupère deux valeurs de monades à travers x et y, puis l'on place le résultat de show x ++ y dans un contexte. C'est lourd à écrire, demande l'imbrication de fonctions... Avec la notation do, cela évident :
 ``` haskell
 foo :: Maybe String  
 foo = do  
@@ -342,7 +342,7 @@ foo = do
 
 Dans les deux premières lignes, on récupère `x` et `y` depuis `Just 3` et `Just "!"`, puis on fait notre traitement.
 
-Hey! Mais ça ressemble a des listes en compréhension tout ça! Reproduisons le même exercice mais avec des listes :
+Hey! Mais ça ressemble à des listes en compréhension tout ça! Reproduisons le même exercice mais avec des listes :
 ``` haskell
 foo :: Maybe String  
 foo = [1, 2, 3]   >>= (\x -> 
@@ -350,7 +350,7 @@ foo = [1, 2, 3]   >>= (\x ->
           [show x ++ y]))
 ```
 
-Le résultat produit est toute les façons de coller l'un des signes de ponctuation après l'un des nombres. C'est exactement la même chose que :
+Le résultat produit est toutes les façons de coller l'un des signes de ponctuation après l'un des nombres. C'est exactement la même chose que :
 ``` haskell
 foo :: Maybe String  
 foo = do
@@ -362,9 +362,9 @@ foo = do
 foo = [show x ++ y | x <- [1, 2, 3] | y <- [".", "!", "?"]]
 ```
 
-Voilà donc l'origine des liste en compréhension! Et oui, il nous aura fallu arriver jusqu'ici pour pouvoir enfin expliquer ce que sont les liste en compréhension. C'est simplement un sucre syntaxique spécifique au liste d'un bloque do. C'est donc de la manipulation de monade que vous faites, à chaque fois que vous écrivez une liste en compréhension. Si c'est si pratique avec les listes, vous vous doutez bien que pouvoir le faire avec diverses structures (des arbres par exemple), est tout aussi pratique.
+Voilà donc l'origine des liste en compréhension! Et oui, il nous aura fallu arriver jusqu'ici pour pouvoir enfin expliquer ce que sont les listes en compréhension. C'est simplement un sucre syntaxique spécifique aux listes d'un bloc do. C'est donc de la manipulation de monade que vous faites, à chaque fois que vous écrivez une liste en compréhension. Si c'est si pratique avec les listes, vous vous doutez bien que pouvoir le faire avec diverses structures (des arbres par exemple), est tout aussi pratique.
 
-Vous vous demandez alors comment ajouter les conditions, comme dans `[x^2 | x <- [1..20], x `mod` 2 == 0]` ? Et bien vous pouvez utilisez la fonction `guard`, qui produiras une liste vide si la condition n'est pas vérifiée :
+Vous vous demandez alors comment ajouter les conditions, comme dans `[x^2 | x <- [1..20], x `mod` 2 == 0]` ? Et bien vous pouvez utilisez la fonction `guard`, qui produira une liste vide si la condition n'est pas vérifiée :
 ``` haskell
 foo = do
       x <- [1..20]
@@ -374,14 +374,14 @@ foo = do
 
 ### Le retour de Jafar, aussi connu sous le nom de `(->) r`.
 
-Nous avions utilisé le foncteur applicatif `(->) r` pour représenter des calculs qui dépendent d'un contexte. On savais donc appliquer des fonctions `r -> (a -> b)` sur des valeurs `r -> a`. Seulement, il est plus commun de partir d'une valeur, et produire un résultat qui dépend du contexte. On voudrais donc une monade, pour pouvoir combiner des fonctions de type `a -> (r -> b)` (Les parenthèses sont là pour faire ressortir que l'on considère (->) r comme un foncteur / une monade, mais bien sur facultatives).
+Nous avions utilisé le foncteur applicatif `(->) r` pour représenter des calculs qui dépendent d'un contexte. On savait donc appliquer des fonctions `r -> (a -> b)` sur des valeurs `r -> a`. Seulement, il est plus commun de partir d'une valeur, et produire un résultat qui dépend du contexte. On voudrait donc une monade, pour pouvoir combiner des fonctions de type `a -> (r -> b)` (Les parenthèses sont là pour faire ressortir que l'on considère (->) r comme un foncteur / une monade, mais bien sur facultatives).
 
 Comme `(->) r` est l'une des monades les plus abstraites, regardons un exemple concret, où le contexte est la position d'une caméra dans un raytracer.
 
 ``` haskell
 -- On définit une caméra.
--- Une caméra contient la position depuis la quelle
--- les rayons sont lancé, la distance à la quel se trouve
+-- Une caméra contient la position depuis laquelle
+-- les rayons sont lancés, la distance à laquelle se trouve
 -- le plan, et la taille de celui ci.
 type Position = (Double, Double, Double)
 type Direction = (Double, Double, Double)
@@ -392,7 +392,7 @@ type Hauteur = Coordonnee
 type Plan = (Largeur, Hauteur)
 data Camera = Camera Position Distance Plan
 
-getRay :: Cooronnee -> (Camera -> Direction)
+getRay :: Coordonnee -> (Camera -> Direction)
 getRay (i, j) cam = let (Camera (x, y, z) _ _ _) = cam in normalize (i - x, j - y, -z)
   where
     normalize (x, y, z) = let norme = sqrt(x^2 + y^2 + z^2) in (x / norm, y / norm, z / norm)
@@ -408,15 +408,15 @@ computeColor = -- Calcule la couleur en tenant compte de l'angle de la caméra, 
 -- C'est pourquoi le type est "Camera -> Coordonnee -> [Word8]" plutôt
 -- que "Coordonnee -> Camera -> [Word8]". On perd donc la possibilité
 -- d'utiliser getPixel avec la monade "(->) Camera".
-getPixel :: Camera -> Coordonee -> [Word8])
+getPixel :: Camera -> Coordonnee -> [Word8]
 getPixel cam coords = (return coords >>= getRay >>= (rayTraceScene uneScene) >>= computeColor) cam
 ```
 
 ### Point culture
 
-Comprenez bien que les monades ne sont pas indispensable, et que l'on faisait des monade avant la première apparition de la classe Monade. C'est simplement de nouveaux outils à votre disposition pour résoudre des problèmes, et ils permettent parfois de vieux problèmes de façon très élégante et concise (ce qui est un excellent pour l'évolutivité d'un code).
+Comprenez bien que les monades ne sont pas indispensables, et que l'on faisait des monades avant la première apparition de la classe Monade. C'est simplement de nouveaux outils à votre disposition pour résoudre des problèmes, et ils permettent parfois de résoudre de vieux problèmes de façon très élégante et concise (ce qui est un excellent pour l'évolutivité d'un code).
 
-Sachez que les monades aussi doivent respecter certaines règles, tous comme les foncteurs et les foncteurs applicatifs. Cela assure qu'une monade seras bien un foncteur (applicatif), de la façon décrite plus haut. Les voici :
+Sachez que les monades aussi doivent respecter certaines règles, tout comme les foncteurs et les foncteurs applicatifs. Cela assure qu'une monade sera bien un foncteur (applicatif), de la façon décrite plus haut. Les voici :
 ``` haskell
 -- Neutre à gauche
 return a >>= f = f a
@@ -428,16 +428,16 @@ m >>= return = m
 
 Vous trouverez des liens dans les références pour plus de détails.
 
-On n'a pas aborder la monade IO. Cette monade permet de ramener les actions propre a l'impératif, les "effets de bord", dans le langage haskell. L'astuce diabolique est la suivante : Puisque qu'un programme haskell ne peut produire d'effet de bord, un programme haskell décriras comment composer, jusxtaposer, et transformer les résultats produits par des programmes impératif. Utiliser la monade IO, c'est jouer avec la composition et la juxtaposition de programmes. C'est alors que l'opérateur `>>` prend tout son sens! Il permet de juxtaposer deux programmes impératifs et ne retenir le résultat que du second, par exemple :
+On n'a pas abordé la monade IO. Cette monade permet de ramener les actions propres à l'impératif, les "effets de bord", dans le langage haskell. L'astuce diabolique est la suivante : Puisque qu'un programme haskell ne peut produire d'effet de bord, un programme haskell décrira comment composer, juxtaposer, et transformer les résultats produits par des programmes impératifs. Utiliser la monade IO, c'est jouer avec la composition et la juxtaposition de programmes. C'est alors que l'opérateur `>>` prend tout son sens! Il permet de juxtaposer deux programmes impératifs et ne retenir le résultat que du second, par exemple :
 ``` haskell
 afficherMessage = putStrLn "Bonjour," >> putStrLn "monde!"
 ```
 
-En dire plus sur cette monade n'a d'intérêts que pour les personne voulant écrire des programmes en haskell. Si c'est votre cas, je vous invite à lire, au choix, Learn You Haskell for Great Good ou (plus technique et plus ... "professionnel") Real World Haskell, chez O'Reilly.
+En dire plus sur cette monade n'a d'intérêt que pour les personnes voulant écrire des programmes en haskell. Si c'est votre cas, je vous invite à lire, au choix, Learn You Haskell for Great Good ou (plus technique et plus ... "professionnel") Real World Haskell, chez O'Reilly.
 
 ### Références :
 
-  * [Les lois respectés par les monades][monades-laws]
+  * [Les lois respectées par les monades][monades-laws]
   * La monade [Either][either]
   * Le moteur de recherche haskell [Hoogle][hoogle]. Permet de rechercher une fonction à partir de son type.
 

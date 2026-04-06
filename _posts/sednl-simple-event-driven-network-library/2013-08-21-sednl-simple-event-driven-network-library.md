@@ -31,7 +31,7 @@ apprendre (moins d'un quart d'heure pour un développeur expérimenté).
 Elle convient parfaitement tant à des projets d’envergure moyenne que des
 projets de taille plus conséquente.
 
-Un court exemple d'utilisation du mécanisme d'évènement coté serveur :
+Un court exemple d'utilisation du mécanisme d'évènement côté serveur :
 ``` cpp
 #include <SEDNL/sednl.hpp>
 
@@ -68,12 +68,12 @@ vos callback pour les évènements provenant d'un même utilisateur
 ne peut être supposé. En contrepartie, vous pouvez contrôler quels
 threads vous allouez à quels évènements.
 
-SedNL fournis aussi des outils légers pour sérialiser et envoyer
+SedNL fournit aussi des outils légers pour sérialiser et envoyer
 de façon fiable les instances de vos classes.
 
 Philosophie particulière de cette bibliothèque : la règle est que même
 dans des conditions difficiles (plus de mémoire disponible, limite de
-connections ouvertes, exceptions levées par vos callback, dysfonctionnement
+connexions ouvertes, exceptions levées par vos callback, dysfonctionnement
 du système dans la gestion des threads, ...) la bibliothèque doit faire tout
 ce qui est possible pour conserver un comportement normal.
 Toutes les exceptions "std::bad_alloc" sont interceptées et traitées
@@ -88,9 +88,9 @@ Il est possible que suite à certaines contraintes techniques SedNL ne soit
 pas la bibliothèque la plus adaptée à votre projet. Une lecture rapide de
 la documentation devrait vous permettre de savoir si SedNL est adapté à
 votre projet, ou si vous devez préférer une autre bibliothèque.
-Par exemple, SedNL n'est pas du tout adapter [à de la RCP](http://en.wikipedia.org/wiki/Remote_procedure_call).
+Par exemple, SedNL n'est pas du tout adapté [à de la RCP](http://en.wikipedia.org/wiki/Remote_procedure_call).
 Même si le mécanisme d'évènement est ce que vous recherchez,
-d'autres alternative C basé aussi sur un mécanisme d'évènement
+d'autres alternatives C basées aussi sur un mécanisme d'évènement
 comme libev / libevent offrent un contrôle plus fin,
 au coût d'une API plus complexe et moins intuitive.
 Gardez aussi à l’esprit que le design encouragé par SedNL devrait

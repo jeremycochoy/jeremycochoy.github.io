@@ -11,7 +11,7 @@ redirect_from:
   - /site/blog/posts/boost-property-tree/en.html
 ...
 
-**Property Tree** is a sublibrary of boost that allow you handling _tree of property_. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.
+**Property Tree** is a sublibrary of boost that allows you to handle _trees of properties_. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.
 
 Our example case will be the following json file :
 
@@ -58,13 +58,13 @@ pt::ptree root;
 pt::read_json("filename.json", root);
 ```
 
-Now, we have a populated property tree thatis waiting from us to look at him. Notice that you can also read from a stream, for example `pt::read_json(std::cin, root)`{.cpp} is also allowed.
+Now, we have a populated property tree that is waiting for us to look at it. Notice that you can also read from a stream, for example `pt::read_json(std::cin, root)`{.cpp} is also allowed.
 
-If your json file is illformed, you will be granted by a `pt::json_parser::json_parser_error`.
+If your json file is ill-formed, you will be greeted by a `pt::json_parser::json_parser_error`.
 
 ### Loading some values
 
-We can access a value from the root by giving it's path to the `get` method.
+We can access a value from the root by giving its path to the `get` method.
 
 ```cpp
 // Read values
@@ -73,15 +73,15 @@ int height = root.get<int>("height", 0);
 std::string msg = root.get<std::string>("some.complex.path");
 ```
 
-If the field your are looking to doesn't exists, the `get()` method will throw a `pt::ptree_bad_path` exception, so that you can recorver from incomplete json files. Notice you can set a default value as second argument, or use `get_optional<T>()` wich return a `boost::optional<T>`.
+If the field you are looking for doesn't exist, the `get()` method will throw a `pt::ptree_bad_path` exception, so that you can recover from incomplete json files. Notice you can set a default value as second argument, or use `get_optional<T>()` which returns a `boost::optional<T>`.
 
-Notice the getter doesn't care about the type of the input in the json file, but only rely on the ability to convert the string to the type you are asking.
+Notice the getter doesn't care about the type of the input in the json file, but only relies on the ability to convert the string to the type you are asking for.
 
 ### Browsing lists
 
 So now, we would like to read a list of objects (in our cases, a list of animals).
 
-We can handle it with a simple for loop, using an iterator. In **c++11**, it become :
+We can handle it with a simple for loop, using an iterator. In **c++11**, it becomes :
 
 ```cpp
 // A vector to allow storing our animals
@@ -100,9 +100,9 @@ for (pt::ptree::value_type &animal : root.get_child("animals"))
 }
 ```
 
-Since `animal.second` is a `ptree`, we can also call call `get()` or `get_child()` in the case our node wasn't just a string.
+Since `animal.second` is a `ptree`, we can also call `get()` or `get_child()` in the case our node wasn't just a string.
 
-A bit more complexe example is given by a list of values. Each element of the list is actualy a `std::pair("", value)` (where value is a `ptree`). It doesnt means that reading it is harder.
+A bit more complex example is given by a list of values. Each element of the list is actually a `std::pair("", value)` (where value is a `ptree`). It doesn't mean that reading it is harder.
 
 ```cpp
 std::vector<std::string> fruits;
@@ -114,11 +114,11 @@ for (pt::ptree::value_type &fruit : root.get_child("fruits"))
 
 ```
 
-In the case the values arent string, we can just call `fruit.second.get_value<T>()` in place of `fruit.second.data()`.
+In the case the values aren't strings, we can just call `fruit.second.get_value<T>()` in place of `fruit.second.data()`.
 
 ### Deeper : matrices
 
-There is nothing now to enable reading of matrices, but it's a good way to check that you anderstood the reading of list. But enought talking, let's have a look at the code.
+There is nothing new to enable reading of matrices, but it's a good way to check that you understood the reading of lists. But enough talking, let's have a look at the code.
 
 ```cpp
 int matrix[3][3];
@@ -139,7 +139,7 @@ You can now read any kind of JSON tree. The next step is being able to read them
 
 ## Writing JSON
 
-Let's say that now, we wan't to produce this tree from our application's data. To do that, all we have to do is build a `ptree` containing our data.
+Let's say that now, we want to produce this tree from our application's data. To do that, all we have to do is build a `ptree` containing our data.
 
 We start with an empty tree :
 ```{.cpp}
@@ -153,7 +153,7 @@ pt::write_json(std::cout, root);
 
 ### Add values
 
-Puting values in a tree can be acomplished with the `put()` method.
+Putting values in a tree can be accomplished with the `put()` method.
 
 ```cpp
 root.put("height", height);
@@ -164,7 +164,7 @@ As you can see, very boring.
 
 ### Add a list of objects
 
-No big deel here, although we now use `add_child()` to put our `animal` node at the root.
+No big deal here, although we now use `add_child()` to put our `animal` node at the root.
 
 ```cpp
 // Create a node
@@ -181,7 +181,7 @@ root.add_child("animals", animals_node);
 Now start the tricky tricks. If you want to add more than one time a node
 named `fish`, you can't call the `put()` method. The call `node.put("name", value)` will
 replace the existing node named `name`. But you can do it by manually pushing your nodes,
-as demonstrated bellow.
+as demonstrated below.
 
 ```cpp
  // Add two objects with the same name
@@ -195,7 +195,7 @@ as demonstrated bellow.
 
 ### Add a list of values
 
-If you remember, list are mades of nodes with empty name. Se we have to build node with empty names, and then use the `push_back()` once again to add all those unnamed childs.
+If you remember, lists are made of nodes with empty names. So we have to build nodes with empty names, and then use the `push_back()` once again to add all those unnamed children.
 
 ```cpp
 // Add a list
@@ -246,4 +246,4 @@ Some links related :
 - [The official documentation](http://www.boost.org/doc/libs/1_60_0/doc/html/property_tree/tutorial.html)
 - [A post on stack overflow](http://stackoverflow.com/questions/2114466/creating-json-arrays-in-boost-using-property-trees)
 
-__Rem__ : At the time of writing, the boost::property_tree library doesn't output typed value. But we can expect that it will be corrected soon.
+__Rem__ : At the time of writing, the boost::property_tree library doesn't output typed values. But we can expect that it will be corrected soon.
