@@ -105,11 +105,11 @@
       <div class="post">
   <h1 class="post-title">Arduino Uno with ArchLinux (3.8.4-1-ARCH)</h1>
   <span class="post-date">31 Mar 2013</span>
-  <p>I quickly explain how to make your arduino card works with your ArchLinux distrib by patching and installing the last version of rxtx.</p>
+  <p>I quickly explain how to make your arduino card work with your ArchLinux distrib by patching and installing the latest version of rxtx.</p>
 
 <h2 id="step-1--arduino-package">Step 1 : Arduino package</h2>
 
-<p>Install the aur arduino package using the well known and loved binnary : yaourt.</p>
+<p>Install the aur arduino package using the well known and loved binary: yaourt.</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yaourt <span class="nt">-S</span> arduino
 </code></pre></div></div>
@@ -156,11 +156,11 @@ unzip rxtx-2.2pre2.xip
 
 <h2 id="use-your-arduino">Use your arduino</h2>
 
-<p>You can now launch the arduino IDE (command arduino) and upload a test sketch (like blink). You can select your arduino uno wich will probably show as “ttyACM0” in the device list.</p>
+<p>You can now launch the arduino IDE (command arduino) and upload a test sketch (like blink). You can select your arduino uno which will probably show as “ttyACM0” in the device list.</p>
 
-<h2 id="some-informations">Some informations</h2>
+<h2 id="some-information">Some information</h2>
 
-<p>We disable the flag <code class="language-plaintext highlighter-rouge">--diseable-lockfile</code> so that errors messages diseapear speaking about the impossibility to write lock files. We also added the right .h file containing <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> to remove stupid compiling errors (the file in wich the macro is defined changed recently). To finish, we had to modify rxtx’s code (read the comments, they ask you to add missing devices) so that you can use ttyACMx. An other solution would be to add a symbolic link in /dev/ from a ttyUSBx to a ttyACMx.</p>
+<p>We disable the flag <code class="language-plaintext highlighter-rouge">--disable-lockfile</code> so that error messages disappear speaking about the impossibility to write lock files. We also added the right .h file containing <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> to remove stupid compiling errors (the file in which the macro is defined changed recently). To finish, we had to modify rxtx’s code (read the comments, they ask you to add missing devices) so that you can use ttyACMx. Another solution would be to add a symbolic link in /dev/ from a ttyUSBx to a ttyACMx.</p>
 
 <p>Anyway, if you can’t use your arduino, and you have an error of the style <code class="language-plaintext highlighter-rouge">processing.app.SerialNotFoundException: [..] « /dev/ttyACM0 » not found</code>, it’s probably that ttyACM is not in the list of rxtx’s devices.</p>
 

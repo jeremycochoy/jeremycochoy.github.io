@@ -105,8 +105,8 @@
       <div class="post">
   <h1 class="post-title">Tutoriel d'initiation à SEDNL</h1>
   <span class="post-date">25 Aug 2013</span>
-  <p>Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
-Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliseront
+  <p>Ce court tutoriel va vous apprendre à utiliser la bibliothèque réseau SedNL.
+Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliserons
 un client et serveur de chat, ainsi qu’une application de dessin collaborative.</p>
 
 <h2 id="installation-de-sednl">Installation de SedNL</h2>
@@ -152,7 +152,7 @@ linux ou <code class="language-plaintext highlighter-rouge">cmake-gui.exe</code>
 <p>Vous pouvez maintenant lancer la compilation avec <code class="language-plaintext highlighter-rouge">make</code> sous linux,
 et <code class="language-plaintext highlighter-rouge">mingw32-make</code> sous Windows avec mingw.</p>
 
-<p>Une fois la compilation terminé, vous obtenez une bibliothèque statique
+<p>Une fois la compilation terminée, vous obtenez une bibliothèque statique
 <code class="language-plaintext highlighter-rouge">sednl-1.0.a</code> et une dynamique <code class="language-plaintext highlighter-rouge">sednl-1.0.so</code>. (.lib et .dll sous windows).</p>
 
 <p>C’est terminé, nous allons pouvoir compiler notre premier programme.</p>
@@ -160,8 +160,8 @@ et <code class="language-plaintext highlighter-rouge">mingw32-make</code> sous W
 <h2 id="service-de-log-dextraits-de-code">Service de log d’extraits de code</h2>
 
 <p>Pour nos premiers pas avec cette bibliothèque, nous allons réaliser une
-application cliente capable d’envoyer un extrait de code lue depuis l’entrée
-standard vers un serveur qui loggera tout les extraits reçus, sur sa sortie
+application cliente capable d’envoyer un extrait de code lu depuis l’entrée
+standard vers un serveur qui loggera tous les extraits reçus, sur sa sortie
 standard.</p>
 
 <h3 id="le-client">Le client</h3>
@@ -217,7 +217,7 @@ standard, puis l’envoyer au serveur.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Si le fichier se nome « client.cpp », vous pouvez le compiler avec la ligne
+<p>Si le fichier se nomme « client.cpp », vous pouvez le compiler avec la ligne
 <code class="language-plaintext highlighter-rouge">clang++ -std=c++11 -I/usr/local/include/sednl-1.0/ -lsednl-1.0 -lpthread client.cpp</code>.</p>
 
 <p>La première fonction <code class="language-plaintext highlighter-rouge">get_input</code> lit l’entrée standard et stocke tout l’extrait de code dans une chaîne qu’elle renvoie.</p>
@@ -227,23 +227,23 @@ de l’extrait de code (<code class="language-plaintext highlighter-rouge">argv[
 
 <p>Enfin, c’est à la ligne 26 que commence vraiment notre programme.
 On commence par ouvrir une connexion vers <code class="language-plaintext highlighter-rouge">localhost</code>. C’est l’ordinateur
-qui exécute ce programme. On peux aussi indiquer « 127.0.0.1 ».
-Le port sur le quel on cherche à atteindre le serveur est le port « 4280 ».
-Un port n’a pas de réalitée matériel, c’est juste une façon de distinguer
-les différentes connexions ouverte vers un ordinateur.
+qui exécute ce programme. On peut aussi indiquer « 127.0.0.1 ».
+Le port sur lequel on cherche à atteindre le serveur est le port « 4280 ».
+Un port n’a pas de réalité matérielle, c’est juste une façon de distinguer
+les différentes connexions ouvertes vers un ordinateur.
 Le choix du numéro de port est arbitraire, même si l’on cherchera à
 éviter d’utiliser les plus communs (comme 80 pour http,
-20 et 21 pour ftp, etc.) ainsi que les valeurs inférieurs à 1024, car
-certains système requière des privilèges administrateur pour les utiliser.</p>
+20 et 21 pour ftp, etc.) ainsi que les valeurs inférieures à 1024, car
+certains systèmes requièrent des privilèges administrateur pour les utiliser.</p>
 
-<p>La ligne 35 fait deux choses. D’abord, <code class="language-plaintext highlighter-rouge">make_event</code> fabriquer un objet
+<p>La ligne 35 fait deux choses. D’abord, <code class="language-plaintext highlighter-rouge">make_event</code> fabrique un objet
 de type <code class="language-plaintext highlighter-rouge">Event</code> qui contient :</p>
 
 <p>1)  Le nom de l’évènement envoyé au serveur. Ici, <code class="language-plaintext highlighter-rouge">"log_that"</code>.
-2)  Le nom sous le quel l’extrait de code sera enregistré. Ici, <code class="language-plaintext highlighter-rouge">argv[1]</code>.
+2)  Le nom sous lequel l’extrait de code sera enregistré. Ici, <code class="language-plaintext highlighter-rouge">argv[1]</code>.
 3)  L’extrait de code à logger. Ici, <code class="language-plaintext highlighter-rouge">input</code>.</p>
 
-<p>Une fois l’évènement crée, il est envoyé avec par la fonction membre <code class="language-plaintext highlighter-rouge">send</code>.</p>
+<p>Une fois l’évènement créé, il est envoyé par la fonction membre <code class="language-plaintext highlighter-rouge">send</code>.</p>
 
 <p>Enfin, la connexion est fermée à la ligne 37.</p>
 
@@ -252,9 +252,9 @@ levée. Elle est alors attrapée à la ligne 39.</p>
 
 <h3 id="le-serveur">Le serveur</h3>
 
-<p>Le serveur n’est pas beaucoup plus compliqué. Il doit attendre de nouvelle
-connections, et écrire sur la sortie standard le texte reçu. Attention,
-il faudra bien penser à gérer le cas où deux clients envoie un message
+<p>Le serveur n’est pas beaucoup plus compliqué. Il doit attendre de nouvelles
+connexions, et écrire sur la sortie standard le texte reçu. Attention,
+il faudra bien penser à gérer le cas où deux clients envoient un message
 au même moment. Pour ça, on utilisera une mutex.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">

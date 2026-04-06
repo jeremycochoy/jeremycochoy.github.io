@@ -128,7 +128,7 @@ apprendre (moins d’un quart d’heure pour un développeur expérimenté).
 Elle convient parfaitement tant à des projets d’envergure moyenne que des
 projets de taille plus conséquente.</p>
 
-<p>Un court exemple d’utilisation du mécanisme d’évènement coté serveur :</p>
+<p>Un court exemple d’utilisation du mécanisme d’évènement côté serveur :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
@@ -164,12 +164,12 @@ vos callback pour les évènements provenant d’un même utilisateur
 ne peut être supposé. En contrepartie, vous pouvez contrôler quels
 threads vous allouez à quels évènements.</p>
 
-<p>SedNL fournis aussi des outils légers pour sérialiser et envoyer
+<p>SedNL fournit aussi des outils légers pour sérialiser et envoyer
 de façon fiable les instances de vos classes.</p>
 
 <p>Philosophie particulière de cette bibliothèque : la règle est que même
 dans des conditions difficiles (plus de mémoire disponible, limite de
-connections ouvertes, exceptions levées par vos callback, dysfonctionnement
+connexions ouvertes, exceptions levées par vos callback, dysfonctionnement
 du système dans la gestion des threads, …) la bibliothèque doit faire tout
 ce qui est possible pour conserver un comportement normal.
 Toutes les exceptions “std::bad_alloc” sont interceptées et traitées
@@ -184,9 +184,9 @@ C’est, selon moi, ce que l’on doit attendre de toute vraie bibliothèque ré
 pas la bibliothèque la plus adaptée à votre projet. Une lecture rapide de
 la documentation devrait vous permettre de savoir si SedNL est adapté à
 votre projet, ou si vous devez préférer une autre bibliothèque.
-Par exemple, SedNL n’est pas du tout adapter <a href="http://en.wikipedia.org/wiki/Remote_procedure_call">à de la RCP</a>.
+Par exemple, SedNL n’est pas du tout adapté <a href="http://en.wikipedia.org/wiki/Remote_procedure_call">à de la RCP</a>.
 Même si le mécanisme d’évènement est ce que vous recherchez,
-d’autres alternative C basé aussi sur un mécanisme d’évènement
+d’autres alternatives C basées aussi sur un mécanisme d’évènement
 comme libev / libevent offrent un contrôle plus fin,
 au coût d’une API plus complexe et moins intuitive.
 Gardez aussi à l’esprit que le design encouragé par SedNL devrait

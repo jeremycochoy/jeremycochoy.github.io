@@ -108,7 +108,7 @@
   <h2 id="error-handling">Error handling</h2>
 
 <p>This not so short post is dedicated to a subject that may interest many
-programers: error handling.</p>
+programmers: error handling.</p>
 
 <p>Error handling is the “dark side” of programming. It is both the heart of
 real world applications, and the dirty stuff you would like to avoid.</p>
@@ -119,8 +119,8 @@ real world applications, and the dirty stuff you would like to avoid.</p>
 
 <p>‘C-Style’ handling is the easiest way to do it, but it isn’t completely satisfying.</p>
 
-<p>C-Style error handling is basicaly “returning an error code when the application
-failed”. Here is short example.</p>
+<p>C-Style error handling is basically “returning an error code when the application
+failed”. Here is a short example.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">find_slash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
@@ -146,29 +146,29 @@ failed”. Here is short example.</p>
 
 <h3 id="whats-good-here">What’s good here?</h3>
 
-<p>You can (and actualy, in C style, you do), right after the call, directly handle
-the error by eventualy displaying a message and terminating the application,
+<p>You can (and actually, in C style, you do), right after the call, directly handle
+the error by eventually displaying a message and terminating the application,
 or just retrieving the last state, aborting the computation…</p>
 
-<p>When you wan’t to find where the error handling is made, you just have to look at
+<p>When you want to find where the error handling is made, you just have to look at
 the <strong>function call</strong>. It’s <strong>right</strong> after.</p>
 
 <h3 id="whats-bad-here">What’s bad here?</h3>
 
-<p>As some may have told you, it mix error handling with proper “execution flow”.
-When you read linearly the code as the code execute, you read sometime error
-handling, and some time program logic. That’s really bad, because you would like to
+<p>As some may have told you, it mixes error handling with proper “execution flow”.
+When you read linearly the code as the code executes, you read sometimes error
+handling, and sometimes program logic. That’s really bad, because you would like to
 read either “program logic” or “error handling”.</p>
 
 <p>Also notice that you are limited to an “error code”. If you want to provide
-more informations, you’ll have to create some functions (like errstr) and / or
-use global variables;</p>
+more information, you’ll have to create some functions (like errstr) and / or
+use global variables.</p>
 
 <h2 id="do-it-c-style-exceptions">Do it C++-style: exceptions</h2>
 
 <p>When C was “enhanced” to c++, a new way of handling errors was introduced. It
 was “exceptions”. Exceptions are a way of breaking the normal flow of your code
-by “throwing” an error that will be “catched” somewhere else. Again, a short example.</p>
+by “throwing” an error that will be “caught” somewhere else. Again, a short example.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">find_slash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
@@ -199,41 +199,41 @@ by “throwing” an error that will be “catched” somewhere else. Again, a s
 <h3 id="whats-good-here-1">What’s good here?</h3>
 
 <p>Program logic and error handling are separated. On one side you can see how the function
-whork and when it fail, on the other part you can see what it does if it failed.
-It’s pretty, simplify reading of both error handling and program logic.</p>
+works and when it fails, on the other part you can see what it does if it failed.
+It’s pretty, simplifies reading of both error handling and program logic.</p>
 
 <p>The second point is that now you can give as many information as you like, since
 you can put what you want in your MyException object.</p>
 
 <h2 id="whats-bad-here-1">What’s bad here?</h2>
 
-<p>Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interesting it. Also, you need some
-error codes inside, to know exactly what hapenned, retrieve an error message, etc.
+<p>Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interested in. Also, you need some
+error codes inside, to know exactly what happened, retrieve an error message, etc.
 Writing exceptions class <strong>is</strong> verbose, it’s the cost of the flexibility given by the
-ability to handle more informations embeded as an error.</p>
+ability to handle more information embedded as an error.</p>
 
 <p>The way encouraged by this philosophy is to postpone error handling as late as possible,
-so that users can have the highest flexibility to handle errors. Thats theoricaly a good
+so that users can have the highest flexibility to handle errors. That’s theoretically a good
 thing, but…</p>
 
-<p>In big applications, you <strong>can’t</strong> find esily where the error is handled. When you wan’t
+<p>In big applications, you <strong>can’t</strong> find easily where the error is handled. When you want
 to know what would be the path of an error, you have to jump across files, functions,
 and it’s really hard to find, if you introduce a new exception deep in the “call ~graph~ tree” (I mean the graph you would have if you draw each function call) then you have to
 figure out where it should be handled, if it is already handled, in which places. It’s
-really hard when the application is big, old, not really well writen everywhere. Actualy
+really hard when the application is big, old, not really well written everywhere. Actually
 it’s the case of most of the commercial projects. And that is that.</p>
 
-<p>That’s what make me state “Exceptions are dangerous”. Of course, they provide a pretty
-well to handle error… but only when you are working on small project, where the
+<p>That’s what makes me state “Exceptions are dangerous”. Of course, they provide a pretty
+good way to handle errors… but only when you are working on small project, where the
 “call graph” is simple and easy to get in the mind.</p>
 
 <h2 id="the-error-box-pattern">The error box pattern</h2>
 
-<p>I call it a pattern, so that people don’t be afraid. At the end, I’ll call it with it’s
+<p>I call it a pattern, so that people don’t get afraid. At the end, I’ll call it with its
 right name, so please, be patient.</p>
 
 <p>The main idea is creating a box that can contain either an error message or a value. We
-will limit ourself to a string, and nothing more, because it’s actualy not so easy to
+will limit ourselves to a string, and nothing more, because it’s actually not so easy to
 implement. We will try to keep the syntax readable, understandable, for use cases.
 We won’t handle correctly copy constructor, more than one parameter functions,
 and rvalues. We will keep it as simple as possible.</p>
@@ -283,8 +283,8 @@ To see that, you have to look at more than one function call.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Ok, so what happened ? Bind is a member function that takes your function, and tries
-to apply it. If there is a value in the “error box”, then it aplies to function, and then
+<p>Ok, so what happened? Bind is a member function that takes your function, and tries
+to apply it. If there is a value in the “error box”, then it applies the function, and then
 returns an error box (the compiler won’t let you give a function that doesn’t return
 an error box).</p>
 
@@ -295,20 +295,20 @@ functions of type <code class="language-plaintext highlighter-rouge">E&lt;someth
 <h3 id="whats-good-here-2">What’s good here?</h3>
 
 <p>Once again, program logic (the chain) and error handling (the if) are separated. Like
-with exception, we have the ability to read the chain and don’t think about where
-the execution is interrupted. Actualy, the chain <strong>may</strong> be interrupted at <strong>any</strong> step.
+with exceptions, we have the ability to read the chain and don’t think about where
+the execution is interrupted. Actually, the chain <strong>may</strong> be interrupted at <strong>any</strong> step.
 But we can think as if no error is happening and check quickly if our logic is right.</p>
 
 <p>Of course, typing will prevent you from binding format after a display, so we
 don’t lose any typing capabilities.</p>
 
 <p>Notice that we aren’t calling any of those function in any other. We are “composing”
-them at the end. That is the key to make it works. You should, write small modular
+them at the end. That is the key to make it work. You should write small modular
 functions (hey, look at that: you <strong>should</strong> write generic code so that it can work)
-that accept a value, then compute an other “new” value, or fail. And at each
+that accept a value, then compute another “new” value, or fail. And at each
 step, you don’t have to think about where an exception may interrupt your control
-flow and take care of maintain you stuff in a valid state (exception safety is basically
-beeing always looking at each call you do, and figure out if the function can interrupt
+flow and take care of maintaining your stuff in a valid state (exception safety is basically
+being always looking at each call you do, and figuring out if the function can interrupt
 your flow and what will happen if it does). For this point, it’s “safer”.</p>
 
 <p>As with exceptions, we can have “as many information as you like”, although in this
@@ -326,18 +326,18 @@ Big projects are more “linear” and easy to read.</p>
 <p>First, it’s new. It’s not integrated to C++, it’s not the standard way, and with the
 stl you’ll still have to use exceptions.</p>
 
-<p>It’s still a bit too much verbose for my taste. The need to write explicitely the type in
+<p>It’s still a bit too verbose for my taste. The need to write explicitly the type in
 <code class="language-plaintext highlighter-rouge">fail&lt;int&gt;("...")</code> is bad. If you had a polymorphic error type, then it’s worst because
 you’ll have to write <code class="language-plaintext highlighter-rouge">fail&lt;return_type, error_type&gt;("...")</code>.</p>
 
-<p>It do not provide an easy way to call a function that need more than one argument.
+<p>It does not provide an easy way to call a function that needs more than one argument.
 In some other languages, you have “applicative” types and currification that solve it
 nicely, but that’s far from what you may expect from c++. I’m more likely to think that
 a <code class="language-plaintext highlighter-rouge">bind2(E&lt;a&gt;, E&lt;b&gt;, f)</code> and <code class="language-plaintext highlighter-rouge">bind3(E&lt;a&gt;, E&lt;b&gt;, E&lt;c&gt;, f)</code> function could be used.
 Variadic templates may help.</p>
 
 <p>To get the value “out of the box”, we have to check if the box is really a value,
-and then call a “to_value” method. And we have no means from doing it without
+and then call a “to_value” method. And we have no way of doing it without
 checking. What we would like to have is “deconstruction” of objects, but this doesn’t
 exist in c++, and it’s not the kind of things you just have to say “hey, let’s
 add it to the next standard”.</p>
@@ -357,7 +357,7 @@ so if you are curious you can have a look at my <a href="/haskell-pure-1/">frenc
 point of view.</p>
 
 <p>Let’s start by implementing the E class you saw above. I’m relying on C++11 <code class="language-plaintext highlighter-rouge">decltype</code>
-and <code class="language-plaintext highlighter-rouge">auto -&gt; decltype</code> wich allow figuring out the type of things from expressions. It’s
+and <code class="language-plaintext highlighter-rouge">auto -&gt; decltype</code> which allow figuring out the type of things from expressions. It’s
 really useful.</p>
 
 <p>The bind function is a bit strange, but it does what I stated previously.</p>
@@ -543,7 +543,7 @@ value is now an "empty box".</void></p>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Oh, we don’t spoke about <code class="language-plaintext highlighter-rouge">ret</code> and <code class="language-plaintext highlighter-rouge">fail</code>. Actually, they are just wraper around
+<p>Oh, we didn’t speak about <code class="language-plaintext highlighter-rouge">ret</code> and <code class="language-plaintext highlighter-rouge">fail</code>. Actually, they are just wrappers around
 the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <code class="language-plaintext highlighter-rouge">xxx::ret</code> functions.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
@@ -565,7 +565,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>There, we are, you can compile and play with the example above.</p>
+<p>There we are, you can compile and play with the example above.</p>
 
 <p>If you want more stuff to play with, I also have this “more realistic” example:</p>
 
@@ -590,8 +590,8 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 <span class="c1">//Parse a +- formated string.</span>
 <span class="c1">//If a letter is prefixed by +, then the function toupper is applied.</span>
 <span class="c1">//''                                              tolower is applied.</span>
-<span class="c1">//Non alphabetical (+ and - excepted) aren't alowed.</span>
-<span class="c1">//Words are cut on each space ' '. Other blank characters aren't alowed.</span>
+<span class="c1">//Non alphabetical (+ and - excepted) aren't allowed.</span>
+<span class="c1">//Words are cut on each space ' '. Other blank characters aren't allowed.</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">vs</span><span class="o">&gt;</span> <span class="n">parse</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -640,7 +640,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
     <span class="k">return</span> <span class="nf">ret</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="c1">//Take the first word and append it to the begining of all other words.</span>
+<span class="c1">//Take the first word and append it to the beginning of all other words.</span>
 <span class="c1">//Vec should contain at least one element.</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">vs</span><span class="o">&gt;</span> <span class="n">prefixy</span><span class="p">(</span><span class="n">vs</span> <span class="n">vec</span><span class="p">)</span>
 <span class="p">{</span>

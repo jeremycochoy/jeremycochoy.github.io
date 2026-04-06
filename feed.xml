@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-06T00:09:27+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+02:00</published><updated>2019-05-24T00:00:00+02:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
-edit a collection of tracks, while editing only one track at a time.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-06T19:57:56+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+02:00</published><updated>2019-05-24T00:00:00+02:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
+edits a collection of tracks, while editing only one track at a time.
 After a little thought, the best representation of this “focus” in the data
 model was obviously a zipper.
 Since this is not a common pattern, I thought it would be a wonderful example
@@ -8,10 +8,10 @@ of how such a simple pattern can encode the intention into the data structure.</
 <h2 id="abstract-idea">Abstract idea</h2>
 <p>The Zipper is a well known pattern in Haskell,
 and although this language is rarely used in production,
-some of its usage translate very well to other languages.
+some of its usages translate very well to other languages.
 The List Zipper is basically a list where the element we are focusing at
 was taken out.
-It allow shifting the attention to the previous or next element,
+It allows shifting the attention to the previous or next element,
 and obviously to retrieve the whole list if required.</p>
 
 <h2 id="usage">Usage</h2>
@@ -31,7 +31,7 @@ Here is a short usage:</p>
 </code></pre></div></div>
 
 <h2 id="implementation">Implementation</h2>
-<p>Let’s start by the data itself.
+<p>Let’s start with the data itself.
 We need to store the element of the list we are looking at (the cursor).
 Since we are focusing on an element of the list,
 we also need to remember what was before this element, and what comes next.</p>
@@ -47,11 +47,11 @@ we also need to remember what was before this element, and what comes next.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Now that we have the informations,
+<p>Now that we have the information,
 we need a way to convert from a list to a ListZipper,
 and from a ListZipper to a list.
 We add an initializer with as a default an empty list,
-and a function that glue together the beginning of the list, the cursor,
+and a function that glues together the beginning of the list, the cursor,
 and the remaining part of the list.</p>
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">list</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
@@ -69,13 +69,13 @@ and the remaining part of the list.</p>
   <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Notice how we handle the case where the curser is pointing to nothing.
-(A case which could occurs from an empty list / empty zipper.)</p>
+<p>Notice how we handle the case where the cursor is pointing to nothing.
+(A case which could occur from an empty list / empty zipper.)</p>
 
 <p>Our zipper can store the information,
 but is always pointing to the first element of the list.
 This is pretty boring and not really useful.
-We introduce two functions that allow to move on the right or the left of
+We introduce two functions that allow moving to the right or the left of
 our band.</p>
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// Select the left element if available</span>
@@ -95,7 +95,7 @@ our band.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>I personally choose to add guards for my particular usage,
+<p>I personally chose to add guards for my particular usage,
 because I always want to be pointing to a music track if my song is not empty.
 But you could safely remove them.
 In this setting you’d know you are on the bounds simply by checking if the
@@ -103,7 +103,7 @@ cursor is pointing to nothing.</p>
 
 <p>One crucial step remaining to make this Zipper fully usable is a way to insert
 and remove elements at the current location.
-I choose to always insert on the right of the element pointed.
+I chose to always insert on the right of the element pointed.
 Symmetrically, when I remove the pointed element,
 I automatically look to the left.</p>
 
@@ -127,7 +127,7 @@ I automatically look to the left.</p>
 </code></pre></div></div>
 
 <p>Notice that in the case you removed the guard in the left/right functions,
-you can also simplify remove by only poping the value from <code class="language-plaintext highlighter-rouge">leftList</code>.</p>
+you can also simplify remove by only popping the value from <code class="language-plaintext highlighter-rouge">leftList</code>.</p>
 
 <p>Now you have a simple but powerful zipper in your hands.
 For more fanciness, one could also enjoy the natural functoriality of the list
@@ -144,7 +144,7 @@ zipper to add the <code class="language-plaintext highlighter-rouge">map</code> 
 </code></pre></div></div>
 
 <p>I hope you liked this little taste of functional programming. 😉</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="swift" /><category term="ios" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[A simple and elegant implementation of the list zipper data structure.]]></summary></entry><entry xml:lang="en"><title type="html">What is wrong with the object paradigm ?</title><link href="/what-is-wrong-with-the-object-paradigm/" rel="alternate" type="text/html" title="What is wrong with the object paradigm ?" /><published>2017-02-17T00:00:00+01:00</published><updated>2017-02-17T00:00:00+01:00</updated><id>/what-is-wrong-with-the-object-paradigm</id><content type="html" xml:base="/what-is-wrong-with-the-object-paradigm/"><![CDATA[<p>Disclaimer: Aside from the catchy title,
-the main point of this article is to asks questions about the weakness of OOP
+the main point of this article is to ask questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.</p>
 
 <blockquote>
@@ -154,19 +154,19 @@ and how some languages provided some element of improvement, by taking a slightl
 <p>If you are curious about programming languages and diverse paradigms,
 you probably heard or read this sentence more than once.
 Through those lines,
-I’ll try to draw a picture of the main reason that can lead peoples to this conclusion.
-What are the good side and wrong side of OOP,
+I’ll try to draw a picture of the main reason that can lead people to this conclusion.
+What are the good sides and wrong sides of OOP,
 and how we can improve this paradigm by tuning it a little bit.
-This nice “tunning” is actually already part of some languages,
+This nice “tuning” is actually already part of some languages,
 and I’ll refer to it as the ‘category paradigm’.</p>
 
-<h2 id="where-does-the-object-paradigm-comes-from">Where does the object paradigm comes from?</h2>
+<h2 id="where-does-the-object-paradigm-come-from">Where does the object paradigm come from?</h2>
 
 <p>First, let’s recall how, historically, we came to the object paradigm.
 We are in the late 70s.
 The C language is now famous as it completely changed the way to write code
-compared to assembly, is human readable and have a monstrous expressivity
-in only few language words and
+compared to assembly, is human readable and has a monstrous expressivity
+in only a few language words and
 the procedural paradigm<sup id="fnref:procedural-paradigm"><a href="#fn:procedural-paradigm" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> (the one you use while writing C)
 is well understood.
 But, as applications grow and get an increasing size,
@@ -176,8 +176,8 @@ the code’s complexity is growing exponentially, and code gets harder and harde
 The object paradigm was developed, expecting to solve the complexity curse.
 Here came OBJC and C++, both in 1983.</p>
 
-<p>Sadly, we know today that OOP wasn’t the Holly Graal.
-But what did made peoples believe that it would be, and why is OOP still used today?</p>
+<p>Sadly, we know today that OOP wasn’t the Holy Grail.
+But what did make people believe that it would be, and why is OOP still used today?</p>
 
 <h2 id="the-hopes-of-oop">The hopes of OOP</h2>
 
@@ -185,23 +185,23 @@ But what did made peoples believe that it would be, and why is OOP still used to
 that describe some complex structure (for example, linked lists in C are built of chained cells,
 each cell composed of a value and a link to the next cell)
 and functions operating on this type (using the same example,
-function for initialising empty list, destroying list,
-inserting into this list and removing value from it, etc.).
+functions for initialising an empty list, destroying a list,
+inserting into this list and removing values from it, etc.).
 Once you have spotted this coding pattern, it sounds reasonable to formalise it so that
 you don’t always have to rewrite it by hand, each time.
-Indeed, this is the best way to involve : spot a pattern that people do mechanically,
-and automatise it.
+Indeed, this is the best way to evolve: spot a pattern that people do mechanically,
+and automate it.
 It worked in the automobile industry,
 and it also did for computer development.
-Automatization, from shell script… to new programming languages.</p>
+Automation, from shell scripts… to new programming languages.</p>
 
 <h2 id="genesis-of-oop">Genesis of OOP</h2>
 
-<p>This was the genese of the object paradigm.
-We call a such data type an object, add an
+<p>This was the genesis of the object paradigm.
+We call such a data type an object, add an
 initialisation procedure always called at initialisation,
-and an other one always called when the resource become unreachable.
-Namely, OOP’s constructor and destructors.
+and another one always called when the resource becomes unreachable.
+Namely, OOP’s constructors and destructors.
 Because we always have lots of methods related to this object that
 always need as argument this object,
 we add them to the type definition and call them methods.</p>
@@ -276,17 +276,17 @@ we add them to the type definition and call them methods.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>This example is quite simple, and show how object paradigm is applied
+<p>This example is quite simple, and shows how object paradigm is applied
 both in C and C++ languages.
 The second language is a lot more error-proof thanks to
 the support of the paradigm <em>in</em> the language.</p>
 
-<p>Now you might interupt me and argue ‘object paradim isn’t just about methods glued to a type’.
+<p>Now you might interrupt me and argue ‘object paradigm isn’t just about methods glued to a type’.
 And you would be right.
-I swept under the rug <em>inheritence</em>.
-This feature actually comes from spotting another codding patter C developers were also
+I swept under the rug <em>inheritance</em>.
+This feature actually comes from spotting another coding pattern C developers were also
 doing quite frequently.
-You reproduce the inheritence by agregating types, and using pointer arithmetic,
+You reproduce the inheritance by aggregating types, and using pointer arithmetic,
 as shown below.</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">A</span> <span class="p">{</span>
@@ -339,43 +339,43 @@ as shown below.</p>
 
 <p>Introducing this feature in the language ensure automatic conversion from B* to A* with
 the right pointer arithmetic.
-It remove the risk of often hard to spot bugs.
-Inheriting doesn’t apply only to type, it apply to methods.
-You can call methods working with a type A on instance of type B.
+It removes the risk of often hard to spot bugs.
+Inheriting doesn’t apply only to types, it applies to methods.
+You can call methods working with a type A on instances of type B.
 This is the key reason of this pointer conversion.</p>
 
-<p>The languages C++ and Java alow something even stronguer than reusing methode
-for subtypes in inheritence hierarchy.
+<p>The languages C++ and Java allow something even stronger than reusing methods
+for subtypes in inheritance hierarchy.
 Through abstract methods, or Java’s interface,
 you can force the existence of methods on a given type.
 Such that the behavior can be different with different types,
-but the interface to work on them remind the same.
+but the interface to work on them remains the same.
 Allowing huge code factorisation and genericity of algorithms.</p>
 
 <h2 id="so-why-is-oop-wrong">So why is OOP wrong?</h2>
 
 <p>Before saying anything,
-I want to show you how does object looks like in different mainstream languages.</p>
+I want to show you how objects look like in different mainstream languages.</p>
 
 <p><img src="data/object-languages.png" alt="Object Languages" /></p>
 
 <p>Of course, you can make schemes similar to java in C++ ;
-interface are obtained through abstract class.
+interfaces are obtained through abstract classes.
 It’s just that the language doesn’t prevent you from gluing too many things together
 (but that’s actually part of the C++ philosophy : allow doing
-as much thing as you can imagine, but you have to make carefully your design decisions).</p>
+as many things as you can imagine, but you have to make carefully your design decisions).</p>
 
 <p>Looking at the scheme, we see that always, in both languages,
 type definition and method definitions are glued together.
 You <strong>can not</strong> define a type and later,
 in a completely independent way, implement methods for this type.
 Actually, if C++ and Java are the only object languages you have heard about,
-my last sentence might sounds really strange for you (even maybe sounds like nonsense).
-But notice that in D, you <strong>can</strong> implement something rely similar to methods in a
+my last sentence might sound really strange to you (and maybe even sound like nonsense).
+But notice that in D, you <strong>can</strong> implement something really similar to methods in a
 complementary independent way of type definition.
 Why would you do that? Let me give you a tasty example.</p>
 
-<p>A guy (let call him A) make a colorful library describing tasty chocolate biscuits.
+<p>A guy (let’s call him A) makes a colorful library describing tasty chocolate biscuits.
 Here is a little bit of his library.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Biscuit -&gt; Cookie -&gt; FullChocolateCookie
@@ -383,17 +383,17 @@ Here is a little bit of his library.</p>
         -&gt; Oreo
 </code></pre></div></div>
 
-<p>He think a lot about cooking such wonderful wonders, an implement many sophisticated methods.</p>
+<p>He thinks a lot about cooking such wonderful wonders, and implements many sophisticated methods.</p>
 
 <p>Now another guy (named B) just discovered the best way to eat biscuits,
 so that you can really enjoy all the taste and perfume they carry.
 Not only for chocolate biscuits, but for any biscuit in the world.
-He implements many new biscuit, and their <em>eat</em> method.
+He implements many new biscuits, and their <em>eat</em> method.
 But in those languages, his only way to add an <em>eat</em> method to A’s cookies is to either:</p>
 
 <ul>
-  <li>Re-implement all the biscuit A did in his library, or modify A’s library to add his eat method,</li>
-  <li>Encapsulate the A library in some container, like a ‘biscuit metal box’, which is definitively not as easy to eat (especially because metal tends to be harder your teeth).</li>
+  <li>Re-implement all the biscuits A did in his library, or modify A’s library to add his eat method,</li>
+  <li>Encapsulate the A library in some container, like a ‘biscuit metal box’, which is definitely not as easy to eat (especially because metal tends to be harder than your teeth).</li>
 </ul>
 
 <p>If you develop library and re-use existing libraries,
@@ -402,7 +402,7 @@ that’s a problem you probably already encountered many times.</p>
 <p>This is because there is actually no good reason to enforce (Java style)
 interface implementation where type definition occurs.
 This is the first big issue coming from the way object model
-is implemented <strong>and</strong> conceived in developer’s mind.</p>
+is implemented <strong>and</strong> conceived in developers’ minds.</p>
 
 <p>The second big issue, related to the way OOP is done today,
 is the huge verbosity and boilerplate code introduced by encapsulation.
@@ -426,10 +426,10 @@ I really like the following example from LLVM’s documentation:</p>
 Have a look at LLVM’s example for heavily verbose C++ code
 (that is actually good C++ practice…).
 Each variable’s name is written three times.
-I would say that this code is three times longer that it should be
-(I mean, if we was living in a perfect world).
+I would say that this code is three times longer than it should be
+(I mean, if we were living in a perfect world).
 But there isn’t a better way to do it, conforming to usual understanding of OOP.
-If so, LLVM’s developer would have found it and spreed the word.</p>
+If so, LLVM’s developer would have found it and spread the word.</p>
 
 <h2 id="the-categoric-paradigm">The categoric paradigm</h2>
 
@@ -444,12 +444,12 @@ A typeclass (it’s a mathematical class) definition is similar to a java interf
 Types that become instances of this typeclass should implement its methods, but
 the main difference is that the belonging of a type T to a given typeclass C can be
 stated independently of the typeclass definition and of the type definition.
-In rust, typeclass are named trait.
-Types are types (as they are in C) and the link between them, the instanciation of
-the trait of a type can be done independently of the definition of the trait and of
+In rust, typeclasses are named traits.
+Types are types (as they are in C) and the link between them, the instantiation of
+the trait for a type can be done independently of the definition of the trait and of
 the definition of the type.</p>
 
-<p>Here is bellow a short example from rust’s documentation<sup id="fnref:trait"><a href="#fn:trait" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>:</p>
+<p>Here is below a short example from rust’s documentation<sup id="fnref:trait"><a href="#fn:trait" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// # A Sheep object:</span>
 
@@ -514,28 +514,28 @@ the definition of the type.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>See how this three things can be done independently.</p>
+<p>See how these three things can be done independently.</p>
 
-<p>Similar things can be archived in haskell,
-though constructor and destructor doesn’t exist.
-But Haskell’s variable are by default immutable,
+<p>Similar things can be achieved in Haskell,
+though constructors and destructors don’t exist.
+But Haskell’s variables are by default immutable,
 and the language is full of laziness.
-In a such context, looking for a constructor or a destructor doesn’t make sens.
+In such a context, looking for a constructor or a destructor doesn’t make sense.
 But for the curious, what is done in rust for methods can be done in the
 same way in Haskell.</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>Though this article have a really catchy title,
+<p>Though this article has a really catchy title,
 the main point is to show you another perspective for the concept of object
 that is quite different from the one OOP’s developer are used to.
 The first goal is to show the weakness of the object paradigm,
-and the second is to demonstrate how some of them can be strengthen
-from a small switch in the viewpoint, using emerging languages for examples.
-The view point demonstrated here is more known in the functional programming land
-(although not all functional programming languages offers such features).
-The Mozilla fondation made a wonderful work by creating rust, a language that provide
-both the functional and procedural paradigms, and also allow taking the
+and the second is to demonstrate how some of them can be strengthened
+from a small switch in the viewpoint, using emerging languages for example.
+The viewpoint demonstrated here is more known in the functional programming land
+(although not all functional programming languages offer such features).
+The Mozilla Foundation did wonderful work by creating Rust, a language that provides
+both the functional and procedural paradigms, and also allows taking the
 object approach in cases where it fits better than the two previous paradigms.
 I hope that it made you question yourself on the object oriented paradigm and
 developed your curiosity for other languages.
@@ -549,24 +549,24 @@ just because your favorite language doesn’t provide such features :)</p>
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:wrong">
-      <p>Things aren’t black and white. The object paradigm is definitively well suited
+      <p>Things aren’t black and white. The object paradigm is definitely well suited
 for many tasks like modeling GUI. <a href="#fnref:wrong" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:procedural-paradigm">
       <p>Procedural paradigm means essentially
-that the language provide functions with side effects, and code is written linearly.
-You can see it like an enhencement of languages that only provide goto and jumps. <a href="#fnref:procedural-paradigm" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+that the language provides functions with side effects, and code is written linearly.
+You can see it like an enhancement of languages that only provide goto and jumps. <a href="#fnref:procedural-paradigm" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:effective-cpp">
       <p>This is a really good book on good programming advices
-for C++ developer. Despite the critic made in this article, it’s definitively
+for C++ developer. Despite the criticism made in this article, it’s definitely
 a book full of good practices. <a href="#fnref:effective-cpp" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:trait">
       <p>See <a href="http://rustbyexample.com/trait.html">rust traits</a> <a href="#fnref:trait" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name>Jérémy Cochoy</name></author><category term="think" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A reflexion on error handling and application modeling through various variations of data modeling. We look at old C fashion, object languages, and more functional approaches.]]></summary></entry><entry xml:lang="en"><title type="html">How to use boost::property_tree to load and write JSON</title><link href="/boost-property-tree/" rel="alternate" type="text/html" title="How to use boost::property_tree to load and write JSON" /><published>2015-12-21T00:00:00+01:00</published><updated>2015-12-21T00:00:00+01:00</updated><id>/boost-property-tree</id><content type="html" xml:base="/boost-property-tree/"><![CDATA[<p><strong>Property Tree</strong> is a sublibrary of boost that allow you handling <em>tree of property</em>. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.</p>
+</div>]]></content><author><name>Jérémy Cochoy</name></author><category term="think" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A reflection on error handling and application modeling through various variations of data modeling. We look at old C fashion, object languages, and more functional approaches.]]></summary></entry><entry xml:lang="en"><title type="html">How to use boost::property_tree to load and write JSON</title><link href="/boost-property-tree/" rel="alternate" type="text/html" title="How to use boost::property_tree to load and write JSON" /><published>2015-12-21T00:00:00+01:00</published><updated>2015-12-21T00:00:00+01:00</updated><id>/boost-property-tree</id><content type="html" xml:base="/boost-property-tree/"><![CDATA[<p><strong>Property Tree</strong> is a sublibrary of boost that allows you to handle <em>trees of properties</em>. It can be used to represent XML, JSON, INI files, file paths, etc. In our case, we will be interested in loading and writing JSON, to provide an interface with other applications.</p>
 
 <p>Our example case will be the following json file :</p>
 
@@ -611,13 +611,13 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 <span class="n">pt</span><span class="o">::</span><span class="n">read_json</span><span class="p">(</span><span class="s">"filename.json"</span><span class="p">,</span> <span class="n">root</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Now, we have a populated property tree thatis waiting from us to look at him. Notice that you can also read from a stream, for example <code class="language-plaintext highlighter-rouge">pt::read_json(std::cin, root)</code>{.cpp} is also allowed.</p>
+<p>Now, we have a populated property tree that is waiting for us to look at it. Notice that you can also read from a stream, for example <code class="language-plaintext highlighter-rouge">pt::read_json(std::cin, root)</code>{.cpp} is also allowed.</p>
 
-<p>If your json file is illformed, you will be granted by a <code class="language-plaintext highlighter-rouge">pt::json_parser::json_parser_error</code>.</p>
+<p>If your json file is ill-formed, you will be greeted by a <code class="language-plaintext highlighter-rouge">pt::json_parser::json_parser_error</code>.</p>
 
 <h3 id="loading-some-values">Loading some values</h3>
 
-<p>We can access a value from the root by giving it’s path to the <code class="language-plaintext highlighter-rouge">get</code> method.</p>
+<p>We can access a value from the root by giving its path to the <code class="language-plaintext highlighter-rouge">get</code> method.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read values</span>
 <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
@@ -625,15 +625,15 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>If the field your are looking to doesn’t exists, the <code class="language-plaintext highlighter-rouge">get()</code> method will throw a <code class="language-plaintext highlighter-rouge">pt::ptree_bad_path</code> exception, so that you can recorver from incomplete json files. Notice you can set a default value as second argument, or use <code class="language-plaintext highlighter-rouge">get_optional&lt;T&gt;()</code> wich return a <code class="language-plaintext highlighter-rouge">boost::optional&lt;T&gt;</code>.</p>
+<p>If the field you are looking for doesn’t exist, the <code class="language-plaintext highlighter-rouge">get()</code> method will throw a <code class="language-plaintext highlighter-rouge">pt::ptree_bad_path</code> exception, so that you can recover from incomplete json files. Notice you can set a default value as second argument, or use <code class="language-plaintext highlighter-rouge">get_optional&lt;T&gt;()</code> which returns a <code class="language-plaintext highlighter-rouge">boost::optional&lt;T&gt;</code>.</p>
 
-<p>Notice the getter doesn’t care about the type of the input in the json file, but only rely on the ability to convert the string to the type you are asking.</p>
+<p>Notice the getter doesn’t care about the type of the input in the json file, but only relies on the ability to convert the string to the type you are asking for.</p>
 
 <h3 id="browsing-lists">Browsing lists</h3>
 
 <p>So now, we would like to read a list of objects (in our cases, a list of animals).</p>
 
-<p>We can handle it with a simple for loop, using an iterator. In <strong>c++11</strong>, it become :</p>
+<p>We can handle it with a simple for loop, using an iterator. In <strong>c++11</strong>, it becomes :</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A vector to allow storing our animals</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">animals</span><span class="p">;</span>
@@ -651,9 +651,9 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Since <code class="language-plaintext highlighter-rouge">animal.second</code> is a <code class="language-plaintext highlighter-rouge">ptree</code>, we can also call call <code class="language-plaintext highlighter-rouge">get()</code> or <code class="language-plaintext highlighter-rouge">get_child()</code> in the case our node wasn’t just a string.</p>
+<p>Since <code class="language-plaintext highlighter-rouge">animal.second</code> is a <code class="language-plaintext highlighter-rouge">ptree</code>, we can also call <code class="language-plaintext highlighter-rouge">get()</code> or <code class="language-plaintext highlighter-rouge">get_child()</code> in the case our node wasn’t just a string.</p>
 
-<p>A bit more complexe example is given by a list of values. Each element of the list is actualy a <code class="language-plaintext highlighter-rouge">std::pair("", value)</code> (where value is a <code class="language-plaintext highlighter-rouge">ptree</code>). It doesnt means that reading it is harder.</p>
+<p>A bit more complex example is given by a list of values. Each element of the list is actually a <code class="language-plaintext highlighter-rouge">std::pair("", value)</code> (where value is a <code class="language-plaintext highlighter-rouge">ptree</code>). It doesn’t mean that reading it is harder.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">fruits</span><span class="p">;</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">pt</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span> <span class="o">&amp;</span><span class="n">fruit</span> <span class="o">:</span> <span class="n">root</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">))</span>
@@ -664,11 +664,11 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 
 </code></pre></div></div>
 
-<p>In the case the values arent string, we can just call <code class="language-plaintext highlighter-rouge">fruit.second.get_value&lt;T&gt;()</code> in place of <code class="language-plaintext highlighter-rouge">fruit.second.data()</code>.</p>
+<p>In the case the values aren’t strings, we can just call <code class="language-plaintext highlighter-rouge">fruit.second.get_value&lt;T&gt;()</code> in place of <code class="language-plaintext highlighter-rouge">fruit.second.data()</code>.</p>
 
 <h3 id="deeper--matrices">Deeper : matrices</h3>
 
-<p>There is nothing now to enable reading of matrices, but it’s a good way to check that you anderstood the reading of list. But enought talking, let’s have a look at the code.</p>
+<p>There is nothing new to enable reading of matrices, but it’s a good way to check that you understood the reading of lists. But enough talking, let’s have a look at the code.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">];</span>
 <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -688,7 +688,7 @@ a book full of good practices. <a href="#fnref:effective-cpp" class="reversefoo
 
 <h2 id="writing-json">Writing JSON</h2>
 
-<p>Let’s say that now, we wan’t to produce this tree from our application’s data. To do that, all we have to do is build a <code class="language-plaintext highlighter-rouge">ptree</code> containing our data.</p>
+<p>Let’s say that now, we want to produce this tree from our application’s data. To do that, all we have to do is build a <code class="language-plaintext highlighter-rouge">ptree</code> containing our data.</p>
 
 <p>We start with an empty tree :</p>
 <pre><code class="language-{.cpp}">pt::ptree root;
@@ -701,7 +701,7 @@ pt::write_json(std::cout, root);
 
 <h3 id="add-values">Add values</h3>
 
-<p>Puting values in a tree can be acomplished with the <code class="language-plaintext highlighter-rouge">put()</code> method.</p>
+<p>Putting values in a tree can be accomplished with the <code class="language-plaintext highlighter-rouge">put()</code> method.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
 <span class="n">root</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">"some.complex.path"</span><span class="p">,</span> <span class="s">"bonjour"</span><span class="p">);</span>
@@ -711,7 +711,7 @@ pt::write_json(std::cout, root);
 
 <h3 id="add-a-list-of-objects">Add a list of objects</h3>
 
-<p>No big deel here, although we now use <code class="language-plaintext highlighter-rouge">add_child()</code> to put our <code class="language-plaintext highlighter-rouge">animal</code> node at the root.</p>
+<p>No big deal here, although we now use <code class="language-plaintext highlighter-rouge">add_child()</code> to put our <code class="language-plaintext highlighter-rouge">animal</code> node at the root.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a node</span>
 <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">animals_node</span><span class="p">;</span>
@@ -727,7 +727,7 @@ pt::write_json(std::cout, root);
 <p>Now start the tricky tricks. If you want to add more than one time a node
 named <code class="language-plaintext highlighter-rouge">fish</code>, you can’t call the <code class="language-plaintext highlighter-rouge">put()</code> method. The call <code class="language-plaintext highlighter-rouge">node.put("name", value)</code> will
 replace the existing node named <code class="language-plaintext highlighter-rouge">name</code>. But you can do it by manually pushing your nodes,
-as demonstrated bellow.</p>
+as demonstrated below.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// Add two objects with the same name</span>
  <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fish1</span><span class="p">;</span>
@@ -740,7 +740,7 @@ as demonstrated bellow.</p>
 
 <h3 id="add-a-list-of-values">Add a list of values</h3>
 
-<p>If you remember, list are mades of nodes with empty name. Se we have to build node with empty names, and then use the <code class="language-plaintext highlighter-rouge">push_back()</code> once again to add all those unnamed childs.</p>
+<p>If you remember, lists are made of nodes with empty names. So we have to build nodes with empty names, and then use the <code class="language-plaintext highlighter-rouge">push_back()</code> once again to add all those unnamed children.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a list</span>
 <span class="n">pt</span><span class="o">::</span><span class="n">ptree</span> <span class="n">fruits_node</span><span class="p">;</span>
@@ -791,10 +791,10 @@ as demonstrated bellow.</p>
   <li><a href="http://stackoverflow.com/questions/2114466/creating-json-arrays-in-boost-using-property-trees">A post on stack overflow</a></li>
 </ul>
 
-<p><strong>Rem</strong> : At the time of writing, the boost::property_tree library doesn’t output typed value. But we can expect that it will be corrected soon.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="boost" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A quick starting guide to the C++ boost library module property_tree.]]></summary></entry><entry xml:lang="en"><title type="html">An alternative error handling strategy for C++</title><link href="/an-alternative-error-handling-strategy-cpp/" rel="alternate" type="text/html" title="An alternative error handling strategy for C++" /><published>2013-08-27T00:00:00+02:00</published><updated>2013-08-27T00:00:00+02:00</updated><id>/an-alternative-error-handling-strategy-cpp</id><content type="html" xml:base="/an-alternative-error-handling-strategy-cpp/"><![CDATA[<h2 id="error-handling">Error handling</h2>
+<p><strong>Rem</strong> : At the time of writing, the boost::property_tree library doesn’t output typed values. But we can expect that it will be corrected soon.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="boost" /><category term="languages" /><category term="programming" /><category term="software" /><summary type="html"><![CDATA[A quick starting guide to the C++ boost library module property_tree.]]></summary></entry><entry xml:lang="en"><title type="html">An alternative error handling strategy for C++</title><link href="/an-alternative-error-handling-strategy-cpp/" rel="alternate" type="text/html" title="An alternative error handling strategy for C++" /><published>2013-08-27T00:00:00+02:00</published><updated>2013-08-27T00:00:00+02:00</updated><id>/an-alternative-error-handling-strategy-cpp</id><content type="html" xml:base="/an-alternative-error-handling-strategy-cpp/"><![CDATA[<h2 id="error-handling">Error handling</h2>
 
 <p>This not so short post is dedicated to a subject that may interest many
-programers: error handling.</p>
+programmers: error handling.</p>
 
 <p>Error handling is the “dark side” of programming. It is both the heart of
 real world applications, and the dirty stuff you would like to avoid.</p>
@@ -805,8 +805,8 @@ real world applications, and the dirty stuff you would like to avoid.</p>
 
 <p>‘C-Style’ handling is the easiest way to do it, but it isn’t completely satisfying.</p>
 
-<p>C-Style error handling is basicaly “returning an error code when the application
-failed”. Here is short example.</p>
+<p>C-Style error handling is basically “returning an error code when the application
+failed”. Here is a short example.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">find_slash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
@@ -832,29 +832,29 @@ failed”. Here is short example.</p>
 
 <h3 id="whats-good-here">What’s good here?</h3>
 
-<p>You can (and actualy, in C style, you do), right after the call, directly handle
-the error by eventualy displaying a message and terminating the application,
+<p>You can (and actually, in C style, you do), right after the call, directly handle
+the error by eventually displaying a message and terminating the application,
 or just retrieving the last state, aborting the computation…</p>
 
-<p>When you wan’t to find where the error handling is made, you just have to look at
+<p>When you want to find where the error handling is made, you just have to look at
 the <strong>function call</strong>. It’s <strong>right</strong> after.</p>
 
 <h3 id="whats-bad-here">What’s bad here?</h3>
 
-<p>As some may have told you, it mix error handling with proper “execution flow”.
-When you read linearly the code as the code execute, you read sometime error
-handling, and some time program logic. That’s really bad, because you would like to
+<p>As some may have told you, it mixes error handling with proper “execution flow”.
+When you read linearly the code as the code executes, you read sometimes error
+handling, and sometimes program logic. That’s really bad, because you would like to
 read either “program logic” or “error handling”.</p>
 
 <p>Also notice that you are limited to an “error code”. If you want to provide
-more informations, you’ll have to create some functions (like errstr) and / or
-use global variables;</p>
+more information, you’ll have to create some functions (like errstr) and / or
+use global variables.</p>
 
 <h2 id="do-it-c-style-exceptions">Do it C++-style: exceptions</h2>
 
 <p>When C was “enhanced” to c++, a new way of handling errors was introduced. It
 was “exceptions”. Exceptions are a way of breaking the normal flow of your code
-by “throwing” an error that will be “catched” somewhere else. Again, a short example.</p>
+by “throwing” an error that will be “caught” somewhere else. Again, a short example.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">find_slash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
@@ -885,41 +885,41 @@ by “throwing” an error that will be “catched” somewhere else. Again, a s
 <h3 id="whats-good-here-1">What’s good here?</h3>
 
 <p>Program logic and error handling are separated. On one side you can see how the function
-whork and when it fail, on the other part you can see what it does if it failed.
-It’s pretty, simplify reading of both error handling and program logic.</p>
+works and when it fails, on the other part you can see what it does if it failed.
+It’s pretty, simplifies reading of both error handling and program logic.</p>
 
 <p>The second point is that now you can give as many information as you like, since
 you can put what you want in your MyException object.</p>
 
 <h2 id="whats-bad-here-1">What’s bad here?</h2>
 
-<p>Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interesting it. Also, you need some
-error codes inside, to know exactly what hapenned, retrieve an error message, etc.
+<p>Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interested in. Also, you need some
+error codes inside, to know exactly what happened, retrieve an error message, etc.
 Writing exceptions class <strong>is</strong> verbose, it’s the cost of the flexibility given by the
-ability to handle more informations embeded as an error.</p>
+ability to handle more information embedded as an error.</p>
 
 <p>The way encouraged by this philosophy is to postpone error handling as late as possible,
-so that users can have the highest flexibility to handle errors. Thats theoricaly a good
+so that users can have the highest flexibility to handle errors. That’s theoretically a good
 thing, but…</p>
 
-<p>In big applications, you <strong>can’t</strong> find esily where the error is handled. When you wan’t
+<p>In big applications, you <strong>can’t</strong> find easily where the error is handled. When you want
 to know what would be the path of an error, you have to jump across files, functions,
 and it’s really hard to find, if you introduce a new exception deep in the “call ~graph~ tree” (I mean the graph you would have if you draw each function call) then you have to
 figure out where it should be handled, if it is already handled, in which places. It’s
-really hard when the application is big, old, not really well writen everywhere. Actualy
+really hard when the application is big, old, not really well written everywhere. Actually
 it’s the case of most of the commercial projects. And that is that.</p>
 
-<p>That’s what make me state “Exceptions are dangerous”. Of course, they provide a pretty
-well to handle error… but only when you are working on small project, where the
+<p>That’s what makes me state “Exceptions are dangerous”. Of course, they provide a pretty
+good way to handle errors… but only when you are working on small project, where the
 “call graph” is simple and easy to get in the mind.</p>
 
 <h2 id="the-error-box-pattern">The error box pattern</h2>
 
-<p>I call it a pattern, so that people don’t be afraid. At the end, I’ll call it with it’s
+<p>I call it a pattern, so that people don’t get afraid. At the end, I’ll call it with its
 right name, so please, be patient.</p>
 
 <p>The main idea is creating a box that can contain either an error message or a value. We
-will limit ourself to a string, and nothing more, because it’s actualy not so easy to
+will limit ourselves to a string, and nothing more, because it’s actually not so easy to
 implement. We will try to keep the syntax readable, understandable, for use cases.
 We won’t handle correctly copy constructor, more than one parameter functions,
 and rvalues. We will keep it as simple as possible.</p>
@@ -969,8 +969,8 @@ To see that, you have to look at more than one function call.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Ok, so what happened ? Bind is a member function that takes your function, and tries
-to apply it. If there is a value in the “error box”, then it aplies to function, and then
+<p>Ok, so what happened? Bind is a member function that takes your function, and tries
+to apply it. If there is a value in the “error box”, then it applies the function, and then
 returns an error box (the compiler won’t let you give a function that doesn’t return
 an error box).</p>
 
@@ -981,20 +981,20 @@ functions of type <code class="language-plaintext highlighter-rouge">E&lt;someth
 <h3 id="whats-good-here-2">What’s good here?</h3>
 
 <p>Once again, program logic (the chain) and error handling (the if) are separated. Like
-with exception, we have the ability to read the chain and don’t think about where
-the execution is interrupted. Actualy, the chain <strong>may</strong> be interrupted at <strong>any</strong> step.
+with exceptions, we have the ability to read the chain and don’t think about where
+the execution is interrupted. Actually, the chain <strong>may</strong> be interrupted at <strong>any</strong> step.
 But we can think as if no error is happening and check quickly if our logic is right.</p>
 
 <p>Of course, typing will prevent you from binding format after a display, so we
 don’t lose any typing capabilities.</p>
 
 <p>Notice that we aren’t calling any of those function in any other. We are “composing”
-them at the end. That is the key to make it works. You should, write small modular
+them at the end. That is the key to make it work. You should write small modular
 functions (hey, look at that: you <strong>should</strong> write generic code so that it can work)
-that accept a value, then compute an other “new” value, or fail. And at each
+that accept a value, then compute another “new” value, or fail. And at each
 step, you don’t have to think about where an exception may interrupt your control
-flow and take care of maintain you stuff in a valid state (exception safety is basically
-beeing always looking at each call you do, and figure out if the function can interrupt
+flow and take care of maintaining your stuff in a valid state (exception safety is basically
+being always looking at each call you do, and figuring out if the function can interrupt
 your flow and what will happen if it does). For this point, it’s “safer”.</p>
 
 <p>As with exceptions, we can have “as many information as you like”, although in this
@@ -1012,18 +1012,18 @@ Big projects are more “linear” and easy to read.</p>
 <p>First, it’s new. It’s not integrated to C++, it’s not the standard way, and with the
 stl you’ll still have to use exceptions.</p>
 
-<p>It’s still a bit too much verbose for my taste. The need to write explicitely the type in
+<p>It’s still a bit too verbose for my taste. The need to write explicitly the type in
 <code class="language-plaintext highlighter-rouge">fail&lt;int&gt;("...")</code> is bad. If you had a polymorphic error type, then it’s worst because
 you’ll have to write <code class="language-plaintext highlighter-rouge">fail&lt;return_type, error_type&gt;("...")</code>.</p>
 
-<p>It do not provide an easy way to call a function that need more than one argument.
+<p>It does not provide an easy way to call a function that needs more than one argument.
 In some other languages, you have “applicative” types and currification that solve it
 nicely, but that’s far from what you may expect from c++. I’m more likely to think that
 a <code class="language-plaintext highlighter-rouge">bind2(E&lt;a&gt;, E&lt;b&gt;, f)</code> and <code class="language-plaintext highlighter-rouge">bind3(E&lt;a&gt;, E&lt;b&gt;, E&lt;c&gt;, f)</code> function could be used.
 Variadic templates may help.</p>
 
 <p>To get the value “out of the box”, we have to check if the box is really a value,
-and then call a “to_value” method. And we have no means from doing it without
+and then call a “to_value” method. And we have no way of doing it without
 checking. What we would like to have is “deconstruction” of objects, but this doesn’t
 exist in c++, and it’s not the kind of things you just have to say “hey, let’s
 add it to the next standard”.</p>
@@ -1043,7 +1043,7 @@ so if you are curious you can have a look at my <a href="/haskell-pure-1/">frenc
 point of view.</p>
 
 <p>Let’s start by implementing the E class you saw above. I’m relying on C++11 <code class="language-plaintext highlighter-rouge">decltype</code>
-and <code class="language-plaintext highlighter-rouge">auto -&gt; decltype</code> wich allow figuring out the type of things from expressions. It’s
+and <code class="language-plaintext highlighter-rouge">auto -&gt; decltype</code> which allow figuring out the type of things from expressions. It’s
 really useful.</p>
 
 <p>The bind function is a bit strange, but it does what I stated previously.</p>
@@ -1229,7 +1229,7 @@ value is now an "empty box".</void></p>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Oh, we don’t spoke about <code class="language-plaintext highlighter-rouge">ret</code> and <code class="language-plaintext highlighter-rouge">fail</code>. Actually, they are just wraper around
+<p>Oh, we didn’t speak about <code class="language-plaintext highlighter-rouge">ret</code> and <code class="language-plaintext highlighter-rouge">fail</code>. Actually, they are just wrappers around
 the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <code class="language-plaintext highlighter-rouge">xxx::ret</code> functions.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
@@ -1251,7 +1251,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>There, we are, you can compile and play with the example above.</p>
+<p>There we are, you can compile and play with the example above.</p>
 
 <p>If you want more stuff to play with, I also have this “more realistic” example:</p>
 
@@ -1276,8 +1276,8 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 <span class="c1">//Parse a +- formated string.</span>
 <span class="c1">//If a letter is prefixed by +, then the function toupper is applied.</span>
 <span class="c1">//''                                              tolower is applied.</span>
-<span class="c1">//Non alphabetical (+ and - excepted) aren't alowed.</span>
-<span class="c1">//Words are cut on each space ' '. Other blank characters aren't alowed.</span>
+<span class="c1">//Non alphabetical (+ and - excepted) aren't allowed.</span>
+<span class="c1">//Words are cut on each space ' '. Other blank characters aren't allowed.</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">vs</span><span class="o">&gt;</span> <span class="n">parse</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1326,7 +1326,7 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
     <span class="k">return</span> <span class="nf">ret</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="c1">//Take the first word and append it to the begining of all other words.</span>
+<span class="c1">//Take the first word and append it to the beginning of all other words.</span>
 <span class="c1">//Vec should contain at least one element.</span>
 <span class="n">E</span><span class="o">&lt;</span><span class="n">vs</span><span class="o">&gt;</span> <span class="n">prefixy</span><span class="p">(</span><span class="n">vs</span> <span class="n">vec</span><span class="p">)</span>
 <span class="p">{</span>
@@ -1379,8 +1379,8 @@ the <code class="language-plaintext highlighter-rouge">xxx::fail</code> and <cod
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="C++" /><category term="monads" /><category term="language" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[We treat three historical ways to handle errors, and consider a functional approach using monades to handle error in C++. We provide a C++ implementation unsing templates and discuss the pros and cons.]]></summary></entry><entry xml:lang="fr"><title type="html">Tutoriel d’initiation à SEDNL</title><link href="/tutorial-sednl/" rel="alternate" type="text/html" title="Tutoriel d’initiation à SEDNL" /><published>2013-08-25T00:00:00+02:00</published><updated>2013-08-25T00:00:00+02:00</updated><id>/tutorial-sednl</id><content type="html" xml:base="/tutorial-sednl/"><![CDATA[<p>Ce court tutoriel vas vous apprendre à utiliser la bibliothèque réseau SedNL.
-Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliseront
+</code></pre></div></div>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="C++" /><category term="monads" /><category term="language" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[We treat three historical ways to handle errors, and consider a functional approach using monads to handle errors in C++. We provide a C++ implementation using templates and discuss the pros and cons.]]></summary></entry><entry xml:lang="fr"><title type="html">Tutoriel d’initiation à SEDNL</title><link href="/tutorial-sednl/" rel="alternate" type="text/html" title="Tutoriel d’initiation à SEDNL" /><published>2013-08-25T00:00:00+02:00</published><updated>2013-08-25T00:00:00+02:00</updated><id>/tutorial-sednl</id><content type="html" xml:base="/tutorial-sednl/"><![CDATA[<p>Ce court tutoriel va vous apprendre à utiliser la bibliothèque réseau SedNL.
+Grâce à cette bibliothèque facile et rapide à prendre en main, nous réaliserons
 un client et serveur de chat, ainsi qu’une application de dessin collaborative.</p>
 
 <h2 id="installation-de-sednl">Installation de SedNL</h2>
@@ -1426,7 +1426,7 @@ linux ou <code class="language-plaintext highlighter-rouge">cmake-gui.exe</code>
 <p>Vous pouvez maintenant lancer la compilation avec <code class="language-plaintext highlighter-rouge">make</code> sous linux,
 et <code class="language-plaintext highlighter-rouge">mingw32-make</code> sous Windows avec mingw.</p>
 
-<p>Une fois la compilation terminé, vous obtenez une bibliothèque statique
+<p>Une fois la compilation terminée, vous obtenez une bibliothèque statique
 <code class="language-plaintext highlighter-rouge">sednl-1.0.a</code> et une dynamique <code class="language-plaintext highlighter-rouge">sednl-1.0.so</code>. (.lib et .dll sous windows).</p>
 
 <p>C’est terminé, nous allons pouvoir compiler notre premier programme.</p>
@@ -1434,8 +1434,8 @@ et <code class="language-plaintext highlighter-rouge">mingw32-make</code> sous W
 <h2 id="service-de-log-dextraits-de-code">Service de log d’extraits de code</h2>
 
 <p>Pour nos premiers pas avec cette bibliothèque, nous allons réaliser une
-application cliente capable d’envoyer un extrait de code lue depuis l’entrée
-standard vers un serveur qui loggera tout les extraits reçus, sur sa sortie
+application cliente capable d’envoyer un extrait de code lu depuis l’entrée
+standard vers un serveur qui loggera tous les extraits reçus, sur sa sortie
 standard.</p>
 
 <h3 id="le-client">Le client</h3>
@@ -1491,7 +1491,7 @@ standard, puis l’envoyer au serveur.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Si le fichier se nome « client.cpp », vous pouvez le compiler avec la ligne
+<p>Si le fichier se nomme « client.cpp », vous pouvez le compiler avec la ligne
 <code class="language-plaintext highlighter-rouge">clang++ -std=c++11 -I/usr/local/include/sednl-1.0/ -lsednl-1.0 -lpthread client.cpp</code>.</p>
 
 <p>La première fonction <code class="language-plaintext highlighter-rouge">get_input</code> lit l’entrée standard et stocke tout l’extrait de code dans une chaîne qu’elle renvoie.</p>
@@ -1501,23 +1501,23 @@ de l’extrait de code (<code class="language-plaintext highlighter-rouge">argv[
 
 <p>Enfin, c’est à la ligne 26 que commence vraiment notre programme.
 On commence par ouvrir une connexion vers <code class="language-plaintext highlighter-rouge">localhost</code>. C’est l’ordinateur
-qui exécute ce programme. On peux aussi indiquer « 127.0.0.1 ».
-Le port sur le quel on cherche à atteindre le serveur est le port « 4280 ».
-Un port n’a pas de réalitée matériel, c’est juste une façon de distinguer
-les différentes connexions ouverte vers un ordinateur.
+qui exécute ce programme. On peut aussi indiquer « 127.0.0.1 ».
+Le port sur lequel on cherche à atteindre le serveur est le port « 4280 ».
+Un port n’a pas de réalité matérielle, c’est juste une façon de distinguer
+les différentes connexions ouvertes vers un ordinateur.
 Le choix du numéro de port est arbitraire, même si l’on cherchera à
 éviter d’utiliser les plus communs (comme 80 pour http,
-20 et 21 pour ftp, etc.) ainsi que les valeurs inférieurs à 1024, car
-certains système requière des privilèges administrateur pour les utiliser.</p>
+20 et 21 pour ftp, etc.) ainsi que les valeurs inférieures à 1024, car
+certains systèmes requièrent des privilèges administrateur pour les utiliser.</p>
 
-<p>La ligne 35 fait deux choses. D’abord, <code class="language-plaintext highlighter-rouge">make_event</code> fabriquer un objet
+<p>La ligne 35 fait deux choses. D’abord, <code class="language-plaintext highlighter-rouge">make_event</code> fabrique un objet
 de type <code class="language-plaintext highlighter-rouge">Event</code> qui contient :</p>
 
 <p>1)  Le nom de l’évènement envoyé au serveur. Ici, <code class="language-plaintext highlighter-rouge">"log_that"</code>.
-2)  Le nom sous le quel l’extrait de code sera enregistré. Ici, <code class="language-plaintext highlighter-rouge">argv[1]</code>.
+2)  Le nom sous lequel l’extrait de code sera enregistré. Ici, <code class="language-plaintext highlighter-rouge">argv[1]</code>.
 3)  L’extrait de code à logger. Ici, <code class="language-plaintext highlighter-rouge">input</code>.</p>
 
-<p>Une fois l’évènement crée, il est envoyé avec par la fonction membre <code class="language-plaintext highlighter-rouge">send</code>.</p>
+<p>Une fois l’évènement créé, il est envoyé par la fonction membre <code class="language-plaintext highlighter-rouge">send</code>.</p>
 
 <p>Enfin, la connexion est fermée à la ligne 37.</p>
 
@@ -1526,9 +1526,9 @@ levée. Elle est alors attrapée à la ligne 39.</p>
 
 <h3 id="le-serveur">Le serveur</h3>
 
-<p>Le serveur n’est pas beaucoup plus compliqué. Il doit attendre de nouvelle
-connections, et écrire sur la sortie standard le texte reçu. Attention,
-il faudra bien penser à gérer le cas où deux clients envoie un message
+<p>Le serveur n’est pas beaucoup plus compliqué. Il doit attendre de nouvelles
+connexions, et écrire sur la sortie standard le texte reçu. Attention,
+il faudra bien penser à gérer le cas où deux clients envoient un message
 au même moment. Pour ça, on utilisera une mutex.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
@@ -1606,7 +1606,7 @@ apprendre (moins d’un quart d’heure pour un développeur expérimenté).
 Elle convient parfaitement tant à des projets d’envergure moyenne que des
 projets de taille plus conséquente.</p>
 
-<p>Un court exemple d’utilisation du mécanisme d’évènement coté serveur :</p>
+<p>Un court exemple d’utilisation du mécanisme d’évènement côté serveur :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;SEDNL/sednl.hpp&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">SedNL</span><span class="p">;</span>
@@ -1642,12 +1642,12 @@ vos callback pour les évènements provenant d’un même utilisateur
 ne peut être supposé. En contrepartie, vous pouvez contrôler quels
 threads vous allouez à quels évènements.</p>
 
-<p>SedNL fournis aussi des outils légers pour sérialiser et envoyer
+<p>SedNL fournit aussi des outils légers pour sérialiser et envoyer
 de façon fiable les instances de vos classes.</p>
 
 <p>Philosophie particulière de cette bibliothèque : la règle est que même
 dans des conditions difficiles (plus de mémoire disponible, limite de
-connections ouvertes, exceptions levées par vos callback, dysfonctionnement
+connexions ouvertes, exceptions levées par vos callback, dysfonctionnement
 du système dans la gestion des threads, …) la bibliothèque doit faire tout
 ce qui est possible pour conserver un comportement normal.
 Toutes les exceptions “std::bad_alloc” sont interceptées et traitées
@@ -1662,25 +1662,25 @@ C’est, selon moi, ce que l’on doit attendre de toute vraie bibliothèque ré
 pas la bibliothèque la plus adaptée à votre projet. Une lecture rapide de
 la documentation devrait vous permettre de savoir si SedNL est adapté à
 votre projet, ou si vous devez préférer une autre bibliothèque.
-Par exemple, SedNL n’est pas du tout adapter <a href="http://en.wikipedia.org/wiki/Remote_procedure_call">à de la RCP</a>.
+Par exemple, SedNL n’est pas du tout adapté <a href="http://en.wikipedia.org/wiki/Remote_procedure_call">à de la RCP</a>.
 Même si le mécanisme d’évènement est ce que vous recherchez,
-d’autres alternative C basé aussi sur un mécanisme d’évènement
+d’autres alternatives C basées aussi sur un mécanisme d’évènement
 comme libev / libevent offrent un contrôle plus fin,
 au coût d’une API plus complexe et moins intuitive.
 Gardez aussi à l’esprit que le design encouragé par SedNL devrait
 s’adapter à de nombreuses bibliothèques fournissant un mécanisme
 d’évènement, et que la licence autorise diverses modifications
-pour des besoins spécifiques.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Présentation de la bibliothèque C++ SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">Boite à musique Arduino</title><link href="/music-box/" rel="alternate" type="text/html" title="Boite à musique Arduino" /><published>2013-08-16T00:00:00+02:00</published><updated>2013-08-16T00:00:00+02:00</updated><id>/music-box</id><content type="html" xml:base="/music-box/"><![CDATA[<p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
+pour des besoins spécifiques.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="sednl" /><category term="network" /><category term="programming" /><category term="c++" /><category term="software" /><summary type="html"><![CDATA[Présentation de la bibliothèque C++ SEDNL.]]></summary></entry><entry xml:lang="fr"><title type="html">Boite à musique Arduino</title><link href="/music-box/" rel="alternate" type="text/html" title="Boite à musique Arduino" /><published>2013-08-16T00:00:00+02:00</published><updated>2013-08-16T00:00:00+02:00</updated><id>/music-box</id><content type="html" xml:base="/music-box/"><![CDATA[<p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour Arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carrée, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournie avec les libs de l’Arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires pré-calculées, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
 
 <p>Tout ceci est plutôt abstrait, alors regardons cela de plus près.</p>
 
 <h2 id="montage-de-test-">Montage de test :</h2>
 
-<p>Le montage de test est très similaire à celui du tutoriel tone. Seul change le port sur lequel vous devez connecter votre speacker.</p>
+<p>Le montage de test est très similaire à celui du tutoriel tone. Seul change le port sur lequel vous devez connecter votre speaker.</p>
 
 <p><a href="data/music_box_arduino.png"><img src="data/music_box_arduino.png" alt="Montage arduino" /></a></p>
 
-<p>Donc, une résistance d’une centaine d’ohms (prenez ce que vous avez sous la main, plus la résistance sera élevée, moins le volume le sera) reliée à un speacker, ou bien à une prise JACK pour brancher vos enceintes favorites.</p>
+<p>Donc, une résistance d’une centaine d’ohms (prenez ce que vous avez sous la main, plus la résistance sera élevée, moins le volume le sera) reliée à un speaker, ou bien à une prise JACK pour brancher vos enceintes favorites.</p>
 
 <p>Si vous souhaitez changer le port de sortie, il vous faudra toucher au code (et au code asm aussi :/) car le code utilise un mécanisme de l’ATMEGA328P qui n’est disponible que sur les ports 11, 10, 9, 6, 5 et 3 de l’arduino (ceux marqués d’une petite vague). De plus, si vous souhaitez utiliser le port 3 conjointement à ce code, vous risquez d’avoir quelques soucis. (Ces ports sont regroupés en paires, et chaque port d’une paire ne peut émettre un signal qu’à la même fréquence. Vous ne pourrez pas non plus utiliser l’interruption du timer 2, utilisé par ces deux ports. Ici, le code utilise la fréquence maximum possible, donc cela ne devrait à priori pas poser de soucis pour les utilisations les plus simples du port 3, comme contrôler l’intensité lumineuse d’une led).</p>
 
@@ -1694,7 +1694,7 @@ Dans un premier temps, il faut initialiser la lib en appelant <code class="langu
 <span class="k">extern</span> <span class="kt">int</span> <span class="n">square4_period</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>En fait, c’est la période de l’onde qui est stockée, exprimée en 62500ième de seconde. Une macro, frequency_to_period(f), s’occupe de convertir une fréquence f (en Hz) en une période. Un exemple d’utilisation serait :</p>
+<p>En fait, c’est la période de l’onde qui est stockée, exprimée en 62500e de seconde. Une macro, frequency_to_period(f), s’occupe de convertir une fréquence f (en Hz) en une période. Un exemple d’utilisation serait :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="mi">440</span><span class="p">);</span> <span class="c1">//Le LA de référence est à 440Hz</span>
 </code></pre></div></div>
 
@@ -1719,7 +1719,7 @@ Dans un premier temps, il faut initialiser la lib en appelant <code class="langu
 </code></pre></div></div>
 <p>C’est un canal qui émet un son similaire à celui d’un vieux téléviseur sans antennes, un “Tshhhhh” très caractéristique. À nouveau, en faisant varier l’amplitude (on parle de modulation d’amplitude), vous pouvez créer le timbre de divers instruments de percussion. La fonction <code class="language-plaintext highlighter-rouge">play_seawave();</code> est un exemple.</p>
 
-<p>Le bruit est près calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
+<p>Le bruit est pré-calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
 
 <h1 id="code-et-exemple-de-test">Code et exemple de test</h1>
 
@@ -2954,14 +2954,14 @@ void loop()
 
 <h2 id="extrait-sonore-du-code-de-démonstration">Extrait sonore du code de démonstration</h2>
 
-<p>Pour vous montrer que je ne plaisante pas quand à la polyphonie, voici deux extraits utilisant 2 canaux. (Bon, le dernier accord en utilise 3, mais on ne s’en rend pas compte.)</p>
+<p>Pour vous montrer que je ne plaisante pas quant à la polyphonie, voici deux extraits utilisant 2 canaux. (Bon, le dernier accord en utilise 3, mais on ne s’en rend pas compte.)</p>
 
 <p><a href="data/arduino_tetris.mp3">Première partie</a>
 <a href="data/arduino_tetris_effects.mp3">Seconde partie</a></p>
 
 <h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
 
-<p>N’hésitez pas à supprimer quelques canaux, comme le 4ième canal, si vous ne l’utilisez pas et trouvez que votre application est trop lente (i.e. supprimer le bloc de code suivant).</p>
+<p>N’hésitez pas à supprimer quelques canaux, comme le 4e canal, si vous ne l’utilisez pas et trouvez que votre application est trop lente (i.e. supprimer le bloc de code suivant).</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//---------------</span>
   <span class="c1">//-  SQUARE  4  -</span>
   <span class="c1">//---------------</span>
@@ -2969,7 +2969,7 @@ void loop()
   <span class="c1">//---------------</span>
 </code></pre></div></div>
 
-<p>Vous pouvez aussi supprimer le canal de bruit et le tableau white_noise.h pour gagner un peu de mémoire. Bref, faite ce que vous voulez de ce code!</p>
+<p>Vous pouvez aussi supprimer le canal de bruit et le tableau white_noise.h pour gagner un peu de mémoire. Bref, faites ce que vous voulez de ce code!</p>
 
 <h3 id="quelques-références-">Quelques références :</h3>
 
@@ -2983,15 +2983,15 @@ void loop()
 <p>Plus sur Tone :</p>
 <ul>
   <li><a href="http://arduino.cc/en/Tutorial/Tone">http://arduino.cc/en/Tutorial/Tone</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="arduino" /><category term="software" /><category term="music" /><category term="asm" /><category term="c" /><category term="embeded" /><summary type="html"><![CDATA[Une micro-bibliothèque pour jouer une mélodie polyphonique sur arduino en C. Contient le code, la documentation, et la melodie de tétris comme exemple.]]></summary></entry><entry xml:lang="fr"><title type="html">Haskell - Lazy IO</title><link href="/haskell-lazy-io/" rel="alternate" type="text/html" title="Haskell - Lazy IO" /><published>2013-07-16T00:00:00+02:00</published><updated>2013-07-16T00:00:00+02:00</updated><id>/haskell-lazy-io</id><content type="html" xml:base="/haskell-lazy-io/"><![CDATA[<p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
+</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="arduino" /><category term="software" /><category term="music" /><category term="asm" /><category term="c" /><category term="embeded" /><summary type="html"><![CDATA[Une micro-bibliothèque pour jouer une mélodie polyphonique sur Arduino en C. Contient le code, la documentation, et la mélodie de Tétris comme exemple.]]></summary></entry><entry xml:lang="fr"><title type="html">Haskell - Lazy IO</title><link href="/haskell-lazy-io/" rel="alternate" type="text/html" title="Haskell - Lazy IO" /><published>2013-07-16T00:00:00+02:00</published><updated>2013-07-16T00:00:00+02:00</updated><id>/haskell-lazy-io</id><content type="html" xml:base="/haskell-lazy-io/"><![CDATA[<p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présents en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
 
-<p>Je vais ici vous parler de la phase de hachage des fichiers pour les trier et déterminer les doublons. Et oui, on ne vas pas comparer le contenu de tous les fichiers entre eux, ça serait en n^2 par rapport au nombre de fichiers. On ne veux pas non plus attendre une journée.</p>
+<p>Je vais ici vous parler de la phase de hachage des fichiers pour les trier et déterminer les doublons. Et oui, on ne va pas comparer le contenu de tous les fichiers entre eux, ça serait en n^2 par rapport au nombre de fichiers. On ne veut pas non plus attendre une journée.</p>
 
-<p>Je parlerais donc de la lecture du contenu des fichiers pour produire leur hash. Le trie des paires (Nom du fichier, hash) et l’affichage étant trivial et sans intérêt.</p>
+<p>Je parlerai donc de la lecture du contenu des fichiers pour produire leur hash. Le tri des paires (Nom du fichier, hash) et l’affichage étant trivial et sans intérêt.</p>
 
 <h1 id="strict-io-">Strict IO ?</h1>
 
-<p>La première approche est souvent la plus simple. Nous voulons le hash d’un fichier? Et bien il suffit d’utiliser la fonction <code class="language-plaintext highlighter-rouge">hash :: String -&gt; ByteString</code> du package <code class="language-plaintext highlighter-rouge">Crypto.Hash.SHA1</code> (SHA1, MD5, MD4, SHA256 … celons vos gouts). Pour obtenir le contenue du fichier, on peux utiliser <code class="language-plaintext highlighter-rouge">readFile :: FilePath -&gt; IO String</code>.</p>
+<p>La première approche est souvent la plus simple. Nous voulons le hash d’un fichier? Et bien il suffit d’utiliser la fonction <code class="language-plaintext highlighter-rouge">hash :: String -&gt; ByteString</code> du package <code class="language-plaintext highlighter-rouge">Crypto.Hash.SHA1</code> (SHA1, MD5, MD4, SHA256 … selon vos goûts). Pour obtenir le contenu du fichier, on peut utiliser <code class="language-plaintext highlighter-rouge">readFile :: FilePath -&gt; IO String</code>.</p>
 
 <p>Cela nous donne :</p>
 <pre><code class="language-{.haskell}">getHash :: String -&gt; (String, ByteString)
@@ -3000,15 +3000,15 @@ getHash filename = do
     return (filename, hashed)
 </code></pre>
 
-<p>Il suffit alors d’appliquer <code class="language-plaintext highlighter-rouge">mapM getHash</code> sur une liste de nom de fichier pour obtenir une liste de couple Nomdufichier/Hashdufichier.</p>
+<p>Il suffit alors d’appliquer <code class="language-plaintext highlighter-rouge">mapM getHash</code> sur une liste de noms de fichiers pour obtenir une liste de couples Nomdufichier/Hashdufichier.</p>
 
-<p>Si l’on test, cela fonctionne très bien… jusqu’au moment où vous tombez sur un fichier de plus d’1GO. Là, <code class="language-plaintext highlighter-rouge">readFile</code> veux charger l’intégralité du fichier en mémoire. Et bien-sur, sur ma machine, c’est impossible.</p>
+<p>Si l’on test, cela fonctionne très bien… jusqu’au moment où vous tombez sur un fichier de plus d’1GO. Là, <code class="language-plaintext highlighter-rouge">readFile</code> veut charger l’intégralité du fichier en mémoire. Et bien sûr, sur ma machine, c’est impossible.</p>
 
-<h1 id="la-paresse-a-la-rescousse">La paresse a la rescousse!</h1>
+<h1 id="la-paresse-à-la-rescousse">La paresse à la rescousse!</h1>
 
-<p>On vous à toujours dis qu’être paresseux, c’était mal, improductif, et vous mènerais à votre perte? Et bien, ils avaient tort.</p>
+<p>On vous a toujours dit qu’être paresseux, c’était mal, improductif, et vous mènerait à votre perte? Et bien, ils avaient tort.</p>
 
-<p>On voudrais lire le fichier par morceau, et construire le hash avec ces morceaux (ce que toute bonne fonction de hachage permet).</p>
+<p>On voudrait lire le fichier par morceaux, et construire le hash avec ces morceaux (ce que toute bonne fonction de hachage permet).</p>
 
 <p>Pour ce qui est du hachage, on trouve dans <code class="language-plaintext highlighter-rouge">Crypto.Hash.Whatever</code> les trois fonctions :</p>
 <pre><code class="language-{.haskell}">init :: Ctx
@@ -3018,7 +3018,7 @@ finalize :: Ctx -&gt; S.ByteString
 
 <p>Il nous faut donc un flux de <code class="language-plaintext highlighter-rouge">ByteString</code>. Pour ce faire, on dispose d’une version paresseuse de <code class="language-plaintext highlighter-rouge">ByteString</code>, qui se trouve dans le package <code class="language-plaintext highlighter-rouge">Data.ByteString.Lazy</code>. Histoire de fixer les notations et de ne pas se perdre entre les <code class="language-plaintext highlighter-rouge">ByteString</code> strict et les <code class="language-plaintext highlighter-rouge">ByteString</code> lazy, on parlera respectivement de <code class="language-plaintext highlighter-rouge">S.ByteString</code> et de <code class="language-plaintext highlighter-rouge">L.ByteString</code> (Strict/Lazy).</p>
 
-<p>Cela revient a importer les deux types de la façon suivante :</p>
+<p>Cela revient à importer les deux types de la façon suivante :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString</span> <span class="k">as</span> <span class="n">S</span>
 <span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString.Lazy</span> <span class="k">as</span> <span class="n">L</span>
 </code></pre></div></div>
@@ -3028,25 +3028,25 @@ finalize :: Ctx -&gt; S.ByteString
 <span class="kt">L</span><span class="o">.</span><span class="n">foldlChunks</span> <span class="o">::</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">S</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">L</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="n">a</span>
 </code></pre></div></div>
 
-<p>La première nous donne le contenue de notre fichier. La seconde, nous offre exactement la méthode qui “prend une fonction ajoutant un morceau de fichier au hash”, puis “un hash vide”, et enfin “une ByteString paresseuse”. Cela parais plus évident si l’on spécialise les “a” en “Ctx”.</p>
+<p>La première nous donne le contenu de notre fichier. La seconde, nous offre exactement la méthode qui “prend une fonction ajoutant un morceau de fichier au hash”, puis “un hash vide”, et enfin “une ByteString paresseuse”. Cela paraît plus évident si l’on spécialise les “a” en “Ctx”.</p>
 
-<p>On peux donc utiliser :</p>
+<p>On peut donc utiliser :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hashed</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="p">(</span><span class="n">finalize</span> <span class="o">.</span> <span class="n">foldlChunks</span> <span class="n">update</span> <span class="n">init</span><span class="p">)</span> <span class="o">$</span> <span class="n">readFile</span> <span class="n">filename</span>
 </code></pre></div></div>
 
-<p>Bon, en fait, il y avais plus simple. Il y a aussi la fonction :</p>
+<p>Bon, en fait, il y avait plus simple. Il y a aussi la fonction :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hashlazy</span> <span class="o">::</span> <span class="kt">L</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="kt">S</span><span class="o">.</span><span class="kt">ByteString</span>
 </code></pre></div></div>
 <p>qui produit le même résultat que notre pli.</p>
 
-<p>Et là tout fonctionne bien, nos fichier d’1Go sont haché.</p>
+<p>Et là tout fonctionne bien, nos fichiers d’1Go sont hachés.</p>
 
-<p>Mais … si vous travaillez sur beaucoup de fichiers, vous risquez d’avoir un soucis. Par exemple, si vous testez sur <code class="language-plaintext highlighter-rouge">/usr/lib</code>, vous obtiendrez peut-être une jolie exception vous indiquant qu’il y a trop de filedescriptors utilisés, et que donc le fichier ne peux être ouvert.
-Il se trouve que les fichier ne sont pas fermé immédiatement après le hachage, et c’est un vrai problème. Problème que nous allons résoudre.</p>
+<p>Mais … si vous travaillez sur beaucoup de fichiers, vous risquez d’avoir un soucis. Par exemple, si vous testez sur <code class="language-plaintext highlighter-rouge">/usr/lib</code>, vous obtiendrez peut-être une jolie exception vous indiquant qu’il y a trop de filedescriptors utilisés, et que donc le fichier ne peut être ouvert.
+Il se trouve que les fichiers ne sont pas fermés immédiatement après le hachage, et c’est un vrai problème. Problème que nous allons résoudre.</p>
 
 <h1 id="la-solution--withfile">La solution : withFile</h1>
 
-<p>La fonction <code class="language-plaintext highlighter-rouge">withFile :: FilePath -&gt; IOMode -&gt; (Handle -&gt; IO r) -&gt; IO r</code> est la clef. Cette fonction prend un nom de fichier, le mode d’ouverture (on utilisera ReadMode), une fonction qui travaille sur le fichier, et nous fait suivre le résultat de l’application de cette fonction. Un peu stupide, me direz vous? Et bien, ça le serait, si cette fonction se contenter de ça. En fait, elle vous assure aussi qu’une fois évaluée, le fichier est fermé. En l’utilisant, on est donc certain que le fichier est immédiatement fermé lorsque withFile est évalué en un “IO r”.</p>
+<p>La fonction <code class="language-plaintext highlighter-rouge">withFile :: FilePath -&gt; IOMode -&gt; (Handle -&gt; IO r) -&gt; IO r</code> est la clef. Cette fonction prend un nom de fichier, le mode d’ouverture (on utilisera ReadMode), une fonction qui travaille sur le fichier, et nous fait suivre le résultat de l’application de cette fonction. Un peu stupide, me direz vous? Et bien, ça le serait, si cette fonction se contentait de ça. En fait, elle vous assure aussi qu’une fois évaluée, le fichier est fermé. En l’utilisant, on est donc certain que le fichier est immédiatement fermé lorsque withFile est évalué en un “IO r”.</p>
 
 <pre><code class="language-`haskell">getHash filename = do
     hashed &lt;- withFile filename ReadMode $ \h -&gt; do
@@ -3054,31 +3054,31 @@ Il se trouve que les fichier ne sont pas fermé immédiatement après le hachage
 return (filename, hashed)
 </code></pre>
 
-<p>Le <code class="language-plaintext highlighter-rouge">unefonction $ \h -&gt; do</code> est une pratique courante pour ces fonctions qui évalue un morceau de code dans un certains contexte. C’est très pratique, et on reconnaît très vite cette idiome avec un peu d’entraînement.</p>
+<p>Le <code class="language-plaintext highlighter-rouge">unefonction $ \h -&gt; do</code> est une pratique courante pour ces fonctions qui évaluent un morceau de code dans un certain contexte. C’est très pratique, et on reconnaît très vite cet idiome avec un peu d’entraînement.</p>
 
-<p>On compile pour vérifier le typage, tout vas bien, et l’on lance donc notre application que l’on s’attend a voir fonctionner. Et là, c’est le drame : “Illegal operation : handle is closed”.</p>
+<p>On compile pour vérifier le typage, tout va bien, et l’on lance donc notre application que l’on s’attend à voir fonctionner. Et là, c’est le drame : “Illegal operation : handle is closed”.</p>
 
-<p>Wohw, quel est ce mystérieux message? Et bien, comme je vous l’ai dit, withFile ferme immédiatement le fichier après l’évaluation de son expression. Et que fait son évaluation? Elle retourne le hash du fichier me dite vous? Faut.</p>
+<p>Wohw, quel est ce mystérieux message? Et bien, comme je vous l’ai dit, withFile ferme immédiatement le fichier après l’évaluation de son expression. Et que fait son évaluation? Elle retourne le hash du fichier me dites-vous? Faux.</p>
 
-<p>La fonction construit un thunk (je parlerais de promesse de calcul, ou plus simplement de promesse) a l’aide de “fmap …”. L’évaluation de withFile retourne alors cette promesse, plutôt que la valeur du hash. Et cette promesse, elle, ne sera évaluée que plus tard, au moment ou vous en aurez vraiment besoin, et seulement si vous en avez besoin.</p>
+<p>La fonction construit un thunk (je parlerais de promesse de calcul, ou plus simplement de promesse) a l’aide de “fmap …”. L’évaluation de withFile retourne alors cette promesse, plutôt que la valeur du hash. Et cette promesse, elle, ne sera évaluée que plus tard, au moment où vous en aurez vraiment besoin, et seulement si vous en avez besoin.</p>
 
-<p>Il nous faut donc forcer haskell a être strict, et évaluer le hash avant de sortir de la fonction. Il y a différentes façons de le faire. La plus simple, c’est d’utiliser l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> qui force l’évaluation de l’expression a sa gauche, puis retourne l’expression a sa droite. On a aussi l’opérateur <code class="language-plaintext highlighter-rouge">a ($!) b = b `seq` (a b)</code> qui est une “application stricte”. C’est a dire que ce qui sera a droite de <code class="language-plaintext highlighter-rouge">$!</code> sera évalué.</p>
+<p>Il nous faut donc forcer haskell à être strict, et évaluer le hash avant de sortir de la fonction. Il y a différentes façons de le faire. La plus simple, c’est d’utiliser l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> qui force l’évaluation de l’expression à sa gauche, puis retourne l’expression à sa droite. On a aussi l’opérateur <code class="language-plaintext highlighter-rouge">a ($!) b = b `seq` (a b)</code> qui est une “application stricte”. C’est-à-dire que ce qui sera à droite de <code class="language-plaintext highlighter-rouge">$!</code> sera évalué.</p>
 
-<p>Nb : Il faut faire attention. Quand je dis évalué, je parle bien de <em>dé-construire</em> le premier niveau de l’expression. C’est a dire que si <code class="language-plaintext highlighter-rouge">compute 1 42</code> est un calcul, ceci sera remplacer par la promesse ou le résultat retournée par compute. Si compute produit une promesse plutôt qu’un résultat, l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> n’évaluera pas la promesse. Il existe un opérateur <code class="language-plaintext highlighter-rouge">`deepSeq`</code>, qui lui vas <em>tout réduire</em> en profondeur. Comme vous vous en doutez, c’est très coûteux et évalue des choses dont on n’auras peut-être pas besoin. Le plus souvent, on peux se contenter de <code class="language-plaintext highlighter-rouge">`seq`</code> appliqué au bonne endroit pour obtenir le résultat souhaité.</p>
+<p>Nb : Il faut faire attention. Quand je dis évalué, je parle bien de <em>dé-construire</em> le premier niveau de l’expression. C’est-à-dire que si <code class="language-plaintext highlighter-rouge">compute 1 42</code> est un calcul, ceci sera remplacé par la promesse ou le résultat retourné par compute. Si compute produit une promesse plutôt qu’un résultat, l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> n’évaluera pas la promesse. Il existe un opérateur <code class="language-plaintext highlighter-rouge">`deepSeq`</code>, qui lui va <em>tout réduire</em> en profondeur. Comme vous vous en doutez, c’est très coûteux et évalue des choses dont on n’aura peut-être pas besoin. Le plus souvent, on peut se contenter de <code class="language-plaintext highlighter-rouge">`seq`</code> appliqué aux bons endroits pour obtenir le résultat souhaité.</p>
 
-<p>Dans notre cas, il faudrait forcer la promesse faire par <code class="language-plaintext highlighter-rouge">fmap</code> a être évaluée, puis la promesse faite par <code class="language-plaintext highlighter-rouge">hashlazy</code>. Vous allez voir que la solution n’est pas plus compliquée que ce que nous avions déjà écrit :</p>
+<p>Dans notre cas, il faudrait forcer la promesse faite par <code class="language-plaintext highlighter-rouge">fmap</code> à être évaluée, puis la promesse faite par <code class="language-plaintext highlighter-rouge">hashlazy</code>. Vous allez voir que la solution n’est pas plus compliquée que ce que nous avions déjà écrit :</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- getHash ...</span>
     <span class="n">withFile</span> <span class="n">filename</span> <span class="kt">ReadMode</span> <span class="o">$</span> <span class="nf">\</span><span class="n">h</span> <span class="o">-&gt;</span> <span class="kr">do</span>
         <span class="c1">-- On obtient la promesse faite par hashlazy</span>
         <span class="kr">data</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">hashlazy</span> <span class="o">$</span> <span class="n">hGetContents</span> <span class="n">h</span>
-        <span class="c1">-- On force l'évaluation de hashlazy, qui donc sera forcé d'ouvrir le fichier et de le lire, puisque la valeur retournée est un S.ByteString, une valeur Stricte.</span>
+        <span class="c1">-- On force l'évaluation de hashlazy, qui donc sera forcée d'ouvrir le fichier et de le lire, puisque la valeur retournée est un S.ByteString, une valeur Stricte.</span>
         <span class="n">return</span> <span class="o">$!</span> <span class="kr">data</span>
 </code></pre></div></div>
 
 <p>Voila, c’est tout, c’est <code class="language-plaintext highlighter-rouge">$!</code> qui fait tout le travail en demandant à hashlazy de gentiment s’évaluer.</p>
 
-<p>Et la c’est le bonheur, tout refonctionne et l’on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry><entry xml:lang="fr"><title type="html">C++ - Un gout de programmation fonctionelle</title><link href="/c++-functional-programming-taste/" rel="alternate" type="text/html" title="C++ - Un gout de programmation fonctionelle" /><published>2013-07-12T00:00:00+02:00</published><updated>2013-07-12T00:00:00+02:00</updated><id>/c++-functional-programming-taste</id><content type="html" xml:base="/c++-functional-programming-taste/"><![CDATA[<p>Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.</p>
+<p>Et là c’est le bonheur, tout refonctionne et l’on peut gérer des fichiers arbitrairement grands en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry><entry xml:lang="fr"><title type="html">C++ - Un goût de programmation fonctionnelle</title><link href="/c++-functional-programming-taste/" rel="alternate" type="text/html" title="C++ - Un goût de programmation fonctionnelle" /><published>2013-07-12T00:00:00+02:00</published><updated>2013-07-12T00:00:00+02:00</updated><id>/c++-functional-programming-taste</id><content type="html" xml:base="/c++-functional-programming-taste/"><![CDATA[<p>Dans ce billet, nous allons aborder quelques-unes des nouvelles fonctionnalités offertes par le C++11. Elles sont clairement inspirées de la vie dans le monde fonctionnel.</p>
 
 <h2 id="alpha-beta--kappa-lambda">Alpha, Beta, … Kappa, Lambda!</h2>
 
@@ -3102,13 +3102,13 @@ return (filename, hashed)
 <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">b</span><span class="p">](</span><span class="kt">int</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">};</span>
 </code></pre></div></div>
 
-<p>Les lambda permette de faire la même chose de façon plus légère, et ajoute la sémantique de fonction (i.e. on ne peux pas confondre une lambda et un objet en lisant du code, alors qu’on ‘'’pourrait’’’ avec un foncteur et un objet). Les lambda sont aussi plus proche de d’une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclaré dans l’exemple ci dessus (on peux faire f = g avec f et g deux AFunctor) n’existent pas (sont explicitement supprimé) pour les lambda.</p>
+<p>Les lambda permettent de faire la même chose de façon plus légère, et ajoutent la sémantique de fonction (i.e. on ne peut pas confondre une lambda et un objet en lisant du code, alors qu’on ‘'’pourrait’’’ avec un foncteur et un objet). Les lambda sont aussi plus proches d’une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclarées dans l’exemple ci-dessus (on peut faire f = g avec f et g deux AFunctor) n’existent pas (sont explicitement supprimées) pour les lambda.</p>
 
-<p>Par exemple, le constructeur du type d’une lambda (on rappelle qu’en c++11, on peux obtenir le type de <code class="language-plaintext highlighter-rouge">f</code> avec <code class="language-plaintext highlighter-rouge">decltype(f)</code>. Par exemple <code class="language-plaintext highlighter-rouge">decltype(3.5f)</code> ou <code class="language-plaintext highlighter-rouge">std::vector v; decltype(v)</code>) n’existe pas.</p>
+<p>Par exemple, le constructeur du type d’une lambda (on rappelle qu’en c++11, on peut obtenir le type de <code class="language-plaintext highlighter-rouge">f</code> avec <code class="language-plaintext highlighter-rouge">decltype(f)</code>. Par exemple <code class="language-plaintext highlighter-rouge">decltype(3.5f)</code> ou <code class="language-plaintext highlighter-rouge">std::vector v; decltype(v)</code>) n’existe pas.</p>
 
 <p>Si f est une lambda, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> ne compilera pas. Pourtant, si <code class="language-plaintext highlighter-rouge">f</code> est un <code class="language-plaintext highlighter-rouge">AFunctor</code>, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> compilera et correspond à <code class="language-plaintext highlighter-rouge">AFunctor g;</code>.</p>
 
-<p>Bon, qu’on se rassure, on peux quand même faire une copie d’une lambda :</p>
+<p>Bon, qu’on se rassure, on peut quand même faire une copie d’une lambda :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[](){</span><span class="k">return</span> <span class="mi">42</span><span class="p">};</span>
 
 <span class="k">auto</span>        <span class="n">g1</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
@@ -3122,12 +3122,12 @@ return (filename, hashed)
 
 <h2 id="comment-fonctionne-une-lambda">Comment fonctionne une lambda?</h2>
 
-<p>En fait, c’est très simple, est tout est décrit sur la page “Lambda” du site “CPPReference”.</p>
+<p>En fait, c’est très simple, et tout est décrit sur la page “Lambda” du site “CPPReference”.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">capture</span> <span class="p">]</span> <span class="p">(</span> <span class="n">params</span> <span class="p">)</span> <span class="k">mutable</span> <span class="n">exception</span> <span class="n">attribute</span> <span class="o">-&gt;</span> <span class="n">ret</span> <span class="p">{</span> <span class="n">body</span> <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Dans capture on trouve la façon dont les variables extérieurs à la lambda sont capturé. Il y a deux mode de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veux dire “tout est récupérer par valeur”, et le comportement est identique à une copie des variable(pour les objets comme <code class="language-plaintext highlighter-rouge">std::string</code>, c’est plutôt un <code class="language-plaintext highlighter-rouge">const std::string&amp;</code> que vous recevez). On peux aussi spécifier [&amp;] et toute les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peux expliciter le comportement pour chacune des variables, par exemple :</p>
+<p>Dans capture on trouve la façon dont les variables extérieures à la lambda sont capturées. Il y a deux modes de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veut dire “tout est récupéré par valeur”, et le comportement est identique à une copie des variables (pour les objets comme <code class="language-plaintext highlighter-rouge">std::string</code>, c’est plutôt un <code class="language-plaintext highlighter-rouge">const std::string&amp;</code> que vous recevez). On peut aussi spécifier [&amp;] et toutes les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peut expliciter le comportement pour chacune des variables, par exemple :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="p">;</span>
@@ -3147,16 +3147,16 @@ return (filename, hashed)
 
 <p>La partie “exception” correspond aux spécifications du genre <code class="language-plaintext highlighter-rouge">throw (std::bad_alloc, MyExceptionType)</code> ou encore <code class="language-plaintext highlighter-rouge">noexcept</code> (no throw exception safety).</p>
 
-<p>Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter “mutable”. Cela peux être très utile, si vous voulez appeler des méthodes non const sur une copie d’un objet dans le scope.</p>
+<p>Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter “mutable”. Cela peut être très utile, si vous voulez appeler des méthodes non const sur une copie d’un objet dans le scope.</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]()</span> <span class="k">mutable</span> <span class="p">{</span><span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;}</span>
 </code></pre></div></div>
 
-<p>Petite astuce parfois utile : Si une lambda ne capture aucune variable, alors elle peux être convertie en pointeur de fonction.</p>
+<p>Petite astuce parfois utile : si une lambda ne capture aucune variable, alors elle peut être convertie en pointeur de fonction.</p>
 
 <h2 id="stdfunction-">std::function :</h2>
 
-<p>Les std::function représente des fonctions. Ils sont basé sur les templates variadique (l’un des ajout les plus puissant au langage), que l’on peux espérer disponible sous VisualStudio d’ici 2039 (si l’équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n’importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, …).</p>
+<p>Les std::function représentent des fonctions. Ils sont basés sur les templates variadiques (l’un des ajouts les plus puissants au langage), que l’on peut espérer disponibles sous VisualStudio d’ici 2039 (si l’équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n’importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, …).</p>
 
 <p>En code :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Lambda</span>
@@ -3192,14 +3192,14 @@ return (filename, hashed)
 
 <h2 id="application-partielle">Application partielle.</h2>
 
-<p>Tout ça, pour en venir à vous parler de <code class="language-plaintext highlighter-rouge">std::bind</code>. Quand on travail avec des langages fonctionnels, on peux appeler une fonction avec seulement une partie de ses arguments. On parle d’<em>application partielle</em>. <code class="language-plaintext highlighter-rouge">std::bind</code> permet de reproduire ce comportement. Prenons une innocente fonction :</p>
+<p>Tout ça, pour en venir à vous parler de <code class="language-plaintext highlighter-rouge">std::bind</code>. Quand on travaille avec des langages fonctionnels, on peut appeler une fonction avec seulement une partie de ses arguments. On parle d’<em>application partielle</em>. <code class="language-plaintext highlighter-rouge">std::bind</code> permet de reproduire ce comportement. Prenons une innocente fonction :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">display</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a : "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">" - b :"</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="s">" - c : "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>On peux alors construire, grâce à std::bind, différentes spécialisation de cette fonction :</p>
+<p>On peut alors construire, grâce à std::bind, différentes spécialisations de cette fonction :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//On fixe les trois arguments</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
 <span class="n">f</span><span class="p">();</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
@@ -3207,7 +3207,7 @@ return (filename, hashed)
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
 
-<span class="c1">//Placeholders::_i désigne le i-ième argument lors de l’appelle de f</span>
+<span class="c1">//Placeholders::_i désigne le i-ième argument lors de l’appel de f</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 6 - c : 42</span>
 
@@ -3215,17 +3215,17 @@ return (filename, hashed)
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 10 - c : 20</span>
 
-<span class="c1">//On peux changer l'ordre :</span>
+<span class="c1">//On peut changer l'ordre :</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 20 - c : 10</span>
 
 </code></pre></div></div>
 
-<p>Bien entendu, on peux aussi faire des choses plus complexe (passage des arguments par référence avec <code class="language-plaintext highlighter-rouge">std::ref</code> et <code class="language-plaintext highlighter-rouge">std::cref</code> dans les arguments de bind, pointeurs de fonction membre, pointeur vers membres, etc.).</p>
+<p>Bien entendu, on peut aussi faire des choses plus complexes (passage des arguments par référence avec <code class="language-plaintext highlighter-rouge">std::ref</code> et <code class="language-plaintext highlighter-rouge">std::cref</code> dans les arguments de bind, pointeurs de fonction membre, pointeurs vers membres, etc.).</p>
 
-<p>Si vous vous demandez à quoi ça peux bien servir, et bien dite vous que là où on attend une callback avec une certaine signature (c’est le cas avec beaucoup d’outil de <code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>) vous avez maintenant la possibilité de spécialiser vos fonctions.</p>
+<p>Si vous vous demandez à quoi ça peut bien servir, eh bien dites-vous que là où on attend une callback avec une certaine signature (c’est le cas avec beaucoup d’outils de <code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>) vous avez maintenant la possibilité de spécialiser vos fonctions.</p>
 
-<p>Pour ce qui est du coût, il est faible (celons les cas beaucoup de choses peuvent être optimisé lors de la compilation), et n’est un argument recevable que dans certains cas particulier. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critique, vous pouvez vous lâcher.</p>
+<p>Pour ce qui est du coût, il est faible (selon les cas beaucoup de choses peuvent être optimisées lors de la compilation), et n’est un argument recevable que dans certains cas particuliers. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critiques, vous pouvez vous lâcher.</p>
 
 <p>Voilà, j’espère vous avoir donné un petit aperçu de l’apport du c++11 en matière de manipulation des fonctions.</p>
 
@@ -3234,15 +3234,15 @@ return (filename, hashed)
 <ul>
   <li><a href="http://en.cppreference.com/w/cpp/language/lambda">http://en.cppreference.com/w/cpp/language/lambda</a></li>
   <li><a href="http://en.cppreference.com/w/cpp/utility/functional/function">http://en.cppreference.com/w/cpp/utility/functional/function</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveux aspect fonctionnel du C++ 11. Il y est question de lambdas, et les applications partielles.]]></summary></entry><entry xml:lang="fr"><title type="html">CMake - Mini howto</title><link href="/cmake-howto/" rel="alternate" type="text/html" title="CMake - Mini howto" /><published>2013-06-30T00:00:00+02:00</published><updated>2013-06-30T00:00:00+02:00</updated><id>/cmake-howto</id><content type="html" xml:base="/cmake-howto/"><![CDATA[<h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
+</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveaux aspects fonctionnels du C++ 11. Il y est question de lambdas et d'applications partielles.]]></summary></entry><entry xml:lang="fr"><title type="html">CMake - Mini howto</title><link href="/cmake-howto/" rel="alternate" type="text/html" title="CMake - Mini howto" /><published>2013-06-30T00:00:00+02:00</published><updated>2013-06-30T00:00:00+02:00</updated><id>/cmake-howto</id><content type="html" xml:base="/cmake-howto/"><![CDATA[<h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
 
-<p>CMake est un utilitaire permettant de générer le “build process” d’un projet. C’est un outils du même genre que les autotools (aussi appelé pour des raisons que je tairai ‘autohell’) en</p>
+<p>CMake est un utilitaire permettant de générer le “build process” d’un projet. C’est un outil du même genre que les autotools (aussi appelés pour des raisons que je tairai ‘autohell’) en</p>
 
 <ul>
   <li>Plus simple à configurer</li>
-  <li>Plus récent (donc moins de façons de procédé obscures)</li>
+  <li>Plus récent (donc moins de façons de procéder obscures)</li>
   <li>Plus performant (dans le sens où, avec cmake, compiler un projet à l’extérieur du repository est extrêmement simple et agréable!)</li>
-  <li>Vous êtes libre d’organiser vos répertoires/fichier comme vous le désirez.</li>
+  <li>Vous êtes libre d’organiser vos répertoires/fichiers comme vous le désirez.</li>
 </ul>
 
 <p>Il est bon aussi de savoir que CMake est capable de générer aussi bien des Makefiles que des fichiers de projet VC++ ou XCode (pas mal, hein?).</p>
@@ -3251,33 +3251,33 @@ return (filename, hashed)
 
 <p>##Comment on s’en sert ?</p>
 
-<p>On connais tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien salle dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore du votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="language-plaintext highlighter-rouge">cmake .</code> puis <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="language-plaintext highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="language-plaintext highlighter-rouge">cmake ..</code> et <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Dite bonjour a la propreté de votre projet grâce à CMake ;)</p>
+<p>On connaît tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien sales dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore de votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="language-plaintext highlighter-rouge">cmake .</code> puis <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="language-plaintext highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="language-plaintext highlighter-rouge">cmake ..</code> et <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Dites bonjour à la propreté de votre projet grâce à CMake ;)</p>
 
 <p>##Comment ça fonctionne ?</p>
 
-<p>C’est là qu’est le plus beau. Configurer CMake pour un projet, gérer les dépendances de libs, générer les libs, voir même générer les packages (que ce soit des packages archlinux, debian …). On prend très vite en main, c’est claire, et la documentation est excellente.</p>
+<p>C’est là qu’est le plus beau. Configurer CMake pour un projet, gérer les dépendances de libs, générer les libs, voire même générer les packages (que ce soit des packages archlinux, debian …). On prend très vite en main, c’est clair, et la documentation est excellente.</p>
 
-<p>Je ne vais pas détailler comment construire un fichier de config ; le <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial CMake</a> le fait déjà très bien, et l’on trouve tout ce qu’il manque dans le wiki. (Notez que dans un VRAI projet, il vous faudra un peu plus que le tutorial). Je vais aborder les idées générales et les petites astuces qui m’ont servies.</p>
+<p>Je ne vais pas détailler comment construire un fichier de config ; le <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial CMake</a> le fait déjà très bien, et l’on trouve tout ce qu’il manque dans le wiki. (Notez que dans un VRAI projet, il vous faudra un peu plus que le tutorial). Je vais aborder les idées générales et les petites astuces qui m’ont servi.</p>
 
-<p>D’abord, on place les instructions dans un fichier CMakeLists.txt a la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossier grâce à <code class="language-plaintext highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="language-plaintext highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
+<p>D’abord, on place les instructions dans un fichier CMakeLists.txt à la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossiers grâce à <code class="language-plaintext highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="language-plaintext highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
 
-<p>On peut facilement demander a cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendras soin d’ajouter <code class="language-plaintext highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
+<p>On peut facilement demander à cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendra soin d’ajouter <code class="language-plaintext highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
 
-<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp a la liste des fichiers du projet). Avec <code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> le liste des fichiers figure dans la variable “SOURCE_FILES”. Si il vous faut exclure certains fichiers, vous pouvez utiliser :
+<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp à la liste des fichiers du projet). Avec <code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> la liste des fichiers figure dans la variable “SOURCE_FILES”. S’il vous faut exclure certains fichiers, vous pouvez utiliser :
 <code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE UNWANTED_FILES src/FichierAExclure.cpp SRC)
 list (REMOVE_ITEM SOURCE_FILES ${UNWANTED_FILES})</code></p>
 
 <p>Si vous êtes fan des tests unitaires, CMake propose une façon agréable de lancer des tests avec :
-<code class="language-plaintext highlighter-rouge">add_test (NAME NomDuTeste WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
-Ça vas de “lancer un programme et vérifier qu’il EXIT_SUCCESS” à “vérifier que la sortie du programme contient cette expression”.</p>
+<code class="language-plaintext highlighter-rouge">add_test (NAME NomDuTest WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
+Ça va de “lancer un programme et vérifier qu’il EXIT_SUCCESS” à “vérifier que la sortie du programme contient cette expression”.</p>
 
-<p>Chose utile, que ne fournissent pas les autotools, c’est une façon unifiée de gèrer le numéro de version de l’application ; Toute les variables d’un CMakeListes peuvent être utiliser pour générer des fichiers à partir de templates (souvent le nom du fichier avec le suffixe .in). En pratique, on définit VERSION_MAJOR et VERSION_MINOR, puis on génère un Version.h, un doxyfile, et on utilise les valeurs pour générer les noms des bibliothèques exportés. C’est simple, intuitif, et très bien expliqué dans le tutoriel. Faire une release se limite alors a changer le numéro de version dans un fichier, et de lancer la compilation pour obtenir les binaires et packages.</p>
+<p>Chose utile, que ne fournissent pas les autotools, c’est une façon unifiée de gérer le numéro de version de l’application ; Toutes les variables d’un CMakeLists peuvent être utilisées pour générer des fichiers à partir de templates (souvent le nom du fichier avec le suffixe .in). En pratique, on définit VERSION_MAJOR et VERSION_MINOR, puis on génère un Version.h, un doxyfile, et on utilise les valeurs pour générer les noms des bibliothèques exportées. C’est simple, intuitif, et très bien expliqué dans le tutoriel. Faire une release se limite alors à changer le numéro de version dans un fichier, et de lancer la compilation pour obtenir les binaires et packages.</p>
 
 <p>CMake dispose aussi d’un système de macros, pour faciliter la vie des maintainers, et l’on comprend donc que de plus en plus de projets tendent à l’utiliser.</p>
 
 <p>Un fichier de configuration emacs est disponible (depuis la doc de cmake) pour ajouter un “cmake-mode”, et se charge avec, par exemple, <code class="language-plaintext highlighter-rouge">(load "~/.emacs.d/cmake-mode.el")</code>.</p>
 
-<p>On peux aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeListes dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="language-plaintext highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de fonfiguration CMake par <code class="language-plaintext highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
+<p>On peut aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeLists dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="language-plaintext highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de configuration CMake par <code class="language-plaintext highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(DOXYGEN_FOUND)
   configure_file(${DOXYGEN_TEMPLATE_FILE}
     ${DOXYGEN_CONFIGURED_FILE}
@@ -3291,11 +3291,11 @@ list (REMOVE_ITEM SOURCE_FILES ${UNWANTED_FILES})</code></p>
     )
 endif(DOXYGEN_FOUND)
 </code></pre></div></div>
-<p>où le @ONLY signifie que seul les mots entouré d’@ seront remplacé (Sinon, les ${SOMETHING} sont aussi affectés).</p>
+<p>où le @ONLY signifie que seuls les mots entourés d’@ seront remplacés (Sinon, les ${SOMETHING} sont aussi affectés).</p>
 
 <h2 id="conclusion-">Conclusion :</h2>
 
-<p>Ce qu’il faut retenir, c’est que CMake est simple à configurer, offre de nombreuses fonctionnalités, et laisse la possibilité d’ajouter celles manquantes. Beaucoup de gens sont encore habitué au ./configure, et sont effrayé par cette nouvelle façon d’aborder ce problème. Pourtant, CMake est un réel gain de temps, et l’on voit des gros projets comme KDE changer de build system pour CMake.  On peux même l’utiliser pour de minuscule projets (compiler les .cpp d’un dossier en un exécutable, sans dépendances particulières, se fait avec un fichier de configuration de 3 lignes), et je vous encourage justement à le faire. Trois lignes pour avoir une gestion automatique des dépendances des .h, génération des makefiles, le tout multiplateforme, ce n’est pas cher payé.</p>
+<p>Ce qu’il faut retenir, c’est que CMake est simple à configurer, offre de nombreuses fonctionnalités, et laisse la possibilité d’ajouter celles manquantes. Beaucoup de gens sont encore habitués au ./configure, et sont effrayés par cette nouvelle façon d’aborder ce problème. Pourtant, CMake est un réel gain de temps, et l’on voit des gros projets comme KDE changer de build system pour CMake.  On peut même l’utiliser pour de minuscules projets (compiler les .cpp d’un dossier en un exécutable, sans dépendances particulières, se fait avec un fichier de configuration de 3 lignes), et je vous encourage justement à le faire. Trois lignes pour avoir une gestion automatique des dépendances des .h, génération des makefiles, le tout multiplateforme, ce n’est pas cher payé.</p>
 
 <h3 id="resources-">Resources :</h3>
 <ul>

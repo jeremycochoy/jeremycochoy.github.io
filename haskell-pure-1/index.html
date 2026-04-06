@@ -105,13 +105,13 @@
       <div class="post">
   <h1 class="post-title">Le Haskell, un langage au label pure. Première partie.</h1>
   <span class="post-date">07 Apr 2013</span>
-  <p>Mauvais jeux de mots mit à part, ce très court et succin billet (vous me voyez venir) va traiter du haskell. Haskell, de monsieur Haskell Brook Curry, un monsieur très épicé, est un langage fonctionnel. Comme beaucoup de langages fonctionnel, cela représente un choque culturel que de les appréhender. Mais le haskell semble avoir un petit quelque chose que n’ont pas les autres langages fonctionnels. À travers les trois prochains billets, j’espère vous convaincre que, si un jour, dans votre vie, vous avez l’occasion de creuser un language fonctionnel, alors vous devriez creuser le haskell.</p>
+  <p>Mauvais jeux de mots mis à part, ce très court et succinct billet (vous me voyez venir) va traiter du haskell. Haskell, de monsieur Haskell Brook Curry, un monsieur très épicé, est un langage fonctionnel. Comme beaucoup de langages fonctionnels, cela représente un choc culturel que de les appréhender. Mais le haskell semble avoir un petit quelque chose que n’ont pas les autres langages fonctionnels. À travers les trois prochains billets, j’espère vous convaincre que, si un jour, dans votre vie, vous avez l’occasion de creuser un langage fonctionnel, alors vous devriez creuser le haskell.</p>
 
 <p>La <a href="http://zenol.fr/site/blog/posts/haskell-pure-2/fr.htm" title="Le Haskell, un langage au label pure. Seconde partie.">seconde partie est disponible ici</a>.</p>
 
-<p>On y vas tout en douceur. Curryfication et typage, pour ceux qui n’ont pas déjà découvert les joies (les dolipranes?) qu’apportent ces derniers. Si vous avez déjà eu à toucher à des langages fonctionnels, vous souhaiterez sûrement passer directement à la seconde partie où j’aborderais les diverses fonctionnalités original du haskell, comme les fameuses liste infinies dont tout le monde parle, mais dont trop peu se doutent de l’utilité. On parleras de data driven programming, de fonctions sans effets de bord et de parallélisation des calculs en haskell (avec un VRAI exemple!). Enfin, apogée, moment de transe et de plaisir inégale, on abordera la huitième merveille du monde : les monades.</p>
+<p>On y va tout en douceur. Curryfication et typage, pour ceux qui n’ont pas déjà découvert les joies (les dolipranes?) qu’apportent ces derniers. Si vous avez déjà eu à toucher à des langages fonctionnels, vous souhaiterez sûrement passer directement à la seconde partie où j’aborderai les diverses fonctionnalités originales du haskell, comme les fameuses liste infinies dont tout le monde parle, mais dont trop peu se doutent de l’utilité. On parlera de data driven programming, de fonctions sans effets de bord et de parallélisation des calculs en haskell (avec un VRAI exemple!). Enfin, apogée, moment de transe et de plaisir inégalé, on abordera la huitième merveille du monde : les monades.</p>
 
-<h2 id="ce-que-tout-le-monde-sais-déjà-ou-pas">Ce que tout le monde sais déjà… ou pas.</h2>
+<h2 id="ce-que-tout-le-monde-sait-déjà-ou-pas">Ce que tout le monde sait déjà… ou pas.</h2>
 
 <p>Faisons un petit retour sur ce que l’on retrouve dans tous les langages fonctionnels, et ce qui les rend si différents.</p>
 
@@ -124,7 +124,7 @@
 <span class="n">addOne</span> <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">42</span>
 </code></pre></div></div>
 
-<p>La première ligne est le typage de la fonction (souvent facultatif), et la seconde est le corps de la fonction. En C++, ça donnerais :</p>
+<p>La première ligne est le typage de la fonction (souvent facultatif), et la seconde est le corps de la fonction. En C++, ça donnerait :</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="n">T</span> <span class="nf">mult</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
@@ -139,28 +139,28 @@
 
 <p>En fait, le <code class="language-plaintext highlighter-rouge">n</code> qui apparaît dans le type peut être remplacé par n’importe quel lettre/mot qui vous plaît. Cela signifie un type quelconque, qui respecte la contrainte “<em>peut être multiplié</em>” décrite par <code class="language-plaintext highlighter-rouge">(Num n) =&gt;</code>.</p>
 
-<p>La présence de <code class="language-plaintext highlighter-rouge">Num</code> correspond à la nécessiter d’avoir, dans le code c++, une surcharge de l’opérateur *. Remarquez qu’une fonction en haskell correspond naturellement a une fonction template, à moins de forcer les types à être moins “puissant”, comme par exemple :</p>
+<p>La présence de <code class="language-plaintext highlighter-rouge">Num</code> correspond à la nécessité d’avoir, dans le code c++, une surcharge de l’opérateur *. Remarquez qu’une fonction en haskell correspond naturellement à une fonction template, à moins de forcer les types à être moins “puissants”, comme par exemple :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
 <span class="n">mult</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
 </code></pre></div></div>
 
-<p>Qui ne sais plus que multiplier des entiers.</p>
+<p>Qui ne sait plus que multiplier des entiers.</p>
 
 <h3 id="curryfication">Curryfication</h3>
 
-<p>La curryfication est essentiellement un changement de point de vue. On peux considérer une fonctions prenant deux nombres, et retournant une valeur. Mais on peut aussi changer de point de vue et considérer une fonction prenant un nombre, et renvoyant une nouvelle fonction, prenant un nombre, et retournant une valeur.</p>
+<p>La curryfication est essentiellement un changement de point de vue. On peut considérer une fonction prenant deux nombres, et retournant une valeur. Mais on peut aussi changer de point de vue et considérer une fonction prenant un nombre, et renvoyant une nouvelle fonction, prenant un nombre, et retournant une valeur.</p>
 
 <p>Cela explique l’étrange notation pour le type de la fonction mult. En fait, l’opérateur “-&gt;” est associatif à droite, c’est à dire qu’il fallait lire :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Où <code class="language-plaintext highlighter-rouge">X -&gt; Y</code> indique que la fonction prend du type X et retourne du type Y. Ainsi, <code class="language-plaintext highlighter-rouge">n -&gt; n</code> signifie prend un type n quelconque et renvoi quelque chose du même type. C’est le type d’une fonction. Si l’on veux un exemple plus concret, <code class="language-plaintext highlighter-rouge">Int-&gt; (Float-&gt;Double)</code> signifie une fonction qui prend un entier, puis renvoi une nouvelle fonction. Cette dernière prend un float et le transforme en un double.</p>
+<p>Où <code class="language-plaintext highlighter-rouge">X -&gt; Y</code> indique que la fonction prend du type X et retourne du type Y. Ainsi, <code class="language-plaintext highlighter-rouge">n -&gt; n</code> signifie prend un type n quelconque et renvoie quelque chose du même type. C’est le type d’une fonction. Si l’on veut un exemple plus concret, <code class="language-plaintext highlighter-rouge">Int-&gt; (Float-&gt;Double)</code> signifie une fonction qui prend un entier, puis renvoie une nouvelle fonction. Cette dernière prend un float et le transforme en un double.</p>
 
 <p>Partant de ce point de vue, il est très simple de fixer les premiers arguments d’une fonction curryfiée. L’application d’un élément à un autre étant associatif à gauche, il suffit de l’appeler avec une partie de ses arguments. (Et oui, puisque écrire <code class="language-plaintext highlighter-rouge">mult a b</code> signifie alors <code class="language-plaintext highlighter-rouge">((mult a) b)</code>. C’est à dire appliquer <code class="language-plaintext highlighter-rouge">mult</code> à <code class="language-plaintext highlighter-rouge">a</code> pour obtenir une fonction qui “<em>prend un entier et le multiplie par a</em>”, puis évaluer cette fonction sur l’entier b.)</p>
 
 <p>Par exemple, <code class="language-plaintext highlighter-rouge">nouvelle_fonction = mult 42</code> correspond à fixer la première valeur de la fonction <code class="language-plaintext highlighter-rouge">mul</code> à <code class="language-plaintext highlighter-rouge">42</code>.</p>
 
-<p>En C++, il faudrais écrire</p>
+<p>En C++, il faudrait écrire</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="n">T</span> <span class="nf">nouvelle_fonction</span><span class="p">(</span><span class="n">T</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
@@ -169,17 +169,17 @@
 </code></pre></div></div>
 
 <p>Pour finir, puisque l’on est en plein dans la manipulation de fonctions, on peut écrire une fonction comme une valeur, et la stocker dans une “variable”.</p>
-<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Pour écrire une fonction "anonyme", qui prend trois arguments et renvoi 42, on peut écrire</span>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Pour écrire une fonction "anonyme", qui prend trois arguments et renvoie 42, on peut écrire</span>
 <span class="c1">-- (\x y z -&gt; 42)</span>
 <span class="c1">-- Où x y z seront les trois arguments, et ce qui suit -&gt; est la "valeur de retour".</span>
-<span class="c1">-- On aurais donc pu écrire la fonction mult de la façon suivante :</span>
+<span class="c1">-- On aurait donc pu écrire la fonction mult de la façon suivante :</span>
 <span class="n">mult</span> <span class="o">=</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span>
 
 <span class="c1">--On peut aussi écrire \a -&gt; \b -&gt; à la place de \a b, grâce à la curryfication.</span>
 </code></pre></div></div>
-<p>Le typage est bien sur facultatif.</p>
+<p>Le typage est bien sûr facultatif.</p>
 
-<p>On a alors deux petites fonctions bien pratique pour manipuler des fonctions ; l’identité et la composition :</p>
+<p>On a alors deux petites fonctions bien pratiques pour manipuler des fonctions ; l’identité et la composition :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">id</span> <span class="o">=</span> <span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
 <span class="n">a</span> <span class="o">.</span> <span class="n">b</span> <span class="o">=</span> <span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="p">(</span><span class="n">b</span> <span class="n">x</span><span class="p">)</span>
 </code></pre></div></div>
@@ -189,7 +189,7 @@
 <span class="n">superFct</span> <span class="o">=</span> <span class="n">mult</span> <span class="mi">2</span> <span class="o">.</span> <span class="n">add</span> <span class="mi">3</span>
 </code></pre></div></div>
 
-<p>Enfin, on aurais pu écrire :</p>
+<p>Enfin, on aurait pu écrire :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mult</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <span class="n">add</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span>
 <span class="n">superFct</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">)</span> <span class="o">.</span> <span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="p">)</span>
@@ -197,16 +197,16 @@
 
 <h3 id="typage">Typage</h3>
 
-<p>Les types, en langage fonctionnel, disent beaucoup de choses, et sont lourd de sens.
+<p>Les types, en langage fonctionnel, disent beaucoup de choses, et sont lourds de sens.
 En haskell, une liste d’entiers se note <code class="language-plaintext highlighter-rouge">[Int]</code>. Si <code class="language-plaintext highlighter-rouge">a</code> est un type, alors une liste de <code class="language-plaintext highlighter-rouge">a</code> est de type <code class="language-plaintext highlighter-rouge">[a]</code>. Les chaînes de caractères sont par exemple des <code class="language-plaintext highlighter-rouge">[Char]</code>.</p>
 
-<p>Alors, que devrait faire une fonction de type <code class="language-plaintext highlighter-rouge">(a -&gt; b) -&gt; [a] -&gt; [b]</code>? Et bien, elle prend une fonction <em>transformant du a en b</em> que l’on appellera f, une <em>liste de a</em>, et produit une <em>liste de b</em>. Le bon sens veux que cette fonction applique f à chaque élément de la <em>liste de a</em>, pour produire une <em>liste de b</em>.</p>
+<p>Alors, que devrait faire une fonction de type <code class="language-plaintext highlighter-rouge">(a -&gt; b) -&gt; [a] -&gt; [b]</code>? Et bien, elle prend une fonction <em>transformant du a en b</em> que l’on appellera f, une <em>liste de a</em>, et produit une <em>liste de b</em>. Le bon sens veut que cette fonction applique f à chaque élément de la <em>liste de a</em>, pour produire une <em>liste de b</em>.</p>
 
-<p>Encore un, pour la route. Que dire du type <code class="language-plaintext highlighter-rouge">[[a]] -&gt; [a]</code>? On prend une <em>liste de liste</em>, et on produit <em>une liste</em>. La première chose qui nous vient à l’esprit est de concaténer toute ces listes les unes à la suite des autres pour n’en produire plus qu’une.</p>
+<p>Encore un, pour la route. Que dire du type <code class="language-plaintext highlighter-rouge">[[a]] -&gt; [a]</code>? On prend une <em>liste de liste</em>, et on produit <em>une liste</em>. La première chose qui nous vient à l’esprit est de concaténer toutes ces listes les unes à la suite des autres pour n’en produire plus qu’une.</p>
 
 <p>Voyez tout ce qu’on peut deviner sur le comportement d’une fonction grâce aux types.</p>
 
-<p>Pour éviter les noms à rallonge, on peu aussi construire des alias de type. Plutôt que décrire <code class="language-plaintext highlighter-rouge">[Char]</code>, on peut écrire <code class="language-plaintext highlighter-rouge">String</code>, définit par :</p>
+<p>Pour éviter les noms à rallonge, on peut aussi construire des alias de type. Plutôt que décrire <code class="language-plaintext highlighter-rouge">[Char]</code>, on peut écrire <code class="language-plaintext highlighter-rouge">String</code>, défini par :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">type</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
 </code></pre></div></div>
 
@@ -221,9 +221,9 @@ En haskell, une liste d’entiers se note <code class="language-plaintext highli
 <p>Grâce à ces alias, vous avez une idée claire du comportement de la fonction getSomeone simplement en lisant son type.</p>
 
 <p>Mais le meilleur est à venir : les constructeurs de type.
-Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se rapprocherais plutôt de la structure, et encore…</p>
+Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se rapprocherait plutôt de la structure, et encore…</p>
 
-<p>Pou faire bref, les constructeur permettent de fabriquer des instances d’un type. Considérons quelques types :</p>
+<p>Pour faire bref, les constructeurs permettent de fabriquer des instances d’un type. Considérons quelques types :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Personne</span> <span class="o">=</span> <span class="kt">ConstructeurDePersonne</span> <span class="kt">Nom</span> <span class="kt">Prenom</span> <span class="kt">Identifiant</span>
 <span class="kr">data</span> <span class="kt">Reponse</span> <span class="o">=</span> <span class="kt">Oui</span> <span class="o">|</span> <span class="kt">Non</span>
 <span class="kr">data</span> <span class="kt">LaValeur</span> <span class="o">=</span> <span class="kt">Entier</span> <span class="kt">Int</span> <span class="o">|</span> <span class="kt">Flotant</span> <span class="kt">Float</span>
@@ -231,7 +231,7 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
 <span class="kr">data</span> <span class="kt">ArbreEntier</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="kt">Int</span> <span class="kt">Arbre</span> <span class="kt">Arbre</span> <span class="o">|</span> <span class="kt">Vide</span>
 </code></pre></div></div>
 
-<p>Le premier type, <code class="language-plaintext highlighter-rouge">Personne</code>, est une structure à trois champs. Le second, est un type booléen, qui peut soit être construit par le constructeur <em>Oui</em>, soit par le constructeur <em>Non</em>. Le troisième est une union pouvant contenir un <code class="language-plaintext highlighter-rouge">Int</code> ou un <code class="language-plaintext highlighter-rouge">Float</code>, et les derniers sont respectivement un type liste d’entier et arbre binaire d’entier. Le système de types permet de considérer des objets plus proche des données représentée, et de s’abstraire de l’implémentation.</p>
+<p>Le premier type, <code class="language-plaintext highlighter-rouge">Personne</code>, est une structure à trois champs. Le second, est un type booléen, qui peut soit être construit par le constructeur <em>Oui</em>, soit par le constructeur <em>Non</em>. Le troisième est une union pouvant contenir un <code class="language-plaintext highlighter-rouge">Int</code> ou un <code class="language-plaintext highlighter-rouge">Float</code>, et les derniers sont respectivement un type liste d’entier et arbre binaire d’entier. Le système de types permet de considérer des objets plus proches des données représentées, et de s’abstraire de l’implémentation.</p>
 
 <p>Donnons une correspondance C++ des deux derniers exemples dans leur version “polymorphique”, où Liste et Arbre deviennent des constructeurs de type, et prennent donc en paramètre le type qu’ils doivent contenir.</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Liste</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Element</span> <span class="n">a</span> <span class="kt">Liste</span> <span class="o">|</span> <span class="kt">Vide</span>
@@ -276,9 +276,9 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
 <span class="n">racine</span> <span class="o">=</span> <span class="kt">Noeud</span> <span class="mi">4</span> <span class="p">(</span><span class="kt">Noeud</span> <span class="mi">2</span> <span class="kt">Vide</span> <span class="kt">Vide</span><span class="p">)</span> <span class="p">(</span><span class="kt">Noeud</span> <span class="mi">6</span> <span class="kt">Vide</span> <span class="kt">Vide</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="patern-matching">Patern matching</h3>
+<h3 id="pattern-matching">Pattern matching</h3>
 
-<p>Si l’on peut construire des types, on peut aussi les détruire, où plus précisément, les dès-construire. Partant d’un objet de type liste, on peut vouloir récupérer le première élément, si la liste n’est pas vide. Cela se fait en faisant matcher un pattern sur l’instance d’un type :</p>
+<p>Si l’on peut construire des types, on peut aussi les détruire, où plus précisément, les dé-construire. Partant d’un objet de type liste, on peut vouloir récupérer le premier élément, si la liste n’est pas vide. Cela se fait en faisant matcher un pattern sur l’instance d’un type :</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">obtenirNom</span> <span class="p">(</span><span class="kt">ConstructeurDePersonne</span> <span class="n">nom</span> <span class="kr">_</span> <span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">nom</span>
 
@@ -298,7 +298,7 @@ Attention, un constructeur en haskell est tout sauf un constructeur C++. Ça se 
 
 <p><strong>Nb :</strong> Le caractère ‘ est un caractère valide comme un autre pour un nom de fonction ou de variable (bien qu’en fait, en haskell, il n’existe pas de variable au sens usuel).</p>
 
-<p>Voilà, ce seras tout pour aujourd’hui :)</p>
+<p>Voilà, ce sera tout pour aujourd’hui :)</p>
 
 <h2 id="références-">Références :</h2>
 

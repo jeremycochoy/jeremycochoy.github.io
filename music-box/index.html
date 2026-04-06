@@ -105,17 +105,17 @@
       <div class="post">
   <h1 class="post-title">Boite à musique Arduino</h1>
   <span class="post-date">16 Aug 2013</span>
-  <p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carré, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournis avec les libs de l’arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires près-calculés, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
+  <p>Dans la lignée du dépoussiérage de vieux codes, j’ai ressorti un jeu de quelques fonctions pour Arduino que je n’avais pas eu le temps de publier. Il s’agit d’une certaine façon d’une bibliothèque similaire à la lib “Tone” fournie avec l’Arduino. Toutefois, contrairement à cette dernière, c’est bien un instrument polyphonique dont vous disposez. À dire vrai, il y a 4 canaux d’onde carrée, et un canal de bruit. On peut de plus régler l’amplitude sonore de chacun des canaux entre 0 (minimum) et 255 (maximum). Il y a tout de même une contrainte ; la somme des amplitudes ne doit pas excéder 255. Ainsi, jouer de la musique est relativement simple. Il suffit de choisir la fréquence et l’amplitude de chaque canal, puis d’attendre un certain laps de temps (fonction delay fournie avec les libs de l’Arduino) avant de recommencer. Le bruit est généré grâce à une table de valeurs aléatoires pré-calculées, pour des raisons de performances. Vous pouvez réduire ou augmenter la taille de cette table à votre guise, un “script C++”(trop peu de lignes pour parler de programme) permettant de générer le header.</p>
 
 <p>Tout ceci est plutôt abstrait, alors regardons cela de plus près.</p>
 
 <h2 id="montage-de-test-">Montage de test :</h2>
 
-<p>Le montage de test est très similaire à celui du tutoriel tone. Seul change le port sur lequel vous devez connecter votre speacker.</p>
+<p>Le montage de test est très similaire à celui du tutoriel tone. Seul change le port sur lequel vous devez connecter votre speaker.</p>
 
 <p><a href="data/music_box_arduino.png"><img src="data/music_box_arduino.png" alt="Montage arduino" /></a></p>
 
-<p>Donc, une résistance d’une centaine d’ohms (prenez ce que vous avez sous la main, plus la résistance sera élevée, moins le volume le sera) reliée à un speacker, ou bien à une prise JACK pour brancher vos enceintes favorites.</p>
+<p>Donc, une résistance d’une centaine d’ohms (prenez ce que vous avez sous la main, plus la résistance sera élevée, moins le volume le sera) reliée à un speaker, ou bien à une prise JACK pour brancher vos enceintes favorites.</p>
 
 <p>Si vous souhaitez changer le port de sortie, il vous faudra toucher au code (et au code asm aussi :/) car le code utilise un mécanisme de l’ATMEGA328P qui n’est disponible que sur les ports 11, 10, 9, 6, 5 et 3 de l’arduino (ceux marqués d’une petite vague). De plus, si vous souhaitez utiliser le port 3 conjointement à ce code, vous risquez d’avoir quelques soucis. (Ces ports sont regroupés en paires, et chaque port d’une paire ne peut émettre un signal qu’à la même fréquence. Vous ne pourrez pas non plus utiliser l’interruption du timer 2, utilisé par ces deux ports. Ici, le code utilise la fréquence maximum possible, donc cela ne devrait à priori pas poser de soucis pour les utilisations les plus simples du port 3, comme contrôler l’intensité lumineuse d’une led).</p>
 
@@ -129,7 +129,7 @@ Dans un premier temps, il faut initialiser la lib en appelant <code class="langu
 <span class="k">extern</span> <span class="kt">int</span> <span class="n">square4_period</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>En fait, c’est la période de l’onde qui est stockée, exprimée en 62500ième de seconde. Une macro, frequency_to_period(f), s’occupe de convertir une fréquence f (en Hz) en une période. Un exemple d’utilisation serait :</p>
+<p>En fait, c’est la période de l’onde qui est stockée, exprimée en 62500e de seconde. Une macro, frequency_to_period(f), s’occupe de convertir une fréquence f (en Hz) en une période. Un exemple d’utilisation serait :</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">square1_period</span> <span class="o">=</span> <span class="n">frequency_to_period</span><span class="p">(</span><span class="mi">440</span><span class="p">);</span> <span class="c1">//Le LA de référence est à 440Hz</span>
 </code></pre></div></div>
 
@@ -154,7 +154,7 @@ Dans un premier temps, il faut initialiser la lib en appelant <code class="langu
 </code></pre></div></div>
 <p>C’est un canal qui émet un son similaire à celui d’un vieux téléviseur sans antennes, un “Tshhhhh” très caractéristique. À nouveau, en faisant varier l’amplitude (on parle de modulation d’amplitude), vous pouvez créer le timbre de divers instruments de percussion. La fonction <code class="language-plaintext highlighter-rouge">play_seawave();</code> est un exemple.</p>
 
-<p>Le bruit est près calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
+<p>Le bruit est pré-calculé grâce au programme C++ <em>generate_white_noise.cpp.src</em> (qui n’est autre qu’un fichier .cpp). Vous pouvez le bidouiller pour diminuer ou agrandir la table.</p>
 
 <h1 id="code-et-exemple-de-test">Code et exemple de test</h1>
 
@@ -1389,14 +1389,14 @@ void loop()
 
 <h2 id="extrait-sonore-du-code-de-démonstration">Extrait sonore du code de démonstration</h2>
 
-<p>Pour vous montrer que je ne plaisante pas quand à la polyphonie, voici deux extraits utilisant 2 canaux. (Bon, le dernier accord en utilise 3, mais on ne s’en rend pas compte.)</p>
+<p>Pour vous montrer que je ne plaisante pas quant à la polyphonie, voici deux extraits utilisant 2 canaux. (Bon, le dernier accord en utilise 3, mais on ne s’en rend pas compte.)</p>
 
 <p><a href="data/arduino_tetris.mp3">Première partie</a>
 <a href="data/arduino_tetris_effects.mp3">Seconde partie</a></p>
 
 <h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
 
-<p>N’hésitez pas à supprimer quelques canaux, comme le 4ième canal, si vous ne l’utilisez pas et trouvez que votre application est trop lente (i.e. supprimer le bloc de code suivant).</p>
+<p>N’hésitez pas à supprimer quelques canaux, comme le 4e canal, si vous ne l’utilisez pas et trouvez que votre application est trop lente (i.e. supprimer le bloc de code suivant).</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//---------------</span>
   <span class="c1">//-  SQUARE  4  -</span>
   <span class="c1">//---------------</span>
@@ -1404,7 +1404,7 @@ void loop()
   <span class="c1">//---------------</span>
 </code></pre></div></div>
 
-<p>Vous pouvez aussi supprimer le canal de bruit et le tableau white_noise.h pour gagner un peu de mémoire. Bref, faite ce que vous voulez de ce code!</p>
+<p>Vous pouvez aussi supprimer le canal de bruit et le tableau white_noise.h pour gagner un peu de mémoire. Bref, faites ce que vous voulez de ce code!</p>
 
 <h3 id="quelques-références-">Quelques références :</h3>
 

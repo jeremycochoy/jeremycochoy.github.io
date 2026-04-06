@@ -105,15 +105,15 @@
       <div class="post">
   <h1 class="post-title">Haskell - Lazy IO</h1>
   <span class="post-date">16 Jul 2013</span>
-  <p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présent en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
+  <p>Ces derniers jours, j’écrivais un script haskell qui repère les fichiers présents en double, et propose de ne conserver qu’un exemplaire. Très pratique pour faire un peu de rangement, par exemple parmi une centaine de PDF que je ne lirais jamais.</p>
 
-<p>Je vais ici vous parler de la phase de hachage des fichiers pour les trier et déterminer les doublons. Et oui, on ne vas pas comparer le contenu de tous les fichiers entre eux, ça serait en n^2 par rapport au nombre de fichiers. On ne veux pas non plus attendre une journée.</p>
+<p>Je vais ici vous parler de la phase de hachage des fichiers pour les trier et déterminer les doublons. Et oui, on ne va pas comparer le contenu de tous les fichiers entre eux, ça serait en n^2 par rapport au nombre de fichiers. On ne veut pas non plus attendre une journée.</p>
 
-<p>Je parlerais donc de la lecture du contenu des fichiers pour produire leur hash. Le trie des paires (Nom du fichier, hash) et l’affichage étant trivial et sans intérêt.</p>
+<p>Je parlerai donc de la lecture du contenu des fichiers pour produire leur hash. Le tri des paires (Nom du fichier, hash) et l’affichage étant trivial et sans intérêt.</p>
 
 <h1 id="strict-io-">Strict IO ?</h1>
 
-<p>La première approche est souvent la plus simple. Nous voulons le hash d’un fichier? Et bien il suffit d’utiliser la fonction <code class="language-plaintext highlighter-rouge">hash :: String -&gt; ByteString</code> du package <code class="language-plaintext highlighter-rouge">Crypto.Hash.SHA1</code> (SHA1, MD5, MD4, SHA256 … celons vos gouts). Pour obtenir le contenue du fichier, on peux utiliser <code class="language-plaintext highlighter-rouge">readFile :: FilePath -&gt; IO String</code>.</p>
+<p>La première approche est souvent la plus simple. Nous voulons le hash d’un fichier? Et bien il suffit d’utiliser la fonction <code class="language-plaintext highlighter-rouge">hash :: String -&gt; ByteString</code> du package <code class="language-plaintext highlighter-rouge">Crypto.Hash.SHA1</code> (SHA1, MD5, MD4, SHA256 … selon vos goûts). Pour obtenir le contenu du fichier, on peut utiliser <code class="language-plaintext highlighter-rouge">readFile :: FilePath -&gt; IO String</code>.</p>
 
 <p>Cela nous donne :</p>
 <pre><code class="language-{.haskell}">getHash :: String -&gt; (String, ByteString)
@@ -122,15 +122,15 @@ getHash filename = do
     return (filename, hashed)
 </code></pre>
 
-<p>Il suffit alors d’appliquer <code class="language-plaintext highlighter-rouge">mapM getHash</code> sur une liste de nom de fichier pour obtenir une liste de couple Nomdufichier/Hashdufichier.</p>
+<p>Il suffit alors d’appliquer <code class="language-plaintext highlighter-rouge">mapM getHash</code> sur une liste de noms de fichiers pour obtenir une liste de couples Nomdufichier/Hashdufichier.</p>
 
-<p>Si l’on test, cela fonctionne très bien… jusqu’au moment où vous tombez sur un fichier de plus d’1GO. Là, <code class="language-plaintext highlighter-rouge">readFile</code> veux charger l’intégralité du fichier en mémoire. Et bien-sur, sur ma machine, c’est impossible.</p>
+<p>Si l’on test, cela fonctionne très bien… jusqu’au moment où vous tombez sur un fichier de plus d’1GO. Là, <code class="language-plaintext highlighter-rouge">readFile</code> veut charger l’intégralité du fichier en mémoire. Et bien sûr, sur ma machine, c’est impossible.</p>
 
-<h1 id="la-paresse-a-la-rescousse">La paresse a la rescousse!</h1>
+<h1 id="la-paresse-à-la-rescousse">La paresse à la rescousse!</h1>
 
-<p>On vous à toujours dis qu’être paresseux, c’était mal, improductif, et vous mènerais à votre perte? Et bien, ils avaient tort.</p>
+<p>On vous a toujours dit qu’être paresseux, c’était mal, improductif, et vous mènerait à votre perte? Et bien, ils avaient tort.</p>
 
-<p>On voudrais lire le fichier par morceau, et construire le hash avec ces morceaux (ce que toute bonne fonction de hachage permet).</p>
+<p>On voudrait lire le fichier par morceaux, et construire le hash avec ces morceaux (ce que toute bonne fonction de hachage permet).</p>
 
 <p>Pour ce qui est du hachage, on trouve dans <code class="language-plaintext highlighter-rouge">Crypto.Hash.Whatever</code> les trois fonctions :</p>
 <pre><code class="language-{.haskell}">init :: Ctx
@@ -140,7 +140,7 @@ finalize :: Ctx -&gt; S.ByteString
 
 <p>Il nous faut donc un flux de <code class="language-plaintext highlighter-rouge">ByteString</code>. Pour ce faire, on dispose d’une version paresseuse de <code class="language-plaintext highlighter-rouge">ByteString</code>, qui se trouve dans le package <code class="language-plaintext highlighter-rouge">Data.ByteString.Lazy</code>. Histoire de fixer les notations et de ne pas se perdre entre les <code class="language-plaintext highlighter-rouge">ByteString</code> strict et les <code class="language-plaintext highlighter-rouge">ByteString</code> lazy, on parlera respectivement de <code class="language-plaintext highlighter-rouge">S.ByteString</code> et de <code class="language-plaintext highlighter-rouge">L.ByteString</code> (Strict/Lazy).</p>
 
-<p>Cela revient a importer les deux types de la façon suivante :</p>
+<p>Cela revient à importer les deux types de la façon suivante :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString</span> <span class="k">as</span> <span class="n">S</span>
 <span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString.Lazy</span> <span class="k">as</span> <span class="n">L</span>
 </code></pre></div></div>
@@ -150,25 +150,25 @@ finalize :: Ctx -&gt; S.ByteString
 <span class="kt">L</span><span class="o">.</span><span class="n">foldlChunks</span> <span class="o">::</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">S</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">L</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="n">a</span>
 </code></pre></div></div>
 
-<p>La première nous donne le contenue de notre fichier. La seconde, nous offre exactement la méthode qui “prend une fonction ajoutant un morceau de fichier au hash”, puis “un hash vide”, et enfin “une ByteString paresseuse”. Cela parais plus évident si l’on spécialise les “a” en “Ctx”.</p>
+<p>La première nous donne le contenu de notre fichier. La seconde, nous offre exactement la méthode qui “prend une fonction ajoutant un morceau de fichier au hash”, puis “un hash vide”, et enfin “une ByteString paresseuse”. Cela paraît plus évident si l’on spécialise les “a” en “Ctx”.</p>
 
-<p>On peux donc utiliser :</p>
+<p>On peut donc utiliser :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hashed</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="p">(</span><span class="n">finalize</span> <span class="o">.</span> <span class="n">foldlChunks</span> <span class="n">update</span> <span class="n">init</span><span class="p">)</span> <span class="o">$</span> <span class="n">readFile</span> <span class="n">filename</span>
 </code></pre></div></div>
 
-<p>Bon, en fait, il y avais plus simple. Il y a aussi la fonction :</p>
+<p>Bon, en fait, il y avait plus simple. Il y a aussi la fonction :</p>
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hashlazy</span> <span class="o">::</span> <span class="kt">L</span><span class="o">.</span><span class="kt">ByteString</span> <span class="o">-&gt;</span> <span class="kt">S</span><span class="o">.</span><span class="kt">ByteString</span>
 </code></pre></div></div>
 <p>qui produit le même résultat que notre pli.</p>
 
-<p>Et là tout fonctionne bien, nos fichier d’1Go sont haché.</p>
+<p>Et là tout fonctionne bien, nos fichiers d’1Go sont hachés.</p>
 
-<p>Mais … si vous travaillez sur beaucoup de fichiers, vous risquez d’avoir un soucis. Par exemple, si vous testez sur <code class="language-plaintext highlighter-rouge">/usr/lib</code>, vous obtiendrez peut-être une jolie exception vous indiquant qu’il y a trop de filedescriptors utilisés, et que donc le fichier ne peux être ouvert.
-Il se trouve que les fichier ne sont pas fermé immédiatement après le hachage, et c’est un vrai problème. Problème que nous allons résoudre.</p>
+<p>Mais … si vous travaillez sur beaucoup de fichiers, vous risquez d’avoir un soucis. Par exemple, si vous testez sur <code class="language-plaintext highlighter-rouge">/usr/lib</code>, vous obtiendrez peut-être une jolie exception vous indiquant qu’il y a trop de filedescriptors utilisés, et que donc le fichier ne peut être ouvert.
+Il se trouve que les fichiers ne sont pas fermés immédiatement après le hachage, et c’est un vrai problème. Problème que nous allons résoudre.</p>
 
 <h1 id="la-solution--withfile">La solution : withFile</h1>
 
-<p>La fonction <code class="language-plaintext highlighter-rouge">withFile :: FilePath -&gt; IOMode -&gt; (Handle -&gt; IO r) -&gt; IO r</code> est la clef. Cette fonction prend un nom de fichier, le mode d’ouverture (on utilisera ReadMode), une fonction qui travaille sur le fichier, et nous fait suivre le résultat de l’application de cette fonction. Un peu stupide, me direz vous? Et bien, ça le serait, si cette fonction se contenter de ça. En fait, elle vous assure aussi qu’une fois évaluée, le fichier est fermé. En l’utilisant, on est donc certain que le fichier est immédiatement fermé lorsque withFile est évalué en un “IO r”.</p>
+<p>La fonction <code class="language-plaintext highlighter-rouge">withFile :: FilePath -&gt; IOMode -&gt; (Handle -&gt; IO r) -&gt; IO r</code> est la clef. Cette fonction prend un nom de fichier, le mode d’ouverture (on utilisera ReadMode), une fonction qui travaille sur le fichier, et nous fait suivre le résultat de l’application de cette fonction. Un peu stupide, me direz vous? Et bien, ça le serait, si cette fonction se contentait de ça. En fait, elle vous assure aussi qu’une fois évaluée, le fichier est fermé. En l’utilisant, on est donc certain que le fichier est immédiatement fermé lorsque withFile est évalué en un “IO r”.</p>
 
 <pre><code class="language-`haskell">getHash filename = do
     hashed &lt;- withFile filename ReadMode $ \h -&gt; do
@@ -176,31 +176,31 @@ Il se trouve que les fichier ne sont pas fermé immédiatement après le hachage
 return (filename, hashed)
 </code></pre>
 
-<p>Le <code class="language-plaintext highlighter-rouge">unefonction $ \h -&gt; do</code> est une pratique courante pour ces fonctions qui évalue un morceau de code dans un certains contexte. C’est très pratique, et on reconnaît très vite cette idiome avec un peu d’entraînement.</p>
+<p>Le <code class="language-plaintext highlighter-rouge">unefonction $ \h -&gt; do</code> est une pratique courante pour ces fonctions qui évaluent un morceau de code dans un certain contexte. C’est très pratique, et on reconnaît très vite cet idiome avec un peu d’entraînement.</p>
 
-<p>On compile pour vérifier le typage, tout vas bien, et l’on lance donc notre application que l’on s’attend a voir fonctionner. Et là, c’est le drame : “Illegal operation : handle is closed”.</p>
+<p>On compile pour vérifier le typage, tout va bien, et l’on lance donc notre application que l’on s’attend à voir fonctionner. Et là, c’est le drame : “Illegal operation : handle is closed”.</p>
 
-<p>Wohw, quel est ce mystérieux message? Et bien, comme je vous l’ai dit, withFile ferme immédiatement le fichier après l’évaluation de son expression. Et que fait son évaluation? Elle retourne le hash du fichier me dite vous? Faut.</p>
+<p>Wohw, quel est ce mystérieux message? Et bien, comme je vous l’ai dit, withFile ferme immédiatement le fichier après l’évaluation de son expression. Et que fait son évaluation? Elle retourne le hash du fichier me dites-vous? Faux.</p>
 
-<p>La fonction construit un thunk (je parlerais de promesse de calcul, ou plus simplement de promesse) a l’aide de “fmap …”. L’évaluation de withFile retourne alors cette promesse, plutôt que la valeur du hash. Et cette promesse, elle, ne sera évaluée que plus tard, au moment ou vous en aurez vraiment besoin, et seulement si vous en avez besoin.</p>
+<p>La fonction construit un thunk (je parlerais de promesse de calcul, ou plus simplement de promesse) a l’aide de “fmap …”. L’évaluation de withFile retourne alors cette promesse, plutôt que la valeur du hash. Et cette promesse, elle, ne sera évaluée que plus tard, au moment où vous en aurez vraiment besoin, et seulement si vous en avez besoin.</p>
 
-<p>Il nous faut donc forcer haskell a être strict, et évaluer le hash avant de sortir de la fonction. Il y a différentes façons de le faire. La plus simple, c’est d’utiliser l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> qui force l’évaluation de l’expression a sa gauche, puis retourne l’expression a sa droite. On a aussi l’opérateur <code class="language-plaintext highlighter-rouge">a ($!) b = b `seq` (a b)</code> qui est une “application stricte”. C’est a dire que ce qui sera a droite de <code class="language-plaintext highlighter-rouge">$!</code> sera évalué.</p>
+<p>Il nous faut donc forcer haskell à être strict, et évaluer le hash avant de sortir de la fonction. Il y a différentes façons de le faire. La plus simple, c’est d’utiliser l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> qui force l’évaluation de l’expression à sa gauche, puis retourne l’expression à sa droite. On a aussi l’opérateur <code class="language-plaintext highlighter-rouge">a ($!) b = b `seq` (a b)</code> qui est une “application stricte”. C’est-à-dire que ce qui sera à droite de <code class="language-plaintext highlighter-rouge">$!</code> sera évalué.</p>
 
-<p>Nb : Il faut faire attention. Quand je dis évalué, je parle bien de <em>dé-construire</em> le premier niveau de l’expression. C’est a dire que si <code class="language-plaintext highlighter-rouge">compute 1 42</code> est un calcul, ceci sera remplacer par la promesse ou le résultat retournée par compute. Si compute produit une promesse plutôt qu’un résultat, l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> n’évaluera pas la promesse. Il existe un opérateur <code class="language-plaintext highlighter-rouge">`deepSeq`</code>, qui lui vas <em>tout réduire</em> en profondeur. Comme vous vous en doutez, c’est très coûteux et évalue des choses dont on n’auras peut-être pas besoin. Le plus souvent, on peux se contenter de <code class="language-plaintext highlighter-rouge">`seq`</code> appliqué au bonne endroit pour obtenir le résultat souhaité.</p>
+<p>Nb : Il faut faire attention. Quand je dis évalué, je parle bien de <em>dé-construire</em> le premier niveau de l’expression. C’est-à-dire que si <code class="language-plaintext highlighter-rouge">compute 1 42</code> est un calcul, ceci sera remplacé par la promesse ou le résultat retourné par compute. Si compute produit une promesse plutôt qu’un résultat, l’opérateur <code class="language-plaintext highlighter-rouge">`seq`</code> n’évaluera pas la promesse. Il existe un opérateur <code class="language-plaintext highlighter-rouge">`deepSeq`</code>, qui lui va <em>tout réduire</em> en profondeur. Comme vous vous en doutez, c’est très coûteux et évalue des choses dont on n’aura peut-être pas besoin. Le plus souvent, on peut se contenter de <code class="language-plaintext highlighter-rouge">`seq`</code> appliqué aux bons endroits pour obtenir le résultat souhaité.</p>
 
-<p>Dans notre cas, il faudrait forcer la promesse faire par <code class="language-plaintext highlighter-rouge">fmap</code> a être évaluée, puis la promesse faite par <code class="language-plaintext highlighter-rouge">hashlazy</code>. Vous allez voir que la solution n’est pas plus compliquée que ce que nous avions déjà écrit :</p>
+<p>Dans notre cas, il faudrait forcer la promesse faite par <code class="language-plaintext highlighter-rouge">fmap</code> à être évaluée, puis la promesse faite par <code class="language-plaintext highlighter-rouge">hashlazy</code>. Vous allez voir que la solution n’est pas plus compliquée que ce que nous avions déjà écrit :</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- getHash ...</span>
     <span class="n">withFile</span> <span class="n">filename</span> <span class="kt">ReadMode</span> <span class="o">$</span> <span class="nf">\</span><span class="n">h</span> <span class="o">-&gt;</span> <span class="kr">do</span>
         <span class="c1">-- On obtient la promesse faite par hashlazy</span>
         <span class="kr">data</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">hashlazy</span> <span class="o">$</span> <span class="n">hGetContents</span> <span class="n">h</span>
-        <span class="c1">-- On force l'évaluation de hashlazy, qui donc sera forcé d'ouvrir le fichier et de le lire, puisque la valeur retournée est un S.ByteString, une valeur Stricte.</span>
+        <span class="c1">-- On force l'évaluation de hashlazy, qui donc sera forcée d'ouvrir le fichier et de le lire, puisque la valeur retournée est un S.ByteString, une valeur Stricte.</span>
         <span class="n">return</span> <span class="o">$!</span> <span class="kr">data</span>
 </code></pre></div></div>
 
 <p>Voila, c’est tout, c’est <code class="language-plaintext highlighter-rouge">$!</code> qui fait tout le travail en demandant à hashlazy de gentiment s’évaluer.</p>
 
-<p>Et la c’est le bonheur, tout refonctionne et l’on peux gérer des fichiers arbitrairement grand en nombre arbitrairement grand, le tout en 4 lignes.</p>
+<p>Et là c’est le bonheur, tout refonctionne et l’on peut gérer des fichiers arbitrairement grands en nombre arbitrairement grand, le tout en 4 lignes.</p>
 
 </div>
 

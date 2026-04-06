@@ -105,41 +105,41 @@
       <div class="post">
   <h1 class="post-title">GDT et IDT</h1>
   <span class="post-date">20 Apr 2009</span>
-  <p>Depuis peu, le noyeau que je développe dispose enfin d’une gestion précaire des interruptions.
-Dans cette article je vais donc vous parler… interruptions!
+  <p>Depuis peu, le noyau que je développe dispose enfin d’une gestion précaire des interruptions.
+Dans cet article je vais donc vous parler… interruptions!
 Et histoire de ne perdre personne, on commencera par décrire le fonctionnement de la
 GDT.</p>
 
 <h2 id="1--physique-ou-virtuelle">1 : Physique ou Virtuelle</h2>
 
 <p>Si vous avez déjà fait un peu d’assembleur, vous savez peut-être qu’un programme,
-une fois en mémoire, est diviser en plusieurs segments :</p>
+une fois en mémoire, est divisé en plusieurs segments :</p>
 
 <ul>
   <li>Segment de code</li>
-  <li>Segment de donne</li>
+  <li>Segment de données</li>
   <li>Stack</li>
 </ul>
 
-<p>Pour accéder a ces différents segment, on dispose des Sélecteurs de Segment.
-Ce sont des registre qui indiquent à quel adresse mémoire situent les donnes.</p>
+<p>Pour accéder à ces différents segments, on dispose des Sélecteurs de Segment.
+Ce sont des registres qui indiquent à quelle adresse mémoire se situent les données.</p>
 
-<p>Ainsi, pour accéder a l’ octet numéro <code class="language-plaintext highlighter-rouge">0x03</code> du segment de code,
+<p>Ainsi, pour accéder à l’octet numéro <code class="language-plaintext highlighter-rouge">0x03</code> du segment de code,
 on peut écrire <code class="language-plaintext highlighter-rouge">cs::0x03</code>.
-Quand l’ordinateur démarre, le processeur est en mode réelle.
-C’ est a dire que les sélecteurs de segment représentent une adresse physique.
-(<code class="language-plaintext highlighter-rouge">0x73</code> représente l’ adresse mémoire <code class="language-plaintext highlighter-rouge">0x730</code>)</p>
+Quand l’ordinateur démarre, le processeur est en mode réel.
+C’est-à-dire que les sélecteurs de segment représentent une adresse physique.
+(<code class="language-plaintext highlighter-rouge">0x73</code> représente l’adresse mémoire <code class="language-plaintext highlighter-rouge">0x730</code>)</p>
 
-<p>Ce n’est pas vraiment super, tout les programmes ont accès à toute la mémoire,
-et de plus les registres sont limiter a 16bits… impossible
-d’accèder à toute la mémoire des ordinateurs actuel.</p>
+<p>Ce n’est pas vraiment super, tous les programmes ont accès à toute la mémoire,
+et de plus les registres sont limités à 16bits… impossible
+d’accéder à toute la mémoire des ordinateurs actuels.</p>
 
 <p>Pour régler ce problème, il existe le mode protégé,
-où le processeur est en 32Bits et ou les sélecteurs correspondent a un maillon
+où le processeur est en 32Bits et où les sélecteurs correspondent à un maillon
 de la GDT (on en reparlera dans quelques lignes).</p>
 
-<p>Dans le mode protéger, la valeur des sélecteurs correspond à
-l’offset (décalage par rapport a l’origine) de l’ élément dans
+<p>Dans le mode protégé, la valeur des sélecteurs correspond à
+l’offset (décalage par rapport à l’origine) de l’élément dans
 la GDT (Global Descriptor Table).
 Pour accéder au premier sélecteur de la GDT, on place donc 0x0 dans
 un sélecteur de segment.
@@ -152,34 +152,34 @@ l’exécution normale d’un
 <a href="http://fr.wikipedia.org/wiki/Programme_informatique">programme informatique</a>
 par le <a href="http://fr.wikipedia.org/wiki/Microprocesseur">microprocesseur</a>.</p>
 
-<p>Les interruptions sont de deux type : matériel ou logiciel.</p>
+<p>Les interruptions sont de deux types : matériel ou logiciel.</p>
 
-<p>Une interruption matériel est typiquement l’ appuis sur une touche du clavier.
-Une interruption logiciel peut être l’ appelle à
+<p>Une interruption matérielle est typiquement l’appui sur une touche du clavier.
+Une interruption logicielle peut être l’appel à
 un syscall (un appel à write sous unix)</p>
 
-<p>Pour associer une fonction(le sens informatique du terme) à chaque
-interruption, il existe l’ IDT(Interrupt Descriptor Table).</p>
+<p>Pour associer une fonction (le sens informatique du terme) à chaque
+interruption, il existe l’IDT (Interrupt Descriptor Table).</p>
 
-<p>Chaque élément de l’ IDT contient :</p>
+<p>Chaque élément de l’IDT contient :</p>
 
 <ul>
   <li>Un sélecteur, qui correspond aux éléments de la GDT</li>
   <li>Un offset (pointeur sur fonction)</li>
-  <li>Des bits qui spécifie le TYPE du maillon</li>
+  <li>Des bits qui spécifient le TYPE du maillon</li>
 </ul>
 
 <h2 id="3--irqs">3 : IRQs</h2>
 
-<p>Et non, ce n’est pas terminer. C’est bien beau de configurer la GDT et l’ IDT,
+<p>Et non, ce n’est pas terminé. C’est bien beau de configurer la GDT et l’IDT,
 mais encore faut-il configurer le chipset qui s’occupe de prévenir le processeur
-quand une interruption matériel a lieu.
-Pour résumer, ce composent envoi une requête (IRQ=Interuption ReQuest)
+quand une interruption matérielle a lieu.
+Pour résumer, ce composant envoie une requête (IRQ=Interruption ReQuest)
 au processeur quand un évènement a lieu.
-En plus, il n’ est pas un, mais ils sont deux, en cascade (Un esclave et un maître).</p>
+En plus, il n’est pas un, mais ils sont deux, en cascade (Un esclave et un maître).</p>
 
-<p>Une fois le tout configurer, on réactive les interruption et…
-On cherche pourquoi ça n’ a pas fonctionner :)</p>
+<p>Une fois le tout configuré, on réactive les interruptions et…
+On cherche pourquoi ça n’a pas fonctionné :)</p>
 
 <h3 id="4--références">4 : Références</h3>
 

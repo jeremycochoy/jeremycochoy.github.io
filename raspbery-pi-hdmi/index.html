@@ -105,9 +105,9 @@
       <div class="post">
   <h1 class="post-title">Raspbery PI with HDMI</h1>
   <span class="post-date">12 Aug 2012</span>
-  <p>Today, I was testing my <a href="https://en.wikipedia.org/wiki/Raspberry_Pi">RPi</a>, just to check that “<em>everything is alright</em>”. I bought a cheap 1A/5V micro usb power supply from china (from a well known auction website) and writed the official raspbian image. I plugged my new VGA/HDMI flat screen, and booted the RPi. Then…. nothing.</p>
+  <p>Today, I was testing my <a href="https://en.wikipedia.org/wiki/Raspberry_Pi">RPi</a>, just to check that “<em>everything is alright</em>”. I bought a cheap 1A/5V micro USB power supply from China (from a well-known auction website) and wrote the official raspbian image. I plugged my new VGA/HDMI flat screen, and booted the RPi. Then…. nothing.</p>
 
-<p>Actualy, to make it works, I had to modify the <code class="language-plaintext highlighter-rouge">config.txt</code> file, as said by <em>Aptoitos</em> on <a href="https://www.rs-online.com/designspark/what-you-need-to-get-your-raspberry-pi-up-and-running">the website rs-online</a> :</p>
+<p>Actually, to make it work, I had to modify the <code class="language-plaintext highlighter-rouge">config.txt</code> file, as said by <em>Aptoitos</em> on <a href="https://www.rs-online.com/designspark/what-you-need-to-get-your-raspberry-pi-up-and-running">the website rs-online</a> :</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hdmi_drive=2
 config_hdmi_boost=4
 hdmi_group=1
@@ -116,11 +116,11 @@ hdmi_force_hotplug=1
 disable_overscan=0
 </code></pre></div></div>
 
-<p>After adding and uncommenting those lines in the config.txt file, it worked fine (although I still have to push the auto button of my screen to tell him something great is coming from HDMI input).</p>
+<p>After adding and uncommenting those lines in the config.txt file, it worked fine (although I still have to push the auto button of my screen to tell it something great is coming from HDMI input).</p>
 
 <p>I can’t tell exactly what was the problem (signal too low to be recognized, bad display mode, or something else) but then it works fine, and now I’ll have to wait for a USB keyboard :)</p>
 
-<p>For more informations about which setting change what : <a href="http://www.rs-online.com/designspark/electronics/knowledge-item/what-you-need-to-get-your-raspberry-pi-up-and-running">http://www.rs-online.com/designspark/electronics/knowledge-item/what-you-need-to-get-your-raspberry-pi-up-and-running</a></p>
+<p>For more information about which setting changes what : <a href="http://www.rs-online.com/designspark/electronics/knowledge-item/what-you-need-to-get-your-raspberry-pi-up-and-running">http://www.rs-online.com/designspark/electronics/knowledge-item/what-you-need-to-get-your-raspberry-pi-up-and-running</a></p>
 
 
 </div>

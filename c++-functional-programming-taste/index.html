@@ -15,7 +15,7 @@
 
   <title>
     
-      C++ - Un gout de programmation fonctionelle &middot; Jeremy Cochoy
+      C++ - Un goût de programmation fonctionnelle &middot; Jeremy Cochoy
     
   </title>
 
@@ -103,9 +103,9 @@
 
     <div class="container">
       <div class="post">
-  <h1 class="post-title">C++ - Un gout de programmation fonctionelle</h1>
+  <h1 class="post-title">C++ - Un goût de programmation fonctionnelle</h1>
   <span class="post-date">12 Jul 2013</span>
-  <p>Dans ce billet, nous allons aborder quelques unes des nouvelles fonctionnalités offerte par le C++11. Elles sont clairement inspiré de la vie dans le monde fonctionnel.</p>
+  <p>Dans ce billet, nous allons aborder quelques-unes des nouvelles fonctionnalités offertes par le C++11. Elles sont clairement inspirées de la vie dans le monde fonctionnel.</p>
 
 <h2 id="alpha-beta--kappa-lambda">Alpha, Beta, … Kappa, Lambda!</h2>
 
@@ -129,13 +129,13 @@
 <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">b</span><span class="p">](</span><span class="kt">int</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">};</span>
 </code></pre></div></div>
 
-<p>Les lambda permette de faire la même chose de façon plus légère, et ajoute la sémantique de fonction (i.e. on ne peux pas confondre une lambda et un objet en lisant du code, alors qu’on ‘'’pourrait’’’ avec un foncteur et un objet). Les lambda sont aussi plus proche de d’une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclaré dans l’exemple ci dessus (on peux faire f = g avec f et g deux AFunctor) n’existent pas (sont explicitement supprimé) pour les lambda.</p>
+<p>Les lambda permettent de faire la même chose de façon plus légère, et ajoutent la sémantique de fonction (i.e. on ne peut pas confondre une lambda et un objet en lisant du code, alors qu’on ‘'’pourrait’’’ avec un foncteur et un objet). Les lambda sont aussi plus proches d’une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclarées dans l’exemple ci-dessus (on peut faire f = g avec f et g deux AFunctor) n’existent pas (sont explicitement supprimées) pour les lambda.</p>
 
-<p>Par exemple, le constructeur du type d’une lambda (on rappelle qu’en c++11, on peux obtenir le type de <code class="language-plaintext highlighter-rouge">f</code> avec <code class="language-plaintext highlighter-rouge">decltype(f)</code>. Par exemple <code class="language-plaintext highlighter-rouge">decltype(3.5f)</code> ou <code class="language-plaintext highlighter-rouge">std::vector v; decltype(v)</code>) n’existe pas.</p>
+<p>Par exemple, le constructeur du type d’une lambda (on rappelle qu’en c++11, on peut obtenir le type de <code class="language-plaintext highlighter-rouge">f</code> avec <code class="language-plaintext highlighter-rouge">decltype(f)</code>. Par exemple <code class="language-plaintext highlighter-rouge">decltype(3.5f)</code> ou <code class="language-plaintext highlighter-rouge">std::vector v; decltype(v)</code>) n’existe pas.</p>
 
 <p>Si f est une lambda, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> ne compilera pas. Pourtant, si <code class="language-plaintext highlighter-rouge">f</code> est un <code class="language-plaintext highlighter-rouge">AFunctor</code>, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> compilera et correspond à <code class="language-plaintext highlighter-rouge">AFunctor g;</code>.</p>
 
-<p>Bon, qu’on se rassure, on peux quand même faire une copie d’une lambda :</p>
+<p>Bon, qu’on se rassure, on peut quand même faire une copie d’une lambda :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[](){</span><span class="k">return</span> <span class="mi">42</span><span class="p">};</span>
 
 <span class="k">auto</span>        <span class="n">g1</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
@@ -149,12 +149,12 @@
 
 <h2 id="comment-fonctionne-une-lambda">Comment fonctionne une lambda?</h2>
 
-<p>En fait, c’est très simple, est tout est décrit sur la page “Lambda” du site “CPPReference”.</p>
+<p>En fait, c’est très simple, et tout est décrit sur la page “Lambda” du site “CPPReference”.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">capture</span> <span class="p">]</span> <span class="p">(</span> <span class="n">params</span> <span class="p">)</span> <span class="k">mutable</span> <span class="n">exception</span> <span class="n">attribute</span> <span class="o">-&gt;</span> <span class="n">ret</span> <span class="p">{</span> <span class="n">body</span> <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Dans capture on trouve la façon dont les variables extérieurs à la lambda sont capturé. Il y a deux mode de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veux dire “tout est récupérer par valeur”, et le comportement est identique à une copie des variable(pour les objets comme <code class="language-plaintext highlighter-rouge">std::string</code>, c’est plutôt un <code class="language-plaintext highlighter-rouge">const std::string&amp;</code> que vous recevez). On peux aussi spécifier [&amp;] et toute les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peux expliciter le comportement pour chacune des variables, par exemple :</p>
+<p>Dans capture on trouve la façon dont les variables extérieures à la lambda sont capturées. Il y a deux modes de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veut dire “tout est récupéré par valeur”, et le comportement est identique à une copie des variables (pour les objets comme <code class="language-plaintext highlighter-rouge">std::string</code>, c’est plutôt un <code class="language-plaintext highlighter-rouge">const std::string&amp;</code> que vous recevez). On peut aussi spécifier [&amp;] et toutes les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peut expliciter le comportement pour chacune des variables, par exemple :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="p">;</span>
@@ -174,16 +174,16 @@
 
 <p>La partie “exception” correspond aux spécifications du genre <code class="language-plaintext highlighter-rouge">throw (std::bad_alloc, MyExceptionType)</code> ou encore <code class="language-plaintext highlighter-rouge">noexcept</code> (no throw exception safety).</p>
 
-<p>Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter “mutable”. Cela peux être très utile, si vous voulez appeler des méthodes non const sur une copie d’un objet dans le scope.</p>
+<p>Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter “mutable”. Cela peut être très utile, si vous voulez appeler des méthodes non const sur une copie d’un objet dans le scope.</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]()</span> <span class="k">mutable</span> <span class="p">{</span><span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;}</span>
 </code></pre></div></div>
 
-<p>Petite astuce parfois utile : Si une lambda ne capture aucune variable, alors elle peux être convertie en pointeur de fonction.</p>
+<p>Petite astuce parfois utile : si une lambda ne capture aucune variable, alors elle peut être convertie en pointeur de fonction.</p>
 
 <h2 id="stdfunction-">std::function :</h2>
 
-<p>Les std::function représente des fonctions. Ils sont basé sur les templates variadique (l’un des ajout les plus puissant au langage), que l’on peux espérer disponible sous VisualStudio d’ici 2039 (si l’équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n’importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, …).</p>
+<p>Les std::function représentent des fonctions. Ils sont basés sur les templates variadiques (l’un des ajouts les plus puissants au langage), que l’on peut espérer disponibles sous VisualStudio d’ici 2039 (si l’équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n’importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, …).</p>
 
 <p>En code :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Lambda</span>
@@ -219,14 +219,14 @@
 
 <h2 id="application-partielle">Application partielle.</h2>
 
-<p>Tout ça, pour en venir à vous parler de <code class="language-plaintext highlighter-rouge">std::bind</code>. Quand on travail avec des langages fonctionnels, on peux appeler une fonction avec seulement une partie de ses arguments. On parle d’<em>application partielle</em>. <code class="language-plaintext highlighter-rouge">std::bind</code> permet de reproduire ce comportement. Prenons une innocente fonction :</p>
+<p>Tout ça, pour en venir à vous parler de <code class="language-plaintext highlighter-rouge">std::bind</code>. Quand on travaille avec des langages fonctionnels, on peut appeler une fonction avec seulement une partie de ses arguments. On parle d’<em>application partielle</em>. <code class="language-plaintext highlighter-rouge">std::bind</code> permet de reproduire ce comportement. Prenons une innocente fonction :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">display</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a : "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">" - b :"</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="s">" - c : "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>On peux alors construire, grâce à std::bind, différentes spécialisation de cette fonction :</p>
+<p>On peut alors construire, grâce à std::bind, différentes spécialisations de cette fonction :</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//On fixe les trois arguments</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
 <span class="n">f</span><span class="p">();</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
@@ -234,7 +234,7 @@
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
 
-<span class="c1">//Placeholders::_i désigne le i-ième argument lors de l’appelle de f</span>
+<span class="c1">//Placeholders::_i désigne le i-ième argument lors de l’appel de f</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 6 - c : 42</span>
 
@@ -242,17 +242,17 @@
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 10 - c : 20</span>
 
-<span class="c1">//On peux changer l'ordre :</span>
+<span class="c1">//On peut changer l'ordre :</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 20 - c : 10</span>
 
 </code></pre></div></div>
 
-<p>Bien entendu, on peux aussi faire des choses plus complexe (passage des arguments par référence avec <code class="language-plaintext highlighter-rouge">std::ref</code> et <code class="language-plaintext highlighter-rouge">std::cref</code> dans les arguments de bind, pointeurs de fonction membre, pointeur vers membres, etc.).</p>
+<p>Bien entendu, on peut aussi faire des choses plus complexes (passage des arguments par référence avec <code class="language-plaintext highlighter-rouge">std::ref</code> et <code class="language-plaintext highlighter-rouge">std::cref</code> dans les arguments de bind, pointeurs de fonction membre, pointeurs vers membres, etc.).</p>
 
-<p>Si vous vous demandez à quoi ça peux bien servir, et bien dite vous que là où on attend une callback avec une certaine signature (c’est le cas avec beaucoup d’outil de <code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>) vous avez maintenant la possibilité de spécialiser vos fonctions.</p>
+<p>Si vous vous demandez à quoi ça peut bien servir, eh bien dites-vous que là où on attend une callback avec une certaine signature (c’est le cas avec beaucoup d’outils de <code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>) vous avez maintenant la possibilité de spécialiser vos fonctions.</p>
 
-<p>Pour ce qui est du coût, il est faible (celons les cas beaucoup de choses peuvent être optimisé lors de la compilation), et n’est un argument recevable que dans certains cas particulier. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critique, vous pouvez vous lâcher.</p>
+<p>Pour ce qui est du coût, il est faible (selon les cas beaucoup de choses peuvent être optimisées lors de la compilation), et n’est un argument recevable que dans certains cas particuliers. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critiques, vous pouvez vous lâcher.</p>
 
 <p>Voilà, j’espère vous avoir donné un petit aperçu de l’apport du c++11 en matière de manipulation des fonctions.</p>
 

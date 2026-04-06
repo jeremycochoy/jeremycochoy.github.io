@@ -105,9 +105,9 @@
       <div class="post">
   <h1 class="post-title">Arduino Uno sous ArchLinux (3.8.4-1-ARCH)</h1>
   <span class="post-date">31 Mar 2013</span>
-  <p>Voilà que je ressort mon arduino de mes cartons, motivé à dépoussiérer le code de ma ‘boite musicale’. Et quel ne fut pas ma surprise quand le package rxtx refusa de s’installer suite a des erreurs de compilation.</p>
+  <p>Voilà que je ressors mon arduino de mes cartons, motivé à dépoussiérer le code de ma ‘boite musicale’. Et quelle ne fut pas ma surprise quand le package rxtx refusa de s’installer suite à des erreurs de compilation.</p>
 
-<p>Vous commencez sûrement à me connaître ; je n’ai pas abandonné pour si peu. Voilà donc que je me retrouve a publier ce petit billet, accompagné des instructions pour patcher et installer la dernière version de rxtx sous votre système :)</p>
+<p>Vous commencez sûrement à me connaître ; je n’ai pas abandonné pour si peu. Voilà donc que je me retrouve à publier ce petit billet, accompagné des instructions pour patcher et installer la dernière version de rxtx sous votre système :)</p>
 
 <h2 id="étape-1--arduino-package">Étape 1 : Arduino package</h2>
 
@@ -118,7 +118,7 @@
 
 <h1 id="étape-2--télécharger-patcher-et-installer-rxtx">Étape 2 : Télécharger, patcher et installer rxtx</h1>
 
-<p>Telechargez la pre-release depuis http://rxtx.qbang.org/wiki/index.php/Download :</p>
+<p>Téléchargez la pre-release depuis http://rxtx.qbang.org/wiki/index.php/Download :</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2.zip
 unzip rxtx-2.2pre2.xip
@@ -130,12 +130,12 @@ unzip rxtx-2.2pre2.xip
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--disable-lockfile</span>
 </code></pre></div></div>
 
-<p>Ici, si vous tentez de compiler, vous aurez probablement une erreur <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> est indéfini. Pour corriger ce problème, commencez par trouver le fichier utsrelease.h (<code class="language-plaintext highlighter-rouge">find /usr/ -name 'utsrelease.h'</code>). Pour ma part, il se trouvait dans <code class="language-plaintext highlighter-rouge">/lib/modules/3.8.4-1-ARCH/build/include/generated/</code>. Ensuite, incluez le dans config.h(C’est un fichier généré par configure), de facon à ce que la constant soit définie partout.</p>
+<p>Ici, si vous tentez de compiler, vous aurez probablement une erreur <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> est indéfini. Pour corriger ce problème, commencez par trouver le fichier utsrelease.h (<code class="language-plaintext highlighter-rouge">find /usr/ -name 'utsrelease.h'</code>). Pour ma part, il se trouvait dans <code class="language-plaintext highlighter-rouge">/lib/modules/3.8.4-1-ARCH/build/include/generated/</code>. Ensuite, incluez-le dans config.h (c’est un fichier généré par configure), de façon à ce que la constante soit définie partout.</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">#include </span><span class="se">\"</span><span class="s2">/lib/modules/3.8.4-1-ARCH/build/include/generated/utsrelease.h</span><span class="se">\"\n</span><span class="s2">"</span> <span class="o">&gt;</span> config.h
 </code></pre></div></div>
 
-<p>Maintenant, on doit ajouter ttyACM à la liste des périphériques. On modifit le fichier src/gnu/io/RXTXCommDriver.java en ajoutant une entrée à un tableau (ttyACM). Regardez le fichier diff suivant :</p>
+<p>Maintenant, on doit ajouter ttyACM à la liste des périphériques. On modifie le fichier src/gnu/io/RXTXCommDriver.java en ajoutant une entrée à un tableau (ttyACM). Regardez le fichier diff suivant :</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">---</span> src/gnu/io/RXTXCommDriver.java.back 2013-03-31 14:14:38.718567087 +0200
 +++ src/gnu/io/RXTXCommDriver.java      2013-03-31 14:08:38.728149384 +0200
@@ -158,13 +158,13 @@ unzip rxtx-2.2pre2.xip
 
 <h2 id="utilisez-votre-arduino">Utilisez votre arduino</h2>
 
-<p>Vous pouvez maintenant lancer l’IDE arduino (commande arduino) et charger un programme de test. Vous pouvez sélectionner votre carte dans la liste des périphérique, probablement sous le nom “ttyACM0”.</p>
+<p>Vous pouvez maintenant lancer l’IDE arduino (commande arduino) et charger un programme de test. Vous pouvez sélectionner votre carte dans la liste des périphériques, probablement sous le nom “ttyACM0”.</p>
 
 <h2 id="quelques-infos">Quelques infos</h2>
 
-<p>On désactive l’option <code class="language-plaintext highlighter-rouge">--diseable-lockfile</code> pour faire disparaître des messages d’erreur parlant d’impossibilité d’écrire les fichiers de lock. On ajouter le bon fichier .h contenant <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> pour éviter de stupide erreur de compilation (le fichier dans le quel est définit la macro a changé récemment). Enfin, il est nécessaire de modifier le code de rxtx (lisez les commentaires, vous verez qu’on vous demande explicitement de rajouter les devices manquant, en vous proposant la liste de tous ceux possible, et elle est bien longue!) pour que vous puissiez utiliser ttyACMx. Une autre solution serait d’ajouter un lien symbolique dans /dev/ d’un ttyUSBx vers un ttyACMx, par exemple (ttyUSB figure dans le tableau où nous avons ajouter ttyACM).</p>
+<p>On désactive l’option <code class="language-plaintext highlighter-rouge">--disable-lockfile</code> pour faire disparaître des messages d’erreur parlant d’impossibilité d’écrire les fichiers de lock. On ajoute le bon fichier .h contenant <code class="language-plaintext highlighter-rouge">UTS_RELEASE</code> pour éviter de stupides erreurs de compilation (le fichier dans lequel est définie la macro a changé récemment). Enfin, il est nécessaire de modifier le code de rxtx (lisez les commentaires, vous verrez qu’on vous demande explicitement de rajouter les devices manquants, en vous proposant la liste de tous ceux possibles, et elle est bien longue!) pour que vous puissiez utiliser ttyACMx. Une autre solution serait d’ajouter un lien symbolique dans /dev/ d’un ttyUSBx vers un ttyACMx, par exemple (ttyUSB figure dans le tableau où nous avons ajouté ttyACM).</p>
 
-<p>Bref, en fin de compte, si vous ne parvenez pas à utiliser votre arduino et que vous avez une erreur du type <code class="language-plaintext highlighter-rouge">processing.app.SerialNotFoundException: Port série « /dev/ttyACM0 » non trouvé</code>, c’est peut-etre tout simplement que ttyACM ne figure pas dans les périphériques accepté par rxtx.</p>
+<p>Bref, en fin de compte, si vous ne parvenez pas à utiliser votre arduino et que vous avez une erreur du type <code class="language-plaintext highlighter-rouge">processing.app.SerialNotFoundException: Port série « /dev/ttyACM0 » non trouvé</code>, c’est peut-être tout simplement que ttyACM ne figure pas dans les périphériques acceptés par rxtx.</p>
 
 <h2 id="références-">Références :</h2>
 <ul>

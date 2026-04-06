@@ -107,29 +107,29 @@
   <span class="post-date">06 Jun 2012</span>
   <h2 id="matrice-de-led-10x10-pour-une-alimentation-5v">Matrice de LED 10x10 pour une alimentation 5V</h2>
 
-<p>Dans ce billet, je vais développer les différentes étapes dans la réalisation d’une matrice de diode 10x10 pour une utilisation avec des tensions de 5V (Il faudra prévoir une/des résistances dans le circuit qui contrôleras les transistors).</p>
+<p>Dans ce billet, je vais développer les différentes étapes dans la réalisation d’une matrice de diodes 10x10 pour une utilisation avec des tensions de 5V (Il faudra prévoir une/des résistances dans le circuit qui contrôlera les transistors).</p>
 
-<p>Quel est l’intérêt de réaliser une matrice soit même?
-Certainement pas le prix, puisqu’on trouve des matrices 8x8 à 3€ sur un célèbre site d’enchère.
-Ni la qualité esthétique, puisque vous vous rendrez vite compte qu’aligner parfaitement les diodes relèverais du miracle.</p>
+<p>Quel est l’intérêt de réaliser une matrice soi-même?
+Certainement pas le prix, puisqu’on trouve des matrices 8x8 à 3€ sur un célèbre site d’enchères.
+Ni la qualité esthétique, puisque vous vous rendrez vite compte qu’aligner parfaitement les diodes relèverait du miracle.</p>
 
-<p>Non, ce que l’on cherche ici, c’est la satisfaction d’avoir réalisé son premier circuit, et d’avoir fait le premier pas vers un nouveau monde. À mes yeux, ce projet est le plus simples des projets utile accessible à un néophyte, et fait suite à l’hello world.</p>
+<p>Non, ce que l’on cherche ici, c’est la satisfaction d’avoir réalisé son premier circuit, et d’avoir fait le premier pas vers un nouveau monde. À mes yeux, ce projet est le plus simple des projets utiles accessible à un néophyte, et fait suite à l’hello world.</p>
 
 <p><img src="data/led_matrix.png" alt="Le projet terminé" /></p>
 
-<p>Je vous fourni le projet Eagle contenant schéma et PCB, pour que vous puissiez imprimer le PCB ou simplement modifier le design ; <a href="data/led_matrix.7z">led_matrix.7z</a>.</p>
+<p>Je vous fournis le projet Eagle contenant schéma et PCB, pour que vous puissiez imprimer le PCB ou simplement modifier le design ; <a href="data/led_matrix.7z">led_matrix.7z</a>.</p>
 
 <h2 id="dessin-du-circuit-pcb-détermination-des-composants">Dessin du circuit (PCB), détermination des composants</h2>
 
-<p>La première étape consiste à réaliser le circuit via un logiciel spécialisé, par exemple Eagle, en s’aidant des lois de la physique (Loi des mailles, des noeuds, et U=RI :) ) pour s’assurer que l’on a les bonnes tensions / intensités. J’ai réaliser les calculs pour des leds vertes haute luminosité. Notez que le seuil de tension (aussi appelé Forward Voltage) des led vari aelon les couleurs (2~2.6v pour les rouges/oranges/jaunes et 3~4V pour les vertes/bleu). Dans la configuration que j’ai réaliser, prévu pour une alimentation de 5V, on ne peut allumer les LED qu’une à une pour espérer une intensité lumineuse acceptable. Dans l’ensemble, pour l’adapter a d’autres tensions, vous pouvez vous contenter de recalculer/mesurer les résistances.</p>
+<p>La première étape consiste à réaliser le circuit via un logiciel spécialisé, par exemple Eagle, en s’aidant des lois de la physique (Loi des mailles, des noeuds, et U=RI :) ) pour s’assurer que l’on a les bonnes tensions / intensités. J’ai réalisé les calculs pour des leds vertes haute luminosité. Notez que le seuil de tension (aussi appelé Forward Voltage) des led varie selon les couleurs (2~2.6v pour les rouges/oranges/jaunes et 3~4V pour les vertes/bleu). Dans la configuration que j’ai réalisée, prévue pour une alimentation de 5V, on ne peut allumer les LED qu’une à une pour espérer une intensité lumineuse acceptable. Dans l’ensemble, pour l’adapter à d’autres tensions, vous pouvez vous contenter de recalculer/mesurer les résistances.</p>
 
-<p>Notez que les transistors n’ont pas de résistance sur leur base. Vous DEVEZ en placer. Pour ma part elles figureront coté contrôleur, car je prévoir l’usage d’un démultiplexeur qui diminuera le nombre de résistances nécessaires.</p>
+<p>Notez que les transistors n’ont pas de résistance sur leur base. Vous DEVEZ en placer. Pour ma part elles figureront côté contrôleur, car je prévois l’usage d’un démultiplexeur qui diminuera le nombre de résistances nécessaires.</p>
 
 <p>Voilà la bête :</p>
 
 <p><img src="data/led_matrix_sch.png" alt="Schéma de la matrice" /></p>
 
-<p>Une fois le schéma réalisé, le choix des connecteurs fait, les connexions vérifiés, on peut passer au dessin du PCB. Une petite réflexion vous conduira a la conclusion qu’il est impossible de relier les connexions avec une piste de cuivre simple face sans qu’elles se chevauchent. La solution? De petits fils qui vont venir jouer le rôle de pont. Cela se caractérise par le fait que les pistes ne sont pas complètement reliés, comme Eagle l’indique par la présence de ‘fils aériens’. Sachez au passage que j’ai du réaliser le rooting (câblage) à la main, pour obtenir quelque chose d’esthétique.</p>
+<p>Une fois le schéma réalisé, le choix des connecteurs fait, les connexions vérifiées, on peut passer au dessin du PCB. Une petite réflexion vous conduira à la conclusion qu’il est impossible de relier les connexions avec une piste de cuivre simple face sans qu’elles se chevauchent. La solution? De petits fils qui vont venir jouer le rôle de pont. Cela se caractérise par le fait que les pistes ne sont pas complètement reliées, comme Eagle l’indique par la présence de ‘fils aériens’. Sachez au passage que j’ai dû réaliser le rooting (câblage) à la main, pour obtenir quelque chose d’esthétique.</p>
 
 <p><img src="data/led_matrix_pcb.png" alt="Le PCB" /></p>
 
@@ -137,11 +137,11 @@ Ni la qualité esthétique, puisque vous vous rendrez vite compte qu’aligner p
 
 <h2 id="le-montage">Le montage</h2>
 
-<p>Après quelques semaines, je reçoit le circuit que j’avais commandé. Et oui, vous avez crus que je ferait le circuit moi même? Commandé auprès d’un particulier qui ne traite que les commandes de particuliers ; <a href="http://etronics.free.fr">http://etronics.free.fr</a> si vous me demandez de le dénoncer. Je sort les câbles, la soudure, et me prépare à poser la “deuxième couche” du circuit. Ah mais, il ne manquerait pas la moitié des trous?!</p>
+<p>Après quelques semaines, je reçois le circuit que j’avais commandé. Et oui, vous avez cru que je ferais le circuit moi-même? Commandé auprès d’un particulier qui ne traite que les commandes de particuliers ; <a href="http://etronics.free.fr">http://etronics.free.fr</a> si vous me demandez de le dénoncer. Je sors les câbles, la soudure, et me prépare à poser la “deuxième couche” du circuit. Ah mais, il ne manquerait pas la moitié des trous?!</p>
 
 <hr />
 
-<p>Bon, on essaye de retourner la situation à son avantage. Et si on se contentais de petites agrafes reliés entre elles via un long fil métallique? Mais oui! Ça fonctionne, et c’est même très pratique!</p>
+<p>Bon, on essaye de retourner la situation à son avantage. Et si on se contentait de petites agrafes reliées entre elles via un long fil métallique? Mais oui! Ça fonctionne, et c’est même très pratique!</p>
 
 <p><img src="data/led_matrix_01.png" alt="Placement des bootstraps en agrafes." />
 <img src="data/led_matrix_01.png" alt="Deuxième piste" /></p>
@@ -161,22 +161,22 @@ C’est terminé!</p>
 
 <ul>
   <li>On n’allume qu’une led à la fois, quitte à le faire assez vite pour donner
-l’illusion que plusieurs sont allumé en même temps. Un affichage à 60kHz est suffisant.</li>
+l’illusion que plusieurs sont allumées en même temps. Un affichage à 60kHz est suffisant.</li>
   <li>Il faut penser à mettre des résistances sur la base des transistors
 (Les headers C1-C10).</li>
   <li>Pour activer la diode en (4,8) (Avec la disposition où est prise la
 première photographie) on branche 5V sur L8 et l’on active C4 avec par
-exemple une résistance 10K relié à 5V.</li>
+exemple une résistance 10K reliée à 5V.</li>
 </ul>
 
 <p><strong>À vous de faire une plus grosse matrice! ;)</strong></p>
 
-<p><strong>NB :</strong> Le montage que j’ai fait n’est pas la seul solution pour réduire le nombre
+<p><strong>NB :</strong> Le montage que j’ai fait n’est pas la seule solution pour réduire le nombre
 de connections. Il existe des multiplexages à ‘haute impédance’, se basant sur
 le fait que l’on ne connecte que 2 broches sur l’ensemble des combinaisons
-possible (<a href="http://www.sonelec-musique.com/electronique_bases_affichage_multiplexage.html">Sonelec-musique</a>).
-Je ne garantit pas que ce soit une bonne idée pour utiliser conjointement avec
-des LED haute luminosité et un microcontroleur. Si quelqu’un a testé, je suis
+possibles (<a href="http://www.sonelec-musique.com/electronique_bases_affichage_multiplexage.html">Sonelec-musique</a>).
+Je ne garantis pas que ce soit une bonne idée pour utiliser conjointement avec
+des LED haute luminosité et un microcontrôleur. Si quelqu’un a testé, je suis
 curieux de savoir ce que ça donne.</p>
 
 </div>
