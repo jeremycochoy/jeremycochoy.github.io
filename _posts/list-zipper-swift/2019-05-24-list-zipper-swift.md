@@ -9,7 +9,7 @@ lang: en
 ...
 
 Recently, I was implementing a model for a music application where the user
-edit a collection of tracks, while editing only one track at a time.
+edits a collection of tracks, while editing only one track at a time.
 After a little thought, the best representation of this “focus” in the data
 model was obviously a zipper.
 Since this is not a common pattern, I thought it would be a wonderful example
@@ -18,10 +18,10 @@ of how such a simple pattern can encode the intention into the data structure.
 ## Abstract idea
 The Zipper is a well known pattern in Haskell,
 and although this language is rarely used in production,
-some of its usage translate very well to other languages.
+some of its usages translate very well to other languages.
 The List Zipper is basically a list where the element we are focusing at
 was taken out.
-It allow shifting the attention to the previous or next element,
+It allows shifting the attention to the previous or next element,
 and obviously to retrieve the whole list if required.
 
 ## Usage
@@ -42,7 +42,7 @@ print(zippy.toList().joined(separator: " ")) // Eat pancakes
 ```
 
 ## Implementation
-Let’s start by the data itself.
+Let’s start with the data itself.
 We need to store the element of the list we are looking at (the cursor).
 Since we are focusing on an element of the list,
 we also need to remember what was before this element, and what comes next.
@@ -59,11 +59,11 @@ struct ListZipper<T> {
 }
 ```
 
-Now that we have the informations,
+Now that we have the information,
 we need a way to convert from a list to a ListZipper,
 and from a ListZipper to a list.
 We add an initializer with as a default an empty list,
-and a function that glue together the beginning of the list, the cursor,
+and a function that glues together the beginning of the list, the cursor,
 and the remaining part of the list.
 
 ```swift
@@ -82,13 +82,13 @@ and the remaining part of the list.
   }
 ```
 
-Notice how we handle the case where the curser is pointing to nothing.
-(A case which could occurs from an empty list / empty zipper.)
+Notice how we handle the case where the cursor is pointing to nothing.
+(A case which could occur from an empty list / empty zipper.)
 
 Our zipper can store the information,
 but is always pointing to the first element of the list.
 This is pretty boring and not really useful.
-We introduce two functions that allow to move on the right or the left of
+We introduce two functions that allow moving to the right or the left of
 our band.
 
 ```swift
@@ -109,7 +109,7 @@ mutating func right() {
 }
 ```
 
-I personally choose to add guards for my particular usage,
+I personally chose to add guards for my particular usage,
 because I always want to be pointing to a music track if my song is not empty.
 But you could safely remove them.
 In this setting you’d know you are on the bounds simply by checking if the
@@ -117,7 +117,7 @@ cursor is pointing to nothing.
 
 One crucial step remaining to make this Zipper fully usable is a way to insert
 and remove elements at the current location.
-I choose to always insert on the right of the element pointed.
+I chose to always insert on the right of the element pointed.
 Symmetrically, when I remove the pointed element,
 I automatically look to the left.
 
@@ -142,7 +142,7 @@ mutating func remove() {
 ```
 
 Notice that in the case you removed the guard in the left/right functions,
-you can also simplify remove by only poping the value from `leftList`.
+you can also simplify remove by only popping the value from `leftList`.
 
 Now you have a simple but powerful zipper in your hands.
 For more fanciness, one could also enjoy the natural functoriality of the list

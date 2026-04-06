@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What is wrong with the object paradigm ?
-description: A reflexion on error handling and application modeling
+description: A reflection on error handling and application modeling
   through various variations of data modeling. We look at old C fashion,
   object languages, and more functional approaches.
 author: Jérémy Cochoy
@@ -11,7 +11,7 @@ lang: en
 ---
 
 Disclaimer: Aside from the catchy title,
-the main point of this article is to asks questions about the weakness of OOP
+the main point of this article is to ask questions about the weakness of OOP
 and how some languages provided some element of improvement, by taking a slightly different point of view.
 
 > The object paradigm is fundamentally wrong[^wrong]
@@ -19,19 +19,19 @@ and how some languages provided some element of improvement, by taking a slightl
 If you are curious about programming languages and diverse paradigms,
 you probably heard or read this sentence more than once.
 Through those lines,
-I'll try to draw a picture of the main reason that can lead peoples to this conclusion.
-What are the good side and wrong side of OOP,
+I'll try to draw a picture of the main reason that can lead people to this conclusion.
+What are the good sides and wrong sides of OOP,
 and how we can improve this paradigm by tuning it a little bit.
-This nice "tunning" is actually already part of some languages,
+This nice "tuning" is actually already part of some languages,
 and I'll refer to it as the 'category paradigm'.
 
-## Where does the object paradigm comes from?
+## Where does the object paradigm come from?
 
 First, let's recall how, historically, we came to the object paradigm.
 We are in the late 70s.
 The C language is now famous as it completely changed the way to write code
-compared to assembly, is human readable and have a monstrous expressivity
-in only few language words and
+compared to assembly, is human readable and has a monstrous expressivity
+in only a few language words and
 the procedural paradigm[^procedural-paradigm] (the one you use while writing C)
 is well understood.
 But, as applications grow and get an increasing size,
@@ -41,8 +41,8 @@ the code's complexity is growing exponentially, and code gets harder and harder 
 The object paradigm was developed, expecting to solve the complexity curse.
 Here came OBJC and C++, both in 1983.
 
-Sadly, we know today that OOP wasn't the Holly Graal.
-But what did made peoples believe that it would be, and why is OOP still used today?
+Sadly, we know today that OOP wasn't the Holy Grail.
+But what did make people believe that it would be, and why is OOP still used today?
 
 ## The hopes of OOP
 
@@ -50,23 +50,23 @@ What came out from a lot of procedural development is that you often have types
 that describe some complex structure (for example, linked lists in C are built of chained cells,
 each cell composed of a value and a link to the next cell)
 and functions operating on this type (using the same example,
-function for initialising empty list, destroying list,
-inserting into this list and removing value from it, etc.).
+functions for initialising an empty list, destroying a list,
+inserting into this list and removing values from it, etc.).
 Once you have spotted this coding pattern, it sounds reasonable to formalise it so that
 you don't always have to rewrite it by hand, each time.
-Indeed, this is the best way to involve : spot a pattern that people do mechanically,
-and automatise it.
+Indeed, this is the best way to evolve: spot a pattern that people do mechanically,
+and automate it.
 It worked in the automobile industry,
 and it also did for computer development.
-Automatization, from shell script... to new programming languages.
+Automation, from shell scripts... to new programming languages.
 
 ## Genesis of OOP
 
-This was the genese of the object paradigm.
-We call a such data type an object, add an
+This was the genesis of the object paradigm.
+We call such a data type an object, add an
 initialisation procedure always called at initialisation,
-and an other one always called when the resource become unreachable.
-Namely, OOP's constructor and destructors.
+and another one always called when the resource becomes unreachable.
+Namely, OOP's constructors and destructors.
 Because we always have lots of methods related to this object that
 always need as argument this object,
 we add them to the type definition and call them methods.
@@ -143,17 +143,17 @@ int Object::do_stuff(int input) {
 }
 ```
 
-This example is quite simple, and show how object paradigm is applied
+This example is quite simple, and shows how object paradigm is applied
 both in C and C++ languages.
 The second language is a lot more error-proof thanks to
 the support of the paradigm _in_ the language.
 
-Now you might interupt me and argue 'object paradim isn't just about methods glued to a type'.
+Now you might interrupt me and argue 'object paradigm isn't just about methods glued to a type'.
 And you would be right.
-I swept under the rug _inheritence_.
-This feature actually comes from spotting another codding patter C developers were also
+I swept under the rug _inheritance_.
+This feature actually comes from spotting another coding pattern C developers were also
 doing quite frequently.
-You reproduce the inheritence by agregating types, and using pointer arithmetic,
+You reproduce the inheritance by aggregating types, and using pointer arithmetic,
 as shown below.
 
 ```c
@@ -208,43 +208,43 @@ A* q = &obj_c;
 
 Introducing this feature in the language ensure automatic conversion from B* to A* with
 the right pointer arithmetic.
-It remove the risk of often hard to spot bugs.
-Inheriting doesn't apply only to type, it apply to methods.
-You can call methods working with a type A on instance of type B.
+It removes the risk of often hard to spot bugs.
+Inheriting doesn't apply only to types, it applies to methods.
+You can call methods working with a type A on instances of type B.
 This is the key reason of this pointer conversion.
 
-The languages C++ and Java alow something even stronguer than reusing methode
-for subtypes in inheritence hierarchy.
+The languages C++ and Java allow something even stronger than reusing methods
+for subtypes in inheritance hierarchy.
 Through abstract methods, or Java's interface,
 you can force the existence of methods on a given type.
 Such that the behavior can be different with different types,
-but the interface to work on them remind the same.
+but the interface to work on them remains the same.
 Allowing huge code factorisation and genericity of algorithms.
 
 ## So why is OOP wrong?
 
 Before saying anything,
-I want to show you how does object looks like in different mainstream languages.
+I want to show you how objects look like in different mainstream languages.
 
 ![Object Languages](data/object-languages.png)
 
 Of course, you can make schemes similar to java in C++ ;
-interface are obtained through abstract class.
+interfaces are obtained through abstract classes.
 It's just that the language doesn't prevent you from gluing too many things together
 (but that's actually part of the C++ philosophy : allow doing
-as much thing as you can imagine, but you have to make carefully your design decisions).
+as many things as you can imagine, but you have to make carefully your design decisions).
 
 Looking at the scheme, we see that always, in both languages,
 type definition and method definitions are glued together.
 You **can not** define a type and later,
 in a completely independent way, implement methods for this type.
 Actually, if C++ and Java are the only object languages you have heard about,
-my last sentence might sounds really strange for you (even maybe sounds like nonsense).
-But notice that in D, you **can** implement something rely similar to methods in a
+my last sentence might sound really strange to you (and maybe even sound like nonsense).
+But notice that in D, you **can** implement something really similar to methods in a
 complementary independent way of type definition.
 Why would you do that? Let me give you a tasty example.
 
-A guy (let call him A) make a colorful library describing tasty chocolate biscuits.
+A guy (let's call him A) makes a colorful library describing tasty chocolate biscuits.
 Here is a little bit of his library.
 
 ```
@@ -253,16 +253,16 @@ Biscuit -> Cookie -> FullChocolateCookie
         -> Oreo
 ```
 
-He think a lot about cooking such wonderful wonders, an implement many sophisticated methods.
+He thinks a lot about cooking such wonderful wonders, and implements many sophisticated methods.
 
 Now another guy (named B) just discovered the best way to eat biscuits,
 so that you can really enjoy all the taste and perfume they carry.
 Not only for chocolate biscuits, but for any biscuit in the world.
-He implements many new biscuit, and their _eat_ method.
+He implements many new biscuits, and their _eat_ method.
 But in those languages, his only way to add an _eat_ method to A's cookies is to either:
 
-- Re-implement all the biscuit A did in his library, or modify A's library to add his eat method,
-- Encapsulate the A library in some container, like a 'biscuit metal box', which is definitively not as easy to eat (especially because metal tends to be harder your teeth).
+- Re-implement all the biscuits A did in his library, or modify A's library to add his eat method,
+- Encapsulate the A library in some container, like a 'biscuit metal box', which is definitely not as easy to eat (especially because metal tends to be harder than your teeth).
 
 If you develop library and re-use existing libraries,
 that's a problem you probably already encountered many times.
@@ -270,7 +270,7 @@ that's a problem you probably already encountered many times.
 This is because there is actually no good reason to enforce (Java style)
 interface implementation where type definition occurs.
 This is the first big issue coming from the way object model
-is implemented **and** conceived in developer's mind.
+is implemented **and** conceived in developers' minds.
 
 The second big issue, related to the way OOP is done today,
 is the huge verbosity and boilerplate code introduced by encapsulation.
@@ -295,10 +295,10 @@ So much redundancy.
 Have a look at LLVM's example for heavily verbose C++ code
 (that is actually good C++ practice...).
 Each variable's name is written three times.
-I would say that this code is three times longer that it should be
-(I mean, if we was living in a perfect world).
+I would say that this code is three times longer than it should be
+(I mean, if we were living in a perfect world).
 But there isn't a better way to do it, conforming to usual understanding of OOP.
-If so, LLVM's developer would have found it and spreed the word.
+If so, LLVM's developer would have found it and spread the word.
 
 ## The categoric paradigm
 
@@ -313,12 +313,12 @@ A typeclass (it's a mathematical class) definition is similar to a java interfac
 Types that become instances of this typeclass should implement its methods, but
 the main difference is that the belonging of a type T to a given typeclass C can be
 stated independently of the typeclass definition and of the type definition.
-In rust, typeclass are named trait.
-Types are types (as they are in C) and the link between them, the instanciation of
-the trait of a type can be done independently of the definition of the trait and of
+In rust, typeclasses are named traits.
+Types are types (as they are in C) and the link between them, the instantiation of
+the trait for a type can be done independently of the definition of the trait and of
 the definition of the type.
 
-Here is bellow a short example from rust's documentation[^trait]:
+Here is below a short example from rust's documentation[^trait]:
 
 ```rust
 // # A Sheep object:
@@ -384,28 +384,28 @@ impl Animal for Sheep {
 }
 ```
 
-See how this three things can be done independently.
+See how these three things can be done independently.
 
-Similar things can be archived in haskell,
-though constructor and destructor doesn't exist.
-But Haskell's variable are by default immutable,
+Similar things can be achieved in Haskell,
+though constructors and destructors don't exist.
+But Haskell's variables are by default immutable,
 and the language is full of laziness.
-In a such context, looking for a constructor or a destructor doesn't make sens.
+In such a context, looking for a constructor or a destructor doesn't make sense.
 But for the curious, what is done in rust for methods can be done in the
 same way in Haskell.
 
 ## Conclusion
 
-Though this article have a really catchy title,
+Though this article has a really catchy title,
 the main point is to show you another perspective for the concept of object
 that is quite different from the one OOP's developer are used to.
 The first goal is to show the weakness of the object paradigm,
-and the second is to demonstrate how some of them can be strengthen
-from a small switch in the viewpoint, using emerging languages for examples.
-The view point demonstrated here is more known in the functional programming land
-(although not all functional programming languages offers such features).
-The Mozilla fondation made a wonderful work by creating rust, a language that provide
-both the functional and procedural paradigms, and also allow taking the
+and the second is to demonstrate how some of them can be strengthened
+from a small switch in the viewpoint, using emerging languages for example.
+The viewpoint demonstrated here is more known in the functional programming land
+(although not all functional programming languages offer such features).
+The Mozilla Foundation did wonderful work by creating Rust, a language that provides
+both the functional and procedural paradigms, and also allows taking the
 object approach in cases where it fits better than the two previous paradigms.
 I hope that it made you question yourself on the object oriented paradigm and
 developed your curiosity for other languages.
@@ -417,14 +417,14 @@ our usual tools from procedural languages. So don't turn your head away,
 just because your favorite language doesn't provide such features :)
 
 [^procedural-paradigm]: Procedural paradigm means essentially
-    that the language provide functions with side effects, and code is written linearly.
-    You can see it like an enhencement of languages that only provide goto and jumps.
+    that the language provides functions with side effects, and code is written linearly.
+    You can see it like an enhancement of languages that only provide goto and jumps.
 
 [^effective-cpp]: This is a really good book on good programming advices
-    for C++ developer. Despite the critic made in this article, it's definitively
+    for C++ developer. Despite the criticism made in this article, it's definitely
     a book full of good practices.
 
 [^trait]: See [rust traits](http://rustbyexample.com/trait.html)
 
-[^wrong]: Things aren't black and white. The object paradigm is definitively well suited
+[^wrong]: Things aren't black and white. The object paradigm is definitely well suited
     for many tasks like modeling GUI.

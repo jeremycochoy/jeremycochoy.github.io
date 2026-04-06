@@ -2,8 +2,8 @@
 layout: post
 title: An alternative error handling strategy for C++
 description: We treat three historical ways to handle errors,
-  and consider a functional approach using monades to handle error in C++.
-  We provide a C++ implementation unsing templates and discuss the pros and cons.
+  and consider a functional approach using monads to handle errors in C++.
+  We provide a C++ implementation using templates and discuss the pros and cons.
 author: Jérémy Cochoy
 date: 2013-08-27 + 0100
 categories: programming C++ monads language software script
@@ -16,7 +16,7 @@ redirect_from:
 ## Error handling
 
 This not so short post is dedicated to a subject that may interest many
-programers: error handling.
+programmers: error handling.
 
 Error handling is the "dark side" of programming. It is both the heart of
 real world applications, and the dirty stuff you would like to avoid.
@@ -27,8 +27,8 @@ Since the C years, I know three most common ways of handling errors.
 
 'C-Style' handling is the easiest way to do it, but it isn't completely satisfying.
 
-C-Style error handling is basicaly "returning an error code when the application
-failed". Here is short example.
+C-Style error handling is basically "returning an error code when the application
+failed". Here is a short example.
 
 ``` cpp
 int find_slash(const char *str)
@@ -55,29 +55,29 @@ if (find_slash(string) == -1)
 
 ### What's good here?
 
-You can (and actualy, in C style, you do), right after the call, directly handle
-the error by eventualy displaying a message and terminating the application,
+You can (and actually, in C style, you do), right after the call, directly handle
+the error by eventually displaying a message and terminating the application,
 or just retrieving the last state, aborting the computation...
 
-When you wan't to find where the error handling is made, you just have to look at
+When you want to find where the error handling is made, you just have to look at
 the __function call__. It's __right__ after.
 
 ### What's bad here?
 
-As some may have told you, it mix error handling with proper "execution flow".
-When you read linearly the code as the code execute, you read sometime error
-handling, and some time program logic. That's really bad, because you would like to
+As some may have told you, it mixes error handling with proper "execution flow".
+When you read linearly the code as the code executes, you read sometimes error
+handling, and sometimes program logic. That's really bad, because you would like to
 read either "program logic" or "error handling".
 
 Also notice that you are limited to an "error code". If you want to provide
-more informations, you'll have to create some functions (like errstr) and / or
-use global variables;
+more information, you'll have to create some functions (like errstr) and / or
+use global variables.
 
 ## Do it C++-style: exceptions
 
 When C was "enhanced" to c++, a new way of handling errors was introduced. It
 was "exceptions". Exceptions are a way of breaking the normal flow of your code
-by "throwing" an error that will be "catched" somewhere else. Again, a short example.
+by "throwing" an error that will be "caught" somewhere else. Again, a short example.
 
 ``` cpp
 int find_slash(const char *str)
@@ -110,41 +110,41 @@ catch(AnException& e)
 ### What's good here?
 
 Program logic and error handling are separated. On one side you can see how the function
-whork and when it fail, on the other part you can see what it does if it failed.
-It's pretty, simplify reading of both error handling and program logic.
+works and when it fails, on the other part you can see what it does if it failed.
+It's pretty, simplifies reading of both error handling and program logic.
 
 The second point is that now you can give as many information as you like, since
 you can put what you want in your MyException object.
 
 ## What's bad here?
 
-Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interesting it. Also, you need some
-error codes inside, to know exactly what hapenned, retrieve an error message, etc.
+Writing exceptions well is verbose. You need an exception tree, if possible not too big, so that you can catch only the exception you are interested in. Also, you need some
+error codes inside, to know exactly what happened, retrieve an error message, etc.
 Writing exceptions class __is__ verbose, it's the cost of the flexibility given by the
-ability to handle more informations embeded as an error.
+ability to handle more information embedded as an error.
 
 The way encouraged by this philosophy is to postpone error handling as late as possible,
-so that users can have the highest flexibility to handle errors. Thats theoricaly a good
+so that users can have the highest flexibility to handle errors. That's theoretically a good
 thing, but…
 
-In big applications, you __can't__ find esily where the error is handled. When you wan't
+In big applications, you __can't__ find easily where the error is handled. When you want
 to know what would be the path of an error, you have to jump across files, functions,
 and it's really hard to find, if you introduce a new exception deep in the "call ~graph~ tree" (I mean the graph you would have if you draw each function call) then you have to
 figure out where it should be handled, if it is already handled, in which places. It's
-really hard when the application is big, old, not really well writen everywhere. Actualy
+really hard when the application is big, old, not really well written everywhere. Actually
 it's the case of most of the commercial projects. And that is that.
 
-That's what make me state "Exceptions are dangerous". Of course, they provide a pretty
-well to handle error… but only when you are working on small project, where the
+That's what makes me state "Exceptions are dangerous". Of course, they provide a pretty
+good way to handle errors… but only when you are working on small project, where the
 "call graph" is simple and easy to get in the mind.
 
 ## The error box pattern
 
-I call it a pattern, so that people don't be afraid. At the end, I'll call it with it's
+I call it a pattern, so that people don't get afraid. At the end, I'll call it with its
 right name, so please, be patient.
 
 The main idea is creating a box that can contain either an error message or a value. We
-will limit ourself to a string, and nothing more, because it's actualy not so easy to
+will limit ourselves to a string, and nothing more, because it's actually not so easy to
 implement. We will try to keep the syntax readable, understandable, for use cases.
 We won't handle correctly copy constructor, more than one parameter functions,
 and rvalues. We will keep it as simple as possible.
@@ -196,8 +196,8 @@ if(!v)
 }
 ```
 
-Ok, so what happened ? Bind is a member function that takes your function, and tries
-to apply it. If there is a value in the "error box", then it aplies to function, and then
+Ok, so what happened? Bind is a member function that takes your function, and tries
+to apply it. If there is a value in the "error box", then it applies the function, and then
 returns an error box (the compiler won't let you give a function that doesn't return
 an error box).
 
@@ -209,20 +209,20 @@ functions of type `E<something_out> f(E<something_in>)`.
 ### What's good here?
 
 Once again, program logic (the chain) and error handling (the if) are separated. Like
-with exception, we have the ability to read the chain and don't think about where
-the execution is interrupted. Actualy, the chain __may__ be interrupted at __any__ step.
+with exceptions, we have the ability to read the chain and don't think about where
+the execution is interrupted. Actually, the chain __may__ be interrupted at __any__ step.
 But we can think as if no error is happening and check quickly if our logic is right.
 
 Of course, typing will prevent you from binding format after a display, so we
 don't lose any typing capabilities.
 
 Notice that we aren't calling any of those function in any other. We are "composing"
-them at the end. That is the key to make it works. You should, write small modular
+them at the end. That is the key to make it work. You should write small modular
 functions (hey, look at that: you __should__ write generic code so that it can work)
-that accept a value, then compute an other "new" value, or fail. And at each
+that accept a value, then compute another "new" value, or fail. And at each
 step, you don't have to think about where an exception may interrupt your control
-flow and take care of maintain you stuff in a valid state (exception safety is basically
-beeing always looking at each call you do, and figure out if the function can interrupt
+flow and take care of maintaining your stuff in a valid state (exception safety is basically
+being always looking at each call you do, and figuring out if the function can interrupt
 your flow and what will happen if it does). For this point, it's "safer".
 
 As with exceptions, we can have "as many information as you like", although in this
@@ -240,18 +240,18 @@ Big projects are more "linear" and easy to read.
 First, it's new. It's not integrated to C++, it's not the standard way, and with the
 stl you'll still have to use exceptions.
 
-It's still a bit too much verbose for my taste. The need to write explicitely the type in
+It's still a bit too verbose for my taste. The need to write explicitly the type in
 `fail<int>("...")` is bad. If you had a polymorphic error type, then it's worst because
 you'll have to write `fail<return_type, error_type>("...")`.
 
-It do not provide an easy way to call a function that need more than one argument.
+It does not provide an easy way to call a function that needs more than one argument.
 In some other languages, you have "applicative" types and currification that solve it
 nicely, but that's far from what you may expect from c++. I'm more likely to think that
 a `bind2(E<a>, E<b>, f)` and `bind3(E<a>, E<b>, E<c>, f)` function could be used.
 Variadic templates may help.
 
 To get the value "out of the box", we have to check if the box is really a value,
-and then call a "to_value" method. And we have no means from doing it without
+and then call a "to_value" method. And we have no way of doing it without
 checking. What we would like to have is "deconstruction" of objects, but this doesn't
 exist in c++, and it's not the kind of things you just have to say "hey, let's
 add it to the next standard".
@@ -272,7 +272,7 @@ A bit stranger, lists are monad. They are "a value" in a context, from a certain
 point of view.
 
 Let's start by implementing the E class you saw above. I'm relying on C++11 `decltype`
-and `auto -> decltype` wich allow figuring out the type of things from expressions. It's
+and `auto -> decltype` which allow figuring out the type of things from expressions. It's
 really useful.
 
 The bind function is a bit strange, but it does what I stated previously.
@@ -460,7 +460,7 @@ public:
 };
 ```
 
-Oh, we don't spoke about `ret` and `fail`. Actually, they are just wraper around
+Oh, we didn't speak about `ret` and `fail`. Actually, they are just wrappers around
 the `xxx::fail` and `xxx::ret` functions.
 
 ``` cpp
@@ -483,7 +483,7 @@ E<T> fail(std::string err)
 }
 ```
 
-There, we are, you can compile and play with the example above.
+There we are, you can compile and play with the example above.
 
 If you want more stuff to play with, I also have this "more realistic" example:
 
@@ -509,8 +509,8 @@ typedef std::string str;
 //Parse a +- formated string.
 //If a letter is prefixed by +, then the function toupper is applied.
 //''                                              tolower is applied.
-//Non alphabetical (+ and - excepted) aren't alowed.
-//Words are cut on each space ' '. Other blank characters aren't alowed.
+//Non alphabetical (+ and - excepted) aren't allowed.
+//Words are cut on each space ' '. Other blank characters aren't allowed.
 E<vs> parse(std::string str)
 {
     int mode = 0;
@@ -559,7 +559,7 @@ E<vs> parse(std::string str)
     return ret(vec);
 }
 
-//Take the first word and append it to the begining of all other words.
+//Take the first word and append it to the beginning of all other words.
 //Vec should contain at least one element.
 E<vs> prefixy(vs vec)
 {
