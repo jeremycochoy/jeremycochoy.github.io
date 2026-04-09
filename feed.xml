@@ -1,4 +1,188 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-09T09:49:16+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+02:00</published><updated>2019-05-24T00:00:00+02:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-09T11:42:37+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry><title type="html">Effective AI Usage Patterns</title><link href="/effective-ai-usage-patterns/" rel="alternate" type="text/html" title="Effective AI Usage Patterns" /><published>2026-04-09T00:00:00+02:00</published><updated>2026-04-09T00:00:00+02:00</updated><id>/effective-ai-usage-patterns</id><content type="html" xml:base="/effective-ai-usage-patterns/"><![CDATA[<p>Most guides on “prompting” focus on wording tricks — how to phrase a question, what role to assign the AI. This guide is different. It comes from analyzing 500+ real prompts from engineers working with AI daily on production systems over several weeks. The patterns that emerged aren’t about writing better sentences. They’re about building a working relationship with a tool that is powerful, tireless, and confidently wrong in ways you won’t expect.</p>
+
+<p>These 8 principles are ordered as a learning progression:</p>
+
+<ul>
+  <li><strong>Points 1–3</strong> — Foundations: how to interact with the AI effectively</li>
+  <li><strong>Points 4–5</strong> — Scaling up: extending the AI beyond a simple question-answer tool</li>
+  <li><strong>Points 6–8</strong> — Staying in control: managing risk as you delegate more</li>
+</ul>
+
+<p>The arc is: <strong>use it → extend it → shape it → manage it → control it → think above it.</strong></p>
+
+<hr />
+
+<h2 id="1-progressive-delegation--verify-before-you-commit-scope">1. Progressive delegation — verify before you commit scope</h2>
+
+<p>Don’t open with “analyze all the data and write me a report.” Start small: “Do you see the data?” Then: “Who are the users?” Then: “Analyze them.” Each step verifies a capability before committing more scope.</p>
+
+<p><strong>Example:</strong>
+A conversation following this pattern:</p>
+<ol>
+  <li>“Can you access the production database on the staging server?” — <em>can you even reach it?</em></li>
+  <li>“Yes, use ssh deploy@staging” — <em>establishing capability</em></li>
+  <li>“I want you to compare the last 3 deployments and flag any performance regressions” — <em>now the real task</em></li>
+  <li>“Also include memory usage, not just latency” — <em>steering after seeing first output</em></li>
+  <li>“Write this up as a summary report” — <em>committing to deliverable only after the content is validated</em></li>
+</ol>
+
+<p><strong>Why it works:</strong>
+Each step is a low-cost checkpoint. If step 1 fails (can’t access the server), you haven’t wasted time on a detailed analysis prompt. If step 3 produces a bad framework, you course-correct at step 4 before investing in formatting. The total cost is lower because failures are caught early.</p>
+
+<p><strong>The anti-pattern:</strong>
+Writing a 500-token prompt that says “SSH to staging, query the database, compare the last 3 deployments across latency and memory, and write a formatted summary report.” If any assumption is wrong (can’t SSH, schema is different, there were 5 deployments not 3), the entire effort is wasted.</p>
+
+<hr />
+
+<h2 id="2-context-is-an-asset--invest-in-it">2. Context is an asset — invest in it</h2>
+
+<p>Keeping a conversation alive across hours or days is not laziness. It’s an investment. Every prompt you’ve sent, every correction you’ve made, every piece of domain knowledge you’ve shared is now part of the AI’s working memory. That accumulated context is what lets you steer with 3-token prompts instead of 400-token briefs.</p>
+
+<p><strong>Example:</strong>
+A single session about migrating a legacy API spanned 12 days, 50+ prompts, across 8 distinct working days. By day 10, prompts were things like “Check the logs” (3 tokens), “Yes, deploy it” (4 tokens), “Rollback the auth service” (5 tokens). These are precise directives — not vague — because both sides share 12 days of accumulated context about which endpoints were migrated, what broke, what the rollback procedure is, and which services depend on what.</p>
+
+<p>Compare with starting a fresh session each morning: you’d write 300-token prompts to re-explain the migration state, which services are done, which are pending, and what “rollback” means in this context.</p>
+
+<p><strong>The trade-off:</strong>
+Cold start (new session) costs prompt tokens but avoids context pollution. Warm continuation (same session) is efficient but requires the context to still be relevant. The most effective pattern is to keep sessions alive for as long as the <em>problem</em> persists, and start fresh when the <em>problem</em> changes.</p>
+
+<p><strong>How to apply:</strong>
+Don’t close a session just because you’re stepping away. Come back to it tomorrow. The AI remembers everything. The 30 seconds of re-reading your last exchange saves 5 minutes of re-prompting.</p>
+
+<hr />
+
+<h2 id="3-correct-the-framing-not-the-output">3. Correct the framing, not the output</h2>
+
+<p>When the AI produces an incorrect or unintended output, the instinct is to point at it and say “fix this.”</p>
+
+<p><strong>Example:</strong>
+The AI produced a prompt analysis that judged short prompts as a weakness (“would be useless as standalone documentation”). There were two options:</p>
+
+<ul>
+  <li><strong>Correct the output:</strong> “Short prompts aren’t a weakness, they’re efficient.” — the AI adjusts that one judgment, but keeps evaluating prompts as if they were supposed to be self-contained instructions.</li>
+  <li><strong>Correct the framing:</strong> “Prompts aren’t supposed to be documentation, they gave us a window on how the user use them and we want to understand this.”</li>
+</ul>
+
+<p>The first feels like it fixes the problem. But the AI still thinks prompts should be judged by conventional quality standards — it just makes an exception for length. The second — a single sentence — changed the entire analytical framework. The AI re-derived all conclusions from the corrected premise, including ones not yet produced.</p>
+
+<p><strong>Why it works:</strong>
+The output is a symptom. The AI’s mental model is the cause. Fixing the output patches one symptom; fixing the mental model fixes all downstream outputs at once.</p>
+
+<p><strong>How to apply:</strong>
+When the AI gets something wrong, ask yourself: is the output wrong, or is its understanding of what I want wrong? If the latter, state what it should be thinking about, not what it should be writing.</p>
+
+<hr />
+
+<h2 id="4-async-operator-pattern--the-ai-works-while-you-dont">4. Async operator pattern — the AI works while you don’t</h2>
+
+<p>The AI can run background tasks, monitor processes, and check periodically. Treating it as a persistent operator — not a synchronous call-response tool — multiplies your effective working hours.</p>
+
+<p><strong>Example:</strong>
+Patterns like:</p>
+<ul>
+  <li>“Run the full regression suite. Check every 20 minutes — if a test fails, investigate but don’t push any fix until I review.”</li>
+  <li>“Good morning. Did the overnight migration finish? Show me the error count.”</li>
+  <li>“Start the deployment. Monitor the health checks for 3 hours, and rollback if error rate exceeds 1%.”</li>
+</ul>
+
+<p>The user kicks off long-running tasks, then steps away. The AI monitors, and the user comes back to results.</p>
+
+<p><strong>The rhythm:</strong>
+Burst of rapid interaction (5-10 prompts in 30 minutes to set up and steer) → async gap (hours or overnight, AI working) → brief check-in (“How is it going?”, “Check on them”) → either another burst or a final “merge and deploy.”</p>
+
+<p><strong>How to apply:</strong>
+When you have a long-running task (training, deployment, data processing), don’t sit and wait. Tell the AI what to monitor and what to do if things go wrong, then come back later. The AI’s time is cheaper than yours.</p>
+
+<hr />
+
+<h2 id="5-guardrails-before-autonomy">5. Guardrails before autonomy</h2>
+
+<p>Before giving the AI freedom to act, establish the rules it must follow. This is not micromanagement — it’s the opposite. By investing in constraints upfront (coding guidelines, TDD workflow, PR process, naming conventions), you can later delegate with minimal supervision because the AI operates within safe boundaries.</p>
+
+<p><strong>Example:</strong>
+Before any feature work begins, the groundwork is laid:</p>
+<ul>
+  <li>“Please have a look at the README.md and the files loaded according to claude.md. Is there an explicit mention of TDD approach?”</li>
+  <li>“Please add to our readme guideline that we should not define private functions or methods unless it is really a technical detail”</li>
+  <li>“Also create a CODING_STYLE.md and a CLAUDE.md file in this directory”</li>
+  <li>“Please add in README that new features are first merged against development and then development is merged to master”</li>
+</ul>
+
+<p>Once these exist, later sessions can say “follow the instructions in the coding style and readme docs” (30 tokens) instead of re-explaining the entire workflow (300 tokens). The guardrails also apply to other users and other AI sessions — they’re a one-time investment with compounding returns.</p>
+
+<p><strong>The principle:</strong>
+Autonomy without guardrails is dangerous. Guardrails without autonomy is micromanagement. The most effective pattern is: invest heavily in rules once, then delegate freely.</p>
+
+<hr />
+
+<h2 id="6-explicit-action-gates">6. Explicit action gates</h2>
+
+<p>Create deliberate pause points where the AI must report before executing. This prevents costly mistakes in high-stakes operations.</p>
+
+<p><strong>Example:</strong></p>
+<ul>
+  <li>“Only study, do not write code for now”</li>
+  <li>“Don’t act, only answer”</li>
+  <li>“You will wait for my green light before merging anything”</li>
+  <li>“Don’t forget to git commit at the key step of your process”</li>
+  <li>“I won’t be answering for several hours, and I want to be back with the repository ready to review”</li>
+</ul>
+
+<p>These gates create a two-phase workflow: <em>think, then act</em> — with a human checkpoint in between. The AI explores, proposes, analyzes — then waits. The human reviews, adjusts, approves — then the AI executes.</p>
+
+<p><strong>When to gate:</strong></p>
+<ul>
+  <li>Before any production change (deployment, database modification, model disabling)</li>
+  <li>Before irreversible actions (merging PRs, deleting data)</li>
+  <li>When the problem is not yet well understood (“read first, then we decide”)</li>
+  <li>When you’re stepping away and want to review before the AI acts further</li>
+</ul>
+
+<p><strong>The anti-pattern:</strong>
+Giving the AI a long chain of actions with no checkpoints: “analyze, implement, test, merge, deploy.” If step 2 goes wrong, steps 3-5 compound the error.</p>
+
+<hr />
+
+<h2 id="7-human-judgment-at-decision-points">7. Human judgment at decision points</h2>
+
+<p>Use the AI for data gathering, analysis, and execution — but keep the decisions for yourself. The AI computes; you decide.</p>
+
+<p><strong>Example:</strong>
+The pattern repeats consistently:</p>
+<ul>
+  <li>“Show me the benchmark results” → <em>AI produces table</em> → “Service B is clearly degraded, take it out of the load balancer”</li>
+  <li>“Show me the table again without the decommissioned services”</li>
+  <li>“Are you sure about 0.2ms average latency? That seems impossibly low for a cross-region call”</li>
+  <li>“How can the Q1 numbers include the March outage if the window ends February 28?”</li>
+</ul>
+
+<p>The user never says “decide which services to keep.” They say “show me the data” and then make the call. When the AI presents numbers that don’t make sense, the user challenges them — because the user has domain intuition that the AI lacks.</p>
+
+<p><strong>Why it matters:</strong>
+The AI can process data faster, but it doesn’t know what “unlikely” looks like in your domain. A 0.2ms cross-region latency might be mathematically valid but practically impossible. Only you know that. Keeping decision authority means the AI’s mistakes get caught at review, not at deployment.</p>
+
+<p><strong>How to apply:</strong>
+Ask for data, not decisions. Ask for options, not recommendations. When the AI presents results, apply your domain sense before acting. If something looks off, challenge it — the AI can be confidently wrong.</p>
+
+<hr />
+
+<h2 id="8-challenge-the-ais-reasoning">8. Challenge the AI’s reasoning</h2>
+
+<p>Don’t accept AI outputs at face value. Stress-test the logic, especially conclusions and causal claims.</p>
+
+<p><strong>Example:</strong></p>
+<ul>
+  <li>“You’re concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it’s the cache and not the serialization format?” The AI concluded from N=1. The user caught the logical flaw.</li>
+  <li>“Don’t say ‘further investigation needed for the cache layer’ specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic.” The AI over-specified a conclusion that should have been generic.</li>
+  <li>“NaN is not a valid value here. We have data for every region. If you’re getting NaN, your query is wrong.” The AI produced missing values instead of recognizing a bug in its own computation.</li>
+  <li>“I never asked you to switch from the test window to the full history. This is wrong.” The AI silently changed a parameter.</li>
+</ul>
+
+<p><strong>Why it matters:</strong>
+The AI is fluent and confident. It will present wrong conclusions with the same tone as correct ones. The only defense is your own domain knowledge and critical thinking. Treating AI output as a draft to be reviewed, not a finished product, catches errors before they become actions.</p>
+
+<p><strong>How to apply:</strong>
+When the AI presents a conclusion, ask yourself: would I accept this reasoning from a junior engineer? If not, push back. Pay special attention to causal claims (“X caused Y”), edge cases in data, and silent assumption changes.</p>]]></content><author><name>Jeremy Cochoy</name></author><summary type="html"><![CDATA[Principles derived from real-world prompt data — 8 patterns for building a productive working relationship with AI.]]></summary></entry><entry xml:lang="en"><title type="html">List Zipper applied to iOS swift</title><link href="/list-zipper-swift/" rel="alternate" type="text/html" title="List Zipper applied to iOS swift" /><published>2019-05-24T00:00:00+02:00</published><updated>2019-05-24T00:00:00+02:00</updated><id>/list-zipper-swift</id><content type="html" xml:base="/list-zipper-swift/"><![CDATA[<p>Recently, I was implementing a model for a music application where the user
 edits a collection of tracks, while editing only one track at a time.
 After a little thought, the best representation of this “focus” in the data
 model was obviously a zipper.
@@ -3234,71 +3418,4 @@ return (filename, hashed)
 <ul>
   <li><a href="http://en.cppreference.com/w/cpp/language/lambda">http://en.cppreference.com/w/cpp/language/lambda</a></li>
   <li><a href="http://en.cppreference.com/w/cpp/utility/functional/function">http://en.cppreference.com/w/cpp/utility/functional/function</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveaux aspects fonctionnels du C++ 11. Il y est question de lambdas et d'applications partielles.]]></summary></entry><entry xml:lang="fr"><title type="html">CMake - Mini howto</title><link href="/cmake-howto/" rel="alternate" type="text/html" title="CMake - Mini howto" /><published>2013-06-30T00:00:00+02:00</published><updated>2013-06-30T00:00:00+02:00</updated><id>/cmake-howto</id><content type="html" xml:base="/cmake-howto/"><![CDATA[<h2 id="quest-ce-que-cmake-">Qu’est-ce que CMake ?</h2>
-
-<p>CMake est un utilitaire permettant de générer le “build process” d’un projet. C’est un outil du même genre que les autotools (aussi appelés pour des raisons que je tairai ‘autohell’) en</p>
-
-<ul>
-  <li>Plus simple à configurer</li>
-  <li>Plus récent (donc moins de façons de procéder obscures)</li>
-  <li>Plus performant (dans le sens où, avec cmake, compiler un projet à l’extérieur du repository est extrêmement simple et agréable!)</li>
-  <li>Vous êtes libre d’organiser vos répertoires/fichiers comme vous le désirez.</li>
-</ul>
-
-<p>Il est bon aussi de savoir que CMake est capable de générer aussi bien des Makefiles que des fichiers de projet VC++ ou XCode (pas mal, hein?).</p>
-
-<p>On a aussi une jolie progression en % de la compilation (et l’on peut toujours utiliser make -j42 pour faire chauffer les cœurs).</p>
-
-<p>##Comment on s’en sert ?</p>
-
-<p>On connaît tous le <em>./autogen.sh</em>, <em>./configure</em> puis <em>make &amp;&amp; sudo make install</em>. Bien entendu, on produit tous les fichiers bien sales dans le dossier des sources, ce qui donne une magnifique liste de fichiers à ajouter au .gitignore de votre projet (ou tout autre fichier équivalent pour svn / mercurial). Avec cmake, on peut reproduire le schéma des autotools via <code class="language-plaintext highlighter-rouge">cmake .</code> puis <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Mais mieux, vous pouvez (par exemple) faire <code class="language-plaintext highlighter-rouge">mkdir build &amp;&amp; cd build</code> puis <code class="language-plaintext highlighter-rouge">cmake ..</code> et <code class="language-plaintext highlighter-rouge">make &amp;&amp; sudo make install</code>. Dites bonjour à la propreté de votre projet grâce à CMake ;)</p>
-
-<p>##Comment ça fonctionne ?</p>
-
-<p>C’est là qu’est le plus beau. Configurer CMake pour un projet, gérer les dépendances de libs, générer les libs, voire même générer les packages (que ce soit des packages archlinux, debian …). On prend très vite en main, c’est clair, et la documentation est excellente.</p>
-
-<p>Je ne vais pas détailler comment construire un fichier de config ; le <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial CMake</a> le fait déjà très bien, et l’on trouve tout ce qu’il manque dans le wiki. (Notez que dans un VRAI projet, il vous faudra un peu plus que le tutorial). Je vais aborder les idées générales et les petites astuces qui m’ont servi.</p>
-
-<p>D’abord, on place les instructions dans un fichier CMakeLists.txt à la racine du projet. On évite donc la multiplication des fichiers de configuration. Il est possible d’appeler des scripts d’autres dossiers grâce à <code class="language-plaintext highlighter-rouge">add_subdirectory("${PROJECT_SOURCE_DIR}/your_folder"</code>). Il est important d’utiliser <code class="language-plaintext highlighter-rouge">${PROJECT_SOURCE_DIR}</code> pour que tout se place bien quand on souhaite compiler dans un autre dossier.</p>
-
-<p>On peut facilement demander à cmake de trouver des libs. En règle générale, on trouve un FindNomDeLaLib.cmake que l’on placera dans projet/cmake/Modules/, et l’on prendra soin d’ajouter <code class="language-plaintext highlighter-rouge">set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")</code>.</p>
-
-<p>Une façon pratique pour compiler votre projet est de placer tous vos .c/.cpp dans un dossier src, et de tous les sélectionner (ça évite d’oublier d’ajouter un .cpp à la liste des fichiers du projet). Avec <code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE SOURCE_FILES src/*.cpp SRC)</code> la liste des fichiers figure dans la variable “SOURCE_FILES”. S’il vous faut exclure certains fichiers, vous pouvez utiliser :
-<code class="language-plaintext highlighter-rouge">file(GLOB_RECURSE UNWANTED_FILES src/FichierAExclure.cpp SRC)
-list (REMOVE_ITEM SOURCE_FILES ${UNWANTED_FILES})</code></p>
-
-<p>Si vous êtes fan des tests unitaires, CMake propose une façon agréable de lancer des tests avec :
-<code class="language-plaintext highlighter-rouge">add_test (NAME NomDuTest WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/repertoiredexecution" COMMAND "commande a executer")</code>
-Ça va de “lancer un programme et vérifier qu’il EXIT_SUCCESS” à “vérifier que la sortie du programme contient cette expression”.</p>
-
-<p>Chose utile, que ne fournissent pas les autotools, c’est une façon unifiée de gérer le numéro de version de l’application ; Toutes les variables d’un CMakeLists peuvent être utilisées pour générer des fichiers à partir de templates (souvent le nom du fichier avec le suffixe .in). En pratique, on définit VERSION_MAJOR et VERSION_MINOR, puis on génère un Version.h, un doxyfile, et on utilise les valeurs pour générer les noms des bibliothèques exportées. C’est simple, intuitif, et très bien expliqué dans le tutoriel. Faire une release se limite alors à changer le numéro de version dans un fichier, et de lancer la compilation pour obtenir les binaires et packages.</p>
-
-<p>CMake dispose aussi d’un système de macros, pour faciliter la vie des maintainers, et l’on comprend donc que de plus en plus de projets tendent à l’utiliser.</p>
-
-<p>Un fichier de configuration emacs est disponible (depuis la doc de cmake) pour ajouter un “cmake-mode”, et se charge avec, par exemple, <code class="language-plaintext highlighter-rouge">(load "~/.emacs.d/cmake-mode.el")</code>.</p>
-
-<p>On peut aussi contrôler la génération d’une documentation avec doxygen. Pour cela, on rajoute un CMakeLists dans un répertoire /doc. On demande à ce que doxygen soit présent via <code class="language-plaintext highlighter-rouge">find_package(Doxygen)</code>. On écrit un fichier template doxygen.in de configuration, où les valeurs à modifier sont de la forme @NOM_DUN_DEFINE@, et définies dans le fichier de configuration CMake par <code class="language-plaintext highlighter-rouge">set(NOM_DUN_DEFINE pouïc)</code>. Ensuite, on peut facilement ajouter une règle “make doc” de la façon suivante :</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(DOXYGEN_FOUND)
-  configure_file(${DOXYGEN_TEMPLATE_FILE}
-    ${DOXYGEN_CONFIGURED_FILE}
-    @ONLY
-    )
-  add_custom_target(doc
-    ${DOXYGEN_EXECUTABLE}
-    ${DOXYGEN_CONFIGURED_FILE}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Generating API documentation with Doxygen" VERBATIM
-    )
-endif(DOXYGEN_FOUND)
-</code></pre></div></div>
-<p>où le @ONLY signifie que seuls les mots entourés d’@ seront remplacés (Sinon, les ${SOMETHING} sont aussi affectés).</p>
-
-<h2 id="conclusion-">Conclusion :</h2>
-
-<p>Ce qu’il faut retenir, c’est que CMake est simple à configurer, offre de nombreuses fonctionnalités, et laisse la possibilité d’ajouter celles manquantes. Beaucoup de gens sont encore habitués au ./configure, et sont effrayés par cette nouvelle façon d’aborder ce problème. Pourtant, CMake est un réel gain de temps, et l’on voit des gros projets comme KDE changer de build system pour CMake.  On peut même l’utiliser pour de minuscules projets (compiler les .cpp d’un dossier en un exécutable, sans dépendances particulières, se fait avec un fichier de configuration de 3 lignes), et je vous encourage justement à le faire. Trois lignes pour avoir une gestion automatique des dépendances des .h, génération des makefiles, le tout multiplateforme, ce n’est pas cher payé.</p>
-
-<h3 id="resources-">Resources :</h3>
-<ul>
-  <li><a href="http://en.wikipedia.org/wiki/CMake">http://en.wikipedia.org/wiki/CMake</a></li>
-  <li><a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">http://www.cmake.org/cmake/help/cmake_tutorial.html</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="language" /><category term="cmake" /><category term="adminsys" /><category term="makefile" /><summary type="html"><![CDATA[Introduction à CMake.]]></summary></entry></feed>
+</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveaux aspects fonctionnels du C++ 11. Il y est question de lambdas et d'applications partielles.]]></summary></entry></feed>
