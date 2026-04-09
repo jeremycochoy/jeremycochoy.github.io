@@ -1,0 +1,112 @@
+# Jeremy Cochoy
+
+> Dr in Mathematics and Computer Science. CEO of Redstone Solutions. Speaker at international ML conferences. Researcher at the intersection of machine learning, time series forecasting, and signal processing.
+
+Website: https://www.cochoy.fr
+
+## About
+
+Jeremy Cochoy holds a PhD in Mathematics and Computer Science from INRIA Saclay (Paris), where he worked on persistent homology under Steve Oudot. His academic foundation spans pure mathematics (ENS Lyon, Agregation) and computer science, giving him a rare dual perspective on both theoretical and applied problems.
+
+He is the CEO of Redstone Solutions OÜ, a company focused on real-time and high-availability solutions, building advanced generative modeling and simulation technologies. Previously, he served as CTO at Symphonia (audio signal processing with deep learning), worked as ML consultant specializing in time series forecasting with PyTorch and transformers, and was a backend developer at Klaxit.
+
+## Domains of Expertise
+
+- Transformer-based autoregressive models
+- Time series forecasting (contrastive forecasting, latent-space prediction)
+- Reinforcement learning
+- Genetic algorithms
+- Alignment
+- Signal processing and audio processing
+- Persistent homology and topological data analysis
+- Algorithmic trading strategy implementation
+
+## Talks and Conferences
+
+Jeremy is an active speaker at major machine learning and technology conferences:
+
+- **ML Prague 2026** — "Contrastive Forecasting: Latent-Space Prediction for Time Series via Joint Embedding" (conference talk, May 2026)
+- **ML Prague 2025** — "Introduction to Algorithmic Trading: Hands-On Strategy Implementation with Real-World Data" (workshop, co-led with Szymon Bubak, April 2025)
+- **Warsaw IT Days 2024** — "Unlocking the Secrets of Singing: A Neural Network for Transcribing Human Sung Voice" (conference talk, April 2024)
+- **DataNatives Paris** — "Art through Gradient Descent" (conference talk, 2019)
+- **Paris.RB** — "Monads in Ruby" (meetup talk, March 2019)
+- **JGA 2017** — "Persistent Algebras" (academic conference, December 2017)
+- **ENS Lyon** — "Monades and Automata" (seminar, October 2015)
+
+Full details: https://www.cochoy.fr/talks/
+
+## Research and Publications
+
+### Current Research
+- Meteo back casting
+- Contrastive forecasting
+
+### Publications
+- "Decomposition of exact pointwise finite dimensional persistence bimodules" — J. Cochoy, S. Oudot (https://arxiv.org/abs/1605.09726)
+- "Decomposability and stability of multidimensional persistence" — J. Cochoy, PhD dissertation (https://tel.archives-ouvertes.fr/tel-01988780/document)
+- "Contrastive Forecasting" — presented at ML Prague (available at https://www.cochoy.fr/pdfs/)
+
+Full details: https://www.cochoy.fr/research/
+
+## Technical Blog
+
+A collection of 22 in-depth technical articles (in English and French) covering:
+
+### Machine Learning and Functional Programming
+- Monadic error handling in C++ as an alternative to exceptions
+- Three-part Haskell series covering the type system, lazy evaluation, functors, applicative functors, and monads
+- Functional programming concepts in C++11 (lambdas, std::function, std::bind)
+- Lazy I/O in Haskell for processing large files
+- List Zipper data structure applied to iOS Swift
+
+### Systems and Hardware
+- GDT and IDT for bootloader/kernel development
+- Building a 10x10 LED matrix with Arduino
+- High-frequency PWM generation (62.5kHz) on ATMega328
+- Arduino as ISP programmer for Atmel microcontrollers
+- Raspberry Pi HDMI configuration
+- Music synthesis on Arduino hardware
+
+### Software Engineering
+- Boost property_tree for JSON handling in C++
+- CMake build system tutorial
+- SedNL event-driven network library (design and tutorial)
+- Critical analysis of the object-oriented paradigm vs. functional/categoric approaches
+
+### Mathematics
+- Solving cubic polynomial equations with the Tartaglia-Cardan method
+- Introduction to OCaml
+
+Full blog: https://www.cochoy.fr/blog/
+
+## Open Source Projects
+
+- **SedNL** — Simple Event Driven Network Library in C++ (https://github.com/jeremycochoy/sednl)
+- **SGB** — Simple Game Boy Classic emulator in Rust (https://github.com/jeremycochoy/sgb)
+
+## Data Visualizations
+
+Interactive data visualizations available at https://www.cochoy.fr/insights/:
+- EU Electricity Prices chart (household vs business, all 27 EU member states)
+- Polar Asset Prices for BTC and ETH
+
+## Press
+
+- Featured in AsiaTechDaily: https://asiatechdaily.com/jeremy-cochoy-symphonia/
+
+## Education
+
+- PhD in Computer Science and Mathematics — INRIA Saclay / U-PSUD, Paris (2015-2018)
+- Master in Zeta and L functions theory — ENS Lyon (2014-2015)
+- Agregation de Mathematiques — ENS Lyon (2013-2014)
+- Licence in Mathematics — ENS Lyon and UCBL (2009-2012)
+
+## Technical Skills
+
+PyTorch, transformers, Flask, Pandas, C++, Rust, Swift, Ruby, Rails, Vue.js, React, Redis, AWS, PostgreSQL, AVR assembly.
+
+## Contact
+
+- Email: jeremy.cochoy@gmail.com
+- GitHub: https://github.com/jeremycochoy
+- Website: https://www.cochoy.fr
