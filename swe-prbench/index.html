@@ -15,7 +15,7 @@
 
   <title>
     
-      Insights &middot; Jeremy Cochoy
+      Claude Opus 4.7/4.8 on SWE-PRBench &middot; Jeremy Cochoy
     
   </title>
 
@@ -103,20 +103,178 @@
 
     <div class="container">
       <div class="page margin-top">
-  <h1 class="page-title">Insights</h1>
-  <h2 id="benchmarks">Benchmarks</h2>
+  <h1 class="page-title">Claude Opus 4.7/4.8 on SWE-PRBench</h1>
+  <p>We ran the <a href="https://arxiv.org/abs/2603.26130">SWE-PRBench</a> benchmark (<code class="language-plaintext highlighter-rouge">eval_100</code> split, 100 PRs × 3 context configurations) on four agent configurations: Claude Opus 4.7 at max effort, and Claude Opus 4.8 at low, medium, and max effort. The judge model is Claude Sonnet 4.6.</p>
 
-<ul>
-  <li><a href="/swe-prbench/">Claude Opus 4.7/4.8 on SWE-PRBench</a> — results, judged by Claude Sonnet 4.6.</li>
-</ul>
+<h2 id="config_a-diff-only">config_A (diff only)</h2>
 
-<h2 id="data-visualizations">Data Visualizations</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Overall</th>
+      <th>Detection</th>
+      <th>Hallucination</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_medium</code></td>
+      <td>0.479</td>
+      <td>0.665</td>
+      <td>0.082</td>
+      <td>0.517</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_max</code></td>
+      <td>0.467</td>
+      <td>0.642</td>
+      <td>0.072</td>
+      <td>0.496</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_low</code></td>
+      <td>0.466</td>
+      <td>0.633</td>
+      <td>0.080</td>
+      <td>0.500</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_7_max</code></td>
+      <td>0.452</td>
+      <td>0.696</td>
+      <td>0.068</td>
+      <td>0.447</td>
+    </tr>
+  </tbody>
+</table>
 
-<ul>
-  <li><a href="/public/eu-electricity-prices.html">EU Electricity Prices 2024 Chart</a></li>
-  <li><a href="/public/btc-polar.html">Polar Asset Prices: BTC</a></li>
-  <li><a href="/public/eth-polar.html">Polar Asset Prices: ETH</a></li>
-</ul>
+<h2 id="config_b-with-file-content">config_B (with file content)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Overall</th>
+      <th>Detection</th>
+      <th>Hallucination</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_max</code></td>
+      <td>0.416</td>
+      <td>0.564</td>
+      <td>0.059</td>
+      <td>0.446</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_low</code></td>
+      <td>0.414</td>
+      <td>0.570</td>
+      <td>0.058</td>
+      <td>0.455</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_medium</code></td>
+      <td>0.410</td>
+      <td>0.549</td>
+      <td>0.048</td>
+      <td>0.435</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_7_max</code></td>
+      <td>0.394</td>
+      <td>0.613</td>
+      <td>0.055</td>
+      <td>0.395</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="config_c-full-context">config_C (full context)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Overall</th>
+      <th>Detection</th>
+      <th>Hallucination</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_low</code></td>
+      <td>0.430</td>
+      <td>0.593</td>
+      <td>0.053</td>
+      <td>0.471</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_max</code></td>
+      <td>0.425</td>
+      <td>0.581</td>
+      <td>0.057</td>
+      <td>0.464</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_medium</code></td>
+      <td>0.412</td>
+      <td>0.557</td>
+      <td>0.058</td>
+      <td>0.450</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_7_max</code></td>
+      <td>0.387</td>
+      <td>0.606</td>
+      <td>0.055</td>
+      <td>0.391</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="final-scores-mean-across-a-b-c">Final scores (mean across A, B, C)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Agent</th>
+      <th>Overall</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_low</code></td>
+      <td>0.437</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_max</code></td>
+      <td>0.436</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_8_medium</code></td>
+      <td>0.434</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">opus_4_7_max</code></td>
+      <td>0.411</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p><a href="https://github.com/jeremycochoy/swe-prbench/tree/add-claude-code-cli-eval">Source data and reproduction harness</a></p>
 
 </div>
 
