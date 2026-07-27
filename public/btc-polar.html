@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Bitcoin Price Spiral (With EMA20 and Legend)</title>
+    <title>Bitcoin Price Spiral (4-Year Cycle, Log Scale)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
     <style>
-        .year-line { stroke: #ccc; stroke-width: 0.5; }
-        .support-circle { fill: none; stroke: #0000ff; stroke-width: 1; stroke-dasharray: 5,5; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
         .year-label { font-size: 10px; }
+        .axis-year-label { font-size: 12px; font-weight: bold; }
+        .support-circle { fill: none; stroke: #0000ff; stroke-width: 1; stroke-dasharray: 5,5; }
         .price-label { font-size: 12px; fill: #0000ff; font-weight: bold; }
         .axis-line { stroke: #000; stroke-width: 1; }
         .halving-dot { fill: green; }
@@ -20,10 +21,20 @@
         .bitcoin-line { stroke: black; stroke-width: 1.5; fill: none; }
         .ema20-line { stroke: orange; stroke-width: 1; fill: none; }
         .legend { font-size: 12px; }
-        #error-message { color: red; font-weight: bold; }
+        #caption { max-width: 800px; font-size: 13px; color: #444; line-height: 1.5; }
+        #status { font-size: 13px; color: #666; }
+        #error-message { color: red; font-weight: bold; max-width: 800px; }
     </style>
 </head>
 <body>
+    <div id="caption">
+        Bitcoin price on a log-radial spiral. The angle is the position within the
+        4-year halving cycle, so each full turn is one cycle and the cycles overlay
+        each other; the radius is the price on a logarithmic scale. Daily average
+        market price from the
+        <a href="https://www.blockchain.com/explorer/api/charts_api">blockchain.info charts API</a>.
+    </div>
+    <div id="status">Loading price history…</div>
     <div id="chart"></div>
     <div id="error-message"></div>
 
@@ -31,6 +42,7 @@
         const width = 800;
         const height = 800;
         const margin = {top: 40, right: 40, bottom: 60, left: 40};
+        const outerRadius = Math.min(width, height) / 2 - margin.top;
 
         const svg = d3.select("#chart")
             .append("svg")
@@ -40,24 +52,25 @@
         const g = svg.append("g")
             .attr("transform", `translate(${width/2},${height/2})`);
 
-        const startDate = new Date(2009, 0, 1);  // January 1, 2009
-        const fourYears = 4 * 365.25 * 24 * 60 * 60 * 1000;  // 4 years in milliseconds
+        const cycleEpoch = new Date("2009-01-01");     // angle 0 of every cycle
+        const fourYears = 4 * 365.25 * 24 * 60 * 60 * 1000;
 
+        // Last entry is the estimated next halving; it is skipped until data reaches it.
         const halvingDates = [
             new Date("2012-11-28"),
             new Date("2016-07-09"),
             new Date("2020-05-11"),
-            new Date("2024-04-20")  // Estimated date
-        ];
-
-        const athDates = [
-            { date: new Date("2013-11-30"), price: 1242 },
-            { date: new Date("2017-12-17"), price: 20089 },
-            { date: new Date("2021-11-10"), price: 69000 }
+            new Date("2024-04-20"),
+            new Date("2028-04-01")
         ];
 
         function angleFromDate(date) {
-            return ((date - startDate) % fourYears) / fourYears * 2 * Math.PI;
+            return ((date - cycleEpoch) % fourYears) / fourYears * 2 * Math.PI;
+        }
+
+        // Screen coordinates of a polar point, with angle 0 pointing up.
+        function polar(radius, angle) {
+            return [radius * Math.cos(angle - Math.PI/2), radius * Math.sin(angle - Math.PI/2)];
         }
 
         function formatDate(date) {
@@ -74,256 +87,169 @@
             });
         }
 
+        // blockchain.info's market-price chart is the average USD price across major
+        // exchanges. It reaches back to 2009 and allows cross-origin browser requests,
+        // but it downsamples long spans, so page through it five years at a time to
+        // keep daily resolution. Overlapping pages are deduplicated by timestamp.
         async function fetchHistoricalData() {
-            const baseUrl = 'https://min-api.cryptocompare.com/data/v2/histoday';
-            const limit = 2000;
-            const symbol = 'BTC';
-            const currency = 'USD';
+            const endpoint = 'https://api.blockchain.info/charts/market-price?format=json&cors=true&timespan=5years';
+            const pricesByTimestamp = new Map();
 
-            let allData = [];
-            let toTs = Math.floor(Date.now() / 1000);
-            const startDate = new Date(2010, 6, 17, 2);  // July 17, 2010, 2 AM
-            const startTs = Math.floor(startDate.getTime() / 1000);
-
-            while (toTs > startTs && allData.length < 5000) {
-                const url = `${baseUrl}?fsym=${symbol}&tsym=${currency}&limit=${limit}&toTs=${toTs}`;
-                try {
-                    const response = await fetch(url);
-                    const json = await response.json();
-                    const newData = json.Data.Data;
-                    allData = [...allData, ...newData];
-                    toTs = newData[0].time - 86400;
-                } catch (error) {
-                    console.error('Error fetching historical data:', error);
-                    break;
+            for (let year = 2010; year <= new Date().getFullYear(); year += 5) {
+                const response = await fetch(`${endpoint}&start=${year}-01-01`);
+                if (!response.ok) {
+                    throw new Error(`the blockchain.info API returned HTTP ${response.status}, so the price feed is unavailable.`);
                 }
+                const values = (await response.json())?.values;
+                if (!Array.isArray(values)) {
+                    throw new Error("the blockchain.info API returned an unexpected response shape.");
+                }
+                values.forEach(point => pricesByTimestamp.set(point.x, point.y));
+                d3.select("#status").text(`Loading price history… ${pricesByTimestamp.size} days`);
             }
 
-            return allData
-                .filter(dataPoint => dataPoint.time >= startTs && dataPoint.close >= 1)
-                .sort((a, b) => a.time - b.time)
-                .map(dataPoint => ({
-                    date: new Date(dataPoint.time * 1000),
-                    price: dataPoint.close
-                }));
+            return [...pricesByTimestamp]
+                .map(([timestamp, price]) => ({ date: new Date(timestamp * 1000), price }))
+                .filter(d => d.price >= 1)
+                .sort((a, b) => a.date - b.date);
+        }
+
+        // Peak of each halving cycle, derived from the data so it can never go stale.
+        function cyclePeaks(data) {
+            return halvingDates
+                .map((start, i) => {
+                    const end = halvingDates[i + 1] || new Date("2100-01-01");
+                    const inCycle = data.filter(d => d.date >= start && d.date < end);
+                    return inCycle.length ? inCycle.reduce((best, d) => d.price > best.price ? d : best) : null;
+                })
+                .filter(Boolean);
+        }
+
+        let radiusScale;
+
+        // Dot on the curve, a spoke back to the centre, and a date label.
+        function drawRadialMarker(point, classes, label, labelOffset) {
+            const angle = angleFromDate(point.date);
+            const radius = radiusScale(Math.log(point.price));
+            const [x, y] = polar(radius, angle);
+
+            g.append("line").attr("class", classes.line)
+                .attr("x1", 0).attr("y1", 0).attr("x2", x).attr("y2", y);
+            g.append("circle").attr("class", classes.dot)
+                .attr("cx", x).attr("cy", y).attr("r", 4);
+
+            const [lx, ly] = polar(radius + labelOffset, angle);
+            g.append("text").attr("class", classes.label)
+                .attr("x", lx).attr("y", ly).attr("dy", "0.35em")
+                .attr("text-anchor", labelOffset < 0 ? "end" : (angle > Math.PI ? "end" : "start"))
+                .text(label);
         }
 
         function drawSpiral(data) {
-            if (!data || data.length === 0) {
-                throw new Error("No data available to draw the spiral.");
-            }
-
             const maxLogPrice = Math.log(Math.max(1000000, ...data.map(d => d.price)));
+            radiusScale = d3.scaleLinear().domain([0, maxLogPrice]).range([0, outerRadius]);
 
-            const radiusScale = d3.scaleLinear()
-                .domain([0, maxLogPrice])
-                .range([0, Math.min(width, height) / 2 - margin.top]);
-
-            // Calculate EMA20
-            const ema20Data = calculateEMA(data, 20);
-
-            // Draw EMA20 line
-            const ema20Line = d3.lineRadial()
+            const radialLine = value => d3.lineRadial()
                 .angle(d => angleFromDate(d.date))
-                .radius(d => radiusScale(Math.log(d.ema)))
+                .radius(d => radiusScale(Math.log(value(d))))
                 .curve(d3.curveLinear);
 
             g.append("path")
-                .datum(ema20Data)
+                .datum(calculateEMA(data, 20))
                 .attr("class", "ema20-line")
-                .attr("d", ema20Line);
-
-            // Draw Bitcoin price line
-            const line = d3.lineRadial()
-                .angle(d => angleFromDate(d.date))
-                .radius(d => radiusScale(Math.log(d.price)))
-                .curve(d3.curveLinear);
+                .attr("d", radialLine(d => d.ema));
 
             g.append("path")
                 .datum(data)
                 .attr("class", "bitcoin-line")
-                .attr("d", line);
+                .attr("d", radialLine(d => d.price));
 
-            // Draw halving date dots and lines first
             halvingDates.forEach(halvingDate => {
-                const halvingDataPoint = data.find(d => d.date >= halvingDate);
-                if (halvingDataPoint) {
-                    const angle = angleFromDate(halvingDataPoint.date);
-                    const radius = radiusScale(Math.log(halvingDataPoint.price));
-                    
-                    // Draw line from center to halving dot
-                    g.append("line")
-                        .attr("class", "halving-line")
-                        .attr("x1", 0)
-                        .attr("y1", 0)
-                        .attr("x2", radius * Math.cos(angle - Math.PI/2))
-                        .attr("y2", radius * Math.sin(angle - Math.PI/2));
-                    
-                    // Draw halving dot
-                    g.append("circle")
-                        .attr("class", "halving-dot")
-                        .attr("cx", radius * Math.cos(angle - Math.PI/2))
-                        .attr("cy", radius * Math.sin(angle - Math.PI/2))
-                        .attr("r", 4);
-
-                    // Add halving date label
-                    const labelRadius = radius - 20;  // More to the left
-                    g.append("text")
-                        .attr("class", "halving-label")
-                        .attr("x", labelRadius * Math.cos(angle - Math.PI/2))
-                        .attr("y", labelRadius * Math.sin(angle - Math.PI/2))
-                        .attr("dy", "0.35em")
-                        .attr("text-anchor", "end")  // Always end-aligned (to the left of the dot)
-                        .text(formatDate(halvingDate));
+                const point = data.find(d => d.date >= halvingDate);
+                if (point) {
+                    drawRadialMarker(point, {line: "halving-line", dot: "halving-dot", label: "halving-label"},
+                                     formatDate(halvingDate), -20);
                 }
             });
 
-            // Draw 4 main axes
-            const axisAngles = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
-            axisAngles.forEach(angle => {
-                const radius = Math.min(width, height) / 2 - margin.top;
-                g.append("line")
-                    .attr("class", "axis-line")
-                    .attr("x1", 0)
-                    .attr("y1", 0)
-                    .attr("x2", radius * Math.cos(angle - Math.PI/2))
-                    .attr("y2", radius * Math.sin(angle - Math.PI/2));
-            });
+            // The angle wraps every 4 years, so each axis is one year of the cycle and
+            // stands for that year plus every 4th year before it. Label the current cycle.
+            const cycleStartYear = 2009 + 4 * Math.floor((new Date().getFullYear() - 2009) / 4);
+            [0, 1, 2, 3].forEach(yearInCycle => {
+                const angle = yearInCycle * Math.PI / 2;
+                const [x, y] = polar(outerRadius, angle);
+                g.append("line").attr("class", "axis-line")
+                    .attr("x1", 0).attr("y1", 0).attr("x2", x).attr("y2", y);
 
-            // Draw year lines and labels (every 2 years to reduce clutter)
-            const years = d3.range(2010, new Date().getFullYear() + 1, 2);
-            years.forEach(year => {
-                const angle = angleFromDate(new Date(year, 0, 1));
-                const radius = Math.min(width, height) / 2 - margin.top;
-                
-                // Vertical line
-                g.append("line")
-                    .attr("class", "year-line")
-                    .attr("x1", 0)
-                    .attr("y1", 0)
-                    .attr("x2", radius * Math.cos(angle - Math.PI/2))
-                    .attr("y2", radius * Math.sin(angle - Math.PI/2));
-
-                // Year label (exclude labels near horizontal axis)
-                const labelX = (radius + 10) * Math.cos(angle - Math.PI/2);
-                const labelY = (radius + 10) * Math.sin(angle - Math.PI/2);
-                if (Math.abs(labelY) > 20) {
-                    g.append("text")
-                        .attr("class", "year-label")
-                        .attr("x", labelX)
-                        .attr("y", labelY)
-                        .attr("dy", "0.35em")
-                        .attr("text-anchor", "middle")
-                        .text(year);
-                }
-            });
-
-            // Draw support price circles
-            const supportPrices = [1, 10, 100, 1000, 10000, 100000, 1000000];
-            supportPrices.forEach((price, index) => {
-                const radius = radiusScale(Math.log(price));
-                g.append("circle")
-                    .attr("class", "support-circle")
-                    .attr("r", radius);
-                
-                g.append("text")
-                    .attr("class", "price-label")
-                    .attr("x", 0)
-                    .attr("y", -radius - 5)
-                    .attr("dy", "0.35em")
+                const [labelX, labelY] = polar(outerRadius + 14, angle);
+                g.append("text").attr("class", "axis-year-label")
+                    .attr("x", labelX).attr("y", labelY).attr("dy", "0.35em")
                     .attr("text-anchor", "middle")
+                    .text(cycleStartYear + yearInCycle);
+            });
+
+            const supportPrices = [1, 10, 100, 1000, 10000, 100000, 1000000];
+            supportPrices.forEach(price => {
+                const radius = radiusScale(Math.log(price));
+                g.append("circle").attr("class", "support-circle").attr("r", radius);
+                // Kept left of the vertical axis; the cycle labels below take the right.
+                g.append("text").attr("class", "price-label")
+                    .attr("x", -6).attr("y", -radius - 5).attr("dy", "0.35em")
+                    .attr("text-anchor", "end")
                     .text(`$${price.toLocaleString()}`);
             });
 
-            // Add intersecting year labels (every other year)
+            // One label per turn, where each cycle starts, so the overlaid loops can be
+            // told apart. Labelling every year instead would stack them on two angles.
             data.forEach((d, i) => {
-                if (i > 0 && d.date.getFullYear() !== data[i-1].date.getFullYear() && d.date.getFullYear() % 2 === 0) {
+                const year = d.date.getFullYear();
+                if (i > 0 && year !== data[i-1].date.getFullYear() && (year - 2009) % 4 === 0) {
                     const angle = angleFromDate(d.date);
-                    const radius = radiusScale(Math.log(d.price));
-                    const labelX = (radius + 5) * Math.cos(angle - Math.PI/2);
-                    const labelY = (radius + 5) * Math.sin(angle - Math.PI/2);
-                    if (Math.abs(labelX) < width/2 - 30) {
-                        g.append("text")
-                            .attr("class", "year-label")
-                            .attr("x", labelX)
-                            .attr("y", labelY)
-                            .attr("dy", "0.35em")
-                            .attr("text-anchor", angle > Math.PI ? "end" : "start")
-                            .text(d.date.getFullYear());
-                    }
+                    const [labelX, labelY] = polar(radiusScale(Math.log(d.price)) + 6, angle);
+                    g.append("text").attr("class", "year-label")
+                        .attr("x", labelX + 6).attr("y", labelY).attr("dy", "0.35em")
+                        .attr("text-anchor", "start")
+                        .text(`${year}–${String(year + 3).slice(2)}`);
                 }
             });
 
-            // Add ATH dots and lines from center
-            athDates.forEach(ath => {
-                const angle = angleFromDate(ath.date);
-                const radius = radiusScale(Math.log(ath.price));
-                
-                // Draw line from center to ATH dot
-                g.append("line")
-                    .attr("class", "ath-line")
-                    .attr("x1", 0)
-                    .attr("y1", 0)
-                    .attr("x2", radius * Math.cos(angle - Math.PI/2))
-                    .attr("y2", radius * Math.sin(angle - Math.PI/2));
-
-                // Draw ATH dot
-                g.append("circle")
-                    .attr("class", "ath-dot")
-                    .attr("cx", radius * Math.cos(angle - Math.PI/2))
-                    .attr("cy", radius * Math.sin(angle - Math.PI/2))
-                    .attr("r", 4);
-
-                // Add ATH date label
-                const labelRadius = radius + 15;  // Slightly further outside the dot
-                g.append("text")
-                    .attr("class", "ath-label")
-                    .attr("x", labelRadius * Math.cos(angle - Math.PI/2))
-                    .attr("y", labelRadius * Math.sin(angle - Math.PI/2))
-                    .attr("dy", "0.35em")
-                    .attr("text-anchor", angle > Math.PI ? "end" : "start")
-                    .text(formatDate(ath.date));
+            cyclePeaks(data).forEach(peak => {
+                drawRadialMarker(peak, {line: "ath-line", dot: "ath-dot", label: "ath-label"},
+                                 formatDate(peak.date), 15);
             });
 
-            // Add legend
+            const legendItems = [
+                { color: "green", text: "Halving" },
+                { color: "red", text: "Cycle high" },
+                { color: "orange", text: "EMA20" }
+            ];
             const legend = svg.append("g")
                 .attr("class", "legend")
                 .attr("transform", `translate(${width/2},${height - margin.bottom + 20})`);
 
-            const legendItems = [
-                { color: "green", text: "Halving" },
-                { color: "red", text: "ATH" },
-                { color: "orange", text: "EMA20" }
-            ];
-
             legendItems.forEach((item, i) => {
-                const g = legend.append("g")
-                    .attr("transform", `translate(${i * 100 - 150}, 0)`);
-
-                g.append("circle")
-                    .attr("cx", 0)
-                    .attr("cy", -5)
-                    .attr("r", 5)
-                    .attr("fill", item.color);
-
-                g.append("text")
-                    .attr("x", 10)
-                    .attr("y", 0)
-                    .text(item.text);
+                const entry = legend.append("g")
+                    .attr("transform", `translate(${(i - (legendItems.length - 1) / 2) * 110}, 0)`);
+                entry.append("circle").attr("cx", 0).attr("cy", -5).attr("r", 5).attr("fill", item.color);
+                entry.append("text").attr("x", 10).attr("y", 0).text(item.text);
             });
         }
 
         async function updateChart() {
             try {
                 const data = await fetchHistoricalData();
-                if (data && data.length > 0) {
-                    drawSpiral(data);
-                } else {
-                    throw new Error("No data received from the API.");
+                if (data.length === 0) {
+                    throw new Error("the price feed returned no usable daily candles.");
                 }
+                drawSpiral(data);
+                const last = data[data.length - 1];
+                d3.select("#status").text(
+                    `${data.length} daily closes, ${formatDate(data[0].date)} to ${formatDate(last.date)} — ` +
+                    `last close $${Math.round(last.price).toLocaleString()}`);
             } catch (error) {
                 console.error('Error updating chart:', error);
-                d3.select("#error-message").text(`Error: ${error.message}`);
+                d3.select("#status").text("");
+                d3.select("#error-message").text(`Could not draw the chart: ${error.message}`);
             }
         }
 
