@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-06-24T15:14:49+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry><title type="html">Effective AI Usage Patterns</title><link href="/effective-ai-usage-patterns/" rel="alternate" type="text/html" title="Effective AI Usage Patterns" /><published>2026-04-09T00:00:00+02:00</published><updated>2026-04-09T00:00:00+02:00</updated><id>/effective-ai-usage-patterns</id><content type="html" xml:base="/effective-ai-usage-patterns/"><![CDATA[<p>Most guides on “prompting” focus on wording tricks — how to phrase a question, what role to assign the AI. This guide is different. It comes from analyzing 500+ real prompts from engineers working with AI daily on production systems over several weeks. The patterns that emerged aren’t about writing better sentences. They’re about building a working relationship with a tool that is powerful, tireless, and confidently wrong in ways you won’t expect.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-08-03T19:58:58+02:00</updated><id>/feed.xml</id><title type="html">Jeremy Cochoy</title><subtitle>By a developper, for developpers.</subtitle><author><name>Jeremy Cochoy</name><email>jeremy.cochoy@gmail.com</email></author><entry><title type="html">Could I order a Perplexity on a $(d-1)$-Sphere?</title><link href="/perplexity-on-a-sphere/" rel="alternate" type="text/html" title="Could I order a Perplexity on a $(d-1)$-Sphere?" /><published>2026-08-03T00:00:00+02:00</published><updated>2026-08-03T00:00:00+02:00</updated><id>/perplexity-on-a-sphere</id><content type="html" xml:base="/perplexity-on-a-sphere/"><![CDATA[<p><img src="data/hero.jpg" alt="A vector pointing at a cell of the unit sphere" /></p>
+
+<h2 id="entropy-cross-entropy-and-perplexity">Entropy, cross-entropy, and Perplexity</h2>
+
+<p>In physics, entropy measures the disorder of a system; the more random or “mixed” the system is, the bigger the entropy. It is believed that our fate is to witness the universe slowly dying by cooling down while turning into a uniform soup of molecules. However, within this homogenization process, several mildly interesting events occurred. Among them: the apparition of life, the first dinosaurs and the formulation of quantum mechanics.</p>
+
+<p>The entropy in information theory is similar in spirit. It measures how far we are from a uniform distribution over the universe of possible values. We define the bits of information contained in a message occurring with probability $p$ as $-\log_2(p)$. To justify it, you can imagine a binary tree whose $N$ leaves are all the possible messages. To encode uniquely a path to each leaf, you need $\log(N)$ bits. From this definition, the entropy is defined as the expectation of information in the signal, concretely it is the integral of bits of information in a message weighted by the probability of this message occurring $-\int_{x\in\Omega} \log_2(p(x))\, p(x)\, dx$ which in the case of a discrete distribution gives $-\sum \log_2(p) \cdot p$.</p>
+
+<p>The perplexity $2^{H(x)}$ represents the average number of choices a system has to pick from. It “undoes” the log we used to go from the space of <em>numbers of combinations</em> to the world of <em>bits required for encoding this information</em>. For example, if we had a universe over $N$ messages, we would need $\log_2(N)$ bits to code for all possible outcomes, but we would have a perplexity of $2^{\log_2(N)} = N$, which is why the term shows up so often in LLM literature.</p>
+
+<p>LLMs are trained to predict the next word of a truncated text, given all the previous words. An LLM is a machine turning a sequence of words into a probability distribution over a dictionary. The corpus of text on which it is trained is all the records of human-made text, including stories, advertising and a slice of machine-generated data.</p>
+
+<p>When training LLMs, two distributions are now at play. The first is the empirical distribution of what words are appearing in the continuation of the text. The second is the distribution of the model outputs.</p>
+
+<p>Since we have only one version of a text, and not all the possible alternatives the same author could have written in a parallel universe, we represent the probability of the next word occurring by a distribution with 0 on all words of the dictionary, and 1 over this specific word. You may have heard this representation called a “one hot encoding” before.</p>
+
+<p>We therefore can redefine a “cross” version of our previous entity: the cross entropy, $H(x, y) = -\sum_{w \in \text{Words}} \log(y_w) \cdot x_w$ where $x$ is the “real”, one hot distribution and $y$ is the output distribution of the model. Similarly, we have a cross perplexity $\exp(H(x, y))$. In a beautiful and perfect world, plotting the log cross-perplexity (i.e. the cross-entropy) on the vertical axis and the log training time on the horizontal axis should give you a straight line trending down toward 0. Given that LLMs are trained (under supervised training) by minimizing the cross entropy between the ground truth one hot distribution and the model’s output distribution, this isn’t a surprise.</p>
+
+<h2 id="on-a-sphere">On a Sphere</h2>
+
+<p>We now want to replace a discrete dictionary by the continuous unit sphere $S^{d-1}$ and derive the corresponding perplexity. There is no fundamental obstacle to considering a continuous case, and, since a finite-dimensional sphere is compact, there shouldn’t be a major obstacle to integrating over it.</p>
+
+<p>Let’s assume that for each word at index $t$, we are given a vector on the sphere $x_t$. Let’s also assume that our model outputs, for each prediction, a center $y_t$ of a distribution on the sphere,</p>
+
+\[q_t(z) = \frac{\exp\left(\kappa\, y_t^\top z\right)}{Z_d(\kappa)}\]
+
+<p>where $d$ is the vector dimension; $\kappa \geq 0$ controls concentration and larger $\kappa$ means the distribution is more sharply concentrated around $y_t$. The cross entropy for a single sample is then</p>
+
+\[\ell_t = -\log q_t(x_t) = \log Z_d(\kappa) - \kappa\, y_t^\top x_t.\]
+
+<p>Since our vectors are normalized $\lVert x_t \rVert = 1,\ \lVert y_t \rVert = 1$, their dot product is the cosine similarity $c_t = x_t^\top y_t = \cos(\phi)$ and we define the cosine error as $e_t = 1 - c_t$ where $\phi$ is the angle between these two vectors. Rewriting the cross-entropy in terms of $e_t$ we obtain</p>
+
+\[\ell_t = C + D\,(1 - y_t^\top x_t)\]
+
+<p>where $C$ and $D$ are two constants. If the entropy evolves linearly with training time, as discussed before, these two constants only shift the curve vertically and rescale its slope. Hence they do not change the training dynamic. For a mini-batch $B$ of size $\lvert B \rvert$, define the mean cosine error</p>
+
+\[\bar e_{B} = \frac{1}{|B|}\sum_{t \in B} e_t.\]
+
+<p>The batch cross-entropy is therefore</p>
+
+\[L_{B} = C + D\, \bar e_{B}.\]
+
+<p>In words, the previous equations tell us the log perplexity on a sphere is the average of the cosine errors between our predictions and the ground truth vectors. This gives us a connection between contrastive loss (aligning and reducing cosine error) and LLM training (minimizing perplexity).</p>
+
+<p>I find it fascinating, and surprising, that both approaches (cross-entropy minimization and contrastive learning) lead to the identical loss.</p>]]></content><author><name>Jeremy Cochoy</name></author><summary type="html"><![CDATA[What happens to entropy, cross-entropy and perplexity when the dictionary is replaced by the unit sphere — and why the answer is the cosine error you already minimize in contrastive learning.]]></summary></entry><entry><title type="html">Effective AI Usage Patterns</title><link href="/effective-ai-usage-patterns/" rel="alternate" type="text/html" title="Effective AI Usage Patterns" /><published>2026-04-09T00:00:00+02:00</published><updated>2026-04-09T00:00:00+02:00</updated><id>/effective-ai-usage-patterns</id><content type="html" xml:base="/effective-ai-usage-patterns/"><![CDATA[<p>Most guides on “prompting” focus on wording tricks — how to phrase a question, what role to assign the AI. This guide is different. It comes from analyzing 500+ real prompts from engineers working with AI daily on production systems over several weeks. The patterns that emerged aren’t about writing better sentences. They’re about building a working relationship with a tool that is powerful, tireless, and confidently wrong in ways you won’t expect.</p>
 
 <p>These 8 principles are ordered as a learning progression:</p>
 
@@ -3262,160 +3306,4 @@ return (filename, hashed)
 
 <p>Voila, c’est tout, c’est <code class="language-plaintext highlighter-rouge">$!</code> qui fait tout le travail en demandant à hashlazy de gentiment s’évaluer.</p>
 
-<p>Et là c’est le bonheur, tout refonctionne et l’on peut gérer des fichiers arbitrairement grands en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry><entry xml:lang="fr"><title type="html">C++ - Un goût de programmation fonctionnelle</title><link href="/c++-functional-programming-taste/" rel="alternate" type="text/html" title="C++ - Un goût de programmation fonctionnelle" /><published>2013-07-12T00:00:00+02:00</published><updated>2013-07-12T00:00:00+02:00</updated><id>/c++-functional-programming-taste</id><content type="html" xml:base="/c++-functional-programming-taste/"><![CDATA[<p>Dans ce billet, nous allons aborder quelques-unes des nouvelles fonctionnalités offertes par le C++11. Elles sont clairement inspirées de la vie dans le monde fonctionnel.</p>
-
-<h2 id="alpha-beta--kappa-lambda">Alpha, Beta, … Kappa, Lambda!</h2>
-
-<p>Bien que portant le même nom, les <em>lambda</em>(C++ 11 powered) sont très différentes de leur homologues fonctionnelles, les <em>lambda fonctions</em>. Une lambda en C++11, c’est plutôt une intégration au langage des foncteurs.</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AFunctor</span>
-<span class="p">{</span>
-<span class="nl">public:</span>
-  <span class="kt">int</span> <span class="k">operator</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
-  <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// ...</span>
-<span class="n">AFunctor</span> <span class="n">f</span><span class="p">;</span>
-<span class="n">f</span><span class="p">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">//Display 84</span>
-</code></pre></div></div>
-
-<p>Ré-écrivons la même chose avec la syntaxe d’une lambda, que l’on détaillera un peu plus loin (auto permet de laisser le compilateur inférer(deviner) le type).</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">b</span><span class="p">](</span><span class="kt">int</span> <span class="n">a</span><span class="p">){</span><span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">};</span>
-</code></pre></div></div>
-
-<p>Les lambda permettent de faire la même chose de façon plus légère, et ajoutent la sémantique de fonction (i.e. on ne peut pas confondre une lambda et un objet en lisant du code, alors qu’on ‘'’pourrait’’’ avec un foncteur et un objet). Les lambda sont aussi plus proches d’une fonction anonyme, puisque certaines fonctions (constructeur, opérateur =), implicitement déclarées dans l’exemple ci-dessus (on peut faire f = g avec f et g deux AFunctor) n’existent pas (sont explicitement supprimées) pour les lambda.</p>
-
-<p>Par exemple, le constructeur du type d’une lambda (on rappelle qu’en c++11, on peut obtenir le type de <code class="language-plaintext highlighter-rouge">f</code> avec <code class="language-plaintext highlighter-rouge">decltype(f)</code>. Par exemple <code class="language-plaintext highlighter-rouge">decltype(3.5f)</code> ou <code class="language-plaintext highlighter-rouge">std::vector v; decltype(v)</code>) n’existe pas.</p>
-
-<p>Si f est une lambda, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> ne compilera pas. Pourtant, si <code class="language-plaintext highlighter-rouge">f</code> est un <code class="language-plaintext highlighter-rouge">AFunctor</code>, le code <code class="language-plaintext highlighter-rouge">decltype(f) g;</code> compilera et correspond à <code class="language-plaintext highlighter-rouge">AFunctor g;</code>.</p>
-
-<p>Bon, qu’on se rassure, on peut quand même faire une copie d’une lambda :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[](){</span><span class="k">return</span> <span class="mi">42</span><span class="p">};</span>
-
-<span class="k">auto</span>        <span class="n">g1</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
-<span class="c1">//Or</span>
-<span class="k">auto</span>        <span class="nf">g2</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<span class="c1">//Or</span>
-<span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="n">g3</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
-<span class="c1">//Or</span>
-<span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="n">g4</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h2 id="comment-fonctionne-une-lambda">Comment fonctionne une lambda?</h2>
-
-<p>En fait, c’est très simple, et tout est décrit sur la page “Lambda” du site “CPPReference”.</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">capture</span> <span class="p">]</span> <span class="p">(</span> <span class="n">params</span> <span class="p">)</span> <span class="k">mutable</span> <span class="n">exception</span> <span class="n">attribute</span> <span class="o">-&gt;</span> <span class="n">ret</span> <span class="p">{</span> <span class="n">body</span> <span class="p">}</span>
-</code></pre></div></div>
-
-<p>Dans capture on trouve la façon dont les variables extérieures à la lambda sont capturées. Il y a deux modes de capture : par valeur, et par référence. Par défaut, [] signifie [=] qui veut dire “tout est récupéré par valeur”, et le comportement est identique à une copie des variables (pour les objets comme <code class="language-plaintext highlighter-rouge">std::string</code>, c’est plutôt un <code class="language-plaintext highlighter-rouge">const std::string&amp;</code> que vous recevez). On peut aussi spécifier [&amp;] et toutes les variables sont récupérées par référence (et peuvent donc être modifiées depuis la lambda). Enfin, pour ceux qui apprécient la finesse, on peut expliciter le comportement pour chacune des variables, par exemple :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="p">;</span>
-<span class="c1">//Take a by value</span>
-<span class="k">auto</span> <span class="n">f1</span> <span class="o">=</span> <span class="p">[](){</span><span class="k">return</span> <span class="n">a</span><span class="p">;}</span>
-<span class="c1">//Same, but tell explicitely the return type</span>
-<span class="k">auto</span> <span class="n">f2</span> <span class="o">=</span> <span class="p">[]()</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="p">{</span><span class="k">return</span> <span class="n">a</span><span class="p">;}</span>
-<span class="c1">//Always the same</span>
-<span class="k">auto</span> <span class="n">f3</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">](){</span><span class="k">return</span> <span class="n">a</span><span class="p">;}</span>
-
-<span class="c1">//Take v by ref and a by value (return type is void)</span>
-<span class="k">auto</span> <span class="n">f4</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">]()</span> <span class="p">{</span><span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a</span><span class="p">);}</span>
-
-<span class="c1">//Take everybody by ref</span>
-<span class="k">auto</span> <span class="n">f5</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span><span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="n">a</span><span class="o">++</span><span class="p">;</span> <span class="n">msg</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="sc">'!'</span><span class="p">);</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;}</span>
-</code></pre></div></div>
-
-<p>La partie “exception” correspond aux spécifications du genre <code class="language-plaintext highlighter-rouge">throw (std::bad_alloc, MyExceptionType)</code> ou encore <code class="language-plaintext highlighter-rouge">noexcept</code> (no throw exception safety).</p>
-
-<p>Si vous voulez modifier un objet obtenu par valeur, il vous faudra rajouter “mutable”. Cela peut être très utile, si vous voulez appeler des méthodes non const sur une copie d’un objet dans le scope.</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
-<span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]()</span> <span class="k">mutable</span> <span class="p">{</span><span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;}</span>
-</code></pre></div></div>
-
-<p>Petite astuce parfois utile : si une lambda ne capture aucune variable, alors elle peut être convertie en pointeur de fonction.</p>
-
-<h2 id="stdfunction-">std::function :</h2>
-
-<p>Les std::function représentent des fonctions. Ils sont basés sur les templates variadiques (l’un des ajouts les plus puissants au langage), que l’on peut espérer disponibles sous VisualStudio d’ici 2039 (si l’équipe de microsoft ne prend pas de retard). Le constructeur des std::function autorise de les construire avec plus ou moins n’importe quoi (pointeur de fonction, pointeur de fonction membre, lambda, foncteur, …).</p>
-
-<p>En code :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Lambda</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span><span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;}</span>
-
-<span class="c1">//Function</span>
-<span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">print</span><span class="p">;</span>
-
-<span class="c1">//Functor</span>
-<span class="k">struct</span> <span class="nc">Functor</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="k">operator</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;};</span>
-<span class="p">};</span>
-
-<span class="n">Functor</span> <span class="n">func</span><span class="p">;</span>
-<span class="n">func</span><span class="p">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>    
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">func</span><span class="p">;</span>
-
-<span class="c1">//Member function</span>
-<span class="k">struct</span> <span class="nc">St</span>
-<span class="p">{</span>
-  <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-  <span class="kt">int</span> <span class="n">sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span> <span class="p">};</span>
-<span class="p">}</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="n">St</span><span class="o">&amp;</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">St</span><span class="o">::</span><span class="n">sum</span><span class="p">;</span>
-
-</code></pre></div></div>
-
-<h2 id="application-partielle">Application partielle.</h2>
-
-<p>Tout ça, pour en venir à vous parler de <code class="language-plaintext highlighter-rouge">std::bind</code>. Quand on travaille avec des langages fonctionnels, on peut appeler une fonction avec seulement une partie de ses arguments. On parle d’<em>application partielle</em>. <code class="language-plaintext highlighter-rouge">std::bind</code> permet de reproduire ce comportement. Prenons une innocente fonction :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">display</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a : "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">" - b :"</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="s">" - c : "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>On peut alors construire, grâce à std::bind, différentes spécialisations de cette fonction :</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//On fixe les trois arguments</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
-<span class="n">f</span><span class="p">();</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
-<span class="c1">//On fixe les trois, et on en rajoute un qui sera ignoré</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// Affiche a : 5 - b : 6 - c : 7</span>
-
-<span class="c1">//Placeholders::_i désigne le i-ième argument lors de l’appel de f</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 6 - c : 42</span>
-
-<span class="c1">//Ne fixe que le premier argument</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">);</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 10 - c : 20</span>
-
-<span class="c1">//On peut changer l'ordre :</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">);</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//  Affiche a : 5 - b : 20 - c : 10</span>
-
-</code></pre></div></div>
-
-<p>Bien entendu, on peut aussi faire des choses plus complexes (passage des arguments par référence avec <code class="language-plaintext highlighter-rouge">std::ref</code> et <code class="language-plaintext highlighter-rouge">std::cref</code> dans les arguments de bind, pointeurs de fonction membre, pointeurs vers membres, etc.).</p>
-
-<p>Si vous vous demandez à quoi ça peut bien servir, eh bien dites-vous que là où on attend une callback avec une certaine signature (c’est le cas avec beaucoup d’outils de <code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>) vous avez maintenant la possibilité de spécialiser vos fonctions.</p>
-
-<p>Pour ce qui est du coût, il est faible (selon les cas beaucoup de choses peuvent être optimisées lors de la compilation), et n’est un argument recevable que dans certains cas particuliers. Donc, à moins de faire du temps réel et de faire ce genre de manipulation dans les parties critiques, vous pouvez vous lâcher.</p>
-
-<p>Voilà, j’espère vous avoir donné un petit aperçu de l’apport du c++11 en matière de manipulation des fonctions.</p>
-
-<h2 id="références-">Références :</h2>
-
-<ul>
-  <li><a href="http://en.cppreference.com/w/cpp/language/lambda">http://en.cppreference.com/w/cpp/language/lambda</a></li>
-  <li><a href="http://en.cppreference.com/w/cpp/utility/functional/function">http://en.cppreference.com/w/cpp/utility/functional/function</a></li>
-</ul>]]></content><author><name>Jérémy Cochoy</name></author><category term="c++" /><category term="programming" /><category term="functional" /><category term="language" /><summary type="html"><![CDATA[Une introduction aux nouveaux aspects fonctionnels du C++ 11. Il y est question de lambdas et d'applications partielles.]]></summary></entry></feed>
+<p>Et là c’est le bonheur, tout refonctionne et l’on peut gérer des fichiers arbitrairement grands en nombre arbitrairement grand, le tout en 4 lignes.</p>]]></content><author><name>Jérémy Cochoy</name></author><category term="programming" /><category term="haskell" /><category term="language" /><category term="lazy" /><category term="io" /><category term="software" /><category term="script" /><summary type="html"><![CDATA[On discute des entrées et sorties paresseuses en Haskell et des soucis qu'un comportement paresseux peut poser.]]></summary></entry></feed>
