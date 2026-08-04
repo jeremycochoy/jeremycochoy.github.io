@@ -11,7 +11,7 @@ I read over 500 prompts from engineers who use AI every day on production system
 
 ## 1. Verify before you commit scope
 
-Do not open with "analyze all the data and write me a report." Start small: "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step tests a capability before you commit more scope.
+Open small. "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step tests a capability before you commit more scope.
 
 A conversation that follows this pattern:
 
@@ -35,9 +35,9 @@ A conversation you keep alive for days is worth more than a fresh one. Correctio
 
 One session about migrating a legacy API ran 12 days and more than 50 prompts. By day 10 the prompts were "Check the logs", "Yes, deploy it", "Rollback the auth service". Three or four words each, and each one precise, because both sides already knew which endpoints had moved and how rollback works here.
 
-There is a trade-off. A fresh session costs you a long re-explanation but carries no stale context. An old session is cheap to steer but can drag along assumptions that no longer hold. Keep a session while the problem stays the same. Open a new one when the problem changes.
+There is a trade-off. A fresh session costs you a long re-explanation but carries no stale context. An old session is cheap to steer but can drag along assumptions that no longer hold. Keep a session while the problem stays the same, and open a new one when the problem changes.
 
-Do not close a session because you are stepping away. Come back to it tomorrow, and re-read the last exchange before you continue.
+Leave the session open when you step away, and re-read the last exchange when you come back to it tomorrow.
 
 ---
 
@@ -70,7 +70,7 @@ Prompts of this kind:
 
 A working day then has a shape. A short burst of prompts to set the task up and steer it. Then hours, or a night, with no contact. Then a check-in, "How is it going?", and either another burst or a final "merge and deploy."
 
-On a long task such as a training run or a deployment, do not sit and watch. Say what to monitor and what to do if it goes wrong, then leave.
+On a long task such as a training run or a deployment, say what to monitor and what to do if it goes wrong, then leave.
 
 ---
 
@@ -112,9 +112,9 @@ Without a gate you get a long chain of actions and no checkpoints: "analyze, imp
 
 ---
 
-## 7. Do not delegate your judgment
+## 7. Judgment stays with you
 
-Your judgment is the highest-value thing you bring to the work. Hand over the data gathering and the analysis. Keep the thinking. Ask for numbers and for options, then make the call yourself.
+Judgment is the most valuable thing you bring to the work, so ask the AI for numbers and for options and keep the decision yourself.
 
 - "Show me the benchmark results", then, after reading the table, "Service B is degraded, take it out of the load balancer"
 - "Show me the table again without the decommissioned services"
@@ -127,7 +127,7 @@ The AI processes data faster than you do, but it has no sense of what is unlikel
 
 ## 8. Challenge the AI's reasoning
 
-The previous pattern protects your own thinking. This one audits the AI's. A model drifts into overconfidence easily, and it skips steps quietly. Check the conclusions and the causal claims first.
+A model drifts into overconfidence easily, and it skips steps quietly. Read its conclusions and its causal claims with that in mind.
 
 - "You're concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it's the cache and not the serialization format?" The AI had concluded from N=1.
 - "Don't say 'further investigation needed for the cache layer' specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic." The AI had over-specified a conclusion.
