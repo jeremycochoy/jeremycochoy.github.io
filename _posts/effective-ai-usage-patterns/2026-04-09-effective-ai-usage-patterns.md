@@ -1,174 +1,137 @@
 ---
 layout: post
 title: "Effective AI Usage Patterns"
-description: "Principles derived from real-world prompt data — 8 patterns for building a productive working relationship with AI."
+description: "Seven patterns for working with AI, drawn from over 500 real engineering prompts."
 author: Jeremy Cochoy
 ---
 
-Most guides on "prompting" focus on wording tricks — how to phrase a question, what role to assign the AI. This guide is different. It comes from analyzing 500+ real prompts from engineers working with AI daily on production systems over several weeks. The patterns that emerged aren't about writing better sentences. They're about building a working relationship with a tool that is powerful, tireless, and confidently wrong in ways you won't expect.
-
-These 8 principles are ordered as a learning progression:
-
-- **Points 1–3** — Foundations: how to interact with the AI effectively
-- **Points 4–5** — Scaling up: extending the AI beyond a simple question-answer tool
-- **Points 6–8** — Staying in control: managing risk as you delegate more
-
-The arc is: **use it → extend it → shape it → manage it → control it → think above it.**
+I read over 500 prompts from engineers who use AI every day on production systems. Seven patterns came out of that reading. Each one describes how to split work with a tool that is fast and confident even when it is wrong.
 
 ---
 
-## 1. Progressive delegation — verify before you commit scope
+## 1. Verify before you commit scope
 
-Don't open with "analyze all the data and write me a report." Start small: "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step verifies a capability before committing more scope.
+Do not open with "analyze all the data and write me a report." Start small: "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step tests a capability before you commit more scope.
 
-**Example:**
-A conversation following this pattern:
-1. "Can you access the production database on the staging server?" — *can you even reach it?*
-2. "Yes, use ssh deploy@staging" — *establishing capability*
-3. "I want you to compare the last 3 deployments and flag any performance regressions" — *now the real task*
-4. "Also include memory usage, not just latency" — *steering after seeing first output*
-5. "Write this up as a summary report" — *committing to deliverable only after the content is validated*
+A conversation that follows this pattern:
 
-**Why it works:**
-Each step is a low-cost checkpoint. If step 1 fails (can't access the server), you haven't wasted time on a detailed analysis prompt. If step 3 produces a bad framework, you course-correct at step 4 before investing in formatting. The total cost is lower because failures are caught early.
+1. "Can you access the production database on the staging server?"
+2. "Yes, use ssh deploy@staging"
+3. "I want you to compare the last 3 deployments and flag any performance regressions"
+4. "Also include memory usage, not just latency"
+5. "Write this up as a summary report"
 
-**The anti-pattern:**
-Writing a 500-token prompt that says "SSH to staging, query the database, compare the last 3 deployments across latency and memory, and write a formatted summary report." If any assumption is wrong (can't SSH, schema is different, there were 5 deployments not 3), the entire effort is wasted.
+Step 1 tests reach. Step 2 hands over the credential. The real task only arrives at step 3. Step 4 steers after the first output comes back, and step 5 commits to a deliverable once the content holds up.
 
----
+Each step is a cheap checkpoint. A failure at step 1 costs you one line instead of a detailed analysis prompt.
 
-## 2. Context is an asset — invest in it
-
-Keeping a conversation alive across hours or days is not laziness. It's an investment. Every prompt you've sent, every correction you've made, every piece of domain knowledge you've shared is now part of the AI's working memory. That accumulated context is what lets you steer with 3-token prompts instead of 400-token briefs.
-
-**Example:**
-A single session about migrating a legacy API spanned 12 days, 50+ prompts, across 8 distinct working days. By day 10, prompts were things like "Check the logs" (3 tokens), "Yes, deploy it" (4 tokens), "Rollback the auth service" (5 tokens). These are precise directives — not vague — because both sides share 12 days of accumulated context about which endpoints were migrated, what broke, what the rollback procedure is, and which services depend on what.
-
-Compare with starting a fresh session each morning: you'd write 300-token prompts to re-explain the migration state, which services are done, which are pending, and what "rollback" means in this context.
-
-**The trade-off:**
-Cold start (new session) costs prompt tokens but avoids context pollution. Warm continuation (same session) is efficient but requires the context to still be relevant. The most effective pattern is to keep sessions alive for as long as the *problem* persists, and start fresh when the *problem* changes.
-
-**How to apply:**
-Don't close a session just because you're stepping away. Come back to it tomorrow. The AI remembers everything. The 30 seconds of re-reading your last exchange saves 5 minutes of re-prompting.
+Compare with the opposite approach: one long prompt that says "SSH to staging, query the database, compare the last 3 deployments across latency and memory, and write a formatted summary report." One wrong assumption (no SSH access, a different schema, five deployments instead of three) throws away the work.
 
 ---
 
-## 3. Correct the framing, not the output
+## 2. Context is worth keeping
 
-When the AI produces an incorrect or unintended output, the instinct is to point at it and say "fix this."
+A conversation you keep alive for days is worth more than a fresh one. Corrections and domain details you shared earlier stay in the context window and shape later answers. That is what lets you steer with four-word prompts instead of a full brief.
 
-**Example:**
-The AI produced a prompt analysis that judged short prompts as a weakness ("would be useless as standalone documentation"). There were two options:
+One session about migrating a legacy API ran 12 days and more than 50 prompts. By day 10 the prompts were "Check the logs", "Yes, deploy it", "Rollback the auth service". Three or four words each, and each one precise, because both sides already knew which endpoints had moved and how rollback works here.
 
-- **Correct the output:** "Short prompts aren't a weakness, they're efficient." — the AI adjusts that one judgment, but keeps evaluating prompts as if they were supposed to be self-contained instructions.
-- **Correct the framing:** "Prompts aren't supposed to be documentation, they gave us a window on how the user use them and we want to understand this."
+There is a trade-off. A fresh session costs you a long re-explanation but carries no stale context. An old session is cheap to steer but can drag along assumptions that no longer hold. Keep a session while the problem stays the same. Open a new one when the problem changes.
 
-The first feels like it fixes the problem. But the AI still thinks prompts should be judged by conventional quality standards — it just makes an exception for length. The second — a single sentence — changed the entire analytical framework. The AI re-derived all conclusions from the corrected premise, including ones not yet produced.
-
-**Why it works:**
-The output is a symptom. The AI's mental model is the cause. Fixing the output patches one symptom; fixing the mental model fixes all downstream outputs at once.
-
-**How to apply:**
-When the AI gets something wrong, ask yourself: is the output wrong, or is its understanding of what I want wrong? If the latter, state what it should be thinking about, not what it should be writing.
+Do not close a session because you are stepping away. Come back to it tomorrow, and re-read the last exchange before you continue.
 
 ---
 
-## 4. Async operator pattern — the AI works while you don't
+## 3. Change what the AI is trying to do
 
-The AI can run background tasks, monitor processes, and check periodically. Treating it as a persistent operator — not a synchronous call-response tool — multiplies your effective working hours.
+The instinct on a bad output is to point at it and say "fix this."
 
-**Example:**
-Patterns like:
-- "Run the full regression suite. Check every 20 minutes — if a test fails, investigate but don't push any fix until I review."
+Here is a case. The AI produced a prompt analysis that judged short prompts as a weakness, saying they "would be useless as standalone documentation." There were two ways to answer:
+
+- Correct the output: "Short prompts aren't a weakness, they're efficient." The AI adjusts that one judgment, then keeps evaluating prompts as if they were meant to be self-contained instructions.
+- Correct the framing: "Prompts aren't supposed to be documentation. They give us a window on how the user works, and that is what we want to understand."
+
+The second answer changed the whole analysis. The AI re-derived its conclusions from the corrected premise, including ones it had not produced yet.
+
+Correcting an output changes that one answer, while correcting the premise changes everything that follows from it.
+
+So before you retype the request, check which one is wrong: the answer, or the AI's idea of what you want. If it is the second, say what it should be aiming at.
+
+---
+
+## 4. Let it work while you are away
+
+The AI can run a task in the background and keep checking on it while you do something else. Treat it as an operator that stays on duty.
+
+Prompts of this kind:
+
+- "Run the full regression suite. Check every 20 minutes. If a test fails, investigate but don't push any fix until I review."
 - "Good morning. Did the overnight migration finish? Show me the error count."
 - "Start the deployment. Monitor the health checks for 3 hours, and rollback if error rate exceeds 1%."
 
-The user kicks off long-running tasks, then steps away. The AI monitors, and the user comes back to results.
+A working day then has a shape. A short burst of prompts to set the task up and steer it. Then hours, or a night, with no contact. Then a check-in, "How is it going?", and either another burst or a final "merge and deploy."
 
-**The rhythm:**
-Burst of rapid interaction (5-10 prompts in 30 minutes to set up and steer) → async gap (hours or overnight, AI working) → brief check-in ("How is it going?", "Check on them") → either another burst or a final "merge and deploy."
-
-**How to apply:**
-When you have a long-running task (training, deployment, data processing), don't sit and wait. Tell the AI what to monitor and what to do if things go wrong, then come back later. The AI's time is cheaper than yours.
+On a long task such as a training run or a deployment, do not sit and watch. Say what to monitor and what to do if it goes wrong, then leave.
 
 ---
 
-## 5. Guardrails before autonomy
+## 5. Write the rules down before you delegate
 
-Before giving the AI freedom to act, establish the rules it must follow. This is not micromanagement — it's the opposite. By investing in constraints upfront (coding guidelines, TDD workflow, PR process, naming conventions), you can later delegate with minimal supervision because the AI operates within safe boundaries.
+Write the rules down first: coding guidelines, TDD workflow, PR process, naming conventions. Once they exist you can delegate with light supervision, because the AI has something to check itself against.
 
-**Example:**
-Before any feature work begins, the groundwork is laid:
+The setup prompts look like this:
+
 - "Please have a look at the README.md and the files loaded according to claude.md. Is there an explicit mention of TDD approach?"
-- "Please add to our readme guideline that we should not define private functions or methods unless it is really a technical detail"
+- "Please add to our readme guideline that we should not define private functions or methods unless it is a technical detail"
 - "Also create a CODING_STYLE.md and a CLAUDE.md file in this directory"
 - "Please add in README that new features are first merged against development and then development is merged to master"
 
-Once these exist, later sessions can say "follow the instructions in the coding style and readme docs" (30 tokens) instead of re-explaining the entire workflow (300 tokens). The guardrails also apply to other users and other AI sessions — they're a one-time investment with compounding returns.
-
-**The principle:**
-Autonomy without guardrails is dangerous. Guardrails without autonomy is micromanagement. The most effective pattern is: invest heavily in rules once, then delegate freely.
+After that, a later session only needs "follow the instructions in the coding style and readme docs" instead of a full description of the workflow. The same files apply to other people and to other AI sessions, so you write them once.
 
 ---
 
 ## 6. Explicit action gates
 
-Create deliberate pause points where the AI must report before executing. This prevents costly mistakes in high-stakes operations.
+Create pause points where the AI must report before it executes.
 
-**Example:**
 - "Only study, do not write code for now"
 - "Don't act, only answer"
 - "You will wait for my green light before merging anything"
 - "Don't forget to git commit at the key step of your process"
 - "I won't be answering for several hours, and I want to be back with the repository ready to review"
 
-These gates create a two-phase workflow: *think, then act* — with a human checkpoint in between. The AI explores, proposes, analyzes — then waits. The human reviews, adjusts, approves — then the AI executes.
+A gate splits the work in two. The AI investigates and proposes, then stops. You review and approve, then it runs.
 
-**When to gate:**
-- Before any production change (deployment, database modification, model disabling)
-- Before irreversible actions (merging PRs, deleting data)
-- When the problem is not yet well understood ("read first, then we decide")
-- When you're stepping away and want to review before the AI acts further
+Gate before:
 
-**The anti-pattern:**
-Giving the AI a long chain of actions with no checkpoints: "analyze, implement, test, merge, deploy." If step 2 goes wrong, steps 3-5 compound the error.
+- Any production change (deployment, database modification, model disabling)
+- Any irreversible action (merging PRs, deleting data)
+- Any problem you do not yet understand ("read first, then we decide")
+- Any period when you step away and want to review before the AI acts further
+
+Without a gate you get a long chain of actions and no checkpoints: "analyze, implement, test, merge, deploy." If step 2 goes wrong, steps 3 to 5 build on the error.
 
 ---
 
-## 7. Human judgment at decision points
+## 7. Keep judgment on your side
 
-Use the AI for data gathering, analysis, and execution — but keep the decisions for yourself. The AI computes; you decide.
+Ask the AI for data and for options. Make the call yourself.
 
-**Example:**
-The pattern repeats consistently:
-- "Show me the benchmark results" → *AI produces table* → "Service B is clearly degraded, take it out of the load balancer"
+- "Show me the benchmark results", then, after reading the table, "Service B is degraded, take it out of the load balancer"
 - "Show me the table again without the decommissioned services"
 - "Are you sure about 0.2ms average latency? That seems impossibly low for a cross-region call"
 - "How can the Q1 numbers include the March outage if the window ends February 28?"
 
-The user never says "decide which services to keep." They say "show me the data" and then make the call. When the AI presents numbers that don't make sense, the user challenges them — because the user has domain intuition that the AI lacks.
+The AI processes data faster than you do, but it has no sense of what is unlikely in your domain. A 0.2ms cross-region latency is arithmetically fine and physically impossible. Your review is what catches that.
 
-**Why it matters:**
-The AI can process data faster, but it doesn't know what "unlikely" looks like in your domain. A 0.2ms cross-region latency might be mathematically valid but practically impossible. Only you know that. Keeping decision authority means the AI's mistakes get caught at review, not at deployment.
+Reasoning deserves the same treatment. Push on conclusions and on causal claims:
 
-**How to apply:**
-Ask for data, not decisions. Ask for options, not recommendations. When the AI presents results, apply your domain sense before acting. If something looks off, challenge it — the AI can be confidently wrong.
+- "You're concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it's the cache and not the serialization format?" The AI had concluded from N=1.
+- "Don't say 'further investigation needed for the cache layer' specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic." The AI had over-specified a conclusion.
+- "NaN is not a valid value here. We have data for every region. If you're getting NaN, your query is wrong." The AI reported missing values instead of finding the bug in its own query.
+- "I never asked you to switch from the test window to the full history. This is wrong." The AI had changed a parameter without saying so.
 
----
+A wrong conclusion arrives in the same confident tone as a correct one. Read the output as a draft. Three things deserve a second look:
 
-## 8. Challenge the AI's reasoning
-
-Don't accept AI outputs at face value. Stress-test the logic, especially conclusions and causal claims.
-
-**Example:**
-- "You're concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it's the cache and not the serialization format?" The AI concluded from N=1. The user caught the logical flaw.
-- "Don't say 'further investigation needed for the cache layer' specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic." The AI over-specified a conclusion that should have been generic.
-- "NaN is not a valid value here. We have data for every region. If you're getting NaN, your query is wrong." The AI produced missing values instead of recognizing a bug in its own computation.
-- "I never asked you to switch from the test window to the full history. This is wrong." The AI silently changed a parameter.
-
-**Why it matters:**
-The AI is fluent and confident. It will present wrong conclusions with the same tone as correct ones. The only defense is your own domain knowledge and critical thinking. Treating AI output as a draft to be reviewed, not a finished product, catches errors before they become actions.
-
-**How to apply:**
-When the AI presents a conclusion, ask yourself: would I accept this reasoning from a junior engineer? If not, push back. Pay special attention to causal claims ("X caused Y"), edge cases in data, and silent assumption changes.
+- Causal claims, in the form "X caused Y"
+- Edge cases in the data
+- Parameters that changed without a word
