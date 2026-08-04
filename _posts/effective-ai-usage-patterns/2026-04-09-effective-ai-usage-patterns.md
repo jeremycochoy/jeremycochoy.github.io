@@ -48,7 +48,7 @@ The instinct on a bad output is to point at it and say "fix this."
 Here is a case. The AI produced a prompt analysis that judged short prompts as a weakness, saying they "would be useless as standalone documentation." There were two ways to answer:
 
 - Correct the output: "Short prompts aren't a weakness, they're efficient." The AI adjusts that one judgment, then keeps evaluating prompts as if they were meant to be self-contained instructions.
-- Correct the framing: "Prompts aren't supposed to be documentation, they gave us a window on how the user uses them and we want to understand this."
+- Correct the framing: "Prompts aren't supposed to be documentation, they gave us a window on how the user use them and we want to understand this."
 
 The second answer changed the whole analysis. The AI re-derived its conclusions from the corrected premise, including ones it had not produced yet.
 
@@ -68,7 +68,7 @@ Prompts of this kind:
 - "Good morning. Did the overnight migration finish? Show me the error count."
 - "Start the deployment. Monitor the health checks for 3 hours, and rollback if error rate exceeds 1%."
 
-A working day then has a shape. A short burst of prompts to set the task up and steer it. Then hours, or a night, with no contact. Then a check-in, "How is it going?", and either another burst or a final "merge and deploy."
+A working day then has a shape. A short burst of prompts to set the task up and steer it. Then hours, or a night, with no contact. Then a check-in, "How is it going?" or "Check on them", and either another burst or a final "merge and deploy."
 
 On a long task such as a training run or a deployment, say what to monitor and what to do if it goes wrong, then leave.
 
@@ -121,7 +121,9 @@ Judgment is the most valuable thing you bring to the work, so ask the AI for num
 - "Are you sure about 0.2ms average latency? That seems impossibly low for a cross-region call"
 - "How can the Q1 numbers include the March outage if the window ends February 28?"
 
-The AI processes data faster than you do, but it has no sense of what is unlikely in your domain. A 0.2ms cross-region latency is arithmetically fine and physically impossible. Your review is what catches that.
+The user asks "show me the data", not "decide which services to keep."
+
+The AI processes data faster than you do, but it does not know what "unlikely" looks like in your domain. A 0.2ms cross-region latency is arithmetically fine and physically impossible. Your review is what catches that.
 
 ---
 
