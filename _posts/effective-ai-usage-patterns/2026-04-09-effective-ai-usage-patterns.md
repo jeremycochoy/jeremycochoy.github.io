@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Effective AI Usage Patterns"
-description: "Seven patterns for working with AI, drawn from over 500 real engineering prompts."
+description: "Eight patterns for working with AI, drawn from over 500 real engineering prompts."
 author: Jeremy Cochoy
 ---
 
-I read over 500 prompts from engineers who use AI every day on production systems. Seven patterns came out of that reading. Each one describes how to split work with a tool that is fast and confident even when it is wrong.
+I read over 500 prompts from engineers who use AI every day on production systems. Eight patterns came out of that reading. Each one describes how to split work with a tool that is fast and confident even when it is wrong.
 
 ---
 
@@ -123,7 +123,11 @@ Ask the AI for data and for options. Make the call yourself.
 
 The AI processes data faster than you do, but it has no sense of what is unlikely in your domain. A 0.2ms cross-region latency is arithmetically fine and physically impossible. Your review is what catches that.
 
-Reasoning deserves the same treatment. Push on conclusions and on causal claims:
+---
+
+## 8. Challenge the AI's reasoning
+
+Stress-test the logic behind an output, above all the conclusions and the causal claims.
 
 - "You're concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it's the cache and not the serialization format?" The AI had concluded from N=1.
 - "Don't say 'further investigation needed for the cache layer' specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic." The AI had over-specified a conclusion.
