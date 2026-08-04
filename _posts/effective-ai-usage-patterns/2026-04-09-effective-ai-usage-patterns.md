@@ -112,9 +112,9 @@ Without a gate you get a long chain of actions and no checkpoints: "analyze, imp
 
 ---
 
-## 7. Keep judgment on your side
+## 7. Do not delegate your judgment
 
-Ask the AI for data and for options. Make the call yourself.
+Your judgment is the highest-value thing you bring to the work. Hand over the data gathering and the analysis. Keep the thinking. Ask for numbers and for options, then make the call yourself.
 
 - "Show me the benchmark results", then, after reading the table, "Service B is degraded, take it out of the load balancer"
 - "Show me the table again without the decommissioned services"
@@ -127,7 +127,7 @@ The AI processes data faster than you do, but it has no sense of what is unlikel
 
 ## 8. Challenge the AI's reasoning
 
-Stress-test the logic behind an output, above all the conclusions and the causal claims.
+The previous pattern protects your own thinking. This one audits the AI's. A model drifts into overconfidence easily, and it skips steps quietly. Check the conclusions and the causal claims first.
 
 - "You're concluding the new cache layer caused the slowdown, but you only tested one configuration. How would you know it's the cache and not the serialization format?" The AI had concluded from N=1.
 - "Don't say 'further investigation needed for the cache layer' specifically. We could say the same about the thread pool or the connection timeout. The conclusion should be generic." The AI had over-specified a conclusion.
