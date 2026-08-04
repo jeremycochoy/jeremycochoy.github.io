@@ -11,7 +11,7 @@ I read over 500 prompts from engineers who use AI every day on production system
 
 ## 1. Verify before you commit scope
 
-Open small. "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step tests a capability before you commit more scope.
+Open small. Instead of "analyze all the data and write me a report", ask "Do you see the data?" Then: "Who are the users?" Then: "Analyze them." Each step tests a capability before you commit more scope.
 
 A conversation that follows this pattern:
 
@@ -48,7 +48,7 @@ The instinct on a bad output is to point at it and say "fix this."
 Here is a case. The AI produced a prompt analysis that judged short prompts as a weakness, saying they "would be useless as standalone documentation." There were two ways to answer:
 
 - Correct the output: "Short prompts aren't a weakness, they're efficient." The AI adjusts that one judgment, then keeps evaluating prompts as if they were meant to be self-contained instructions.
-- Correct the framing: "Prompts aren't supposed to be documentation. They give us a window on how the user works, and that is what we want to understand."
+- Correct the framing: "Prompts aren't supposed to be documentation, they gave us a window on how the user uses them and we want to understand this."
 
 The second answer changed the whole analysis. The AI re-derived its conclusions from the corrected premise, including ones it had not produced yet.
 
@@ -81,7 +81,7 @@ Write the rules down first: coding guidelines, TDD workflow, PR process, naming 
 The setup prompts look like this:
 
 - "Please have a look at the README.md and the files loaded according to claude.md. Is there an explicit mention of TDD approach?"
-- "Please add to our readme guideline that we should not define private functions or methods unless it is a technical detail"
+- "Please add to our readme guideline that we should not define private functions or methods unless it is really a technical detail"
 - "Also create a CODING_STYLE.md and a CLAUDE.md file in this directory"
 - "Please add in README that new features are first merged against development and then development is merged to master"
 
@@ -116,7 +116,7 @@ Without a gate you get a long chain of actions and no checkpoints: "analyze, imp
 
 Judgment is the most valuable thing you bring to the work, so ask the AI for numbers and for options and keep the decision yourself.
 
-- "Show me the benchmark results", then, after reading the table, "Service B is degraded, take it out of the load balancer"
+- "Show me the benchmark results", then, after reading the table, "Service B is clearly degraded, take it out of the load balancer"
 - "Show me the table again without the decommissioned services"
 - "Are you sure about 0.2ms average latency? That seems impossibly low for a cross-region call"
 - "How can the Q1 numbers include the March outage if the window ends February 28?"
