@@ -114,14 +114,14 @@ Without a gate you get a long chain of actions and no checkpoints: "analyze, imp
 
 ## 7. Judgment stays with you
 
-Judgment is the most valuable thing you bring to the work, so ask the AI for numbers and for options and keep the decision yourself.
+Judgment is the most valuable thing you bring to the work, so ask the AI for numbers and options, then keep the decision yourself.
 
 - "Show me the benchmark results", then, after reading the table, "Service B is clearly degraded, take it out of the load balancer"
 - "Show me the table again without the decommissioned services"
 - "Are you sure about 0.2ms average latency? That seems impossibly low for a cross-region call"
 - "How can the Q1 numbers include the March outage if the window ends February 28?"
 
-The user asks "show me the data", not "decide which services to keep."
+The prompts ask "show me the data". The call itself, "decide which services to keep", stays with the user.
 
 The AI processes data faster than you do, but it does not know what "unlikely" looks like in your domain. A 0.2ms cross-region latency is arithmetically fine and physically impossible. Your review is what catches that.
 
