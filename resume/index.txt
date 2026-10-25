@@ -9,6 +9,22 @@ Dr. Jérémy Cochoy
 
 Corporate Experience
 
+2021-Today
+
+    _CEO at Redstone Solutions OÜ_
+
+    Real-time and high-availability solutions. Building advanced
+    generative modeling and simulation technologies.
+
+2020-2021
+
+    _ML Consulting_
+
+    Providing machine learning consulting services with a focus on time
+    series forecasting. Expertise includes designing and implementing
+    predictive models using PyTorch, transformers, and recurrent neural
+    network architectures.
+
 2019-2020
 
     _CTO at Symphonia_
@@ -90,6 +106,9 @@ Education
 
 Open Source Contributions
 
+Linux kernel
+    Contributor to the ext2 filesystem (patch merged in Linux 2.6.33).
+
 C++
     Author of sednl, a simple event driven network library.
 
@@ -117,7 +136,7 @@ Sports
 
 ------------------------------------------------------------------------
 
-  jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • years old
+  jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old
   43-300 Bielsko-Biala
   Poland
   pdf version • txt version • doc version • html version

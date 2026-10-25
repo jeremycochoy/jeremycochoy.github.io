@@ -96,6 +96,11 @@ Education
 Open Source Contributions
 -------------------------
 
+Linux kernel
+:   Contributor to the ext2 filesystem
+    ([patch](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92e128884bf04fb155413a78f45be1d73dff75a7)
+    merged in Linux 2.6.33).
+
 C++
 :   Author of
     [sednl](https://github.com/jeremycochoy/sednl), a
@@ -128,7 +133,7 @@ Sports
 
 ----
 
-> jeremy.cochoy@gmail.com • +33 6 43 01 74 02 •  years old\
+> jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old\
 > 43-300 Bielsko-Biala\
 > Poland
 > \
