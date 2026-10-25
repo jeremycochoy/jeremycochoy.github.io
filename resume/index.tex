@@ -45,7 +45,7 @@
 
 \definedescription
   [description]
-  [headstyle=bold, style=normal,
+  [headstyle=bold, style=normal, headalign=nothyphenated, % no "ker-nel"
    location=hanging, width=18mm, distance=14mm, margin=0cm]
 
 \setupitemize[autointro, packed]    % prevent orphan list intro
@@ -82,6 +82,22 @@
 
 \subsection[title={Corporate
 Experience},reference={corporate-experience}]
+
+\startdescription{2021-Today}
+  {\em CEO at Redstone Solutions OÜ}
+
+  Real-time and high-availability solutions. Building advanced
+  generative modeling and simulation technologies.
+\stopdescription
+
+\startdescription{2020-2021}
+  {\em ML Consulting}
+
+  Providing machine learning consulting services with a focus on time
+  series forecasting. Expertise includes designing and implementing
+  predictive models using PyTorch, transformers, and recurrent neural
+  network architectures.
+\stopdescription
 
 \startdescription{2019-2020}
   {\em CTO at Symphonia}
@@ -163,15 +179,21 @@ Experience},reference={corporate-experience}]
 \subsection[title={Open Source
 Contributions},reference={open-source-contributions}]
 
+\startdescription{Linux kernel}
+  Contributor to the ext2 filesystem
+  (\useURL[url1][https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92e128884bf04fb155413a78f45be1d73dff75a7][][patch]\from[url1]
+  merged in Linux 2.6.33).
+\stopdescription
+
 \startdescription{C++}
   Author of
-  \useURL[url1][https://github.com/jeremycochoy/sednl][][sednl]\from[url1],
+  \useURL[url2][https://github.com/jeremycochoy/sednl][][sednl]\from[url2],
   a simple event driven network library.
 \stopdescription
 
 \startdescription{Rust}
   Author of
-  \useURL[url2][https://github.com/jeremycochoy/sgb][][SGB]\from[url2],
+  \useURL[url3][https://github.com/jeremycochoy/sgb][][SGB]\from[url3],
   a simple game boy classic emulator written in rust.
 \stopdescription
 
@@ -206,17 +228,17 @@ interests},reference={activities-and-interests}]
 \thinrule
 
 \startblockquote
-jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • years old\crlf
+jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old\crlf
 43-300 Bielsko-Biala\crlf
 Poland\crlf
-\useURL[url3][http://zenol.fr/resume/index.pdf][][pdf
-version]\from[url3] •
-\useURL[url4][http://zenol.fr/resume/index.txt][][txt
+\useURL[url4][http://zenol.fr/resume/index.pdf][][pdf
 version]\from[url4] •
-\useURL[url5][http://zenol.fr/resume/index.docx][][doc
+\useURL[url5][http://zenol.fr/resume/index.txt][][txt
 version]\from[url5] •
-\useURL[url6][http://zenol.fr/resume/index.html][][html
-version]\from[url6]
+\useURL[url6][http://zenol.fr/resume/index.docx][][doc
+version]\from[url6] •
+\useURL[url7][http://zenol.fr/resume/index.html][][html
+version]\from[url7]
 \stopblockquote
 
 \stoptext
