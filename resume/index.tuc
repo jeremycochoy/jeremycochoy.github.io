@@ -4,8 +4,8 @@ utilitydata.comment={
  ["escape"]="[===[ ... ]===]",
  ["file"]="index",
  ["format"]="cont-en",
- ["stamp"]="2019.03.21 21:39",
- ["version"]=1.31,
+ ["stamp"]="2026.10.23 01:24",
+ ["version"]=0x1.51eb851eb851fp+0,
 }
 
 if not utilitydata.job then utilitydata.job = { } end
@@ -19,7 +19,7 @@ if not utilitydata.job.variables then utilitydata.job.variables = { } end
 
 utilitydata.job.variables.collected={
  ["macros"]={},
- ["randomseed"]=0.1467027165927,
+ ["randomseed"]=0x1.017838cp-5,
  ["sectionblockorder"]={},
 }
 
@@ -147,6 +147,9 @@ utilitydata.structures.counters.collected={
  ["itemgroup:itemize"]={
   { 0, 6 },
  },
+ ["itemgroup:itemize:note"]={
+  { 0 },
+ },
  ["linenote"]={
   { 0 },
  },
@@ -160,6 +163,9 @@ utilitydata.structures.counters.collected={
   { 2 },
  },
  ["table"]={
+  { 0 },
+ },
+ ["textnote:note"]={
   { 0 },
  },
  ["userpage"]={
@@ -180,6 +186,7 @@ utilitydata.structures.lists.collected={
    ["realpage"]=1,
    ["reference"]="corporate-experience",
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
@@ -189,10 +196,40 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
+   ["block"]="bodypart",
    ["internal"]=2,
    ["order"]=1,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
+  },
+  ["titledata"]={
+   ["title"]="2021-Today",
+  },
+ },
+ {
+  ["metadata"]=8,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=3,
+   ["order"]=2,
+   ["realpage"]=1,
+   ["section"]=1,
+   ["view"]="fit",
+  },
+  ["titledata"]={
+   ["title"]="2020-2021",
+  },
+ },
+ {
+  ["metadata"]=8,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=4,
+   ["order"]=3,
+   ["realpage"]=1,
+   ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2019-2020",
@@ -201,10 +238,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=3,
-   ["order"]=2,
+   ["block"]="bodypart",
+   ["internal"]=5,
+   ["order"]=4,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2018-2019",
@@ -213,10 +252,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=4,
-   ["order"]=3,
+   ["block"]="bodypart",
+   ["internal"]=6,
+   ["order"]=5,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2015-2018",
@@ -225,10 +266,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=5,
-   ["order"]=4,
+   ["block"]="bodypart",
+   ["internal"]=7,
+   ["order"]=6,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2013",
@@ -237,10 +280,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=6,
-   ["order"]=5,
+   ["block"]="bodypart",
+   ["internal"]=8,
+   ["order"]=7,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2012",
@@ -249,10 +294,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=7,
-   ["order"]=6,
+   ["block"]="bodypart",
+   ["internal"]=9,
+   ["order"]=8,
    ["realpage"]=1,
    ["section"]=1,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2009",
@@ -263,10 +310,11 @@ utilitydata.structures.lists.collected={
   ["numberdata"]=9,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=8,
+   ["internal"]=10,
    ["realpage"]=1,
    ["reference"]="education",
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
@@ -276,10 +324,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=9,
-   ["order"]=7,
+   ["block"]="bodypart",
+   ["internal"]=11,
+   ["order"]=9,
    ["realpage"]=1,
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2018",
@@ -288,10 +338,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=10,
-   ["order"]=8,
-   ["realpage"]=1,
+   ["block"]="bodypart",
+   ["internal"]=12,
+   ["order"]=10,
+   ["realpage"]=2,
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2014 - 2015",
@@ -300,10 +352,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=11,
-   ["order"]=9,
-   ["realpage"]=1,
+   ["block"]="bodypart",
+   ["internal"]=13,
+   ["order"]=11,
+   ["realpage"]=2,
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2013 - 2014",
@@ -312,10 +366,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=12,
-   ["order"]=10,
-   ["realpage"]=1,
+   ["block"]="bodypart",
+   ["internal"]=14,
+   ["order"]=12,
+   ["realpage"]=2,
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="20011 - 2012",
@@ -324,10 +380,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=13,
-   ["order"]=11,
+   ["block"]="bodypart",
+   ["internal"]=15,
+   ["order"]=13,
    ["realpage"]=2,
    ["section"]=2,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="2009 - 2011",
@@ -338,10 +396,11 @@ utilitydata.structures.lists.collected={
   ["numberdata"]=10,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=14,
+   ["internal"]=16,
    ["realpage"]=2,
    ["reference"]="open-source-contributions",
    ["section"]=3,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
@@ -351,10 +410,26 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=15,
-   ["order"]=12,
+   ["block"]="bodypart",
+   ["internal"]=17,
+   ["order"]=14,
    ["realpage"]=2,
    ["section"]=3,
+   ["view"]="fit",
+  },
+  ["titledata"]={
+   ["title"]="Linux kernel",
+  },
+ },
+ {
+  ["metadata"]=8,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=18,
+   ["order"]=15,
+   ["realpage"]=2,
+   ["section"]=3,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="C++",
@@ -363,10 +438,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=16,
-   ["order"]=13,
+   ["block"]="bodypart",
+   ["internal"]=19,
+   ["order"]=16,
    ["realpage"]=2,
    ["section"]=3,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="Rust",
@@ -377,10 +454,11 @@ utilitydata.structures.lists.collected={
   ["numberdata"]=11,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=17,
+   ["internal"]=20,
    ["realpage"]=2,
    ["reference"]="techs-and-stacks",
    ["section"]=4,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
@@ -392,10 +470,11 @@ utilitydata.structures.lists.collected={
   ["numberdata"]=12,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=18,
+   ["internal"]=21,
    ["realpage"]=2,
    ["reference"]="activities-and-interests",
    ["section"]=5,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
@@ -405,10 +484,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=19,
-   ["order"]=14,
+   ["block"]="bodypart",
+   ["internal"]=22,
+   ["order"]=17,
    ["realpage"]=2,
    ["section"]=5,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="Hobbies",
@@ -417,10 +498,12 @@ utilitydata.structures.lists.collected={
  {
   ["metadata"]=8,
   ["references"]={
-   ["internal"]=20,
-   ["order"]=15,
+   ["block"]="bodypart",
+   ["internal"]=23,
+   ["order"]=18,
    ["realpage"]=2,
    ["section"]=5,
+   ["view"]="fit",
   },
   ["titledata"]={
    ["title"]="Sports",
@@ -600,7 +683,7 @@ utilitydata.job.packed={
   ["positions"]=true,
   ["userdata"]=true,
  },
- ["version"]=1.02,
+ ["version"]=0x1.051eb851eb852p+0,
 }
 
 return utilitydata
