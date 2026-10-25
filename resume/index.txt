@@ -107,7 +107,7 @@ Education
 Open Source Contributions
 
 Linux kernel
-    Contributor to the ext2 filesystem (patch merged in Linux 2.6.33).
+    Contribution to the ext2 filesystem.
 
 C++
     Author of sednl, a simple event driven network library.
@@ -137,6 +137,7 @@ Sports
 ------------------------------------------------------------------------
 
   jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old
-  43-300 Bielsko-Biala
-  Poland
+  Rua Correia Teles 28 A
+  1350-100 Lisboa
+  Portugal
   pdf version • txt version • doc version • html version

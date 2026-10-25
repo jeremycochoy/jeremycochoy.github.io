@@ -83,25 +83,25 @@ modules         > stop used modules
 
 mkiv lua stats  > used config file: selfautoparent:/texmf/web2c/texmfcnf.lua
 mkiv lua stats  > used cache path: /tmp/cv-tools/context-dl/lmtx/tex/texmf-cache/luatex-cache/context/5fe67e0bfe781ce0dde776fb1556f32e
-mkiv lua stats  > resource resolver: loadtime 0.004 seconds, 0 scans with scantime 0.000 seconds, 0 shared scans, 17 found files, scanned paths: <none>
-mkiv lua stats  > stored bytecode data: 459 modules (0.122 sec), 96 tables (0.008 sec), 555 chunks (0.130 sec)
+mkiv lua stats  > resource resolver: loadtime 0.005 seconds, 0 scans with scantime 0.000 seconds, 0 shared scans, 17 found files, scanned paths: <none>
+mkiv lua stats  > stored bytecode data: 459 modules (0.142 sec), 96 tables (0.010 sec), 555 chunks (0.152 sec)
 mkiv lua stats  > traced context lua functions: maxstack: 1443, freed: 0, unreachable: 1443
 mkiv lua stats  > cleaned up reserved nodes: 64 nodes, 9 lists of 442
 mkiv lua stats  > node memory usage: 14 attribute, 4 attribute_list, 1 glue, 51 glue_spec, 3 kern, 2 penalty, 2 temp, 2 user_defined
-mkiv lua stats  > node list callback tasks: 8 unique task lists, 8 instances (re)created, 620 calls
+mkiv lua stats  > node list callback tasks: 8 unique task lists, 8 instances (re)created, 621 calls
 mkiv lua stats  > used backend: pdf (backend for directly generating pdf output)
 mkiv lua stats  > jobdata time: 0.001 seconds saving, 0.000 seconds loading
-mkiv lua stats  > callbacks: internal: 1163, file: 690, direct: 0, late: 35, function 1260, total: 3148 (1574 per page)
-mkiv lua stats  > randomizer: resumed with value 0.031429396476597
+mkiv lua stats  > callbacks: internal: 1165, file: 689, direct: 0, late: 34, function 1255, total: 3143 (1572 per page)
+mkiv lua stats  > randomizer: resumed with value 0.33219695463777
 mkiv lua stats  > result saved in file: index.pdf, compresslevel 3, objectcompresslevel 1
 mkiv lua stats  > loaded patterns: en::1, load time: 0.000
-mkiv lua stats  > interactive elements: 7 references, 23 destinations
+mkiv lua stats  > interactive elements: 6 references, 23 destinations
 mkiv lua stats  > loaded fonts: 4 files: latinmodern-math.otf, texgyreheros-bold.otf, texgyreheros-italic.otf, texgyreheros-regular.otf
-mkiv lua stats  > font engine: otf 3.158, afm 1.541, tfm 1.000, 12 instances, 6 shared in backend, 3 common vectors, 3 common hashes, load time 0.112 seconds 
-mkiv lua stats  > pdf annotations: 7 links (7 unique), 0 special
+mkiv lua stats  > font engine: otf 3.158, afm 1.541, tfm 1.000, 12 instances, 6 shared in backend, 3 common vectors, 3 common hashes, load time 0.128 seconds 
+mkiv lua stats  > pdf annotations: 6 links (6 unique), 0 special
 mkiv lua stats  > used platform: linux-64, type: unix, binary subtree: texmf-linux-64
 mkiv lua stats  > used engine: luatex version: 1.25.9, functionality level: 7743, banner: this is luatex, version 1.25.9 (tex live 2027/dev)
 mkiv lua stats  > used hash slots: 50053 of 65536 + 250000
-mkiv lua stats  > lua properties: engine: lua 5.3, used memory: 97 MB, ctx: 97 MB, max: unknown MB, hash chars: min(64,40), symbol mask: utf (τεχ)
-mkiv lua stats  > runtime: 0.348 seconds, 2 processed pages, 2 shipped pages, 5.747 pages/second
+mkiv lua stats  > lua properties: engine: lua 5.3, used memory: 99 MB, ctx: 99 MB, max: unknown MB, hash chars: min(64,40), symbol mask: utf (τεχ)
+mkiv lua stats  > runtime: 0.393 seconds, 2 processed pages, 2 shipped pages, 5.089 pages/second
 
