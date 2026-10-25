@@ -10,12 +10,17 @@
 Corporate Experience
 --------------------
 
-2020-Today
+2021-Today
+:   *CEO at Redstone Solutions OÜ*
+
+    Real-time and high-availability solutions. Building advanced generative modeling and simulation technologies.
+
+2020-2021
 :   *ML Consulting*
 
     Providing machine learning consulting services with a focus on time series forecasting.
     Expertise includes designing and implementing predictive models using PyTorch, transformers,
-    and recurrent neural network architectures. Assisting clients in leveraging AI for data-driven decision-making.
+    and recurrent neural network architectures.
 
 2019-2020
 :   *CTO at Symphonia*
@@ -91,6 +96,9 @@ Education
 Open Source Contributions
 -------------------------
 
+Linux kernel
+:   Contribution to the ext2 filesystem.
+
 C++
 :   Author of
     [sednl](https://github.com/jeremycochoy/sednl), a
@@ -123,9 +131,10 @@ Sports
 
 ----
 
-> jeremy.cochoy@gmail.com • +33 6 43 01 74 02 •  years old\
-> 43-300 Bielsko-Biala\
-> Poland
+> jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old\
+> Rua Correia Teles 28 A\
+> 1350-100 Lisboa\
+> Portugal
 > \
 > [pdf version](http://zenol.fr/resume/index.pdf) •
 > [txt version](http://zenol.fr/resume/index.txt) •

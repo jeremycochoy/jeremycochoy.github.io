@@ -97,9 +97,7 @@ Open Source Contributions
 -------------------------
 
 Linux kernel
-:   Contributor to the ext2 filesystem
-    ([patch](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92e128884bf04fb155413a78f45be1d73dff75a7)
-    merged in Linux 2.6.33).
+:   Contribution to the ext2 filesystem.
 
 C++
 :   Author of
@@ -134,8 +132,9 @@ Sports
 ----
 
 > jeremy.cochoy@gmail.com • +33 6 43 01 74 02 • 36 years old\
-> 43-300 Bielsko-Biala\
-> Poland
+> Rua Correia Teles 28 A\
+> 1350-100 Lisboa\
+> Portugal
 > \
 > [pdf version](http://zenol.fr/resume/index.pdf) •
 > [txt version](http://zenol.fr/resume/index.txt) •
